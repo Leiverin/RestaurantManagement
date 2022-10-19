@@ -3,6 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/DATN/RestaurantManagement/app/src/main/res/layout/fragment_add_food.xml" value="0.259375" />
+        <entry key="..\:/DATN/RestaurantManagement/app/src/main/res/layout/fragment_login.xml" value="0.259375" />
+        <entry key="..\:/DATN/RestaurantManagement/app/src/main/res/layout/fragment_splash_screen.xml" value="0.259375" />
+        <entry key="..\:/DATN/RestaurantManagement/app/src/main/res/layout/fragment_table.xml" value="0.259375" />
+        <entry key="..\:/DATN/RestaurantManagement/app/src/main/res/layout/fragment_table_manager.xml" value="0.259375" />
+        <entry key="..\:/DATN/RestaurantManagement/app/src/main/res/layout/item_table.xml" value="0.259375" />
         <entry key="..\:/Users/PC/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_main.xml" value="0.1" />
       </map>
     </option>
