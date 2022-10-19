@@ -1,3 +1,25 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">datn</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="titleSplashScreenFragment">Cof-Life</string>
+    <string name="titleLoginFragment">Login</string>
+    <string name="hintUsernameLogin">Username</string>
+    <string name="hintPassLogin">Password</string>
+    <string name="textContactManagement">Liên hệ quản lý</string>
+    <string name="textBtnLogin">Login</string>
+    <string name="titleTableFragment">Orders Management</string>
+    <string name="textTableFlow">Flow 1</string>
+    <string name="textLiveTable">Live table : 0</string>
+    <string name="textEmptyTable">Empty table : 7</string>
+    <string name="textLiveTableNum">Live table( num Live Table )</string>
+    <string name="textEmptyTableNum">Empty table( num Empty Table )</string>
+    <string name="textOrderOnTable">Order on table</string>
+    <string name="textNameTableItem">Table 1</string>
+    <string name="textAddFood">This table is not have a product</string>
+    <string name="hintSearchFood">Search food ...</string>
+    <string name="tab1">Appetizer</string>
+    <string name="tab2">Main dishes</string>
+    <string name="tab3">Desserts</string>
+    <string name="tab4">Drinks</string>
 </resources>
