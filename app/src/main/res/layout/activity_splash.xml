@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:background="#3D3C3C"
     android:gravity="center"
-    tools:context=".ui.SplashScreenFragment">
+    tools:context=".ui.splash.SplashActivity">
 
     <TextView
         style="@style/titleSplash"
