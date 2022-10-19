@@ -8,34 +8,46 @@
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_height="match_parent">
-        <com.google.android.material.appbar.AppBarLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp">
-
-            <androidx.appcompat.widget.Toolbar
+            android:layout_height="140dp"
+            android:background="@color/colorPrimary"
+            >
+            <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/black">
-                <LinearLayout
+                android:layout_height="match_parent">
+
+                <androidx.appcompat.widget.Toolbar
                     android:layout_width="match_parent"
-                    android:orientation="vertical"
-                    android:layout_marginEnd="15dp"
-                    android:layout_height="wrap_content">
-                    <EditText
-                        style="@style/editTextSearch"
-                        android:id="@+id/edSearch"
-                        android:hint="@string/hintSearchFood"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPrimary"
+                    >
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                    <com.google.android.material.tabs.TabLayout
-                        style="@style/styleTabLayoutAddF"
-                        android:id="@+id/tablayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        />
-                </LinearLayout>
-            </androidx.appcompat.widget.Toolbar>
-        </com.google.android.material.appbar.AppBarLayout>
+                        android:orientation="vertical"
+                        android:layout_marginEnd="15dp"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            style="@style/editTextSearch"
+                            android:id="@+id/ed_search"
+                            android:hint="@string/hintSearchFood"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                        <com.google.android.material.tabs.TabLayout
+                            style="@style/styleTabLayoutAddF"
+                            android:id="@+id/tab_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/colorPrimary"
+                            />
+                    </LinearLayout>
+                </androidx.appcompat.widget.Toolbar>
+
+            </com.google.android.material.appbar.AppBarLayout>
+        </LinearLayout>
+
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewPager2Main"
             android:layout_width="match_parent"
