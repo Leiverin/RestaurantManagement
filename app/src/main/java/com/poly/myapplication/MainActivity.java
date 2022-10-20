@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.poly.myapplication.databinding.ActivityMainBinding;
 
+
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
 
