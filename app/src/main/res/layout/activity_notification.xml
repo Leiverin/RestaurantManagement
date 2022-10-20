@@ -6,22 +6,22 @@
     android:background="#EBEBEB"
     android:orientation="vertical"
     android:layout_height="match_parent"
-    tools:context=".ui.history.HistoryActivity">
+    tools:context=".ui.notification.NotificationActivity">
     <androidx.cardview.widget.CardView
         android:layout_margin="10dp"
         app:cardCornerRadius="20dp"
-        android:layout_width="match_parent"
         app:cardBackgroundColor="#D8D8D8"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <EditText
-            android:hint="Tìm kiếm lịch sử order"
             style="@style/hintSearch"
+            android:hint="Tìm kiếm thông báo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </androidx.cardview.widget.CardView>
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_history"
-        tools:listitem="@layout/item_history"
+        android:id="@+id/rv_notification"
+        tools:listitem="@layout/item_noti"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

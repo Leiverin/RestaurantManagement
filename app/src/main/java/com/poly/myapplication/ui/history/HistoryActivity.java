@@ -1,17 +1,18 @@
-package com.poly.myapplication;
+package com.poly.myapplication.ui.history;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.poly.myapplication.databinding.ActivityMainBinding;
+import com.poly.myapplication.databinding.ActivityHistoryBinding;
+
 
 public class HistoryActivity extends AppCompatActivity {
-    private ActivityMainBinding binding;
+    private ActivityHistoryBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        binding = ActivityHistoryBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
     }
 }

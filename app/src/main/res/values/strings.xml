@@ -22,4 +22,10 @@
     <string name="tab2">Main dishes</string>
     <string name="tab3">Desserts</string>
     <string name="tab4">Drinks</string>
+    <string name="quanityHistory">Số lượng : 1</string>
+    <string name="intoMoney">Thành tiền :</string>
+    <string name="money">150$</string>
+    <string name="time">15:30 P.M 8-9-2022</string>
+    <string name="done">Done</string>
+    <string name="thankYou">Thank you so much</string>
 </resources>

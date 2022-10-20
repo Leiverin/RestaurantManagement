@@ -139,5 +139,59 @@
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/textColorTable</item>
     </style>
-
+    // fragment history
+    <style name="styleItemHistory">
+        <item name="android:layout_margin">10dp</item>
+        <item name="cardBackgroundColor">#313131</item>
+        <item name="cardCornerRadius">15dp</item>
+    </style>
+    <style name="textNameTable">
+        <item name="android:fontFamily">@font/josefinslab_regular</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="textTimeTable">
+        <item name="android:fontFamily">@font/josefinslab_regular</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="textMountTableHistory">
+        <item name="android:fontFamily">@font/josefinslab_regular</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginStart">10dp</item>
+    </style>
+    <style name="textMoneyTable">
+        <item name="android:fontFamily">@font/josefinslab_regular</item>
+        <item name="android:textColor">#FF0000</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    // fragment bill
+    <style name="textNameTableBill">
+        <item name="android:fontFamily">@font/josefinslab_regular</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="backBtnDone">
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="cardBackgroundColor">@color/done</item>
+        <item name="cardCornerRadius">20dp</item>
+    </style>
+    // hintSearch
+    <style name="hintSearch">
+        <item name="android:fontFamily">@font/josefinslab_regular</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
 </resources>
