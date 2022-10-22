@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
-    app:cardBackgroundColor="#2E2E2E"
+    app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="10dp">
 
     <FrameLayout
@@ -33,14 +33,14 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-black"
                     android:text="Title"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Content"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="16sp" />
             </LinearLayout>
         </LinearLayout>
@@ -59,7 +59,7 @@
             <TextView
                 android:textSize="12sp"
                 android:layout_marginStart="5dp"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2 Days Ago" />

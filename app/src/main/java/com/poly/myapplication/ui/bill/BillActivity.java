@@ -1,4 +1,4 @@
-package com.poly.myapplication.ui.Bill;
+package com.poly.myapplication.ui.bill;
 
 import androidx.appcompat.app.AppCompatActivity;
 

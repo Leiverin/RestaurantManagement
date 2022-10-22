@@ -13,7 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <androidx.appcompat.widget.Toolbar
-                android:background="@color/black"
+                android:background="#FF7F50"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <LinearLayout

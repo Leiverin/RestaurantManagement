@@ -38,14 +38,14 @@
         <item name="android:textStyle">bold</item>
         <item name="android:fontFamily">@font/josefinslab_regular</item>
         <item name="android:background">@android:color/transparent</item>
-        <item name="android:textColorHint">@color/black</item>
+        <item name="android:textColorHint">@color/hintEditTextLogin</item>
         <item name="android:padding">10dp</item>
     </style>
 
     <style name="contactManagerLogin">
         <item name="android:layout_gravity">end</item>
         <item name="android:layout_marginTop">5dp</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">#181818</item>
         <item name="android:fontFamily">@font/josefinslab_regular</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">18sp</item>
@@ -54,15 +54,15 @@
     <style name="backBtnLogin">
         <item name="android:layout_marginTop">10dp</item>
         <item name="android:layout_gravity">center</item>
-        <item name="cardBackgroundColor">@color/backColorBtnLogin</item>
+        <item name="cardBackgroundColor">@color/white</item>
         <item name="cardCornerRadius">20dp</item>
     </style>
 
     <style name="textBtnLogin">
         <item name="android:fontFamily">@font/josefinslab_regular</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/textColorBtnLogin</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">24sp</item>
         <item name="android:paddingRight">50dp</item>
         <item name="android:paddingLeft">50dp</item>
         <item name="android:paddingTop">10dp</item>
@@ -82,7 +82,7 @@
         <item name="android:fontFamily">@font/josefinslab_regular</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/textColorTable</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="imgIcon">
@@ -114,7 +114,7 @@
     <style name="backBtnAdd">
         <item name="android:layout_marginTop">10dp</item>
         <item name="android:layout_gravity">center</item>
-        <item name="cardBackgroundColor">@color/backColorBtnLogin</item>
+        <item name="cardBackgroundColor">#292929</item>
         <item name="cardCornerRadius">20dp</item>
     </style>
     // fragment add food
@@ -167,27 +167,27 @@
     // fragment history
     <style name="styleItemHistory">
         <item name="android:layout_margin">10dp</item>
-        <item name="cardBackgroundColor">#313131</item>
+        <item name="cardBackgroundColor">@color/white</item>
         <item name="cardCornerRadius">15dp</item>
     </style>
     <style name="textNameTable">
         <item name="android:fontFamily">@font/josefinslab_regular</item>
         <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/black</item>
         <item name="android:textSize">24sp</item>
         <item name="android:textStyle">bold</item>
     </style>
     <style name="textTimeTable">
         <item name="android:fontFamily">@font/josefinslab_regular</item>
         <item name="android:layout_gravity">center</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/black</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
     </style>
     <style name="textMountTableHistory">
         <item name="android:fontFamily">@font/josefinslab_regular</item>
         <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/black</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_marginTop">5dp</item>
@@ -202,7 +202,7 @@
     // fragment bill
     <style name="textNameTableBill">
         <item name="android:fontFamily">@font/josefinslab_regular</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/black</item>
         <item name="android:textSize">24sp</item>
         <item name="android:textStyle">bold</item>
     </style>
