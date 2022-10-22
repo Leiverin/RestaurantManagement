@@ -6,11 +6,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     >
-
     <androidx.cardview.widget.CardView
         app:cardCornerRadius="20dp"
         android:layout_margin="45dp"
-        app:cardBackgroundColor="#636363"
+        app:cardBackgroundColor="#FF7F50"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
@@ -45,7 +44,7 @@
                     android:id="@+id/tvTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="15:30      " />
+                    android:text="15:30    " />
                 <TextView
                     android:textStyle="bold"
                     android:layout_marginRight="10dp"

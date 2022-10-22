@@ -10,7 +10,7 @@
         android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="140dp"
+            android:layout_height="80dp"
             android:background="@color/colorPrimary"
             >
             <com.google.android.material.appbar.AppBarLayout
@@ -20,7 +20,7 @@
                 <androidx.appcompat.widget.Toolbar
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/colorPrimary"
+                    android:background="#FF7F50"
                     >
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -40,7 +40,7 @@
                             android:id="@+id/tab_layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@color/colorPrimary"
+                            android:background="#FF7F50"
                             />
                     </LinearLayout>
                 </androidx.appcompat.widget.Toolbar>
