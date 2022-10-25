@@ -1,4 +1,4 @@
-package com.poly.myapplication.ui.manage;
+package com.poly.myapplication.ui.activities.manage;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,5 +12,6 @@ public class TableManageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_table_manage);
+
     }
 }

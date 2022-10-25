@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#EEEEEE"
-    tools:context=".ui.manage.TableManageActivity">
-    <LinearLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="tableManageViewModel"
+            type="com.poly.myapplication.ui.activities.manage.TableManageViewModel" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#EEEEEE"
+        tools:context=".ui.activities.manage.TableManageActivity">
+
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="80dp">
@@ -58,10 +63,10 @@
                                 style="@style/textTableToobar"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/textEmptyTable"
-                                />
+                                android:text="@string/textEmptyTable" />
                         </LinearLayout>
                     </LinearLayout>
+
                     <ImageView
                         android:id="@+id/imgAlert"
                         style="@style/imgIcon"
@@ -71,41 +76,10 @@
                 </LinearLayout>
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.AppBarLayout>
-        <LinearLayout
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_table"
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:padding="15dp"
-            android:layout_height="wrap_content">
-            <TextView
-                style="@style/textTable"
-                android:text="@string/textLiveTableNum"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvLiveTable"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:spanCount="3"
-                tools:listitem="@layout/item_table"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:padding="15dp"
-            android:layout_height="wrap_content">
-            <TextView
-                style="@style/textTable"
-                android:text="@string/textEmptyTableNum"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvEmptyTable"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:spanCount="3"
-                tools:listitem="@layout/item_table"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"/>
-        </LinearLayout>
-    </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+            android:layout_height="match_parent" />
+    </androidx.core.widget.NestedScrollView>
+</layout>

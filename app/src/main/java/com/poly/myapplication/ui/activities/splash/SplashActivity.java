@@ -1,11 +1,8 @@
-package com.poly.myapplication.ui.splash;
+package com.poly.myapplication.ui.activities.splash;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-
-import com.poly.myapplication.R;
-import com.poly.myapplication.databinding.ActivitySplashBinding;
 
 public class SplashActivity extends AppCompatActivity {
     private ActivitySplashBinding binding;
