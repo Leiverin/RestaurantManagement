@@ -1,4 +1,4 @@
-package com.poly.myapplication;
+package com.poly.myapplication.ui.activities;
 
 import android.os.Bundle;
 

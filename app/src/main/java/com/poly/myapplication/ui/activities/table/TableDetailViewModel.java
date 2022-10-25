@@ -1,4 +1,4 @@
-package com.poly.myapplication.ui.table;
+package com.poly.myapplication.ui.activities.table;
 
 import androidx.lifecycle.ViewModel;
 

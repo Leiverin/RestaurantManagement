@@ -1,4 +1,4 @@
-package com.poly.myapplication.ui.food;
+package com.poly.myapplication.ui.activities.food;
 
 import androidx.appcompat.app.AppCompatActivity;
 

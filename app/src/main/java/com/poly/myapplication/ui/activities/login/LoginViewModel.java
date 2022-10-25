@@ -1,4 +1,4 @@
-package com.poly.myapplication.ui.login;
+package com.poly.myapplication.ui.activities.login;
 
 import androidx.lifecycle.ViewModel;
 
