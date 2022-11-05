@@ -34,6 +34,9 @@
             android:name=".ui.activities.splash.SplashActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.activities.table.TableDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activities.MainActivity"
             android:exported="true">
 

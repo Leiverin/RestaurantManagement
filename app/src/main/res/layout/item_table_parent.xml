@@ -16,7 +16,7 @@
         android:padding="4dp">
 
         <TextView
-            android:id="@+id/title_table"
+            android:id="@+id/tv_title"
             style="@style/text_size_22sp_bold"
             android:text="Live table" />
 

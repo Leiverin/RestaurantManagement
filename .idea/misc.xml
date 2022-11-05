@@ -3,6 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Home/RestaurantManagement/app/src/main/res/drawable/progress_custom_circle.xml" value="0.263" />
+        <entry key="..\:/Home/RestaurantManagement/app/src/main/res/layout/activity_table_detail.xml" value="0.22" />
+        <entry key="..\:/Home/RestaurantManagement/app/src/main/res/layout/activity_table_manage.xml" value="0.25" />
+        <entry key="..\:/Home/RestaurantManagement/app/src/main/res/layout/item_table_child.xml" value="0.33" />
+        <entry key="..\:/Home/RestaurantManagement/app/src/main/res/layout/item_table_parent.xml" value="0.18541666666666667" />
         <entry key="..\:/Users/PC/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_food.xml" value="0.136" />
         <entry key="..\:/Users/PC/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_login.xml" value="0.21666666666666667" />
         <entry key="..\:/Users/PC/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_main.xml" value="0.1" />

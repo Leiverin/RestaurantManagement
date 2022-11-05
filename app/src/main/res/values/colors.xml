@@ -15,4 +15,7 @@
     <color name="colorEditLogin">#59E4E4E4</color>
 
     <color name="colorPrimary">#202121</color>
+    <color name="status_bar_color">#333333</color>
+    <color name="color_bg_progress">#B3B3B3</color>
+    <color name="color_text_setting">#121212</color>
 </resources>

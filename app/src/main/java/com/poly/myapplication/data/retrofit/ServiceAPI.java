@@ -10,7 +10,7 @@ import retrofit2.http.Path;
 
 public interface ServiceAPI {
 
-    @GET("floor/all/{floor}")
+    @GET("table/all/{floor}")
     Call<List<Table>> getTableByFloor(
             @Path("floor") int floor
     );

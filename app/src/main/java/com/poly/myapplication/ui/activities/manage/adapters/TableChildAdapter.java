@@ -1,5 +1,6 @@
 package com.poly.myapplication.ui.activities.manage.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,10 +17,12 @@ import java.util.List;
 public class TableChildAdapter extends RecyclerView.Adapter<TableChildAdapter.TableChildViewModel> {
     private Context context;
     private List<Table> mListTable;
+    private IOnClickItem onClickItem;
 
-    public TableChildAdapter(Context context, List<Table> mListTable) {
+    public TableChildAdapter(Context context, List<Table> mListTable, IOnClickItem onClickItem) {
         this.context = context;
         this.mListTable = mListTable;
+        this.onClickItem = onClickItem;
     }
 
     @NonNull
@@ -28,14 +31,25 @@ public class TableChildAdapter extends RecyclerView.Adapter<TableChildAdapter.Ta
         return new TableChildViewModel(ItemTableChildBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull TableChildViewModel holder, int position) {
-
+        Table table = mListTable.get(position);
+        if(table != null){
+            holder.binding.tvNameTable.setText(table.getName());
+            holder.binding.tvContentTable.setText(table.getCapacity() + " person capacity");
+            holder.binding.viewItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onClickItem.onClickChild(table);
+                }
+            });
+        }
     }
 
     @Override
     public int getItemCount() {
-        return mListTable.size();
+        return mListTable != null ? mListTable.size(): 0;
     }
 
     public class TableChildViewModel extends RecyclerView.ViewHolder{
@@ -45,4 +59,8 @@ public class TableChildAdapter extends RecyclerView.Adapter<TableChildAdapter.Ta
             this.binding = binding;
         }
     }
+}
+
+interface IOnClickItem{
+    void onClickChild(Table table);
 }
