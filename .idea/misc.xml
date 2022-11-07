@@ -3,17 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Home/RestaurantManagement/app/src/main/res/drawable/progress_custom_circle.xml" value="0.263" />
-        <entry key="..\:/Home/RestaurantManagement/app/src/main/res/layout/activity_table_detail.xml" value="0.22" />
-        <entry key="..\:/Home/RestaurantManagement/app/src/main/res/layout/activity_table_manage.xml" value="0.25" />
-        <entry key="..\:/Home/RestaurantManagement/app/src/main/res/layout/item_table_child.xml" value="0.33" />
-        <entry key="..\:/Home/RestaurantManagement/app/src/main/res/layout/item_table_parent.xml" value="0.18541666666666667" />
         <entry key="..\:/Users/PC/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_food.xml" value="0.136" />
         <entry key="..\:/Users/PC/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_login.xml" value="0.21666666666666667" />
         <entry key="..\:/Users/PC/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/PC/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_splash.xml" value="0.152" />
         <entry key="..\:/Users/PC/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_table_detail.xml" value="0.23229166666666667" />
-        <entry key="..\:/Users/PC/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_table_manage.xml" value="0.4" />
+        <entry key="..\:/Users/PC/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_table_manage.xml" value="0.136" />
         <entry key="..\:/Users/PC/AndroidStudioProjects/MyApplication/app/src/main/res/layout/fragment_add_food.xml" value="0.176" />
         <entry key="..\:/Users/PC/AndroidStudioProjects/MyApplication/app/src/main/res/layout/fragment_login.xml" value="0.23072916666666668" />
         <entry key="..\:/Users/PC/AndroidStudioProjects/MyApplication/app/src/main/res/layout/fragment_splash_screen.xml" value="0.234375" />

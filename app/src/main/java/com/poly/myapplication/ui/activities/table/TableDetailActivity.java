@@ -29,6 +29,7 @@ public class TableDetailActivity extends AppCompatActivity {
 
         Table table = getIntent().getParcelableExtra(Constants.EXTRA_TABLE_TO_DETAIL);
         binding.tvNameTable.setText(table.getName());
+
         binding.btnAddFood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
