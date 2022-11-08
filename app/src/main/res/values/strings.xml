@@ -19,7 +19,13 @@
     <string name="textAddFood">This table is not have a product</string>
     <string name="hintSearchFood">Search food ...</string>
 
-<!--    Tab layout-->
+    <string name="quanityHistory">Số lượng : 1</string>
+    <string name="intoMoney">Thành tiền :</string>
+    <string name="money">150$</string>
+    <string name="time">15:30 P.M 8-9-2022</string>
+    <string name="done">Done</string>
+    <string name="thankYou">Thank you so much</string>
+    <!--    Tab layout-->
     <string name="appetizer">Appetizer</string>
     <string name="main">Main dishes</string>
     <string name="desserts">Desserts</string>

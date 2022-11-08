@@ -1,8 +1,11 @@
 package com.poly.myapplication.data.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
-public class Bill {
+public class Bill implements Parcelable {
     private String id;
     private String date;
     private String time;
@@ -27,6 +30,36 @@ public class Bill {
         this.idTable = idTable;
         this.idCustomer = idCustomer;
     }
+
+    public Bill(String idTable, double totalPrice, String time, String date) {
+        this.idTable = idTable;
+        this.totalPrice = totalPrice;
+        this.time = time;
+        this.date = date;
+    }
+
+    protected Bill(Parcel in) {
+        id = in.readString();
+        date = in.readString();
+        time = in.readString();
+        totalPrice = in.readDouble();
+        checkoutType = in.readInt();
+        status = in.readInt();
+        idTable = in.readString();
+        idCustomer = in.readString();
+    }
+
+    public static final Creator<Bill> CREATOR = new Creator<Bill>() {
+        @Override
+        public Bill createFromParcel(Parcel in) {
+            return new Bill(in);
+        }
+
+        @Override
+        public Bill[] newArray(int size) {
+            return new Bill[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -98,5 +131,22 @@ public class Bill {
 
     public void setIdCustomer(String idCustomer) {
         this.idCustomer = idCustomer;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(id);
+        parcel.writeString(date);
+        parcel.writeString(time);
+        parcel.writeDouble(totalPrice);
+        parcel.writeInt(checkoutType);
+        parcel.writeInt(status);
+        parcel.writeString(idTable);
+        parcel.writeString(idCustomer);
     }
 }

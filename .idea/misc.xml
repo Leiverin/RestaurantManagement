@@ -11,17 +11,33 @@
         <entry key="..\:/Users/PC/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_food.xml" value="0.136" />
         <entry key="..\:/Users/PC/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_login.xml" value="0.21666666666666667" />
         <entry key="..\:/Users/PC/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/Users/PC/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_splash.xml" value="0.152" />
-        <entry key="..\:/Users/PC/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_table_detail.xml" value="0.23229166666666667" />
-        <entry key="..\:/Users/PC/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_table_manage.xml" value="0.4" />
-        <entry key="..\:/Users/PC/AndroidStudioProjects/MyApplication/app/src/main/res/layout/fragment_add_food.xml" value="0.176" />
-        <entry key="..\:/Users/PC/AndroidStudioProjects/MyApplication/app/src/main/res/layout/fragment_login.xml" value="0.23072916666666668" />
-        <entry key="..\:/Users/PC/AndroidStudioProjects/MyApplication/app/src/main/res/layout/fragment_splash_screen.xml" value="0.234375" />
-        <entry key="..\:/Users/PC/AndroidStudioProjects/MyApplication/app/src/main/res/layout/fragment_table.xml" value="0.234375" />
-        <entry key="..\:/Users/PC/AndroidStudioProjects/MyApplication/app/src/main/res/layout/fragment_table_manager.xml" value="0.1" />
-        <entry key="..\:/Users/PC/AndroidStudioProjects/MyApplication/app/src/main/res/layout/item_table.xml" value="0.25" />
-        <entry key="..\:/Users/PC/AndroidStudioProjects/MyApplication/app/src/main/res/layout/item_table_child.xml" value="0.152" />
-        <entry key="..\:/Users/PC/AndroidStudioProjects/MyApplication/app/src/main/res/layout/item_table_parent.xml" value="0.152" />
+        <entry key="..\:/datnn/RestaurantManagement/app/src/main/res/drawable/ic_clock.xml" value="0.1815" />
+        <entry key="..\:/datnn/RestaurantManagement/app/src/main/res/drawable/ic_comment_duotone.xml" value="0.1785" />
+        <entry key="..\:/datnn/RestaurantManagement/app/src/main/res/drawable/ic_noti.xml" value="0.1785" />
+        <entry key="..\:/datnn/RestaurantManagement/app/src/main/res/drawable/ic_time.xml" value="0.1815" />
+        <entry key="..\:/datnn/RestaurantManagement/app/src/main/res/drawable/progress_custom_circle.xml" value="0.1755" />
+        <entry key="..\:/datnn/RestaurantManagement/app/src/main/res/layout/activity_add_product.xml" value="0.24375" />
+        <entry key="..\:/datnn/RestaurantManagement/app/src/main/res/layout/activity_bill.xml" value="0.259375" />
+        <entry key="..\:/datnn/RestaurantManagement/app/src/main/res/layout/activity_detail_table_selected.xml" value="0.24375" />
+        <entry key="..\:/datnn/RestaurantManagement/app/src/main/res/layout/activity_feed_back.xml" value="0.264" />
+        <entry key="..\:/datnn/RestaurantManagement/app/src/main/res/layout/activity_food.xml" value="0.264" />
+        <entry key="..\:/datnn/RestaurantManagement/app/src/main/res/layout/activity_history.xml" value="0.259375" />
+        <entry key="..\:/datnn/RestaurantManagement/app/src/main/res/layout/activity_login.xml" value="0.259375" />
+        <entry key="..\:/datnn/RestaurantManagement/app/src/main/res/layout/activity_main.xml" value="0.259375" />
+        <entry key="..\:/datnn/RestaurantManagement/app/src/main/res/layout/activity_notification.xml" value="0.2453125" />
+        <entry key="..\:/datnn/RestaurantManagement/app/src/main/res/layout/activity_show_detail_bill.xml" value="0.24375" />
+        <entry key="..\:/datnn/RestaurantManagement/app/src/main/res/layout/activity_splash.xml" value="0.24375" />
+        <entry key="..\:/datnn/RestaurantManagement/app/src/main/res/layout/activity_table_detail.xml" value="0.24375" />
+        <entry key="..\:/datnn/RestaurantManagement/app/src/main/res/layout/activity_table_manage.xml" value="0.259375" />
+        <entry key="..\:/datnn/RestaurantManagement/app/src/main/res/layout/fragment_appetizer.xml" value="0.24375" />
+        <entry key="..\:/datnn/RestaurantManagement/app/src/main/res/layout/fragment_desserts.xml" value="0.24375" />
+        <entry key="..\:/datnn/RestaurantManagement/app/src/main/res/layout/item_add_product.xml" value="0.24375" />
+        <entry key="..\:/datnn/RestaurantManagement/app/src/main/res/layout/item_bill.xml" value="0.2453125" />
+        <entry key="..\:/datnn/RestaurantManagement/app/src/main/res/layout/item_detail_table_selected.xml" value="0.24375" />
+        <entry key="..\:/datnn/RestaurantManagement/app/src/main/res/layout/item_history.xml" value="0.264" />
+        <entry key="..\:/datnn/RestaurantManagement/app/src/main/res/layout/item_noti.xml" value="0.259375" />
+        <entry key="..\:/datnn/RestaurantManagement/app/src/main/res/layout/item_show_detail_bill.xml" value="0.1046875" />
+        <entry key="..\:/datnn/RestaurantManagement/app/src/main/res/layout/item_table.xml" value="0.259375" />
       </map>
     </option>
   </component>

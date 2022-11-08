@@ -3,9 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="tableDetailViewModel"
-            type="com.poly.myapplication.ui.activities.table.TableDetailViewModel"/>
+            type="com.poly.myapplication.ui.activities.table.TableDetailViewModel" />
     </data>
 
     <LinearLayout
@@ -14,57 +15,56 @@
         android:orientation="vertical"
         tools:context=".ui.activities.table.TableDetailActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="80dp">
-
-        <androidx.appcompat.widget.Toolbar
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/black">
+            android:layout_height="80dp">
 
-            <LinearLayout
+            <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:background="@color/black">
 
-                <TextView
-                    android:id="@+id/txtNameTable"
-                    style="@style/titleTableItem"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/textNameTableItem" />
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
-                <ImageView
-                    android:id="@+id/imgAdd"
-                    style="@style/imgIcon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_icon_add" />
+                    <TextView
+                        android:id="@+id/txtNameTable"
+                        style="@style/titleTableItem"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/textNameTableItem" />
 
-                <ImageView
-                    android:id="@+id/imgBill"
-                    style="@style/imgIcon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_icon_bill" />
-            </LinearLayout>
-        </androidx.appcompat.widget.Toolbar>
-    </com.google.android.material.appbar.AppBarLayout>
+                    <ImageView
+                        android:id="@+id/imgAdd"
+                        style="@style/imgIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_icon_add" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical">
+                    <ImageView
+                        android:id="@+id/imgBill"
+                        style="@style/imgIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_icon_bill" />
+                </LinearLayout>
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
 
             <TextView
                 style="@style/textTable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/textAddFood"
                 android:layout_marginBottom="8dp"
-                />
+                android:text="@string/textAddFood" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/btnAddFood"
@@ -75,24 +75,25 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
                     android:layout_gravity="center"
+                    android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
                     android:orientation="horizontal">
 
-                <TextView
-                    style="@style/titleTableItem"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/textBtnLogin" />
+                    <TextView
+                        style="@style/titleTableItem"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/textBtnLogin" />
 
-                <ImageView
-                    style="@style/imgIcon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_add_circle" />
-            </LinearLayout>
+                    <ImageView
+                        style="@style/imgIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_add_circle" />
+                </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</layout>

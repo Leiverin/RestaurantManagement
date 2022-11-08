@@ -2,6 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/styleItemHistory"
+    android:id="@+id/view_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <LinearLayout
@@ -30,7 +31,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
+                    android:layout_marginTop="5dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -73,6 +74,7 @@
                         android:text="15:30 P.M" />
                 </LinearLayout>
                 <TextView
+                    android:id="@+id/txtDate"
                     style="@style/textTimeTable"
                     android:layout_width="match_parent"
                     android:gravity="end"

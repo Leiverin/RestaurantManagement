@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <EditText
-            style="@style/hintSearch"
+            style="@style/editTextSearch"
             android:hint="Tìm kiếm thông báo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

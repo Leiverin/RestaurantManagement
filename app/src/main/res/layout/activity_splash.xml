@@ -9,19 +9,21 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:background="#3D3C3C"
         android:gravity="center"
+        android:orientation="vertical"
         tools:context=".ui.activities.splash.SplashActivity">
 
-    <TextView
-        style="@style/titleSplash"
-        android:gravity="center"
-        android:text="@string/titleSplashScreenFragment" />
-    <ImageView
-        android:layout_marginTop="50dp"
-        android:src="@drawable/logo_app"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        <TextView
+            style="@style/titleSplash"
+            android:gravity="center"
+            android:text="@string/titleSplashScreenFragment" />
 
-</LinearLayout>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:src="@drawable/logo_app" />
+
+    </LinearLayout>
+</layout>

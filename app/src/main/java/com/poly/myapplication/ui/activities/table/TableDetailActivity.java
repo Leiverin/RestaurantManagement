@@ -28,7 +28,7 @@ public class TableDetailActivity extends AppCompatActivity {
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_color));
 
         Table table = getIntent().getParcelableExtra(Constants.EXTRA_TABLE_TO_DETAIL);
-        binding.tvNameTable.setText(table.getName());
+        binding.txtNameTable.setText(table.getName());
         binding.btnAddFood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
