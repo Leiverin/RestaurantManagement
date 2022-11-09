@@ -57,7 +57,6 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillViewModel>
                     if (Objects.equals(bill.getIdTable(), response.body().get(i).getId())) {
                         holder.binding.txtNameTable.setText(response.body().get(i).getName());
                     }
-
                 }
             }
 
@@ -74,6 +73,9 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillViewModel>
                 public void onClick(View view) {
                     onListener.onClickBill(bill);
                 }
+            });
+            holder.binding.btnDone.setOnClickListener(view -> {
+                onListener.onSetStatus(bill.getStatus());
             });
         }
     }
