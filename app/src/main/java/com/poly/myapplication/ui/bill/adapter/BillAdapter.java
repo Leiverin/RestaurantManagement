@@ -1,6 +1,7 @@
 package com.poly.myapplication.ui.bill.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,9 +10,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.poly.myapplication.data.models.Bill;
+import com.poly.myapplication.data.models.Table;
+import com.poly.myapplication.data.retrofit.RetroInstance;
+import com.poly.myapplication.data.retrofit.ServiceAPI;
 import com.poly.myapplication.databinding.ItemBillBinding;
 
 import java.util.List;
+import java.util.Objects;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillViewModel> {
     private Context context;
@@ -24,10 +33,11 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillViewModel>
         this.onListener = onListener;
     }
 
-    public void setList(List<Bill> mListBill){
+    public void setList(List<Bill> mListBill) {
         this.mListBill = mListBill;
         notifyDataSetChanged();
     }
+
     @NonNull
     @Override
     public BillViewModel onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -37,11 +47,28 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillViewModel>
     @Override
     public void onBindViewHolder(@NonNull BillViewModel holder, int position) {
         Bill bill = mListBill.get(position);
+        ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
+        Call<List<Table>> call = serviceAPI.getTableByFloor(1);
+        call.enqueue(new Callback<List<Table>>() {
+            @Override
+            public void onResponse(Call<List<Table>> call, Response<List<Table>> response) {
+                assert response.body() != null;
+                for (int i = 0; i < response.body().size(); i++) {
+                    if (Objects.equals(bill.getIdTable(), response.body().get(i).getId())) {
+                        holder.binding.txtNameTable.setText(response.body().get(i).getName());
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Table>> call, Throwable t) {
+            }
+        });
         if (bill != null) {
-            holder.binding.txtNameTable.setText(bill.getIdTable());
-            holder.binding.txtMoney.setText(bill.getTotalPrice() + "");
+            holder.binding.txtMoney.setText(" " + bill.getTotalPrice());
             holder.binding.txtTime.setText(bill.getTime());
-            holder.binding.txtDate.setText("date" + bill.getTime());
+            holder.binding.txtDate.setText(bill.getDate() + "");
             holder.binding.viewItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

@@ -2,10 +2,14 @@ package com.poly.myapplication.ui.bill;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.poly.myapplication.data.models.Bill;
+import com.poly.myapplication.data.models.Table;
 import com.poly.myapplication.databinding.ActivityBillBinding;
 import com.poly.myapplication.ui.bill.adapter.BillAdapter;
 import com.poly.myapplication.ui.bill.adapter.OnListener;
@@ -18,10 +22,12 @@ public class BillActivity extends AppCompatActivity {
     private ActivityBillBinding binding;
     private BillAdapter adapter;
     private List<Bill> list;
+    private BillViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        viewModel =  new ViewModelProvider(this).get(BillViewModel.class);
         binding = ActivityBillBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         list = new ArrayList<>();
@@ -42,9 +48,13 @@ public class BillActivity extends AppCompatActivity {
     }
 
     private void initViewModel() {
-        int a = 10;
-        for (int i = 0; i < a; i++) {
-            list.add(new Bill("ta", 100, "9:30", "13-01-2002"));
-        }
+        viewModel.mListBillLiveData.observe(this, new Observer<List<Bill>>() {
+            @Override
+            public void onChanged(List<Bill> bills) {
+                list = bills;
+                adapter.setList(list);
+            }
+        });
+        viewModel.getBill();
     }
 }

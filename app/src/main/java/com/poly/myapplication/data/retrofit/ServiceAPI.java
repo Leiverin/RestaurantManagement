@@ -1,5 +1,6 @@
 package com.poly.myapplication.data.retrofit;
 
+import com.poly.myapplication.data.models.Bill;
 import com.poly.myapplication.data.models.Table;
 
 import java.util.List;
@@ -14,6 +15,7 @@ public interface ServiceAPI {
     Call<List<Table>> getTableByFloor(
             @Path("floor") int floor
     );
-
+    @GET("bill/all")
+    Call<List<Bill>> getBill();
 
 }
