@@ -1,58 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.activities.food.FoodActivity">
-    <LinearLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="foodViewModel"
+            type="com.poly.myapplication.ui.activities.product.FoodViewModel" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:context=".ui.activities.product.FoodActivity">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="140dp"
-            android:background="@color/colorPrimary"
-            >
-            <com.google.android.material.appbar.AppBarLayout
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="140dp"
+                android:background="@color/colorPrimary">
 
-                <androidx.appcompat.widget.Toolbar
+                <com.google.android.material.appbar.AppBarLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/colorPrimary"
-                    >
-                    <LinearLayout
+                    android:layout_height="match_parent">
+
+                    <androidx.appcompat.widget.Toolbar
                         android:layout_width="match_parent"
-                        android:orientation="vertical"
-                        android:layout_marginEnd="15dp"
-                        android:layout_height="wrap_content">
+                        android:layout_height="match_parent"
+                        android:background="@color/colorPrimary">
 
-                        <EditText
-                            style="@style/editTextSearch"
-                            android:id="@+id/ed_search"
-                            android:hint="@string/hintSearchFood"
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
+                            android:orientation="vertical"
+                            android:layout_marginEnd="15dp"
+                            android:layout_height="wrap_content">
 
-                        <com.google.android.material.tabs.TabLayout
-                            style="@style/styleTabLayoutAddF"
-                            android:id="@+id/tab_layout"
-                            android:layout_marginTop="12dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@color/colorPrimary"
-                            />
-                    </LinearLayout>
-                </androidx.appcompat.widget.Toolbar>
+                            <EditText
+                                style="@style/editTextSearch"
+                                android:id="@+id/ed_search"
+                                android:hint="@string/hintSearchFood"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
 
-            </com.google.android.material.appbar.AppBarLayout>
+                            <com.google.android.material.tabs.TabLayout
+                                android:id="@+id/tab_layout"
+                                android:layout_marginTop="12dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/colorPrimary"
+                                style="@style/text_in_tab_style"
+                                app:tabTextAppearance="@style/text_size_18sp_regular"
+                                android:textSize="16sp"
+                                />
+                        </LinearLayout>
+                    </androidx.appcompat.widget.Toolbar>
+
+                </com.google.android.material.appbar.AppBarLayout>
+            </LinearLayout>
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </LinearLayout>
-
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/pager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
-    </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
+</layout>

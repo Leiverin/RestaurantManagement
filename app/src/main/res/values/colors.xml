@@ -18,4 +18,5 @@
     <color name="status_bar_color">#333333</color>
     <color name="color_bg_progress">#B3B3B3</color>
     <color name="color_text_setting">#121212</color>
+    <color name="secondary_color">#292929</color>
 </resources>

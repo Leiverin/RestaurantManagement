@@ -18,7 +18,7 @@
     <string name="textOrderOnTable">Order on table</string>
     <string name="textNameTableItem">Table 1</string>
     <string name="textAddFood">This table is not have a product</string>
-    <string name="hintSearchFood">Search food ...</string>
+    <string name="hintSearchFood">Search food …</string>
 
 <!--    Tab layout-->
     <string name="appetizer">Appetizer</string>
@@ -27,4 +27,5 @@
     <string name="drinks">Drinks</string>
 
     <string name="floor">Floor</string>
+    <string name="add">Add</string>
 </resources>

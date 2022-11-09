@@ -13,6 +13,7 @@ import android.view.Window;
 import com.poly.myapplication.R;
 import com.poly.myapplication.data.models.Table;
 import com.poly.myapplication.databinding.ActivityTableDetailBinding;
+import com.poly.myapplication.ui.activities.product.FoodActivity;
 import com.poly.myapplication.utils.Constants;
 
 public class TableDetailActivity extends AppCompatActivity {
@@ -30,10 +31,10 @@ public class TableDetailActivity extends AppCompatActivity {
         Table table = getIntent().getParcelableExtra(Constants.EXTRA_TABLE_TO_DETAIL);
         binding.tvNameTable.setText(table.getName());
 
-        binding.btnAddFood.setOnClickListener(new View.OnClickListener() {
+        binding.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                startActivity(new Intent(TableDetailActivity.this, FoodActivity.class));
             }
         });
     }
