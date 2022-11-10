@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    style="@style/styleItemHistory"
     android:id="@+id/view_item"
+    style="@style/styleItemHistory"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
+        android:layout_height="match_parent"
         android:layout_margin="10dp"
-        android:layout_height="match_parent">
+        android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -25,8 +26,7 @@
                     android:id="@+id/txtNameTable"
                     style="@style/textNameTableBill"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/textNameTableItem" />
+                    android:layout_height="wrap_content" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -73,25 +73,28 @@
                         android:layout_height="wrap_content"
                         android:text="15:30 P.M" />
                 </LinearLayout>
+
                 <TextView
                     android:id="@+id/txtDate"
                     style="@style/textTimeTable"
                     android:layout_width="match_parent"
-                    android:gravity="end"
                     android:layout_height="wrap_content"
+                    android:gravity="end"
                     android:text="8-9-2022" />
             </LinearLayout>
         </LinearLayout>
+
         <androidx.cardview.widget.CardView
             android:id="@+id/btnDone"
             style="@style/backBtnDone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+
             <TextView
                 style="@style/textBtnLogin"
-                android:text="@string/done"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:text="@string/done" />
         </androidx.cardview.widget.CardView>
     </LinearLayout>
 

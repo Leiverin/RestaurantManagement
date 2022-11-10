@@ -3,6 +3,7 @@ package com.poly.myapplication.ui.bill;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -30,6 +31,8 @@ public class BillActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(this).get(BillViewModel.class);
         binding = ActivityBillBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        binding.prgLoadBill.setVisibility(View.VISIBLE);
+        binding.rvBill.setVisibility(View.GONE);
         list = new ArrayList<>();
         initRec();
         initViewModel();
@@ -43,6 +46,14 @@ public class BillActivity extends AppCompatActivity {
                 intent.putExtra(Constants.EXTRA_BILL_TO_DETAIL, bill);
                 startActivity(intent);
             }
+
+            @Override
+            public void onStatus(Bill bill) {
+                Constants.setOnStatus(bill);
+                list.remove(bill);
+                adapter.setList(list);
+                adapter.notifyDataSetChanged();
+            }
         });
         binding.rvBill.setAdapter(adapter);
     }
@@ -53,6 +64,8 @@ public class BillActivity extends AppCompatActivity {
             public void onChanged(List<Bill> bills) {
                 list = bills;
                 adapter.setList(list);
+                binding.rvBill.setVisibility(View.VISIBLE);
+                binding.prgLoadBill.setVisibility(View.GONE);
                 Log.d("zzz", new Gson().toJson(list));
             }
         });
