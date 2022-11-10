@@ -109,7 +109,7 @@
                         android:id="@+id/tv_quantity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="x3"
+                        android:text="x0"
                         android:layout_marginTop="6dp"
                         android:layout_marginBottom="6dp"
                         android:layout_gravity="center" />
