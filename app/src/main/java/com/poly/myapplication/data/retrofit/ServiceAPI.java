@@ -13,18 +13,14 @@ import retrofit2.http.Path;
 public interface ServiceAPI {
 
     @GET("table/all/{floor}")
-    Call<List<Table>> getTableByFloor(
+    Observable<List<Table>> getTableByFloor(
             @Path("floor") int floor
     );
 
-//    Call<List<Product>> getProductByCategory(
-//
-//    );
-    @GET("product/all/1")
+    @GET("products/all/{category}")
     Observable<List<Product>> getProductByCategory(
-
+        @Path("category") int category
     );
-
 
 
 }

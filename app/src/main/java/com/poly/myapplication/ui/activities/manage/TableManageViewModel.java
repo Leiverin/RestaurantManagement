@@ -1,17 +1,20 @@
 package com.poly.myapplication.ui.activities.manage;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.google.gson.Gson;
 import com.poly.myapplication.data.models.Table;
 import com.poly.myapplication.data.retrofit.RetroInstance;
 import com.poly.myapplication.data.retrofit.ServiceAPI;
 
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class TableManageViewModel extends ViewModel {
     public MutableLiveData<List<Table>> mListTableLiveData;
@@ -22,18 +25,18 @@ public class TableManageViewModel extends ViewModel {
 
     public void callToGetTable(){
         ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
-        Call<List<Table>> call = serviceAPI.getTableByFloor(1);
-        call.enqueue(new Callback<List<Table>>() {
-            @Override
-            public void onResponse(Call<List<Table>> call, Response<List<Table>> response) {
-                mListTableLiveData.postValue(response.body());
-            }
+        Observable<List<Table>> observable = serviceAPI.getTableByFloor(1);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::onRetrieveTableListSuccess, this::onHandleError);
+    }
 
-            @Override
-            public void onFailure(Call<List<Table>> call, Throwable t) {
-                mListTableLiveData.postValue(null);
-            }
-        });
+    private void onRetrieveTableListSuccess(List<Table> tables){
+        mListTableLiveData.postValue(tables);
+    }
+
+    private void onHandleError(Throwable throwable){
+        Log.e("TAG", "handleErrors: " + throwable.getMessage());
     }
 }
 

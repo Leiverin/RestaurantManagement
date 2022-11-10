@@ -1,5 +1,7 @@
 package com.poly.myapplication.ui.activities.product.appetizer;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -27,32 +29,18 @@ public class AppetizerViewModel extends ViewModel {
 
     public void callToGetAppetizer(){
         ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
-        Observable<List<Product>> mListProductObservable = serviceAPI.getProductByCategory();
+        Observable<List<Product>> mListProductObservable = serviceAPI.getProductByCategory(1);
         mListProductObservable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-//                .map(result -> result)
-//                .subscribe(
-//                    {result -> onRetrievePhotoListSuccess(result)},
-//                    {error -> handleErrors(error)}
-//                )
-        ;
-//        Call<List<Product>> call = serviceAPI.getProductByCategory();
-//        call.enqueue(new Callback<List<Product>>() {
-//            @Override
-//            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
-//                mListAppetizerLiveData.postValue(response.body());
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<Product>> call, Throwable t) {
-//                mListAppetizerLiveData.postValue(null);
-//            }
-//        });
+                .subscribe(this::onRetrieveProductListSuccess, this::handleErrors);
     }
 
-    private void onRetrievePhotoListSuccess(List<Product> result) {
-
+    private void onRetrieveProductListSuccess(List<Product> result) {
+        mListAppetizerLiveData.postValue(result);
     }
 
+    private void handleErrors(Throwable throwable) {
+        Log.e("TAG", "handleErrors: "+ throwable.getMessage());
+    }
 
 }
