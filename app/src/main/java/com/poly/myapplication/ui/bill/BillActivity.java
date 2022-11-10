@@ -23,7 +23,6 @@ public class BillActivity extends AppCompatActivity {
     private BillAdapter adapter;
     private List<Bill> list;
     private BillViewModel viewModel;
-    int current = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,18 +43,11 @@ public class BillActivity extends AppCompatActivity {
                 intent.putExtra(Constants.EXTRA_BILL_TO_DETAIL, bill);
                 startActivity(intent);
             }
-
-            @Override
-            public void onSetStatus(int status) {
-                int typeBillHis = current + 1;
-                onBill(typeBillHis);
-            }
         });
         binding.rvBill.setAdapter(adapter);
     }
 
     private void initViewModel() {
-        onBill(current);
         viewModel.mListBillLiveData.observe(this, new Observer<List<Bill>>() {
             @Override
             public void onChanged(List<Bill> bills) {
@@ -65,9 +57,5 @@ public class BillActivity extends AppCompatActivity {
             }
         });
         viewModel.getBill();
-    }
-
-    private void onBill(int status) {
-        viewModel.status=status;
     }
 }

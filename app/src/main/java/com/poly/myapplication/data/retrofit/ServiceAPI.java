@@ -6,6 +6,7 @@ import com.poly.myapplication.data.models.Table;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -24,7 +25,8 @@ public interface ServiceAPI {
     @PUT("bill/update/{id}")
     Call<List<Bill>> doneBill(
             @Path("id") String id,
-            @Query("_method") String method
+            @Query("_method") String method,
+            @Body Bill bill
     );
 
     @GET("bill/all/{status}")

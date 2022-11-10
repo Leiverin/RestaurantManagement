@@ -6,7 +6,7 @@ import android.os.Parcelable;
 import java.util.List;
 
 public class Bill implements Parcelable {
-    private String id;
+    private String _id;
     private String date;
     private String time;
     private double totalPrice;
@@ -19,8 +19,8 @@ public class Bill implements Parcelable {
     public Bill() {
     }
 
-    public Bill(String id, String date, String time, double totalPrice, int checkoutType, int status, List<Product> products, String idTable, String idCustomer) {
-        this.id = id;
+    public Bill(String _id, String date, String time, double totalPrice, int checkoutType, int status, List<Product> products, String idTable, String idCustomer) {
+        this._id = _id;
         this.date = date;
         this.time = time;
         this.totalPrice = totalPrice;
@@ -39,7 +39,7 @@ public class Bill implements Parcelable {
     }
 
     protected Bill(Parcel in) {
-        id = in.readString();
+        _id = in.readString();
         date = in.readString();
         time = in.readString();
         totalPrice = in.readDouble();
@@ -62,11 +62,11 @@ public class Bill implements Parcelable {
     };
 
     public String getId() {
-        return id;
+        return _id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setId(String _id) {
+        this._id = _id;
     }
 
     public String getDate() {
@@ -140,7 +140,7 @@ public class Bill implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(id);
+        parcel.writeString(_id);
         parcel.writeString(date);
         parcel.writeString(time);
         parcel.writeDouble(totalPrice);

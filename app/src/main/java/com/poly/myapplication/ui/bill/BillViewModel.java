@@ -15,7 +15,6 @@ import retrofit2.Response;
 
 public class BillViewModel extends ViewModel {
     public MutableLiveData<List<Bill>> mListBillLiveData;
-    public int status;
 
     public BillViewModel() {
         mListBillLiveData = new MutableLiveData<>();
@@ -23,7 +22,7 @@ public class BillViewModel extends ViewModel {
 
     public void getBill() {
         ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
-        Call<List<Bill>> call = serviceAPI.getTypeBill(status);
+        Call<List<Bill>> call = serviceAPI.getTypeBill(0);
         call.enqueue(new Callback<List<Bill>>() {
             @Override
             public void onResponse(Call<List<Bill>> call, Response<List<Bill>> response) {
