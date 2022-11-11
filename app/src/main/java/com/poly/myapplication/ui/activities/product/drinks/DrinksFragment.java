@@ -68,7 +68,7 @@ public class DrinksFragment extends Fragment {
             }
         });
         mViewModel.callToGetDrink();
-        return inflater.inflate(R.layout.fragment_drinks, container, false);
+        return binding.getRoot();
     }
 
 }

@@ -1,5 +1,6 @@
 package com.poly.myapplication.data.retrofit;
 
+import com.poly.myapplication.data.models.Bill;
 import com.poly.myapplication.data.models.Product;
 import com.poly.myapplication.data.models.Table;
 
@@ -8,6 +9,7 @@ import java.util.List;
 import io.reactivex.rxjava3.core.Observable;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface ServiceAPI {
@@ -22,5 +24,8 @@ public interface ServiceAPI {
         @Path("category") int category
     );
 
+    @POST("bill/create")
+    Observable<List<Bill>> createBill(
 
+    );
 }

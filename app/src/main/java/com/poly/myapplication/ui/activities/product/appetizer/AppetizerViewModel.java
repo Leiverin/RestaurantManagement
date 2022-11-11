@@ -43,4 +43,5 @@ public class AppetizerViewModel extends ViewModel {
         Log.e("TAG", "handleErrors: "+ throwable.getMessage());
     }
 
+
 }

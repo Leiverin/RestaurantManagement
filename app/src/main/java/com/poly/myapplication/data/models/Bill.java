@@ -1,17 +1,23 @@
 package com.poly.myapplication.data.models;
 
+import androidx.room.Entity;
+
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
+@Entity(tableName = "Bill")
 public class Bill {
-    private String id;
-    private String date;
-    private String time;
-    private double totalPrice;
-    private int checkoutType;
-    private int status;
+    @SerializedName("_id")
+    private String id = null;
+    private String date = null;
+    private String time = null;
+    private double totalPrice = 0;
+    private int checkoutType = 0;
+    private int status = 0;
     private List<Product> products;
-    private String idTable;
-    private String idCustomer;
+    private String idTable = null;
+    private String idCustomer = null;
 
     public Bill() {
     }

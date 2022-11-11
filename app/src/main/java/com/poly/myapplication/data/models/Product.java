@@ -1,6 +1,11 @@
 package com.poly.myapplication.data.models;
 
+import androidx.room.Entity;
+
+import com.google.gson.annotations.SerializedName;
+
 public class Product {
+    @SerializedName("_id")
     private String id;
     private String name;
     private String urlImage;

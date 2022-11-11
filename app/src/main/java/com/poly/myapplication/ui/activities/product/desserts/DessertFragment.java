@@ -62,7 +62,10 @@ public class DessertFragment extends Fragment {
         mViewModel.mListDessertLiveData.observe(getViewLifecycleOwner(), new Observer<List<Product>>() {
             @Override
             public void onChanged(List<Product> products) {
-
+                if (products != null){
+                    mListDessert = products;
+                    adapter.setList(products);
+                }
             }
         });
         mViewModel.callToGetDessert();

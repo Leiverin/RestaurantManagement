@@ -3,6 +3,8 @@ package com.poly.myapplication.ui.activities.product.desserts;
 import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
+import com.google.gson.Gson;
 import com.poly.myapplication.data.models.Product;
 import com.poly.myapplication.data.retrofit.RetroInstance;
 import com.poly.myapplication.data.retrofit.ServiceAPI;

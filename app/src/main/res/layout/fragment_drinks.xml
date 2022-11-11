@@ -11,7 +11,9 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.activities.product.drinks.DrinksFragment">
+        tools:context=".ui.activities.product.drinks.DrinksFragment"
+        android:background="#E4E4E4"
+        >
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_drinks"
