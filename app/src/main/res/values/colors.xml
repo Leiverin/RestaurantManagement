@@ -7,9 +7,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="backColorLogin">#3D3C3C</color>
-    <color name="backColorBtnLogin">#0B0A0A</color>
-    <color name="textColorBtnLogin">#FFFF99</color>
+    <color name="backColorLogin">#FF7F50</color>
+    <color name="backColorBtnLogin">#FFFFFF</color>
+    <color name="textColorBtnLogin">#181818</color>
     <color name="textColorTable">#CCCCCC</color>
     <color name="textColorOrderOnTable">#434343</color>
     <color name="colorEditLogin">#59E4E4E4</color>
