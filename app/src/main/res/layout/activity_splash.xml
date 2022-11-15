@@ -4,19 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#3D3C3C"
+    android:background="@drawable/splashscreen_"
     android:gravity="center"
     tools:context=".ui.splash.SplashActivity">
 
-    <TextView
-        style="@style/titleSplash"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/titleSplashScreenFragment" />
-    <ImageView
-        android:layout_marginTop="50dp"
-        android:src="@drawable/logo_app"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
 
 </LinearLayout>
