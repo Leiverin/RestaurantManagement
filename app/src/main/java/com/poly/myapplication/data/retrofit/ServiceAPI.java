@@ -8,6 +8,7 @@ import java.util.List;
 
 import io.reactivex.rxjava3.core.Observable;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -26,6 +27,13 @@ public interface ServiceAPI {
 
     @POST("bill/create")
     Observable<List<Bill>> createBill(
-
+        @Body Bill bill
     );
+
+    @POST("/bill/{idTable}")
+    Observable<Bill> getBillByTable(
+        @Path("idTable") String idTable
+    );
+
+
 }

@@ -1,12 +1,9 @@
 package com.poly.myapplication.data.models;
 
-import androidx.room.Entity;
-
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-@Entity(tableName = "Bill")
 public class Bill {
     @SerializedName("_id")
     private String id = null;
@@ -18,11 +15,12 @@ public class Bill {
     private List<Product> products;
     private String idTable = null;
     private String idCustomer = null;
+    private String idStaff = null;
 
     public Bill() {
     }
 
-    public Bill(String id, String date, String time, double totalPrice, int checkoutType, int status, List<Product> products, String idTable, String idCustomer) {
+    public Bill(String id, String date, String time, double totalPrice, int checkoutType, int status, List<Product> products, String idTable, String idCustomer, String idStaff) {
         this.id = id;
         this.date = date;
         this.time = time;
@@ -32,6 +30,7 @@ public class Bill {
         this.products = products;
         this.idTable = idTable;
         this.idCustomer = idCustomer;
+        this.idStaff = idStaff;
     }
 
     public String getId() {
@@ -104,5 +103,13 @@ public class Bill {
 
     public void setIdCustomer(String idCustomer) {
         this.idCustomer = idCustomer;
+    }
+
+    public String getIdStaff() {
+        return idStaff;
+    }
+
+    public void setIdStaff(String idStaff) {
+        this.idStaff = idStaff;
     }
 }

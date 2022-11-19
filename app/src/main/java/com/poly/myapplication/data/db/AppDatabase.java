@@ -6,11 +6,10 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import com.poly.myapplication.data.db.dao.BillDao;
-import com.poly.myapplication.data.models.Bill;
+import com.poly.myapplication.data.db.dao.ProductDao;
 import com.poly.myapplication.data.models.Product;
 
-@Database(entities = {Bill.class, Product.class}, version = 1, exportSchema = false)
+@Database(entities = {Product.class}, version = 2, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     public static final String DB_NAME = "restaurant.db";
     public static AppDatabase instance;
@@ -22,5 +21,5 @@ public abstract class AppDatabase extends RoomDatabase {
         }
         return instance;
     }
-    public abstract BillDao billDao();
+    public abstract ProductDao productDao();
 }

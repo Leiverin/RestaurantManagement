@@ -3,6 +3,7 @@ package com.poly.myapplication.ui.activities.product;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 import android.view.Window;
@@ -16,6 +17,8 @@ import com.poly.myapplication.ui.activities.product.adapters.PagerProductAdapter
 public class FoodActivity extends AppCompatActivity {
     private PagerProductAdapter pagerProductAdapter;
     private ActivityFoodBinding binding;
+    private FoodViewModel viewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,7 +26,7 @@ public class FoodActivity extends AppCompatActivity {
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_color));
         binding = ActivityFoodBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        viewModel = new ViewModelProvider(this).get(FoodViewModel.class);
         pagerProductAdapter = new PagerProductAdapter(getSupportFragmentManager(), getLifecycle());
         binding.pager.setAdapter(pagerProductAdapter);
         new TabLayoutMediator(binding.tabLayout, binding.pager, new TabLayoutMediator.TabConfigurationStrategy() {

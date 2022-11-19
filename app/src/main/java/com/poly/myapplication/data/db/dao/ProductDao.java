@@ -6,18 +6,19 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.poly.myapplication.data.models.Bill;
+import com.poly.myapplication.data.models.Product;
 
 import java.util.List;
 
 @Dao
-public interface BillDao {
+public interface ProductDao {
 
-    @Query("SELECT * FROM Bill")
-    List<Bill> getListBill();
+    @Query("SELECT * FROM Product")
+    List<Product> getProducts();
 
     @Insert
-    void insertBill(Bill bill);
+    void insertBill(Product product);
 
     @Update
-    void updateBill(Bill bill);
+    void updateBill(Product product);
 }
