@@ -15,25 +15,34 @@ import retrofit2.http.Path;
 
 public interface ServiceAPI {
 
+    // Get table by floor
     @GET("table/all/{floor}")
     Observable<List<Table>> getTableByFloor(
             @Path("floor") int floor
     );
 
+    // Get list product by category
     @GET("products/all/{category}")
     Observable<List<Product>> getProductByCategory(
         @Path("category") int category
     );
 
+    // Create a bill
     @POST("bill/create")
-    Observable<List<Bill>> createBill(
+    Observable<Bill> createBill(
         @Body Bill bill
     );
 
-    @POST("/bill/{idTable}")
+    // Get list bill by table
+    @GET("bill/{idTable}")
     Observable<Bill> getBillByTable(
         @Path("idTable") String idTable
     );
 
+    // Get list product in bill
+    @GET("bill/{idTable}/product")
+    Observable<List<Product>> getListProductInBill(
+        @Path("idTable") String idTable
+    );
 
 }

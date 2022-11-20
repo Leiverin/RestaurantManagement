@@ -61,31 +61,31 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/view_content_product"
                 android:layout_alignParentEnd="true"
-                android:padding="6dp"
+                android:background="@drawable/bg_quantity"
                 android:gravity="center"
-                android:background="@drawable/bg_quantity">
+                android:padding="6dp">
 
                 <ImageButton
                     android:id="@+id/imb_decrease"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_decrease"
-                    android:background="@android:color/transparent" />
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_decrease" />
 
                 <TextView
                     android:id="@+id/tv_quantity_product"
-                    style="@style/text_size_16sp_regular"
-                    android:text="3"
+                    style="@style/text_size_16sp_bold"
                     android:layout_width="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp" />
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:text="0" />
 
                 <ImageButton
                     android:id="@+id/imb_increase"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_increase"
-                    android:background="@android:color/transparent" />
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_increase" />
 
             </LinearLayout>
 

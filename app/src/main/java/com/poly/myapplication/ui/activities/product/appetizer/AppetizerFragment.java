@@ -17,20 +17,25 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.poly.myapplication.R;
+import com.poly.myapplication.data.models.Bill;
 import com.poly.myapplication.data.models.Product;
 import com.poly.myapplication.databinding.FragmentAppetizerBinding;
 import com.poly.myapplication.ui.activities.product.appetizer.adapter.IOnEventProductListener;
 import com.poly.myapplication.ui.activities.product.appetizer.adapter.ProductAdapter;
 import com.poly.myapplication.utils.Constants;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class AppetizerFragment extends Fragment {
     private FragmentAppetizerBinding binding;
     private AppetizerViewModel mViewModel;
     private ProductAdapter adapter;
     private List<Product> mListAppetizer;
+    private List<Product> mListProductBill;
     public static AppetizerFragment newInstance() {
         return new AppetizerFragment();
     }
@@ -41,15 +46,19 @@ public class AppetizerFragment extends Fragment {
         mViewModel = new ViewModelProvider(this).get(AppetizerViewModel.class);
         binding = FragmentAppetizerBinding.inflate(getLayoutInflater());
         mListAppetizer = new ArrayList<>();
+        binding.prgLoadProduct.setVisibility(View.VISIBLE);
+        mListProductBill = new ArrayList<>();
         adapter = new ProductAdapter(mListAppetizer, new IOnEventProductListener() {
             @Override
             public void onClickIncrease(@NonNull Product product, TextView tvQuantity) {
-                Constants.handleIncrease(tvQuantity);
+                mListProductBill.add(product);
+                Constants.handleIncrease(tvQuantity, Constants.TYPE_IN_PRODUCT);
             }
 
             @Override
             public void onClickDecrease(@NonNull Product product, TextView tvQuantity) {
-                Constants.handleDecrease(tvQuantity);
+                Constants.handleDecrease(tvQuantity, Constants.TYPE_IN_PRODUCT);
+
             }
 
             @Override
@@ -65,11 +74,23 @@ public class AppetizerFragment extends Fragment {
                 if (products != null){
                     mListAppetizer = products;
                     adapter.setList(products);
+                    binding.prgLoadProduct.setVisibility(View.GONE);
                 }
             }
         });
 
         mViewModel.callToGetAppetizer();
+
+        mViewModel.mBillLiveData.observe(getViewLifecycleOwner(), new Observer<Bill>() {
+            @Override
+            public void onChanged(Bill bill) {
+                String date = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Calendar.getInstance().getTime());
+                String time = new SimpleDateFormat("hh:mm", Locale.getDefault()).format(Calendar.getInstance().getTime());
+                if (bill == null){
+//                    mViewModel.callToCreateBill(new Bill(null, date, time, ));
+                }
+            }
+        });
         return binding.getRoot();
     }
 }

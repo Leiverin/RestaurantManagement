@@ -3,6 +3,7 @@ package com.poly.myapplication.ui.activities.table;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -15,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.poly.myapplication.R;
+import com.poly.myapplication.data.models.Bill;
 import com.poly.myapplication.data.models.Product;
 import com.poly.myapplication.data.models.Table;
 import com.poly.myapplication.databinding.ActivityTableDetailBinding;
@@ -56,12 +58,12 @@ public class TableDetailActivity extends AppCompatActivity {
 
             @Override
             public void onClickDecrease(@NonNull Product product, @NonNull TextView textView) {
-                Constants.handleDecrease(textView);
+                Constants.handleDecrease(textView, Constants.TYPE_IN_TABLE);
             }
 
             @Override
             public void onClickIncrease(@NonNull Product product, @NonNull TextView textView) {
-                Constants.handleIncrease(textView);
+                Constants.handleIncrease(textView, Constants.TYPE_IN_TABLE);
             }
 
             @Override
@@ -69,14 +71,7 @@ public class TableDetailActivity extends AppCompatActivity {
 
             }
         });
-
-        if (mListProduct.size() == 0){
-            binding.rvFood.setVisibility(View.GONE);
-            binding.viewNoneItem.setVisibility(View.VISIBLE);
-        }else{
-            binding.viewNoneItem.setVisibility(View.GONE);
-            binding.rvFood.setVisibility(View.VISIBLE);
-        }
+        binding.rvFood.setAdapter(adapter);
 
         binding.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,5 +80,33 @@ public class TableDetailActivity extends AppCompatActivity {
             }
         });
 
+        binding.imgAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(TableDetailActivity.this, FoodActivity.class));
+            }
+        });
+
+        viewModel.mListProductLiveData.observe(this, new Observer<List<Product>>() {
+            @Override
+            public void onChanged(List<Product> products) {
+                if (products != null){
+                    mListProduct = products;
+                    adapter.setList(products);
+                }
+                showOrHideView(products);
+            }
+        });
+        viewModel.getListProductInBill(table.getId());
+    }
+
+    private void showOrHideView(List<Product> products){
+        if (products == null || products.size() == 0){
+            binding.rvFood.setVisibility(View.GONE);
+            binding.viewNoneItem.setVisibility(View.VISIBLE);
+        }else{
+            binding.viewNoneItem.setVisibility(View.GONE);
+            binding.rvFood.setVisibility(View.VISIBLE);
+        }
     }
 }

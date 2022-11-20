@@ -7,7 +7,7 @@ import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetroInstance {
-    public static String baseURL = "https://mrestaurantorder.herokuapp.com/restaurant/api/";
+    public static String baseURL = "https://restaurant-order.onrender.com/restaurant/api/";
     public static Retrofit retrofit;
 
     public static Retrofit getRetrofitInstance(){

@@ -39,16 +39,17 @@ public class DrinksFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         mViewModel = new ViewModelProvider(this).get(DrinksViewModel.class);
         binding = FragmentDrinksBinding.inflate(getLayoutInflater());
+        binding.prgLoadProduct.setVisibility(View.VISIBLE);
         mListProduct = new ArrayList<>();
         adapter = new ProductAdapter(mListProduct, new IOnEventProductListener() {
             @Override
             public void onClickIncrease(@NonNull Product product, TextView tvQuantity) {
-                Constants.handleIncrease(tvQuantity);
+                Constants.handleIncrease(tvQuantity, Constants.TYPE_IN_PRODUCT);
             }
 
             @Override
             public void onClickDecrease(@NonNull Product product, TextView tvQuantity) {
-                Constants.handleDecrease(tvQuantity);
+                Constants.handleDecrease(tvQuantity, Constants.TYPE_IN_PRODUCT);
             }
 
             @Override
@@ -64,6 +65,7 @@ public class DrinksFragment extends Fragment {
                 if (products != null){
                     mListProduct = products;
                     adapter.setList(products);
+                    binding.prgLoadProduct.setVisibility(View.GONE);
                 }
             }
         });

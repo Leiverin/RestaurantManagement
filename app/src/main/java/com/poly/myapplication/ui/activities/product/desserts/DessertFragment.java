@@ -40,16 +40,17 @@ public class DessertFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         mViewModel = new ViewModelProvider(this).get(DessertViewModel.class);
         binding = FragmentDessertBinding.inflate(getLayoutInflater());
+        binding.prgLoadProduct.setVisibility(View.VISIBLE);
         mListDessert = new ArrayList<>();
         adapter = new ProductAdapter(mListDessert, new IOnEventProductListener() {
             @Override
             public void onClickIncrease(@NonNull Product product, @NonNull TextView textView) {
-                Constants.handleIncrease(textView);
+                Constants.handleIncrease(textView, Constants.TYPE_IN_PRODUCT);
             }
 
             @Override
             public void onClickDecrease(@NonNull Product product, @NonNull TextView textView) {
-                Constants.handleDecrease(textView);
+                Constants.handleDecrease(textView, Constants.TYPE_IN_PRODUCT);
             }
 
             @Override
@@ -65,6 +66,7 @@ public class DessertFragment extends Fragment {
                 if (products != null){
                     mListDessert = products;
                     adapter.setList(products);
+                    binding.prgLoadProduct.setVisibility(View.GONE);
                 }
             }
         });
