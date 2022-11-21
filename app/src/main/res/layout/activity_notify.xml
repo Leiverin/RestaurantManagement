@@ -6,13 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".ui.notify.Notify"
     android:orientation="vertical">
+    <EditText
+        android:id="@+id/edtsearch"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="40dp"
+        android:background="@drawable/search_notify"
+        android:layout_gravity="center"
+        android:hint="Tìm kiếm thông báo"
+        android:layout_width="365dp"
+        android:layout_height="60dp">
+    </EditText>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcv_notify"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="30dp"
         android:layout_marginBottom="10dp">
-
     </androidx.recyclerview.widget.RecyclerView>
 
 </LinearLayout>
