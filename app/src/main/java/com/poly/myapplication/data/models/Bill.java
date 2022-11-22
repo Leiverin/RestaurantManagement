@@ -3,24 +3,28 @@ package com.poly.myapplication.data.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class Bill implements Parcelable {
-    private String _id;
-    private String date;
-    private String time;
-    private double totalPrice;
-    private int checkoutType;
-    private int status;
+    @SerializedName("_id")
+    private String id = null;
+    private String date = null;
+    private String time = null;
+    private double totalPrice = 0;
+    private int checkoutType = 0;
+    private int status = 0;
     private List<Product> products;
-    private String idTable;
-    private String idCustomer;
+    private String idTable = null;
+    private String idCustomer = null;
+    private String idStaff = null;
 
     public Bill() {
     }
 
-    public Bill(String _id, String date, String time, double totalPrice, int checkoutType, int status, List<Product> products, String idTable, String idCustomer) {
-        this._id = _id;
+    public Bill(String id, String date, String time, double totalPrice, int checkoutType, int status, List<Product> products, String idTable, String idCustomer, String idStaff) {
+        this.id = id;
         this.date = date;
         this.time = time;
         this.totalPrice = totalPrice;
@@ -29,17 +33,11 @@ public class Bill implements Parcelable {
         this.products = products;
         this.idTable = idTable;
         this.idCustomer = idCustomer;
-    }
-
-    public Bill(String idTable, double totalPrice, String time, String date) {
-        this.idTable = idTable;
-        this.totalPrice = totalPrice;
-        this.time = time;
-        this.date = date;
+        this.idStaff = idStaff;
     }
 
     protected Bill(Parcel in) {
-        _id = in.readString();
+        id = in.readString();
         date = in.readString();
         time = in.readString();
         totalPrice = in.readDouble();
@@ -47,6 +45,7 @@ public class Bill implements Parcelable {
         status = in.readInt();
         idTable = in.readString();
         idCustomer = in.readString();
+        idStaff = in.readString();
     }
 
     public static final Creator<Bill> CREATOR = new Creator<Bill>() {
@@ -62,11 +61,11 @@ public class Bill implements Parcelable {
     };
 
     public String getId() {
-        return _id;
+        return id;
     }
 
-    public void setId(String _id) {
-        this._id = _id;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getDate() {
@@ -133,6 +132,14 @@ public class Bill implements Parcelable {
         this.idCustomer = idCustomer;
     }
 
+    public String getIdStaff() {
+        return idStaff;
+    }
+
+    public void setIdStaff(String idStaff) {
+        this.idStaff = idStaff;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -140,7 +147,7 @@ public class Bill implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(_id);
+        parcel.writeString(id);
         parcel.writeString(date);
         parcel.writeString(time);
         parcel.writeDouble(totalPrice);
@@ -148,5 +155,6 @@ public class Bill implements Parcelable {
         parcel.writeInt(status);
         parcel.writeString(idTable);
         parcel.writeString(idCustomer);
+        parcel.writeString(idStaff);
     }
 }

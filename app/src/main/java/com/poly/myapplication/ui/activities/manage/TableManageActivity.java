@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
@@ -32,6 +33,8 @@ public class TableManageActivity extends AppCompatActivity {
     private TableManageAdapter adapter;
     private List<Table> mListTables;
     private List<TableParent> mListTableMain;
+    private  Handler handler = new Handler();
+    private Runnable runnable;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,5 +74,23 @@ public class TableManageActivity extends AppCompatActivity {
         List<TableParent> mTableMain = new ArrayList<>();
         mTableMain.add(new TableParent("Empty table", mListTables));
         return mTableMain;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        handler.removeCallbacks(runnable);
+    }
+
+    @Override
+    protected void onResume() {
+        handler.postDelayed(runnable = new Runnable() {
+            @Override
+            public void run() {
+                viewModel.callToGetTable();
+                handler.postDelayed(runnable, 5000);
+            }
+        }, 5000);
+        super.onResume();
     }
 }

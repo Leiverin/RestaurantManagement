@@ -1,7 +1,7 @@
 package com.poly.myapplication.utils;
 
+import android.annotation.SuppressLint;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.poly.myapplication.data.models.Bill;
 import com.poly.myapplication.data.models.Table;
@@ -15,13 +15,47 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+@SuppressLint("SetTextI18n")
+
 public class Constants {
     public static String EXTRA_TABLE_TO_DETAIL = "extra_table_to_detail";
-    public static String BASE_URL = "https://mrestaurantorder.herokuapp.com/restaurant/api/";
+    public static String BASE_URL = "https://restaurant-order.onrender.com/restaurant/api/";
     public static String EXTRA_BILL_TO_DETAIL = "extra_bill_to_detail";
-    public static void setNameTable(Bill bill, TextView txtNameTable){
+    public static int TYPE_IN_TABLE = 0;
+    public static int TYPE_IN_PRODUCT = 1;
+
+    public static void handleIncrease(TextView tvQuantity, int type) {
+        if (type == TYPE_IN_TABLE) {
+            int quantity = Integer.parseInt(tvQuantity.getText().toString());
+            quantity++;
+            tvQuantity.setText(quantity + "");
+        } else {
+            int quantity = Integer.parseInt(tvQuantity.getText().toString().subSequence(1, tvQuantity.getText().toString().length()).toString());
+            quantity++;
+            tvQuantity.setText("x" + quantity);
+        }
+
+    }
+
+    public static void handleDecrease(TextView tvQuantity, int type) {
+        if (type == TYPE_IN_TABLE) {
+            int quantity = Integer.parseInt(tvQuantity.getText().toString());
+            if (quantity > 0) {
+                quantity--;
+                tvQuantity.setText(quantity + "");
+            }
+        } else {
+            int quantity = Integer.parseInt(tvQuantity.getText().toString().subSequence(1, tvQuantity.getText().toString().length()).toString());
+            if (quantity > 0) {
+                quantity--;
+                tvQuantity.setText("x" + quantity);
+            }
+        }
+    }
+
+    public static void setNameTable(Bill bill, TextView txtNameTable) {
         ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
-        Call<List<Table>> call = serviceAPI.getTableByFloor(1);
+        Call<List<Table>> call = (Call<List<Table>>) serviceAPI.getTableByFloor(1);
         call.enqueue(new Callback<List<Table>>() {
             @Override
             public void onResponse(Call<List<Table>> call, Response<List<Table>> response) {
@@ -38,7 +72,8 @@ public class Constants {
             }
         });
     }
-    public static void setOnStatus(Bill bill){
+
+    public static void setOnStatus(Bill bill) {
         Bill bill1 = new Bill();
         bill1.setStatus(1);
         ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);

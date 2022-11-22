@@ -4,19 +4,18 @@
 
     <data>
         <variable
-            name="drinksViewModel"
-            type="com.poly.myapplication.ui.activities.product.drinks.DrinksViewModel" />
+            name="dessertViewModel"
+            type="com.poly.myapplication.ui.activities.product.desserts.DessertViewModel" />
     </data>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.activities.product.drinks.DrinksFragment"
         android:background="#E4E4E4"
-        >
+        tools:context=".ui.activities.product.desserts.DessertFragment">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_drinks"
+            android:id="@+id/rv_dessert"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:listitem="@layout/item_product" />
@@ -30,5 +29,6 @@
             android:layout_gravity="center"
             android:indeterminateDuration="600"
             />
+
     </FrameLayout>
 </layout>

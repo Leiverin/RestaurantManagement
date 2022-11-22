@@ -3,10 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="tableDetailViewModel"
-            type="com.poly.myapplication.ui.activities.table.TableDetailViewModel" />
+            type="com.poly.myapplication.ui.activities.table.TableDetailViewModel"/>
     </data>
 
     <LinearLayout
@@ -17,7 +16,7 @@
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp">
+            android:layout_height="100dp">
 
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
@@ -30,7 +29,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/txtNameTable"
+                        android:id="@+id/tv_name_table"
                         style="@style/titleTableItem"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -53,47 +52,43 @@
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.AppBarLayout>
 
-        <LinearLayout
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <TextView
-                style="@style/textTable"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="@string/textAddFood" />
+            <LinearLayout
+                android:id="@+id/view_none_item"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/btnAddFood"
-                style="@style/black_radius_32dp"
-                android:layout_width="160dp"
-                android:layout_height="44dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    style="@style/textTable"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
-                    android:orientation="horizontal">
+                    android:text="@string/textAddFood"
+                    android:layout_marginBottom="8dp"
+                    />
 
-                    <TextView
-                        style="@style/titleTableItem"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/textBtnLogin" />
+                <Button
+                    android:id="@+id/btn_add"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/add"
+                    android:background="@drawable/bg_btn_add"
+                    android:textColor="@color/white"
+                    android:drawableRight="@drawable/ic_icon_add"
+                    android:drawablePadding="-28dp"
+                    />
+            </LinearLayout>
 
-                    <ImageView
-                        style="@style/imgIcon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_add_circle" />
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-        </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_food"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="6dp"
+                />
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
     </LinearLayout>
 </layout>

@@ -22,11 +22,11 @@ public class AddProductActivity extends AppCompatActivity {
         binding = ActivityFoodBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         adapter = new ViewPager2Adapter(this);
-        binding.viewPager2Main.setAdapter(adapter);
-        new TabLayoutMediator(binding.tabLayout,binding.viewPager2Main,((tab, position) -> {
+        binding.pager.setAdapter(adapter);
+        new TabLayoutMediator(binding.tabLayout,binding.pager,((tab, position) -> {
             tab.setText(categories[position]);
         })).attach();
-        binding.viewPager2Main.setCurrentItem(1,false);
+        binding.pager.setCurrentItem(1,false);
 
 
 

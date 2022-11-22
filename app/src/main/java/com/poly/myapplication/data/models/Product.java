@@ -1,23 +1,35 @@
 package com.poly.myapplication.data.models;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+import com.google.gson.annotations.SerializedName;
+
+@Entity(tableName = "Product")
 public class Product {
+    @NonNull
+    @SerializedName("_id")
+    @PrimaryKey(autoGenerate = false)
     private String id;
     private String name;
     private String urlImage;
     private double price;
     private int total;
+    private int amount;
     private int type;
     private String idCategory;
 
     public Product() {
     }
 
-    public Product(String id, String name, String urlImage, double price, int total, int type, String idCategory) {
+    public Product(String id, String name, String urlImage, double price, int total, int amount, int type, String idCategory) {
         this.id = id;
         this.name = name;
         this.urlImage = urlImage;
         this.price = price;
         this.total = total;
+        this.amount = amount;
         this.type = type;
         this.idCategory = idCategory;
     }
@@ -76,5 +88,13 @@ public class Product {
 
     public void setIdCategory(String idCategory) {
         this.idCategory = idCategory;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 }
