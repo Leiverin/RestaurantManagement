@@ -1,6 +1,7 @@
 package com.poly.myapplication.ui.history;
 
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.poly.myapplication.data.models.Bill;
 import com.poly.myapplication.data.retrofit.RetroInstance;
@@ -12,25 +13,25 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HistoryViewModel {
-    public MutableLiveData<List<Bill>> mListBillLiveData;
+public class HistoryViewModel extends ViewModel {
+    public MutableLiveData<List<Bill>> mListHisLiveData;
 
     public HistoryViewModel() {
-        mListBillLiveData = new MutableLiveData<>();
+        mListHisLiveData = new MutableLiveData<>();
     }
 
-    public void getBill() {
+    public void getHis() {
         ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
         Call<List<Bill>> call = serviceAPI.getTypeBill(1);
         call.enqueue(new Callback<List<Bill>>() {
             @Override
             public void onResponse(Call<List<Bill>> call, Response<List<Bill>> response) {
-                mListBillLiveData.postValue(response.body());
+                mListHisLiveData.postValue(response.body());
             }
 
             @Override
             public void onFailure(Call<List<Bill>> call, Throwable t) {
-                mListBillLiveData.postValue(null);
+                mListHisLiveData.postValue(null);
             }
         });
     }

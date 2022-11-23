@@ -10,33 +10,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.poly.myapplication.data.models.Bill;
-import com.poly.myapplication.data.models.Table;
-import com.poly.myapplication.data.retrofit.RetroInstance;
-import com.poly.myapplication.data.retrofit.ServiceAPI;
 import com.poly.myapplication.databinding.ItemHistoryBinding;
 import com.poly.myapplication.ui.FeedBackActivity;
-import com.poly.myapplication.ui.activities.manage.adapters.TableChildAdapter;
-import com.poly.myapplication.ui.bill.adapter.BillAdapter;
-import com.poly.myapplication.ui.bill.adapter.OnListener;
 import com.poly.myapplication.utils.Constants;
 
 import java.util.List;
-import java.util.Objects;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder> {
     private Context context;
     private List<Bill> list;
-    private OnListener onListener;
 
-
-    public HistoryAdapter(Context context, List<Bill> list, OnListener onListener) {
+    public HistoryAdapter(Context context, List<Bill> list) {
         this.context = context;
         this.list = list;
-        this.onListener = onListener;
     }
 
     public void setList(List<Bill> mListBill) {
@@ -54,7 +40,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
     public void onBindViewHolder(@NonNull HistoryViewHolder holder, int position) {
         Bill bill = list.get(position);
         if (bill != null) {
-            Constants.setNameTable(bill,holder.binding.txtNameTable);
+            Constants.setNameTable(bill, holder.binding.txtNameTable);
             holder.binding.txtTime.setText(bill.getTime() + " " + bill.getDate());
             holder.binding.txtMount.setText("Số lượng :" + bill.getCheckoutType());
             holder.binding.txtMoney.setText(bill.getTotalPrice() + "");

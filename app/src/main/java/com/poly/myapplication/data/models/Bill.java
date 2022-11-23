@@ -15,6 +15,7 @@ public class Bill implements Parcelable {
     private double totalPrice = 0;
     private int checkoutType = 0;
     private int status = 0;
+    @SerializedName("foods")
     private List<Product> products;
     private String idTable = null;
     private String idCustomer = null;

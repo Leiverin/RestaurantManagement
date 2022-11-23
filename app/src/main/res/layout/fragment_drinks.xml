@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="drinksViewModel"
             type="com.poly.myapplication.ui.activities.product.drinks.DrinksViewModel" />
@@ -11,24 +12,22 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.activities.product.drinks.DrinksFragment"
         android:background="#E4E4E4"
-        >
+        tools:context=".ui.activities.product.drinks.DrinksFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_drinks"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layoutAnimation="@anim/layout_animation_slide_from_bottom"
             tools:listitem="@layout/item_product" />
 
         <ProgressBar
             android:id="@+id/prg_load_product"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:indeterminateOnly="true"
-            android:indeterminateDrawable="@drawable/progress_custom_circle"
             android:layout_gravity="center"
             android:indeterminateDuration="600"
-            />
+            android:indeterminateOnly="true" />
     </FrameLayout>
 </layout>

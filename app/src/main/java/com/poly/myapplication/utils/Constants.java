@@ -55,7 +55,7 @@ public class Constants {
 
     public static void setNameTable(Bill bill, TextView txtNameTable) {
         ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
-        Call<List<Table>> call = (Call<List<Table>>) serviceAPI.getTableByFloor(1);
+        Call<List<Table>> call = serviceAPI.getTableByFloorBill(1);
         call.enqueue(new Callback<List<Table>>() {
             @Override
             public void onResponse(Call<List<Table>> call, Response<List<Table>> response) {
@@ -76,6 +76,7 @@ public class Constants {
     public static void setOnStatus(Bill bill) {
         Bill bill1 = new Bill();
         bill1.setStatus(1);
+        bill1.setTotalPrice(bill.getTotalPrice());
         ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
         Call<List<Bill>> callDon = serviceAPI.doneBill(bill.getId(), "PUT", bill1);
         callDon.enqueue(new Callback<List<Bill>>() {

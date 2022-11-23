@@ -3,6 +3,7 @@
 
     // TuanAnh
     // fragment splash
+
     <style name="titleSplash">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
@@ -12,6 +13,7 @@
     </style>
 
     // fragment login
+
     <style name="backFragmentLogin">
         <item name="android:paddingHorizontal" tools:targetApi="o">20dp</item>
         <item name="android:background">@color/backColorLogin</item>
@@ -89,6 +91,7 @@
         <item name="android:layout_gravity">center</item>
         <item name="android:layout_margin">5dp</item>
     </style>
+
     <style name="textTable">
         <item name="android:layout_marginTop">2dp</item>
         <item name="android:fontFamily">@font/josefinslab_regular</item>
@@ -97,6 +100,7 @@
         <item name="android:textColor">@color/black</item>
     </style>
     // fragment table item
+
     <style name="titleTableItem">
         <item name="android:fontFamily">@font/josefinslab_regular</item>
         <item name="android:textStyle">bold</item>
@@ -105,12 +109,14 @@
         <item name="android:layout_weight">1</item>
         <item name="android:layout_gravity">center</item>
     </style>
+
     <style name="textBtnAdd">
         <item name="android:fontFamily">@font/josefinslab_regular</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">18sp</item>
     </style>
+
     <style name="black_radius_32dp">
         <item name="android:layout_marginTop">10dp</item>
         <item name="android:layout_gravity">center</item>
@@ -118,6 +124,7 @@
         <item name="cardCornerRadius">20dp</item>
     </style>
     // fragment add food
+
     <style name="editTextSearch">
         <item name="android:fontFamily">@font/josefinslab_regular</item>
         <item name="android:textStyle">bold</item>
@@ -126,17 +133,22 @@
         <item name="android:padding">10dp</item>
         <item name="android:background">@drawable/bg_edit_search</item>
     </style>
+
     <style name="textTabToobar">
         <item name="android:fontFamily">@font/josefinslab_regular</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/textColorTable</item>
     </style>
+
     <style name="styleItemHistory">
-        <item name="android:layout_margin">10dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginStart">10dp</item>
+        <item name="android:layout_marginEnd">10dp</item>
         <item name="cardBackgroundColor">@color/white</item>
         <item name="cardCornerRadius">15dp</item>
     </style>
+
     <style name="textNameTable">
         <item name="android:fontFamily">@font/josefinslab_regular</item>
         <item name="android:gravity">center</item>
@@ -144,6 +156,7 @@
         <item name="android:textSize">24sp</item>
         <item name="android:textStyle">bold</item>
     </style>
+
     <style name="textTimeTable">
         <item name="android:fontFamily">@font/josefinslab_regular</item>
         <item name="android:layout_gravity">center</item>
@@ -151,6 +164,7 @@
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
     </style>
+
     <style name="textMountTableHistory">
         <item name="android:fontFamily">@font/josefinslab_regular</item>
         <item name="android:gravity">center</item>
@@ -160,24 +174,28 @@
         <item name="android:layout_marginTop">5dp</item>
         <item name="android:layout_marginStart">10dp</item>
     </style>
+
     <style name="textMoneyTable">
         <item name="android:fontFamily">@font/josefinslab_regular</item>
         <item name="android:textColor">#FF0000</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
     </style>
+
     <style name="backBtnDone">
         <item name="android:layout_marginTop">10dp</item>
         <item name="android:layout_gravity">center</item>
         <item name="cardBackgroundColor">@color/done</item>
         <item name="cardCornerRadius">20dp</item>
     </style>
+
     <style name="textNameTableBill">
         <item name="android:fontFamily">@font/josefinslab_regular</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">24sp</item>
         <item name="android:textStyle">bold</item>
     </style>
+
     <style name="nameFood">
         <item name="android:fontFamily">@font/josefinslab_regular</item>
         <item name="android:textStyle">bold</item>
@@ -186,6 +204,7 @@
         <item name="android:padding">10dp</item>
 
     </style>
+
     <style name="price">
         <item name="android:fontFamily">@font/josefinslab_regular</item>
         <item name="android:textStyle">bold</item>
@@ -193,10 +212,12 @@
         <item name="android:textSize">16sp</item>
         <item name="android:padding">10dp</item>
     </style>
+
     <style name="rounedImage">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">10dp</item>
     </style>
+
     <style name="desciption">
         <item name="android:fontFamily">@font/josefinslab_regular</item>
         <item name="android:textColor">@color/black</item>
@@ -204,6 +225,7 @@
         <item name="android:padding">4dp</item>
     </style>
     // style table
+
     <style name="text_size_22sp_bold">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -281,5 +303,10 @@
         <item name="tabTextColor">@color/white</item>
         <item name="tabIndicatorColor">@color/white</item>
         <item name="rippleColor">#A3E3E3E3</item>
+    </style>
+
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/slide_in_dialog</item>
+        <item name="android:windowExitAnimation">@anim/slide_down_dialog</item>
     </style>
 </resources>
