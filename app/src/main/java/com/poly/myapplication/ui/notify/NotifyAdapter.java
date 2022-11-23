@@ -77,7 +77,6 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.NotifyView
                 }
                 FilterResults filterResults = new FilterResults();
                 filterResults.values = mList;
-
                 return filterResults;
             }
 

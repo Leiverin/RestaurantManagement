@@ -43,12 +43,22 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_password" />
 
-    <EditText
-        android:id="@+id/ed_pass"
-        style="@style/editTextLogin"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:hint="@string/hintPassLogin" />
+   <LinearLayout
+
+       android:orientation="horizontal"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+     <EditText
+         android:id="@+id/ed_pass"
+         style="@style/editTextLogin"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:hint="@string/hintPassLogin"
+         android:longClickable="false"
+         android:drawableRight="@drawable/view_hide"
+         android:inputType="textPassword">
+     </EditText>
+   </LinearLayout>
   </LinearLayout>
 
   <TextView
