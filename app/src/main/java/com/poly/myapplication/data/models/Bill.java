@@ -37,6 +37,7 @@ public class Bill implements Parcelable {
         this.idStaff = idStaff;
     }
 
+
     protected Bill(Parcel in) {
         id = in.readString();
         date = in.readString();
@@ -44,6 +45,7 @@ public class Bill implements Parcelable {
         totalPrice = in.readDouble();
         checkoutType = in.readInt();
         status = in.readInt();
+        products = in.createTypedArrayList(Product.CREATOR);
         idTable = in.readString();
         idCustomer = in.readString();
         idStaff = in.readString();
@@ -154,6 +156,7 @@ public class Bill implements Parcelable {
         parcel.writeDouble(totalPrice);
         parcel.writeInt(checkoutType);
         parcel.writeInt(status);
+        parcel.writeTypedList(products);
         parcel.writeString(idTable);
         parcel.writeString(idCustomer);
         parcel.writeString(idStaff);

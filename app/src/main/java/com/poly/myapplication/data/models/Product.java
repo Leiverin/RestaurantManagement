@@ -1,5 +1,8 @@
 package com.poly.myapplication.data.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -7,7 +10,7 @@ import androidx.room.PrimaryKey;
 import com.google.gson.annotations.SerializedName;
 
 @Entity(tableName = "Product")
-public class Product {
+public class Product implements Parcelable {
     @NonNull
     @SerializedName("_id")
     @PrimaryKey(autoGenerate = false)
@@ -33,6 +36,47 @@ public class Product {
         this.type = type;
         this.idCategory = idCategory;
     }
+
+
+    protected Product(Parcel in) {
+        id = in.readString();
+        name = in.readString();
+        urlImage = in.readString();
+        price = in.readDouble();
+        total = in.readInt();
+        amount = in.readInt();
+        type = in.readInt();
+        idCategory = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(name);
+        dest.writeString(urlImage);
+        dest.writeDouble(price);
+        dest.writeInt(total);
+        dest.writeInt(amount);
+        dest.writeInt(type);
+        dest.writeString(idCategory);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Product> CREATOR = new Creator<Product>() {
+        @Override
+        public Product createFromParcel(Parcel in) {
+            return new Product(in);
+        }
+
+        @Override
+        public Product[] newArray(int size) {
+            return new Product[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -97,4 +141,6 @@ public class Product {
     public void setAmount(int amount) {
         this.amount = amount;
     }
+
+
 }

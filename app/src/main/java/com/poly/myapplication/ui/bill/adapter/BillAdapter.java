@@ -14,7 +14,7 @@ import com.poly.myapplication.utils.Constants;
 
 import java.util.List;
 
-public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillViewModel> {
+public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillHolder> {
     private Context context;
     private List<Bill> mListBill;
     private OnListener onListener;
@@ -32,12 +32,12 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillViewModel>
 
     @NonNull
     @Override
-    public BillViewModel onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new BillAdapter.BillViewModel(ItemBillBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
+    public BillHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new BillAdapter.BillHolder(ItemBillBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BillViewModel holder, int position) {
+    public void onBindViewHolder(@NonNull BillHolder holder, int position) {
         Bill bill = mListBill.get(position);
         if (bill != null) {
             Constants.setNameTable(bill, holder.binding.txtNameTable);
@@ -65,10 +65,10 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillViewModel>
         return mListBill != null ? mListBill.size() : 0;
     }
 
-    public class BillViewModel extends RecyclerView.ViewHolder {
+    public class BillHolder extends RecyclerView.ViewHolder {
         public ItemBillBinding binding;
 
-        public BillViewModel(ItemBillBinding binding) {
+        public BillHolder(ItemBillBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }

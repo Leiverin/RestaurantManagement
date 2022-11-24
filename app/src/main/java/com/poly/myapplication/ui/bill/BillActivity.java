@@ -1,8 +1,8 @@
 package com.poly.myapplication.ui.bill;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -24,17 +25,23 @@ import com.poly.myapplication.R;
 import com.poly.myapplication.data.models.Bill;
 import com.poly.myapplication.databinding.ActivityBillBinding;
 import com.poly.myapplication.databinding.DialogFilterBinding;
+import com.poly.myapplication.databinding.DialogShowDetailBillBinding;
 import com.poly.myapplication.ui.bill.adapter.BillAdapter;
 import com.poly.myapplication.ui.bill.adapter.OnListener;
+import com.poly.myapplication.ui.bill.adapter.ShowDetailProductBillAdapter;
 import com.poly.myapplication.utils.Constants;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class BillActivity extends AppCompatActivity {
     private ActivityBillBinding binding;
     private BillAdapter adapter;
+    private ShowDetailProductBillAdapter adapterShowDetailBill;
     private List<Bill> list;
     private BillViewModel viewModel;
 
@@ -50,11 +57,8 @@ public class BillActivity extends AppCompatActivity {
         binding.prgLoadBill.setVisibility(View.VISIBLE);
         binding.rvBill.setVisibility(View.GONE);
         list = new ArrayList<>();
-        binding.imgFilter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialogBottomSheetFilter();
-            }
+        binding.imgFilter.setOnClickListener(view -> {
+            dialogBottomSheetFilter();
         });
         initRec();
         initViewModel();
@@ -64,9 +68,7 @@ public class BillActivity extends AppCompatActivity {
         adapter = new BillAdapter(this, list, new OnListener() {
             @Override
             public void onClickBill(Bill bill) {
-                Intent intent = new Intent(BillActivity.this, ShowDetailBillActivity.class);
-                intent.putExtra(Constants.EXTRA_BILL_TO_DETAIL, bill);
-                startActivity(intent);
+                dialogShowDetailBill(bill);
             }
 
             @Override
@@ -86,9 +88,9 @@ public class BillActivity extends AppCompatActivity {
             public void onChanged(List<Bill> bills) {
                 list = bills;
                 adapter.setList(list);
+                Log.d("TAG", new Gson().toJson(list));
                 binding.rvBill.setVisibility(View.VISIBLE);
                 binding.prgLoadBill.setVisibility(View.GONE);
-                Log.d("zzz", new Gson().toJson(list));
             }
         });
         viewModel.getBill();
@@ -115,24 +117,61 @@ public class BillActivity extends AppCompatActivity {
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                 calendar.set(Calendar.HOUR_OF_DAY, selectedHour);
                 calendar.set(Calendar.MINUTE, selectedMinute);
-                bindingFilter.timeFirstTv.setText("Time first :" + selectedHour + ":" + selectedMinute);
+                bindingFilter.timeSecondTv.setText("Time first :" + selectedHour + ":" + selectedMinute);
             }
         };
-        bindingFilter.imgFirstTime.setOnClickListener(view -> {
+        bindingFilter.btnFirstTime.setOnClickListener(view -> {
             new TimePickerDialog(BillActivity.this, timeFirst, calendar.get(Calendar.HOUR_OF_DAY),
                     calendar.get(Calendar.MINUTE), true).show();
         });
-        bindingFilter.imgSecondTime.setOnClickListener(view -> {
+        bindingFilter.btnSecondTime.setOnClickListener(view -> {
             new TimePickerDialog(BillActivity.this, timeSecond, calendar.get(Calendar.HOUR_OF_DAY),
                     calendar.get(Calendar.MINUTE), true).show();
         });
         bindingFilter.btnCloseDialog.setOnClickListener(view -> {
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+            String str1 = bindingFilter.timeFirstTv.getText().toString();
+            String str2 = bindingFilter.timeSecondTv.getText().toString();
+            try {
+                Date time1 = sdf.parse(str1);
+                Date time2 = sdf.parse(str2);
+                if (time1.compareTo(time2) > 0) {
+                    Toast.makeText(this, "abc", Toast.LENGTH_SHORT).show();
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             dialog.dismiss();
         });
         dialog.show();
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         dialog.getWindow().setGravity(Gravity.BOTTOM);
+    }
+
+
+    private void dialogShowDetailBill(Bill bill) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(BillActivity.this);
+        DialogShowDetailBillBinding showDetailBillBinding = DialogShowDetailBillBinding.inflate(LayoutInflater.from(BillActivity.this));
+        builder.setView(showDetailBillBinding.getRoot());
+        AlertDialog dialog = builder.create();
+        Constants.setNameTable(bill, showDetailBillBinding.txtNameTable);
+        showDetailBillBinding.tvTime.setText(bill.getTime());
+        showDetailBillBinding.tvDate.setText(bill.getDate());
+        showDetailBillBinding.tvPrice.setText(bill.getTotalPrice() + "");
+        showDetailBillBinding.btnPay.setOnClickListener(view -> {
+            dialog.dismiss();
+        });
+        if (bill.getProducts() != null) {
+            showDetailBillBinding.rvProductBillDetail.setVisibility(View.VISIBLE);
+            adapterShowDetailBill = new ShowDetailProductBillAdapter(BillActivity.this, bill.getProducts());
+            showDetailBillBinding.rvProductBillDetail.setAdapter(adapterShowDetailBill);
+        }
+        dialog.show();
+        dialog.setCancelable(false);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.getWindow().setGravity(Gravity.CENTER);
     }
 }

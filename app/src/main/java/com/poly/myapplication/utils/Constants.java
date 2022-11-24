@@ -20,7 +20,6 @@ import retrofit2.Response;
 public class Constants {
     public static String EXTRA_TABLE_TO_DETAIL = "extra_table_to_detail";
     public static String BASE_URL = "https://restaurant-order.onrender.com/restaurant/api/";
-    public static String EXTRA_BILL_TO_DETAIL = "extra_bill_to_detail";
     public static int TYPE_IN_TABLE = 0;
     public static int TYPE_IN_PRODUCT = 1;
 

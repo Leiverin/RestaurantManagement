@@ -101,11 +101,11 @@ public class HistoryActivity extends AppCompatActivity {
                 bindingFilter.timeSecondTv.setText("Time second :" + dayOfMonth + "/" + (month + 1) + "/" + year);
             }
         };
-        bindingFilter.imgFirstTime.setOnClickListener(view -> {
+        bindingFilter.btnFirstTime.setOnClickListener(view -> {
             new DatePickerDialog(HistoryActivity.this, timeFirst, calendar.get(Calendar.YEAR),
                     calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
         });
-        bindingFilter.imgSecondTime.setOnClickListener(view -> {
+        bindingFilter.btnSecondTime.setOnClickListener(view -> {
             new DatePickerDialog(HistoryActivity.this, timeSecond, calendar.get(Calendar.YEAR),
                     calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
         });
@@ -116,7 +116,7 @@ public class HistoryActivity extends AppCompatActivity {
         dialog.show();
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         dialog.getWindow().setGravity(Gravity.BOTTOM);
     }
 }
