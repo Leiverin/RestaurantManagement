@@ -8,11 +8,33 @@
     android:gravity="center"
     android:orientation="vertical"
     android:background="@color/background">
-    <ImageView
+    <LinearLayout
+        android:background="@drawable/bg_feedback"
+        android:gravity="center"
+        android:layout_width="350dp"
+        android:layout_height="350dp">
+        <ImageView
+            android:background="@drawable/feedback_img"
+            android:layout_width="310dp"
+            android:layout_height="310dp">
+        </ImageView>
+    </LinearLayout>
+    <LinearLayout
+        android:background="@drawable/fb_tk"
+        android:orientation="vertical"
+        android:layout_width="350dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="80dp">
+        <TextView
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            android:textSize="28dp"
+            android:text="Thank you so much"
+            android:fontFamily="@font/josefinslab_regular"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
-        android:layout_width="370dp"
-        android:layout_height="370dp">
-
-    </ImageView>
+    </LinearLayout>
 
 </LinearLayout>
