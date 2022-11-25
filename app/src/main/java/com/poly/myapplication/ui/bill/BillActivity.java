@@ -6,6 +6,8 @@ import android.app.TimePickerDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -60,6 +62,30 @@ public class BillActivity extends AppCompatActivity {
         binding.imgFilter.setOnClickListener(view -> {
             dialogBottomSheetFilter();
         });
+        binding.edSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                List<Bill> newList = new ArrayList<>();
+//                for (Bill item : list) {
+//                    if (item.getIdTable().equals(Constants.setNameById(charSequence.toString()))) {
+//                        newList.add(item);
+//                    }
+//                }
+//                Log.d("aaa", newList.toString());
+//                Log.d("zzzz", new Gson().toJson(list.toString()));
+//                adapter.setList(newList);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        Constants.setNameById("Table 1");
         initRec();
         initViewModel();
     }

@@ -1,6 +1,7 @@
 package com.poly.myapplication.utils;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.poly.myapplication.data.models.Bill;
@@ -70,6 +71,29 @@ public class Constants {
             public void onFailure(Call<List<Table>> call, Throwable t) {
             }
         });
+    }
+
+    public static String setNameById(String text) {
+        final String[] id = {null};
+        ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
+        Call<List<Table>> call = serviceAPI.getTableByFloorBill(1);
+        call.enqueue(new Callback<List<Table>>() {
+            @Override
+            public void onResponse(Call<List<Table>> call, Response<List<Table>> response) {
+                assert response.body() != null;
+                for (int i = 0; i < response.body().size(); i++) {
+                    if (Objects.equals(text, response.body().get(i).getName())) {
+                        id[0] =response.body().get(i).getId();
+                        Log.d("idTb", id[0]);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Table>> call, Throwable t) {
+            }
+        });
+        return id[0];
     }
 
     public static void setOnStatus(Bill bill) {
