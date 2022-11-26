@@ -21,4 +21,5 @@
     <color name="secondary_color">#292929</color>
     <color name="color_price">#FF0D0D</color>
     <color name="color_quantity">#BFE6E6E6</color>
+    <color name="color_bottom_sheet">#FF946C</color>
 </resources>

@@ -30,7 +30,6 @@ public class AppetizerViewModel extends ViewModel {
         mBillLiveData = new MutableLiveData<>();
     }
 
-
     public void callToGetAppetizer(){
         ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
         Observable<List<Product>> mListProductObservable = serviceAPI.getProductByCategory(1);

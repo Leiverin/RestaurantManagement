@@ -1,6 +1,8 @@
 package com.poly.myapplication.data.db.dao;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
@@ -14,11 +16,18 @@ import java.util.List;
 public interface ProductDao {
 
     @Query("SELECT * FROM Product")
-    List<Product> getProducts();
+    LiveData<List<Product>> getProducts();
 
     @Insert
-    void insertBill(Product product);
+    void insertProduct(Product product);
 
     @Update
-    void updateBill(Product product);
+    void updateProduct(Product product);
+
+    @Query("SELECT id FROM Product WHERE id = :id")
+    String findProductById(String id);
+
+    @Delete
+    void deleteProduct(Product product);
+
 }

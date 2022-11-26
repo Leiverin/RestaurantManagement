@@ -87,7 +87,6 @@ public class TableManageActivity extends AppCompatActivity {
         handler.postDelayed(runnable = new Runnable() {
             @Override
             public void run() {
-                viewModel.callToGetTable();
                 handler.postDelayed(runnable, 5000);
             }
         }, 5000);

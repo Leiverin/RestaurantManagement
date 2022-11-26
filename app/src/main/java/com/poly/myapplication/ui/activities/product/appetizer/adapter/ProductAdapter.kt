@@ -1,6 +1,7 @@
 package com.poly.myapplication.ui.activities.product.appetizer.adapter
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
@@ -49,6 +50,7 @@ class ProductAdapter(private var mListAppetizer: List<Product>, private val onEv
         holder.viewProduct.setOnClickListener {
             onEventProductListener.onClickViewItem(product)
         }
+
     }
 
     override fun getItemCount(): Int = mListAppetizer.size

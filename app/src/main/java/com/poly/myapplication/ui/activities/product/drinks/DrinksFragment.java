@@ -9,18 +9,22 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.poly.myapplication.R;
 import com.poly.myapplication.data.models.Product;
 import com.poly.myapplication.databinding.FragmentDrinksBinding;
+import com.poly.myapplication.ui.activities.product.FoodActivity;
 import com.poly.myapplication.ui.activities.product.appetizer.adapter.IOnEventProductListener;
 import com.poly.myapplication.ui.activities.product.appetizer.adapter.ProductAdapter;
 import com.poly.myapplication.utils.Constants;
+import com.poly.myapplication.utils.helps.ViewModelFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,19 +41,31 @@ public class DrinksFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        mViewModel = new ViewModelProvider(this).get(DrinksViewModel.class);
+        ViewModelFactory factory = new ViewModelFactory(getContext());
+        mViewModel = new ViewModelProvider(this, factory).get(DrinksViewModel.class);
         binding = FragmentDrinksBinding.inflate(getLayoutInflater());
+        initView();
+        initListener();
+
+        return binding.getRoot();
+    }
+
+    private void initView() {
         binding.prgLoadProduct.setVisibility(View.VISIBLE);
         mListProduct = new ArrayList<>();
         adapter = new ProductAdapter(mListProduct, new IOnEventProductListener() {
             @Override
             public void onClickIncrease(@NonNull Product product, TextView tvQuantity) {
                 Constants.handleIncrease(tvQuantity, Constants.TYPE_IN_PRODUCT);
+                int quantity = Integer.parseInt(tvQuantity.getText().toString().subSequence(1, tvQuantity.getText().toString().length()).toString());
+                handleAddProduct(product, quantity);
             }
 
             @Override
             public void onClickDecrease(@NonNull Product product, TextView tvQuantity) {
                 Constants.handleDecrease(tvQuantity, Constants.TYPE_IN_PRODUCT);
+                int quantity = Integer.parseInt(tvQuantity.getText().toString().subSequence(1, tvQuantity.getText().toString().length()).toString());
+                handleDecreaseProduct(product, quantity);
             }
 
             @Override
@@ -69,8 +85,56 @@ public class DrinksFragment extends Fragment {
                 }
             }
         });
+        eventScrollRecycleView();
         mViewModel.callToGetDrink();
-        return binding.getRoot();
     }
 
+    private void eventScrollRecycleView() {
+        int height = ((FoodActivity) requireActivity()).findViewById(R.id.view_bottom_sheet).getHeight();
+        binding.rvDrinks.setPadding(0, 0, 0, height);
+        binding.rvDrinks.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                if (newState == 0){
+                    ((FoodActivity) requireActivity()).isScrollingLiveData.postValue(false);
+                }else{
+                    ((FoodActivity) requireActivity()).isScrollingLiveData.postValue(true);
+                }
+            }
+        });
+    }
+
+    private void handleDecreaseProduct(Product product, int quantity) {
+        if (mViewModel.getProductById(product.getId()) != null){
+            mViewModel.updateProduct(new Product(
+                    product.getId(), product.getName(), product.getUrlImage(), product.getPrice(), product.getTotal(), quantity, product.getType(), product.getIdCategory()
+            ));
+            if (quantity == 0){
+                mViewModel.deleteProduct(product);
+            }
+        }
+    }
+
+    private void handleAddProduct(Product product, int quantity) {
+        if (mViewModel.getProductById(product.getId()) == null){
+            mViewModel.insertProduct(new Product(
+                    product.getId(), product.getName(), product.getUrlImage(), product.getPrice(), product.getTotal(), quantity, product.getType(), product.getIdCategory()
+            ));
+        }else{
+            mViewModel.updateProduct(new Product(
+                    product.getId(), product.getName(), product.getUrlImage(), product.getPrice(), product.getTotal(), quantity, product.getType(), product.getIdCategory()
+            ));
+        }
+    }
+
+    private void initListener() {
+        mViewModel.getLocalProductsLiveData().observe(getViewLifecycleOwner(), new Observer<List<Product>>() {
+            @Override
+            public void onChanged(List<Product> products) {
+                if (products != null && products.size() != 0){
+
+                }
+            }
+        });
+    }
 }

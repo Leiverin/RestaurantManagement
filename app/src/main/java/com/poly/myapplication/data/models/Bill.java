@@ -12,7 +12,7 @@ public class Bill {
     private double totalPrice = 0;
     private int checkoutType = 0;
     private int status = 0;
-    private List<Product> products;
+    private List<Product> foods;
     private String idTable = null;
     private String idCustomer = null;
     private String idStaff = null;
@@ -20,14 +20,14 @@ public class Bill {
     public Bill() {
     }
 
-    public Bill(String id, String date, String time, double totalPrice, int checkoutType, int status, List<Product> products, String idTable, String idCustomer, String idStaff) {
+    public Bill(String id, String date, String time, double totalPrice, int checkoutType, int status, List<Product> foods, String idTable, String idCustomer, String idStaff) {
         this.id = id;
         this.date = date;
         this.time = time;
         this.totalPrice = totalPrice;
         this.checkoutType = checkoutType;
         this.status = status;
-        this.products = products;
+        this.foods = foods;
         this.idTable = idTable;
         this.idCustomer = idCustomer;
         this.idStaff = idStaff;
@@ -82,11 +82,11 @@ public class Bill {
     }
 
     public List<Product> getProducts() {
-        return products;
+        return foods;
     }
 
-    public void setProducts(List<Product> products) {
-        this.products = products;
+    public void setProducts(List<Product> foods) {
+        this.foods = foods;
     }
 
     public String getIdTable() {

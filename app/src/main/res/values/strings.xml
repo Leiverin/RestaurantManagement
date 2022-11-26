@@ -28,4 +28,5 @@
 
     <string name="floor">Floor</string>
     <string name="add">Add</string>
+    <string name="push_product">Push product</string>
 </resources>
