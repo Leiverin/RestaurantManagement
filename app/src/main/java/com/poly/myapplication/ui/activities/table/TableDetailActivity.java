@@ -20,6 +20,7 @@ import com.poly.myapplication.data.models.Bill;
 import com.poly.myapplication.data.models.Product;
 import com.poly.myapplication.data.models.Table;
 import com.poly.myapplication.databinding.ActivityTableDetailBinding;
+import com.poly.myapplication.preference.AppSharePreference;
 import com.poly.myapplication.ui.activities.product.FoodActivity;
 import com.poly.myapplication.ui.activities.table.adapter.IOnItemProductTableListener;
 import com.poly.myapplication.ui.activities.table.adapter.ProductTableAdapter;
@@ -42,9 +43,10 @@ public class TableDetailActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         Window window = getWindow();
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_color));
-
         mListProduct = new ArrayList();
+        AppSharePreference sharePreference = new AppSharePreference(this);
         Table table = getIntent().getParcelableExtra(Constants.EXTRA_TABLE_TO_DETAIL);
+        sharePreference.setTableId(table.getId());
         binding.tvNameTable.setText(table.getName());
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);

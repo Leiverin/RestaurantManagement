@@ -18,6 +18,9 @@ public interface ProductDao {
     @Query("SELECT * FROM Product")
     LiveData<List<Product>> getProducts();
 
+    @Query("SELECT * FROM Product")
+    List<Product> getListProducts();
+
     @Insert
     void insertProduct(Product product);
 

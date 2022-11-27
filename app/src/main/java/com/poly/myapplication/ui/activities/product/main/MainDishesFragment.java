@@ -21,6 +21,7 @@ import com.poly.myapplication.databinding.FragmentMainDishesBinding;
 import com.poly.myapplication.ui.activities.product.appetizer.adapter.IOnEventProductListener;
 import com.poly.myapplication.ui.activities.product.appetizer.adapter.ProductAdapter;
 import com.poly.myapplication.utils.Constants;
+import com.poly.myapplication.utils.helps.ViewModelFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +40,8 @@ public class MainDishesFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        mViewModel = new ViewModelProvider(this).get(MainDishesViewModel.class);
+        ViewModelFactory factory = new ViewModelFactory(getContext());
+        mViewModel = new ViewModelProvider(this, factory).get(MainDishesViewModel.class);
         binding = FragmentMainDishesBinding.inflate(getLayoutInflater());
         binding.prgLoadProduct.setVisibility(View.VISIBLE);
         mListMainDishes = new ArrayList<>();
@@ -65,6 +67,15 @@ public class MainDishesFragment extends Fragment {
             @Override
             public void onChanged(List<Product> products) {
                 if (products != null){
+                    for (int i = 0; i < products.size(); i++){
+                        if (mViewModel.getListProduct().size() != 0){
+                            for (int j = 0; j < mViewModel.getListProduct().size(); j++){
+                                if (products.get(i).getId().equals(mViewModel.getListProduct().get(j).getId())){
+                                    products.set(i, mViewModel.getListProduct().get(j));
+                                }
+                            }
+                        }
+                    }
                     mListMainDishes = products;
                     adapter.setList(products);
                     binding.prgLoadProduct.setVisibility(View.GONE);

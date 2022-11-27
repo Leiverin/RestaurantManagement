@@ -19,11 +19,12 @@ public class Product {
     private int amount;
     private int type;
     private String idCategory;
+    private String idTable;
 
     public Product() {
     }
 
-    public Product(String id, String name, String urlImage, double price, int total, int amount, int type, String idCategory) {
+    public Product(String id, String name, String urlImage, double price, int total, int amount, int type, String idCategory, String idTable) {
         this.id = id;
         this.name = name;
         this.urlImage = urlImage;
@@ -32,6 +33,7 @@ public class Product {
         this.amount = amount;
         this.type = type;
         this.idCategory = idCategory;
+        this.idTable = idTable;
     }
 
     public String getId() {
@@ -96,5 +98,13 @@ public class Product {
 
     public void setAmount(int amount) {
         this.amount = amount;
+    }
+
+    public String getIdTable() {
+        return idTable;
+    }
+
+    public void setIdTable(String idTable) {
+        this.idTable = idTable;
     }
 }

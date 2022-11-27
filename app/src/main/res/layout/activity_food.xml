@@ -79,6 +79,7 @@
             android:background="@drawable/bg_bottom_sheet_order">
 
             <TextView
+                android:id="@+id/tv_title_bottom_sheet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/text_size_22sp_bold"
@@ -96,10 +97,11 @@
                 android:background="@drawable/bg_white_radius">
 
                 <ImageView
+                    android:id="@+id/img_cart"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_cart"
-                    android:layout_alignParentEnd="true" />
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/ic_cart" />
 
                 <TextView
                     android:id="@+id/tv_total_dishes"
@@ -112,11 +114,11 @@
                     android:id="@+id/tv_name_product"
                     style="@style/text_size_18sp_bold"
                     android:layout_width="220dp"
+                    android:layout_below="@id/tv_total_dishes"
+                    android:layout_marginTop="3dp"
                     android:ellipsize="end"
                     android:lines="1"
-                    android:layout_below="@id/tv_total_dishes"
-                    android:text="Capuchino, Latte, ..."
-                    android:layout_marginTop="3dp" />
+                    android:text="Capuchino, Latte, ..." />
             </RelativeLayout>
         </LinearLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

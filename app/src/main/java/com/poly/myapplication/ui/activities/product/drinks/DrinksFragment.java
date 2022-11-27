@@ -11,15 +11,18 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.poly.myapplication.R;
 import com.poly.myapplication.data.models.Product;
 import com.poly.myapplication.databinding.FragmentDrinksBinding;
+import com.poly.myapplication.preference.AppSharePreference;
 import com.poly.myapplication.ui.activities.product.FoodActivity;
 import com.poly.myapplication.ui.activities.product.appetizer.adapter.IOnEventProductListener;
 import com.poly.myapplication.ui.activities.product.appetizer.adapter.ProductAdapter;
@@ -34,6 +37,7 @@ public class DrinksFragment extends Fragment {
     private DrinksViewModel mViewModel;
     private ProductAdapter adapter;
     private List<Product> mListProduct;
+    private AppSharePreference sharePreference;
     public static DrinksFragment newInstance() {
         return new DrinksFragment();
     }
@@ -53,6 +57,7 @@ public class DrinksFragment extends Fragment {
     private void initView() {
         binding.prgLoadProduct.setVisibility(View.VISIBLE);
         mListProduct = new ArrayList<>();
+        sharePreference = new AppSharePreference(getContext());
         adapter = new ProductAdapter(mListProduct, new IOnEventProductListener() {
             @Override
             public void onClickIncrease(@NonNull Product product, TextView tvQuantity) {
@@ -79,6 +84,15 @@ public class DrinksFragment extends Fragment {
             @Override
             public void onChanged(List<Product> products) {
                 if (products != null){
+                    for (int i = 0; i < products.size(); i++){
+                        if (mViewModel.getListProduct().size() != 0){
+                            for (int j = 0; j < mViewModel.getListProduct().size(); j++){
+                                if (products.get(i).getId().equals(mViewModel.getListProduct().get(j).getId())){
+                                    products.set(i, mViewModel.getListProduct().get(j));
+                                }
+                            }
+                        }
+                    }
                     mListProduct = products;
                     adapter.setList(products);
                     binding.prgLoadProduct.setVisibility(View.GONE);
@@ -106,23 +120,46 @@ public class DrinksFragment extends Fragment {
 
     private void handleDecreaseProduct(Product product, int quantity) {
         if (mViewModel.getProductById(product.getId()) != null){
-            mViewModel.updateProduct(new Product(
-                    product.getId(), product.getName(), product.getUrlImage(), product.getPrice(), product.getTotal(), quantity, product.getType(), product.getIdCategory()
-            ));
             if (quantity == 0){
                 mViewModel.deleteProduct(product);
             }
+            mViewModel.updateProduct(new Product(
+                    product.getId(),
+                    product.getName(),
+                    product.getUrlImage(),
+                    product.getPrice(),
+                    product.getTotal(),
+                    quantity,
+                    product.getType(),
+                    product.getIdCategory(), sharePreference.getTableId()
+            ));
+
         }
     }
 
     private void handleAddProduct(Product product, int quantity) {
         if (mViewModel.getProductById(product.getId()) == null){
             mViewModel.insertProduct(new Product(
-                    product.getId(), product.getName(), product.getUrlImage(), product.getPrice(), product.getTotal(), quantity, product.getType(), product.getIdCategory()
+                    product.getId(),
+                    product.getName(),
+                    product.getUrlImage(),
+                    product.getPrice(),
+                    product.getTotal(),
+                    quantity,
+                    product.getType(),
+                    product.getIdCategory(),
+                    sharePreference.getTableId()
             ));
         }else{
             mViewModel.updateProduct(new Product(
-                    product.getId(), product.getName(), product.getUrlImage(), product.getPrice(), product.getTotal(), quantity, product.getType(), product.getIdCategory()
+                    product.getId(),
+                    product.getName(),
+                    product.getUrlImage(),
+                    product.getPrice(),
+                    product.getTotal(),
+                    quantity, product.getType(),
+                    product.getIdCategory(),
+                    sharePreference.getTableId()
             ));
         }
     }

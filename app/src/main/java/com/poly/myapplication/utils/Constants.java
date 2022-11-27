@@ -6,6 +6,7 @@ import android.widget.TextView;
 @SuppressLint("SetTextI18n")
 public class Constants {
     public static String EXTRA_TABLE_TO_DETAIL = "extra_table_to_detail";
+    public static String TABLE_ID_SELECTED = "TABLE_ID_SELECTED";
     public static int TYPE_IN_TABLE = 0;
     public static int TYPE_IN_PRODUCT = 1;
 

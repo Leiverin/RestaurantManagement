@@ -26,6 +26,7 @@ class ProductAdapter(private var mListAppetizer: List<Product>, private val onEv
             tvName.text = product.name
             Glide.with(imgProduct.context).load(product.urlImage).into(imgProduct)
             tvPrice.text = "${product.price}$"
+            tvQuantity.text = "x"+product.amount
         }
     }
 

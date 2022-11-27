@@ -80,4 +80,8 @@ public class DrinksViewModel extends BaseViewModel {
         return productDao.findProductById(id);
     }
 
+    public List<Product> getListProduct(){
+        return productDao.getListProducts();
+    }
+
 }
