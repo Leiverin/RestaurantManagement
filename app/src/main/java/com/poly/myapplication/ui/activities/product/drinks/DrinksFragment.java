@@ -90,7 +90,7 @@ public class DrinksFragment extends Fragment {
     }
 
     private void eventScrollRecycleView() {
-        int height = ((FoodActivity) requireActivity()).findViewById(R.id.view_bottom_sheet).getHeight();
+        int height = requireActivity().findViewById(R.id.view_bottom_sheet).getHeight();
         binding.rvDrinks.setPadding(0, 0, 0, height);
         binding.rvDrinks.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override

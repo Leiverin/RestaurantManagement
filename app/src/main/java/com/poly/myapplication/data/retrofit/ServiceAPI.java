@@ -44,5 +44,4 @@ public interface ServiceAPI {
     Observable<List<Product>> getListProductInBill(
         @Path("idTable") String idTable
     );
-
 }
