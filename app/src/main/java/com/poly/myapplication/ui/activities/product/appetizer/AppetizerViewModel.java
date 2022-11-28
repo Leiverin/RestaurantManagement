@@ -1,7 +1,9 @@
 package com.poly.myapplication.ui.activities.product.appetizer;
 
+import android.content.Context;
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -10,6 +12,7 @@ import com.poly.myapplication.data.models.Product;
 import com.poly.myapplication.data.models.Table;
 import com.poly.myapplication.data.retrofit.RetroInstance;
 import com.poly.myapplication.data.retrofit.ServiceAPI;
+import com.poly.myapplication.ui.base.BaseViewModel;
 
 import java.util.List;
 
@@ -21,11 +24,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AppetizerViewModel extends ViewModel {
+public class AppetizerViewModel extends BaseViewModel {
     public MutableLiveData<List<Product>> mListAppetizerLiveData;
     public MutableLiveData<Bill> mBillLiveData;
 
-    public AppetizerViewModel() {
+    public AppetizerViewModel(Context context) {
+        super(context);
         mListAppetizerLiveData = new MutableLiveData<>();
         mBillLiveData = new MutableLiveData<>();
     }
@@ -81,6 +85,46 @@ public class AppetizerViewModel extends ViewModel {
     private void onRetrieveBillFail(Throwable throwable) {
         mBillLiveData.postValue(null);
         Log.e("TAG", "handleErrors: "+ throwable.getMessage());
+    }
+
+
+    public LiveData<List<Product>> getLocalProductsLiveData(){
+        return productDao.getProducts();
+    }
+
+    public void insertProduct(Product product){
+        appExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                productDao.insertProduct(product);
+            }
+        });
+    }
+
+    public void updateProduct(Product product){
+        appExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                productDao.updateProduct(product);
+            }
+        });
+    }
+
+    public void deleteProduct(Product product){
+        appExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                productDao.deleteProduct(product);
+            }
+        });
+    }
+
+    public String getProductById(String id){
+        return productDao.findProductById(id);
+    }
+
+    public List<Product> getListProduct(){
+        return productDao.getListProducts();
     }
 
 }

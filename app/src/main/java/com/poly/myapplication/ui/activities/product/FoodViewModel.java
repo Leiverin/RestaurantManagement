@@ -20,4 +20,8 @@ public class FoodViewModel extends BaseViewModel {
     public LiveData<List<Product>> getLocalProductsLiveData(){
         return productDao.getProducts();
     }
+
+    public List<Product> getLocalProducts(){
+        return productDao.getListProducts();
+    }
 }
