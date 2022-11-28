@@ -1,6 +1,5 @@
 package com.poly.myapplication.ui.bill;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.graphics.Color;
@@ -27,10 +26,8 @@ import com.poly.myapplication.R;
 import com.poly.myapplication.data.models.Bill;
 import com.poly.myapplication.databinding.ActivityBillBinding;
 import com.poly.myapplication.databinding.DialogFilterBinding;
-import com.poly.myapplication.databinding.DialogShowDetailBillBinding;
 import com.poly.myapplication.ui.bill.adapter.BillAdapter;
 import com.poly.myapplication.ui.bill.adapter.OnListener;
-import com.poly.myapplication.ui.bill.adapter.ShowDetailProductBillAdapter;
 import com.poly.myapplication.utils.Constants;
 
 import java.text.ParseException;
@@ -43,7 +40,6 @@ import java.util.List;
 public class BillActivity extends AppCompatActivity {
     private ActivityBillBinding binding;
     private BillAdapter adapter;
-    private ShowDetailProductBillAdapter adapterShowDetailBill;
     private List<Bill> list;
     private BillViewModel viewModel;
 
@@ -62,30 +58,6 @@ public class BillActivity extends AppCompatActivity {
         binding.imgFilter.setOnClickListener(view -> {
             dialogBottomSheetFilter();
         });
-        binding.edSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//                List<Bill> newList = new ArrayList<>();
-//                for (Bill item : list) {
-//                    if (item.getIdTable().equals(Constants.setNameById(charSequence.toString()))) {
-//                        newList.add(item);
-//                    }
-//                }
-//                Log.d("aaa", newList.toString());
-//                Log.d("zzzz", new Gson().toJson(list.toString()));
-//                adapter.setList(newList);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-        Constants.setNameById("Table 1");
         initRec();
         initViewModel();
     }
@@ -94,7 +66,7 @@ public class BillActivity extends AppCompatActivity {
         adapter = new BillAdapter(this, list, new OnListener() {
             @Override
             public void onClickBill(Bill bill) {
-                dialogShowDetailBill(bill);
+                Constants.dialogShowDetailBill(bill, BillActivity.this);
             }
 
             @Override
@@ -114,7 +86,6 @@ public class BillActivity extends AppCompatActivity {
             public void onChanged(List<Bill> bills) {
                 list = bills;
                 adapter.setList(list);
-                Log.d("TAG", new Gson().toJson(list));
                 binding.rvBill.setVisibility(View.VISIBLE);
                 binding.prgLoadBill.setVisibility(View.GONE);
             }
@@ -176,28 +147,4 @@ public class BillActivity extends AppCompatActivity {
         dialog.getWindow().setGravity(Gravity.BOTTOM);
     }
 
-
-    private void dialogShowDetailBill(Bill bill) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(BillActivity.this);
-        DialogShowDetailBillBinding showDetailBillBinding = DialogShowDetailBillBinding.inflate(LayoutInflater.from(BillActivity.this));
-        builder.setView(showDetailBillBinding.getRoot());
-        AlertDialog dialog = builder.create();
-        Constants.setNameTable(bill, showDetailBillBinding.txtNameTable);
-        showDetailBillBinding.tvTime.setText(bill.getTime());
-        showDetailBillBinding.tvDate.setText(bill.getDate());
-        showDetailBillBinding.tvPrice.setText(bill.getTotalPrice() + "");
-        showDetailBillBinding.btnPay.setOnClickListener(view -> {
-            dialog.dismiss();
-        });
-        if (bill.getProducts() != null) {
-            showDetailBillBinding.rvProductBillDetail.setVisibility(View.VISIBLE);
-            adapterShowDetailBill = new ShowDetailProductBillAdapter(BillActivity.this, bill.getProducts());
-            showDetailBillBinding.rvProductBillDetail.setAdapter(adapterShowDetailBill);
-        }
-        dialog.show();
-        dialog.setCancelable(false);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
-        dialog.getWindow().setGravity(Gravity.CENTER);
-    }
 }

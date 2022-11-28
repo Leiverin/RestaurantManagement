@@ -33,15 +33,14 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <EditText
-                        android:id="@+id/ed_search"
+                    <com.poly.myapplication.utils.view.CustomSpinner
+                        android:id="@+id/spinner_table"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="35dp"
                         android:layout_weight="1"
-                        android:background="@color/white"
-                        android:drawableStart="@drawable/ic_baseline_search_24"
-                        android:hint="Search"
-                        android:padding="5dp" />
+                        android:background="@drawable/bg_spinner_table"
+                        android:dropDownVerticalOffset="40dp"
+                        android:popupBackground="@drawable/bg_popup_spinner" />
 
                     <ImageView
                         android:id="@+id/imgFilter"
@@ -60,6 +59,7 @@
             android:id="@+id/rv_history"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layoutAnimation="@anim/layout_animation_slide_from_bottom"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_history" />
     </LinearLayout>

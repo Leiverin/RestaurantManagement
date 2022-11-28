@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.poly.myapplication.data.models.Bill;
 import com.poly.myapplication.databinding.ItemHistoryBinding;
 import com.poly.myapplication.ui.FeedBackActivity;
+import com.poly.myapplication.ui.bill.adapter.OnListener;
 import com.poly.myapplication.utils.Constants;
 
 import java.util.List;
@@ -19,10 +20,12 @@ import java.util.List;
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder> {
     private Context context;
     private List<Bill> list;
+    private OnListener onListener;
 
-    public HistoryAdapter(Context context, List<Bill> list) {
+    public HistoryAdapter(Context context, List<Bill> list,OnListener onListener) {
         this.context = context;
         this.list = list;
+        this.onListener=onListener;
     }
 
     public void setList(List<Bill> mListBill) {
@@ -49,6 +52,9 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
                 public void onClick(View view) {
                     context.startActivity(new Intent(context, FeedBackActivity.class));
                 }
+            });
+            holder.binding.getRoot().setOnClickListener(view -> {
+                onListener.onClickBill(bill);
             });
         }
     }

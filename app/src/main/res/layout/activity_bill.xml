@@ -28,26 +28,17 @@
                 android:layout_height="50dp">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="end"
                     android:orientation="horizontal">
-
-                    <EditText
-                        android:id="@+id/ed_search"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@color/white"
-                        android:drawableStart="@drawable/ic_baseline_search_24"
-                        android:hint="Search"
-                        android:padding="5dp" />
 
                     <ImageView
                         android:id="@+id/imgFilter"
-                        android:layout_width="100dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_weight="1"
+                        android:layout_marginEnd="10dp"
                         android:src="@drawable/ic_baseline_filter_alt_24" />
                 </LinearLayout>
 
