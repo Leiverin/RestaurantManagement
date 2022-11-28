@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.poly.myapplication.R;
 import com.poly.myapplication.data.models.Product;
 import com.poly.myapplication.databinding.FragmentMainDishesBinding;
+import com.poly.myapplication.preference.AppSharePreference;
 import com.poly.myapplication.ui.activities.product.appetizer.adapter.IOnEventProductListener;
 import com.poly.myapplication.ui.activities.product.appetizer.adapter.ProductAdapter;
 import com.poly.myapplication.utils.Constants;
@@ -32,6 +33,7 @@ public class MainDishesFragment extends Fragment {
     private MainDishesViewModel mViewModel;
     private ProductAdapter adapter;
     private List<Product> mListMainDishes;
+    private AppSharePreference sharePreference;
 
     public static MainDishesFragment newInstance() {
         return new MainDishesFragment();
@@ -43,17 +45,22 @@ public class MainDishesFragment extends Fragment {
         ViewModelFactory factory = new ViewModelFactory(getContext());
         mViewModel = new ViewModelProvider(this, factory).get(MainDishesViewModel.class);
         binding = FragmentMainDishesBinding.inflate(getLayoutInflater());
+        sharePreference = new AppSharePreference(getContext());
         binding.prgLoadProduct.setVisibility(View.VISIBLE);
         mListMainDishes = new ArrayList<>();
         adapter = new ProductAdapter(mListMainDishes, new IOnEventProductListener() {
             @Override
-            public void onClickIncrease(@NonNull Product product, @NonNull TextView textView) {
-                Constants.handleIncrease(textView, Constants.TYPE_IN_PRODUCT);
+            public void onClickIncrease(@NonNull Product product, @NonNull TextView tvQuantity) {
+                Constants.handleIncrease(tvQuantity, Constants.TYPE_IN_PRODUCT);
+                int quantity = Integer.parseInt(tvQuantity.getText().toString().subSequence(1, tvQuantity.getText().toString().length()).toString());
+                handleAddProduct(product, quantity);
             }
 
             @Override
-            public void onClickDecrease(@NonNull Product product, @NonNull TextView textView) {
-                Constants.handleDecrease(textView, Constants.TYPE_IN_PRODUCT);
+            public void onClickDecrease(@NonNull Product product, @NonNull TextView tvQuantity) {
+                Constants.handleDecrease(tvQuantity, Constants.TYPE_IN_PRODUCT);
+                int quantity = Integer.parseInt(tvQuantity.getText().toString().subSequence(1, tvQuantity.getText().toString().length()).toString());
+                handleDecreaseProduct(product, quantity);
             }
 
             @Override
@@ -84,6 +91,50 @@ public class MainDishesFragment extends Fragment {
         });
         mViewModel.callToGetDrink();
         return binding.getRoot();
+    }
+
+    private void handleDecreaseProduct(Product product, int quantity) {
+        if (mViewModel.getProductById(product.getId()) != null){
+            if (quantity == 0){
+                mViewModel.deleteProduct(product);
+            }
+            mViewModel.updateProduct(new Product(
+                    product.getId(), product.getName(), product.getUrlImage(), product.getPrice(), product.getTotal(), quantity,
+                    product.getType(),
+                    product.getIdCategory(),
+                    sharePreference.getTableId()
+            ));
+
+        }
+    }
+
+    private void handleAddProduct(Product product, int quantity) {
+        if (mViewModel.getProductById(product.getId()) == null){
+            mViewModel.insertProduct(new Product(
+                    product.getId(), product.getName(), product.getUrlImage(), product.getPrice(), product.getTotal(), quantity,
+                    product.getType(),
+                    product.getIdCategory(),
+                    sharePreference.getTableId()
+            ));
+        }else{
+            mViewModel.updateProduct(new Product(
+                    product.getId(), product.getName(), product.getUrlImage(), product.getPrice(), product.getTotal(), quantity,
+                    product.getType(),
+                    product.getIdCategory(),
+                    sharePreference.getTableId()
+            ));
+        }
+    }
+
+    private void initListener() {
+        mViewModel.getLocalProductsLiveData().observe(getViewLifecycleOwner(), new Observer<List<Product>>() {
+            @Override
+            public void onChanged(List<Product> products) {
+                if (products != null && products.size() != 0){
+
+                }
+            }
+        });
     }
 
 }

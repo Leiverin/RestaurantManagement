@@ -84,4 +84,7 @@ public class DrinksViewModel extends BaseViewModel {
         return productDao.getListProducts();
     }
 
+    public List<Product> getListProductByIdTable(String idTable){
+        return productDao.getProductByIdTable(idTable);
+    }
 }

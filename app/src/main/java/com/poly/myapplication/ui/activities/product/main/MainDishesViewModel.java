@@ -3,6 +3,7 @@ package com.poly.myapplication.ui.activities.product.main;
 import android.content.Context;
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -44,4 +45,41 @@ public class MainDishesViewModel extends BaseViewModel {
     public List<Product> getListProduct(){
         return productDao.getListProducts();
     }
+
+
+    public void insertProduct(Product product){
+        appExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                productDao.insertProduct(product);
+            }
+        });
+    }
+
+    public void updateProduct(Product product){
+        appExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                productDao.updateProduct(product);
+            }
+        });
+    }
+
+    public void deleteProduct(Product product){
+        appExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                productDao.deleteProduct(product);
+            }
+        });
+    }
+
+    public String getProductById(String id){
+        return productDao.findProductById(id);
+    }
+
+    public LiveData<List<Product>> getLocalProductsLiveData(){
+        return productDao.getProducts();
+    }
+
 }

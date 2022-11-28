@@ -30,6 +30,9 @@ public interface ProductDao {
     @Query("SELECT id FROM Product WHERE id = :id")
     String findProductById(String id);
 
+    @Query("SELECT * FROM Product WHERE idTable = :idTable")
+    List<Product> getProductByIdTable(String idTable);
+
     @Delete
     void deleteProduct(Product product);
 

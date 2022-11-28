@@ -85,10 +85,10 @@ public class DrinksFragment extends Fragment {
             public void onChanged(List<Product> products) {
                 if (products != null){
                     for (int i = 0; i < products.size(); i++){
-                        if (mViewModel.getListProduct().size() != 0){
-                            for (int j = 0; j < mViewModel.getListProduct().size(); j++){
-                                if (products.get(i).getId().equals(mViewModel.getListProduct().get(j).getId())){
-                                    products.set(i, mViewModel.getListProduct().get(j));
+                        if (mViewModel.getListProductByIdTable(sharePreference.getTableId()).size() != 0){
+                            for (int j = 0; j < mViewModel.getListProductByIdTable(sharePreference.getTableId()).size(); j++){
+                                if (products.get(i).getId().equals(mViewModel.getListProductByIdTable(sharePreference.getTableId()).get(j).getId())){
+                                    products.set(i, mViewModel.getListProductByIdTable(sharePreference.getTableId()).get(j));
                                 }
                             }
                         }
