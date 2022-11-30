@@ -9,6 +9,8 @@ public class Constants {
     public static String TABLE_ID_SELECTED = "TABLE_ID_SELECTED";
     public static int TYPE_IN_TABLE = 0;
     public static int TYPE_IN_PRODUCT = 1;
+    public static int CHECKOUT_BY_TRANSFER = 1;
+    public static int CHECKOUT_BY_SWIPE = 1;
 
     public static void handleIncrease(TextView tvQuantity, int type){
         if (type == TYPE_IN_TABLE){

@@ -10,9 +10,9 @@ import com.poly.myapplication.data.models.Product
 import com.poly.myapplication.databinding.ItemProductTableBinding
 
 @SuppressLint("SetTextI18n")
-class ProductTableAdapter(private var mListProduct: List<Product>, private val onItemProductTableListener: IOnItemProductTableListener): RecyclerView.Adapter<ProductTableAdapter.ProductTableViewHolder>() {
+class ProductTableAdapter(var mListProduct: List<Product>, private val onItemProductTableListener: IOnItemProductTableListener): RecyclerView.Adapter<ProductTableAdapter.ProductTableViewHolder>() {
 
-    class ProductTableViewHolder(private val binding: ItemProductTableBinding): RecyclerView.ViewHolder(binding.root){
+    class ProductTableViewHolder(binding: ItemProductTableBinding): RecyclerView.ViewHolder(binding.root){
         private val imgProduct = binding.imgProduct
         private val tvName = binding.tvNameProduct
         private val tvPrice = binding.tvPriceProduct
@@ -46,10 +46,10 @@ class ProductTableAdapter(private var mListProduct: List<Product>, private val o
             onItemProductTableListener.onClickDelete(product)
         }
         holder.imbDecrease.setOnClickListener {
-            onItemProductTableListener.onClickDecrease(product, holder.tvQuantity)
+            onItemProductTableListener.onClickDecrease(product, holder.tvQuantity, position)
         }
         holder.imbIncrease.setOnClickListener {
-            onItemProductTableListener.onClickIncrease(product, holder.tvQuantity)
+            onItemProductTableListener.onClickIncrease(product, holder.tvQuantity, position)
         }
         holder.viewItem.setOnClickListener {
             onItemProductTableListener.onClickViewItem(product)
@@ -62,7 +62,7 @@ class ProductTableAdapter(private var mListProduct: List<Product>, private val o
 
 interface IOnItemProductTableListener {
     fun onClickDelete(product: Product)
-    fun onClickDecrease(product: Product, textView: TextView)
-    fun onClickIncrease(product: Product, textView: TextView)
+    fun onClickDecrease(product: Product, textView: TextView, position: Int)
+    fun onClickIncrease(product: Product, textView: TextView, position: Int)
     fun onClickViewItem(product: Product)
 }

@@ -50,17 +50,19 @@ public class MainDishesFragment extends Fragment {
         mListMainDishes = new ArrayList<>();
         adapter = new ProductAdapter(mListMainDishes, new IOnEventProductListener() {
             @Override
-            public void onClickIncrease(@NonNull Product product, @NonNull TextView tvQuantity) {
+            public void onClickIncrease(@NonNull Product product, @NonNull TextView tvQuantity, int position) {
                 Constants.handleIncrease(tvQuantity, Constants.TYPE_IN_PRODUCT);
                 int quantity = Integer.parseInt(tvQuantity.getText().toString().subSequence(1, tvQuantity.getText().toString().length()).toString());
                 handleAddProduct(product, quantity);
+                adapter.getMListProduct().get(position).setAmount(quantity);
             }
 
             @Override
-            public void onClickDecrease(@NonNull Product product, @NonNull TextView tvQuantity) {
+            public void onClickDecrease(@NonNull Product product, @NonNull TextView tvQuantity, int position) {
                 Constants.handleDecrease(tvQuantity, Constants.TYPE_IN_PRODUCT);
                 int quantity = Integer.parseInt(tvQuantity.getText().toString().subSequence(1, tvQuantity.getText().toString().length()).toString());
                 handleDecreaseProduct(product, quantity);
+                adapter.getMListProduct().get(position).setAmount(quantity);
             }
 
             @Override
@@ -94,11 +96,12 @@ public class MainDishesFragment extends Fragment {
     }
 
     private void handleDecreaseProduct(Product product, int quantity) {
-        if (mViewModel.getProductById(product.getId()) != null){
+        if (mViewModel.getProductById(product.getId(), sharePreference.getTableId()) != null){
             if (quantity == 0){
                 mViewModel.deleteProduct(product);
             }
             mViewModel.updateProduct(new Product(
+                    product.getIdProduct(),
                     product.getId(), product.getName(), product.getUrlImage(), product.getPrice(), product.getTotal(), quantity,
                     product.getType(),
                     product.getIdCategory(),
@@ -109,20 +112,15 @@ public class MainDishesFragment extends Fragment {
     }
 
     private void handleAddProduct(Product product, int quantity) {
-        if (mViewModel.getProductById(product.getId()) == null){
-            mViewModel.insertProduct(new Product(
+        if (mViewModel.getProductById(product.getId(), sharePreference.getTableId()) == null){
+            mViewModel.insertProduct(new Product(null,
                     product.getId(), product.getName(), product.getUrlImage(), product.getPrice(), product.getTotal(), quantity,
                     product.getType(),
                     product.getIdCategory(),
                     sharePreference.getTableId()
             ));
         }else{
-            mViewModel.updateProduct(new Product(
-                    product.getId(), product.getName(), product.getUrlImage(), product.getPrice(), product.getTotal(), quantity,
-                    product.getType(),
-                    product.getIdCategory(),
-                    sharePreference.getTableId()
-            ));
+            mViewModel.updateAmountProduct(quantity, product.getId(), sharePreference.getTableId());
         }
     }
 
@@ -137,4 +135,9 @@ public class MainDishesFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onResume() {
+//        adapter.setList(mViewModel.getListProductByIdTable(sharePreference.getTableId()));
+        super.onResume();
+    }
 }

@@ -9,8 +9,9 @@ import com.google.gson.annotations.SerializedName;
 @Entity(tableName = "Product")
 public class Product {
     @NonNull
+    @PrimaryKey(autoGenerate = true)
+    private Long idProduct;
     @SerializedName("_id")
-    @PrimaryKey(autoGenerate = false)
     private String id;
     private String name;
     private String urlImage;
@@ -24,7 +25,8 @@ public class Product {
     public Product() {
     }
 
-    public Product(String id, String name, String urlImage, double price, int total, int amount, int type, String idCategory, String idTable) {
+    public Product(Long idProduct, String id, String name, String urlImage, double price, int total, int amount, int type, String idCategory, String idTable) {
+        this.idProduct = idProduct;
         this.id = id;
         this.name = name;
         this.urlImage = urlImage;
@@ -34,6 +36,15 @@ public class Product {
         this.type = type;
         this.idCategory = idCategory;
         this.idTable = idTable;
+    }
+
+    @NonNull
+    public Long getIdProduct() {
+        return idProduct;
+    }
+
+    public void setIdProduct(@NonNull Long idProduct) {
+        this.idProduct = idProduct;
     }
 
     public String getId() {

@@ -21,6 +21,7 @@ import com.google.gson.Gson;
 import com.poly.myapplication.R;
 import com.poly.myapplication.data.models.Product;
 import com.poly.myapplication.databinding.ActivityFoodBinding;
+import com.poly.myapplication.preference.AppSharePreference;
 import com.poly.myapplication.ui.activities.product.adapters.PagerProductAdapter;
 import com.poly.myapplication.ui.activities.verify.VerifyActivity;
 import com.poly.myapplication.ui.bottomsheet.BottomSheetProduct;
@@ -36,6 +37,7 @@ public class FoodActivity extends AppCompatActivity {
     private BottomSheetProduct bottomSheetProduct;
     public MutableLiveData<Boolean> isScrollingLiveData;
     private boolean isShowing = false;
+    private AppSharePreference sharePreference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,8 @@ public class FoodActivity extends AppCompatActivity {
         ViewModelFactory factory = new ViewModelFactory(this);
         isScrollingLiveData = new MutableLiveData<>();
         viewModel = new ViewModelProvider(this, factory).get(FoodViewModel.class);
+        sharePreference = new AppSharePreference(this);
+
         pagerProductAdapter = new PagerProductAdapter(getSupportFragmentManager(), getLifecycle());
         binding.pager.setAdapter(pagerProductAdapter);
         bottomSheetProduct = new BottomSheetProduct();
@@ -76,7 +80,7 @@ public class FoodActivity extends AppCompatActivity {
     private void initListener() {
         binding.viewBottomSheet.setAnimation(AnimationUtils.loadAnimation(this, R.anim.anim_bottom_to_top));
         binding.viewBottomSheet.setVisibility(View.GONE);
-        viewModel.getLocalProductsLiveData().observe(this, new Observer<List<Product>>() {
+        viewModel.getListProductByIdTableLive(sharePreference.getTableId()).observe(this, new Observer<List<Product>>() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onChanged(List<Product> products) {
@@ -115,8 +119,7 @@ public class FoodActivity extends AppCompatActivity {
         binding.viewContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(FoodActivity.this, VerifyActivity.class);
-                startActivity(intent);
+
             }
         });
 

@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
     </data>
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize">
@@ -29,7 +32,69 @@
                 </LinearLayout>
             </androidx.appcompat.widget.Toolbar>
 
-
         </com.google.android.material.appbar.AppBarLayout>
-    </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_product_detail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#DFDFDF"
+            android:layout_marginTop="?attr/actionBarSize"
+            tools:listitem="@layout/item_detail_product"
+            android:paddingBottom="120dp"
+            android:clipToPadding="false"
+            />
+        <LinearLayout
+            android:id="@+id/view_bottom_sheet"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:padding="16dp"
+            android:layout_gravity="bottom"
+            android:background="@color/color_bottom_sheet"
+            android:elevation="12dp"
+            >
+
+            <RelativeLayout
+                android:id="@+id/view_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="18dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:paddingRight="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_white_radius">
+
+                <TextView
+                    android:id="@+id/tv_total_dishes"
+                    style="@style/text_size_18sp_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total: 3 dishes" />
+
+                <TextView
+                    android:id="@+id/tv_total_price"
+                    style="@style/text_size_18sp_bold"
+                    android:layout_width="220dp"
+                    android:layout_below="@id/tv_total_dishes"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:text="Total price: 900$"
+                    android:textColor="@color/color_price" />
+
+                <Button
+                    android:id="@+id/btn_order"
+                    style="@style/text_size_18sp_bold"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:background="@drawable/bg_btn_order"
+                    android:text="Order"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white" />
+            </RelativeLayout>
+        </LinearLayout>
+    </FrameLayout>
 </layout>

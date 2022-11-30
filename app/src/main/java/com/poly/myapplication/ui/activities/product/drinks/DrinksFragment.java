@@ -60,17 +60,22 @@ public class DrinksFragment extends Fragment {
         sharePreference = new AppSharePreference(getContext());
         adapter = new ProductAdapter(mListProduct, new IOnEventProductListener() {
             @Override
-            public void onClickIncrease(@NonNull Product product, TextView tvQuantity) {
+            public void onClickIncrease(@NonNull Product product, TextView tvQuantity, int position) {
                 Constants.handleIncrease(tvQuantity, Constants.TYPE_IN_PRODUCT);
                 int quantity = Integer.parseInt(tvQuantity.getText().toString().subSequence(1, tvQuantity.getText().toString().length()).toString());
                 handleAddProduct(product, quantity);
+                adapter.getMListProduct().get(position).setAmount(quantity);
+                Log.d("TAG", "quantity: "+ quantity);
+                Log.d("TAG", "onClickIncrease: "+ new Gson().toJson(mViewModel.getListProductByIdTable(sharePreference.getTableId())));
             }
 
             @Override
-            public void onClickDecrease(@NonNull Product product, TextView tvQuantity) {
+            public void onClickDecrease(@NonNull Product product, TextView tvQuantity, int position) {
                 Constants.handleDecrease(tvQuantity, Constants.TYPE_IN_PRODUCT);
                 int quantity = Integer.parseInt(tvQuantity.getText().toString().subSequence(1, tvQuantity.getText().toString().length()).toString());
                 handleDecreaseProduct(product, quantity);
+                adapter.getMListProduct().get(position).setAmount(quantity);
+                Log.d("TAG", "onClickDecrease: "+ new Gson().toJson(mViewModel.getListProductByIdTable(sharePreference.getTableId())));
             }
 
             @Override
@@ -119,11 +124,12 @@ public class DrinksFragment extends Fragment {
     }
 
     private void handleDecreaseProduct(Product product, int quantity) {
-        if (mViewModel.getProductById(product.getId()) != null){
+        if (mViewModel.getProductById(product.getId(), sharePreference.getTableId()) != null){
             if (quantity == 0){
                 mViewModel.deleteProduct(product);
             }
             mViewModel.updateProduct(new Product(
+                    product.getIdProduct(),
                     product.getId(),
                     product.getName(),
                     product.getUrlImage(),
@@ -131,15 +137,16 @@ public class DrinksFragment extends Fragment {
                     product.getTotal(),
                     quantity,
                     product.getType(),
-                    product.getIdCategory(), sharePreference.getTableId()
+                    product.getIdCategory(),
+                    sharePreference.getTableId()
             ));
-
         }
     }
 
     private void handleAddProduct(Product product, int quantity) {
-        if (mViewModel.getProductById(product.getId()) == null){
+        if (mViewModel.getProductById(product.getId(), sharePreference.getTableId()) == null){
             mViewModel.insertProduct(new Product(
+                    null,
                     product.getId(),
                     product.getName(),
                     product.getUrlImage(),
@@ -151,16 +158,7 @@ public class DrinksFragment extends Fragment {
                     sharePreference.getTableId()
             ));
         }else{
-            mViewModel.updateProduct(new Product(
-                    product.getId(),
-                    product.getName(),
-                    product.getUrlImage(),
-                    product.getPrice(),
-                    product.getTotal(),
-                    quantity, product.getType(),
-                    product.getIdCategory(),
-                    sharePreference.getTableId()
-            ));
+            mViewModel.updateAmountProduct(quantity, product.getId(), sharePreference.getTableId());
         }
     }
 
@@ -173,5 +171,11 @@ public class DrinksFragment extends Fragment {
                 }
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+//        adapter.setList(mViewModel.getListProductByIdTable(sharePreference.getTableId()));
+        super.onResume();
     }
 }

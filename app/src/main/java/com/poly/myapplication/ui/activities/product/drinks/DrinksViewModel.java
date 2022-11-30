@@ -45,46 +45,4 @@ public class DrinksViewModel extends BaseViewModel {
         Log.e("TAG", "handleErrors: "+ throwable.getMessage());
     }
 
-    public LiveData<List<Product>> getLocalProductsLiveData(){
-        return productDao.getProducts();
-    }
-
-    public void insertProduct(Product product){
-        appExecutors.diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                productDao.insertProduct(product);
-            }
-        });
-    }
-
-    public void updateProduct(Product product){
-        appExecutors.diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                productDao.updateProduct(product);
-            }
-        });
-    }
-
-    public void deleteProduct(Product product){
-        appExecutors.diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                productDao.deleteProduct(product);
-            }
-        });
-    }
-
-    public String getProductById(String id){
-        return productDao.findProductById(id);
-    }
-
-    public List<Product> getListProduct(){
-        return productDao.getListProducts();
-    }
-
-    public List<Product> getListProductByIdTable(String idTable){
-        return productDao.getProductByIdTable(idTable);
-    }
 }

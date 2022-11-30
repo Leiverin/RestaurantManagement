@@ -27,11 +27,17 @@ public interface ProductDao {
     @Update
     void updateProduct(Product product);
 
-    @Query("SELECT id FROM Product WHERE id = :id")
-    String findProductById(String id);
+    @Query("UPDATE Product SET amount = :amount WHERE id = :id AND idTable = :idTable")
+    void updateAmount(int amount, String id, String idTable);
+
+    @Query("SELECT id FROM Product WHERE id = :id AND idTable = :idTable")
+    String findProductById(String id, String idTable);
 
     @Query("SELECT * FROM Product WHERE idTable = :idTable")
     List<Product> getProductByIdTable(String idTable);
+
+    @Query("SELECT * FROM Product WHERE idTable = :idTable")
+    LiveData<List<Product>> getProductByIdTableLiveData(String idTable);
 
     @Delete
     void deleteProduct(Product product);

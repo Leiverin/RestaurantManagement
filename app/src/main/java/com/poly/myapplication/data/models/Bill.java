@@ -6,21 +6,19 @@ import java.util.List;
 
 public class Bill {
     @SerializedName("_id")
-    private String id = null;
-    private String date = null;
-    private String time = null;
-    private double totalPrice = 0;
-    private int checkoutType = 0;
-    private int status = 0;
+    private String id;
+    private String date;
+    private String time;
+    private double totalPrice;
+    private int checkoutType;
+    private int status;
     private List<Product> foods;
-    private String idTable = null;
-    private String idCustomer = null;
-    private String idStaff = null;
+    private Table table;
+    private String idCustomer;
+    private String idStaff;
 
-    public Bill() {
-    }
 
-    public Bill(String id, String date, String time, double totalPrice, int checkoutType, int status, List<Product> foods, String idTable, String idCustomer, String idStaff) {
+    public Bill(String id, String date, String time, double totalPrice, int checkoutType, int status, List<Product> foods, Table table, String idCustomer, String idStaff) {
         this.id = id;
         this.date = date;
         this.time = time;
@@ -28,7 +26,7 @@ public class Bill {
         this.checkoutType = checkoutType;
         this.status = status;
         this.foods = foods;
-        this.idTable = idTable;
+        this.table = table;
         this.idCustomer = idCustomer;
         this.idStaff = idStaff;
     }
@@ -89,12 +87,12 @@ public class Bill {
         this.foods = foods;
     }
 
-    public String getIdTable() {
-        return idTable;
+    public Table getTable() {
+        return table;
     }
 
-    public void setIdTable(String idTable) {
-        this.idTable = idTable;
+    public void setTable(Table table) {
+        this.table = table;
     }
 
     public String getIdCustomer() {

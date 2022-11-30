@@ -41,45 +41,4 @@ public class MainDishesViewModel extends BaseViewModel {
     private void handleErrors(Throwable throwable) {
         Log.e("TAG", "handleErrors: "+ throwable.getMessage());
     }
-
-    public List<Product> getListProduct(){
-        return productDao.getListProducts();
-    }
-
-
-    public void insertProduct(Product product){
-        appExecutors.diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                productDao.insertProduct(product);
-            }
-        });
-    }
-
-    public void updateProduct(Product product){
-        appExecutors.diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                productDao.updateProduct(product);
-            }
-        });
-    }
-
-    public void deleteProduct(Product product){
-        appExecutors.diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                productDao.deleteProduct(product);
-            }
-        });
-    }
-
-    public String getProductById(String id){
-        return productDao.findProductById(id);
-    }
-
-    public LiveData<List<Product>> getLocalProductsLiveData(){
-        return productDao.getProducts();
-    }
-
 }

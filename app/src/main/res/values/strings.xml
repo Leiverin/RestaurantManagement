@@ -20,7 +20,7 @@
     <string name="textAddFood">This table is not have a product</string>
     <string name="hintSearchFood">Search food …</string>
 
-<!--    Tab layout-->
+    <!--    Tab layout-->
     <string name="appetizer">Appetizer</string>
     <string name="main">Main dishes</string>
     <string name="desserts">Desserts</string>

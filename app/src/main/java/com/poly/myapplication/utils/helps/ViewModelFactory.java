@@ -11,6 +11,7 @@ import com.poly.myapplication.ui.activities.product.appetizer.AppetizerViewModel
 import com.poly.myapplication.ui.activities.product.desserts.DessertViewModel;
 import com.poly.myapplication.ui.activities.product.drinks.DrinksViewModel;
 import com.poly.myapplication.ui.activities.product.main.MainDishesViewModel;
+import com.poly.myapplication.ui.activities.table.TableDetailViewModel;
 import com.poly.myapplication.ui.activities.verify.VerifyViewModel;
 import com.poly.myapplication.ui.bottomsheet.BottomSheetProductViewModel;
 
@@ -38,6 +39,8 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             return (T) new VerifyViewModel(context);
         }else if (modelClass == MainDishesViewModel.class){
             return (T) new MainDishesViewModel(context);
+        }else if (modelClass == TableDetailViewModel.class){
+            return (T) new TableDetailViewModel(context);
         }else{
             return ViewModelProvider.Factory.super.create(modelClass);
         }

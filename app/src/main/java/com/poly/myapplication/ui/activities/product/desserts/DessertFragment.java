@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.poly.myapplication.R;
 import com.poly.myapplication.data.models.Product;
 import com.poly.myapplication.databinding.FragmentDessertBinding;
@@ -49,19 +50,22 @@ public class DessertFragment extends Fragment {
         binding.prgLoadProduct.setVisibility(View.VISIBLE);
         mListDessert = new ArrayList<>();
         sharePreference = new AppSharePreference(getContext());
+
         adapter = new ProductAdapter(mListDessert, new IOnEventProductListener() {
             @Override
-            public void onClickIncrease(@NonNull Product product, @NonNull TextView tvQuantity) {
+            public void onClickIncrease(@NonNull Product product, @NonNull TextView tvQuantity, int position) {
                 Constants.handleIncrease(tvQuantity, Constants.TYPE_IN_PRODUCT);
                 int quantity = Integer.parseInt(tvQuantity.getText().toString().subSequence(1, tvQuantity.getText().toString().length()).toString());
                 handleAddProduct(product, quantity);
+                adapter.getMListProduct().get(position).setAmount(quantity);
             }
 
             @Override
-            public void onClickDecrease(@NonNull Product product, @NonNull TextView tvQuantity) {
+            public void onClickDecrease(@NonNull Product product, @NonNull TextView tvQuantity, int position) {
                 Constants.handleDecrease(tvQuantity, Constants.TYPE_IN_PRODUCT);
                 int quantity = Integer.parseInt(tvQuantity.getText().toString().subSequence(1, tvQuantity.getText().toString().length()).toString());
                 handleDecreaseProduct(product, quantity);
+                adapter.getMListProduct().get(position).setAmount(quantity);
             }
 
             @Override
@@ -76,16 +80,16 @@ public class DessertFragment extends Fragment {
             public void onChanged(List<Product> products) {
                 if (products != null){
                     for (int i = 0; i < products.size(); i++){
-                        if (mViewModel.getListProduct().size() != 0){
-                            for (int j = 0; j < mViewModel.getListProduct().size(); j++){
-                                if (products.get(i).getId().equals(mViewModel.getListProduct().get(j).getId())){
-                                    products.set(i, mViewModel.getListProduct().get(j));
+                        if (mViewModel.getListProductByIdTable(sharePreference.getTableId()).size() != 0){
+                            for (int j = 0; j < mViewModel.getListProductByIdTable(sharePreference.getTableId()).size(); j++){
+                                if (products.get(i).getId().equals(mViewModel.getListProductByIdTable(sharePreference.getTableId()).get(j).getId())){
+                                    products.set(i, mViewModel.getListProductByIdTable(sharePreference.getTableId()).get(j));
                                 }
                             }
                         }
                     }
                     mListDessert = products;
-                    adapter.setList(products);
+                    adapter.setList(mListDessert);
                     binding.prgLoadProduct.setVisibility(View.GONE);
                 }
             }
@@ -114,11 +118,12 @@ public class DessertFragment extends Fragment {
     }
 
     private void handleDecreaseProduct(Product product, int quantity) {
-        if (mViewModel.getProductById(product.getId()) != null){
+        if (mViewModel.getProductById(product.getId(), sharePreference.getTableId()) != null){
             if (quantity == 0){
                 mViewModel.deleteProduct(product);
             }
             mViewModel.updateProduct(new Product(
+                    product.getIdProduct(),
                     product.getId(), product.getName(), product.getUrlImage(), product.getPrice(), product.getTotal(), quantity,
                     product.getType(),
                     product.getIdCategory(),
@@ -129,20 +134,16 @@ public class DessertFragment extends Fragment {
     }
 
     private void handleAddProduct(Product product, int quantity) {
-        if (mViewModel.getProductById(product.getId()) == null){
+        if (mViewModel.getProductById(product.getId(), sharePreference.getTableId()) == null){
             mViewModel.insertProduct(new Product(
+                    null,
                     product.getId(), product.getName(), product.getUrlImage(), product.getPrice(), product.getTotal(), quantity,
                     product.getType(),
                     product.getIdCategory(),
                     sharePreference.getTableId()
             ));
         }else{
-            mViewModel.updateProduct(new Product(
-                    product.getId(), product.getName(), product.getUrlImage(), product.getPrice(), product.getTotal(), quantity,
-                    product.getType(),
-                    product.getIdCategory(),
-                    sharePreference.getTableId()
-            ));
+            mViewModel.updateAmountProduct(quantity, product.getId(), sharePreference.getTableId());
         }
     }
 
@@ -156,5 +157,12 @@ public class DessertFragment extends Fragment {
             }
         });
     }
+
+    @Override
+    public void onResume() {
+//        adapter.setList(mViewModel.getListProductByIdTable(sharePreference.getTableId()));
+        super.onResume();
+    }
+
 
 }

@@ -1,13 +1,11 @@
 package com.poly.myapplication.data.retrofit;
 
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetroInstance {
-    public static String baseURL = "https://restaurant-order.onrender.com/restaurant/api/";
+    public static String baseURL = "https://restaurant-server-eight.vercel.app/restaurant/api/";
     public static Retrofit retrofit;
 
     public static Retrofit getRetrofitInstance(){
@@ -20,5 +18,4 @@ public class RetroInstance {
         }
         return retrofit;
     }
-
 }
