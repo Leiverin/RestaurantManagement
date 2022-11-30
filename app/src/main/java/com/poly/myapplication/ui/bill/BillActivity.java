@@ -1,40 +1,21 @@
 package com.poly.myapplication.ui.bill;
 
-import android.app.Dialog;
-import android.app.TimePickerDialog;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.TimePicker;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.gson.Gson;
-import com.poly.myapplication.R;
 import com.poly.myapplication.data.models.Bill;
 import com.poly.myapplication.databinding.ActivityBillBinding;
-import com.poly.myapplication.databinding.DialogFilterBinding;
 import com.poly.myapplication.ui.bill.adapter.BillAdapter;
 import com.poly.myapplication.ui.bill.adapter.OnListener;
 import com.poly.myapplication.utils.Constants;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class BillActivity extends AppCompatActivity {
@@ -55,9 +36,6 @@ public class BillActivity extends AppCompatActivity {
         binding.prgLoadBill.setVisibility(View.VISIBLE);
         binding.rvBill.setVisibility(View.GONE);
         list = new ArrayList<>();
-        binding.imgFilter.setOnClickListener(view -> {
-            dialogBottomSheetFilter();
-        });
         initRec();
         initViewModel();
     }
@@ -91,60 +69,6 @@ public class BillActivity extends AppCompatActivity {
             }
         });
         viewModel.getBill();
-    }
-
-    private void dialogBottomSheetFilter() {
-        Dialog dialog = new Dialog(BillActivity.this);
-        DialogFilterBinding bindingFilter = DialogFilterBinding.inflate(LayoutInflater.from(BillActivity.this));
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(bindingFilter.getRoot());
-        final Calendar calendar = Calendar.getInstance();
-        // time first
-        TimePickerDialog.OnTimeSetListener timeFirst = new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                calendar.set(Calendar.HOUR_OF_DAY, selectedHour);
-                calendar.set(Calendar.MINUTE, selectedMinute);
-                bindingFilter.timeFirstTv.setText("Time first :" + selectedHour + ":" + selectedMinute);
-            }
-        };
-        // time second
-        TimePickerDialog.OnTimeSetListener timeSecond = new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                calendar.set(Calendar.HOUR_OF_DAY, selectedHour);
-                calendar.set(Calendar.MINUTE, selectedMinute);
-                bindingFilter.timeSecondTv.setText("Time first :" + selectedHour + ":" + selectedMinute);
-            }
-        };
-        bindingFilter.btnFirstTime.setOnClickListener(view -> {
-            new TimePickerDialog(BillActivity.this, timeFirst, calendar.get(Calendar.HOUR_OF_DAY),
-                    calendar.get(Calendar.MINUTE), true).show();
-        });
-        bindingFilter.btnSecondTime.setOnClickListener(view -> {
-            new TimePickerDialog(BillActivity.this, timeSecond, calendar.get(Calendar.HOUR_OF_DAY),
-                    calendar.get(Calendar.MINUTE), true).show();
-        });
-        bindingFilter.btnCloseDialog.setOnClickListener(view -> {
-            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-            String str1 = bindingFilter.timeFirstTv.getText().toString();
-            String str2 = bindingFilter.timeSecondTv.getText().toString();
-            try {
-                Date time1 = sdf.parse(str1);
-                Date time2 = sdf.parse(str2);
-                if (time1.compareTo(time2) > 0) {
-                    Toast.makeText(this, "abc", Toast.LENGTH_SHORT).show();
-                }
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            dialog.dismiss();
-        });
-        dialog.show();
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
-        dialog.getWindow().setGravity(Gravity.BOTTOM);
     }
 
 }

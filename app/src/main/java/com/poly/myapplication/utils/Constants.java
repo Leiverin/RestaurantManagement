@@ -27,12 +27,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 @SuppressLint("SetTextI18n")
-
 public class Constants {
     public static String EXTRA_TABLE_TO_DETAIL = "extra_table_to_detail";
-    public static String BASE_URL = "https://restaurant-order.onrender.com/restaurant/api/";
+    public static String TABLE_ID_SELECTED = "TABLE_ID_SELECTED";
+    public static String BASE_URL = "https://restaurant-server-eight.vercel.app/restaurant/api/";
     public static int TYPE_IN_TABLE = 0;
     public static int TYPE_IN_PRODUCT = 1;
+    public static int CHECKOUT_BY_TRANSFER = 1;
+    public static int CHECKOUT_BY_SWIPE = 1;
 
     public static void handleIncrease(TextView tvQuantity, int type) {
         if (type == TYPE_IN_TABLE) {
@@ -62,27 +64,6 @@ public class Constants {
             }
         }
     }
-
-    public static void setNameTable(Bill bill, TextView txtNameTable) {
-        ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
-        Call<List<Table>> call = serviceAPI.getTableByFloorBill(1);
-        call.enqueue(new Callback<List<Table>>() {
-            @Override
-            public void onResponse(Call<List<Table>> call, Response<List<Table>> response) {
-                assert response.body() != null;
-                for (int i = 0; i < response.body().size(); i++) {
-                    if (Objects.equals(bill.getIdTable(), response.body().get(i).getId())) {
-                        txtNameTable.setText(response.body().get(i).getName());
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Table>> call, Throwable t) {
-            }
-        });
-    }
-
     public static void setOnStatus(Bill bill) {
         Bill bill1 = new Bill();
         bill1.setStatus(1);
@@ -108,7 +89,7 @@ public class Constants {
         DialogShowDetailBillBinding showDetailBillBinding = DialogShowDetailBillBinding.inflate(LayoutInflater.from(context));
         builder.setView(showDetailBillBinding.getRoot());
         AlertDialog dialog = builder.create();
-        Constants.setNameTable(bill, showDetailBillBinding.txtNameTable);
+        showDetailBillBinding.txtNameTable.setText(bill.getTable().getName());
         showDetailBillBinding.tvTime.setText(bill.getTime());
         showDetailBillBinding.tvDate.setText(bill.getDate());
         showDetailBillBinding.tvPrice.setText(bill.getTotalPrice() + "");

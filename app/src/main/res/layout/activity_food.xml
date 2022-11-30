@@ -9,11 +9,11 @@
             type="com.poly.myapplication.ui.activities.product.FoodViewModel" />
     </data>
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.activities.product.FoodActivity">
-
+        tools:context=".ui.activities.product.FoodActivity"
+        >
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="vertical"
@@ -22,7 +22,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="140dp"
-                android:background="@color/colorPrimary">
+                >
 
                 <com.google.android.material.appbar.AppBarLayout
                     android:layout_width="match_parent"
@@ -31,7 +31,7 @@
                     <androidx.appcompat.widget.Toolbar
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/colorPrimary">
+                        android:background="@color/color_bottom_sheet">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -39,19 +39,19 @@
                             android:layout_marginEnd="15dp"
                             android:layout_height="wrap_content">
 
-                        <EditText
-                            style="@style/editTextSearch"
-                            android:id="@+id/ed_search"
-                            android:hint="@string/hintSearchFood"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
+                            <EditText
+                                style="@style/editTextSearch"
+                                android:id="@+id/ed_search"
+                                android:hint="@string/hintSearchFood"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
 
                             <com.google.android.material.tabs.TabLayout
                                 android:id="@+id/tab_layout"
                                 android:layout_marginTop="12dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@color/colorPrimary"
+                                android:background="@color/color_bottom_sheet"
                                 style="@style/text_in_tab_style"
                                 app:tabTextAppearance="@style/text_size_18sp_regular"
                                 android:textSize="16sp"
@@ -59,13 +59,68 @@
                         </LinearLayout>
                     </androidx.appcompat.widget.Toolbar>
 
-            </com.google.android.material.appbar.AppBarLayout>
-        </LinearLayout>
+                </com.google.android.material.appbar.AppBarLayout>
+
+            </LinearLayout>
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/pager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+
         </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+        <LinearLayout
+            android:id="@+id/view_bottom_sheet"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:layout_gravity="bottom"
+            android:background="@drawable/bg_bottom_sheet_order">
+
+            <TextView
+                android:id="@+id/tv_title_bottom_sheet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/text_size_22sp_bold"
+                android:text="@string/push_product" />
+
+            <RelativeLayout
+                android:id="@+id/view_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="18dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:paddingRight="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_white_radius">
+
+                <ImageView
+                    android:id="@+id/img_cart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/ic_cart" />
+
+                <TextView
+                    android:id="@+id/tv_total_dishes"
+                    style="@style/text_size_18sp_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total: 3 dishes" />
+
+                <TextView
+                    android:id="@+id/tv_name_product"
+                    style="@style/text_size_18sp_bold"
+                    android:layout_width="220dp"
+                    android:layout_below="@id/tv_total_dishes"
+                    android:layout_marginTop="3dp"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:text="Capuchino, Latte, ..." />
+            </RelativeLayout>
+        </LinearLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 </layout>

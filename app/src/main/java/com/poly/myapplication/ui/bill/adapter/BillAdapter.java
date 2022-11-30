@@ -40,7 +40,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillHolder> {
     public void onBindViewHolder(@NonNull BillHolder holder, int position) {
         Bill bill = mListBill.get(position);
         if (bill != null) {
-            Constants.setNameTable(bill, holder.binding.txtNameTable);
+            holder.binding.txtNameTable.setText(bill.getTable().getName());
             holder.binding.txtMoney.setText(" " + bill.getTotalPrice());
             holder.binding.txtTime.setText(bill.getTime());
             holder.binding.txtDate.setText(bill.getDate() + "");

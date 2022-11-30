@@ -9,6 +9,7 @@
     <string name="textContactManagement">Liên hệ quản lý</string>
     <string name="textBtnLogin">Login</string>
     <string name="titleTableFragment">Orders Management</string>
+
     <string name="textTableFlow">Flow 1</string>
     <string name="textLiveTable">Live table : 0</string>
     <string name="textEmptyTable">Empty table : 7</string>
@@ -33,4 +34,5 @@
 
     <string name="floor">Floor</string>
     <string name="add">Add</string>
+    <string name="push_product">Push product</string>
 </resources>

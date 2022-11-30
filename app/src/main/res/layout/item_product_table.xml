@@ -45,6 +45,9 @@
                     android:id="@+id/tv_name_product"
                     style="@style/text_size_16sp_bold"
                     android:text="Chicken"
+                    android:layout_marginRight="36dp"
+                    android:ellipsize="end"
+                    android:maxLines="2"
                     android:textSize="20sp" />
 
                 <TextView

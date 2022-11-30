@@ -3,6 +3,7 @@ package com.poly.myapplication.data.retrofit;
 import com.poly.myapplication.data.models.Bill;
 import com.poly.myapplication.data.models.Product;
 import com.poly.myapplication.data.models.Table;
+import com.poly.myapplication.data.models.BodyDate;
 
 import java.util.List;
 
@@ -20,10 +21,6 @@ public interface ServiceAPI {
     // Get table by floor
     @GET("table/all/{floor}")
     Observable<List<Table>> getTableByFloor(
-            @Path("floor") int floor
-    );
-    @GET("table/all/{floor}")
-    Call<List<Table>> getTableByFloorBill(
             @Path("floor") int floor
     );
 
@@ -63,4 +60,10 @@ public interface ServiceAPI {
 
     @GET("bill/all/{status}")
     Call<List<Bill>> getTypeBill(@Path("status") int status);
+
+    @POST("bill/filter/{idTable}")
+    Call<List<Bill>> getBillByDate(
+            @Path("idTable") String idTable,
+            @Body BodyDate bodyDate
+    );
 }

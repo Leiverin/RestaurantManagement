@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,9 +21,12 @@ import com.poly.myapplication.R;
 import com.poly.myapplication.data.models.Bill;
 import com.poly.myapplication.data.models.Product;
 import com.poly.myapplication.databinding.FragmentAppetizerBinding;
+import com.poly.myapplication.preference.AppSharePreference;
+import com.poly.myapplication.ui.activities.product.FoodActivity;
 import com.poly.myapplication.ui.activities.product.appetizer.adapter.IOnEventProductListener;
 import com.poly.myapplication.ui.activities.product.appetizer.adapter.ProductAdapter;
 import com.poly.myapplication.utils.Constants;
+import com.poly.myapplication.utils.helps.ViewModelFactory;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -35,7 +39,7 @@ public class AppetizerFragment extends Fragment {
     private AppetizerViewModel mViewModel;
     private ProductAdapter adapter;
     private List<Product> mListAppetizer;
-    private List<Product> mListProductBill;
+    private AppSharePreference sharePreference;
     public static AppetizerFragment newInstance() {
         return new AppetizerFragment();
     }
@@ -43,22 +47,27 @@ public class AppetizerFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        mViewModel = new ViewModelProvider(this).get(AppetizerViewModel.class);
+        ViewModelFactory factory = new ViewModelFactory(getContext());
+        mViewModel = new ViewModelProvider(this, factory).get(AppetizerViewModel.class);
         binding = FragmentAppetizerBinding.inflate(getLayoutInflater());
         mListAppetizer = new ArrayList<>();
+        sharePreference = new AppSharePreference(getContext());
         binding.prgLoadProduct.setVisibility(View.VISIBLE);
-        mListProductBill = new ArrayList<>();
         adapter = new ProductAdapter(mListAppetizer, new IOnEventProductListener() {
             @Override
-            public void onClickIncrease(@NonNull Product product, TextView tvQuantity) {
-                mListProductBill.add(product);
+            public void onClickIncrease(@NonNull Product product, TextView tvQuantity, int position) {
                 Constants.handleIncrease(tvQuantity, Constants.TYPE_IN_PRODUCT);
+                int quantity = Integer.parseInt(tvQuantity.getText().toString().subSequence(1, tvQuantity.getText().toString().length()).toString());
+                handleAddProduct(product, quantity);
+                adapter.getMListProduct().get(position).setAmount(quantity);
             }
 
             @Override
-            public void onClickDecrease(@NonNull Product product, TextView tvQuantity) {
+            public void onClickDecrease(@NonNull Product product, TextView tvQuantity, int position) {
                 Constants.handleDecrease(tvQuantity, Constants.TYPE_IN_PRODUCT);
-
+                int quantity = Integer.parseInt(tvQuantity.getText().toString().subSequence(1, tvQuantity.getText().toString().length()).toString());
+                handleDecreaseProduct(product, quantity);
+                adapter.getMListProduct().get(position).setAmount(quantity);
             }
 
             @Override
@@ -72,6 +81,15 @@ public class AppetizerFragment extends Fragment {
             @Override
             public void onChanged(List<Product> products) {
                 if (products != null){
+                    for (int i = 0; i < products.size(); i++){
+                        if (mViewModel.getListProduct().size() != 0){
+                            for (int j = 0; j < mViewModel.getListProduct().size(); j++){
+                                if (products.get(i).getId().equals(mViewModel.getListProduct().get(j).getId())){
+                                    products.set(i, mViewModel.getListProduct().get(j));
+                                }
+                            }
+                        }
+                    }
                     mListAppetizer = products;
                     adapter.setList(products);
                     binding.prgLoadProduct.setVisibility(View.GONE);
@@ -79,7 +97,6 @@ public class AppetizerFragment extends Fragment {
             }
         });
 
-        mViewModel.callToGetAppetizer();
 
         mViewModel.mBillLiveData.observe(getViewLifecycleOwner(), new Observer<Bill>() {
             @Override
@@ -91,6 +108,75 @@ public class AppetizerFragment extends Fragment {
                 }
             }
         });
+
+        eventScrollRecycleView();
+        mViewModel.callToGetAppetizer();
+
+        initListener();
         return binding.getRoot();
+    }
+
+
+    private void eventScrollRecycleView() {
+        int height = ((FoodActivity) requireActivity()).findViewById(R.id.view_bottom_sheet).getHeight();
+        binding.rvAppetizer.setPadding(0, 0, 0, height);
+        binding.rvAppetizer.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                if (newState == 0){
+                    ((FoodActivity) requireActivity()).isScrollingLiveData.postValue(false);
+                }else{
+                    ((FoodActivity) requireActivity()).isScrollingLiveData.postValue(true);
+                }
+            }
+        });
+    }
+
+    private void handleDecreaseProduct(Product product, int quantity) {
+        if (mViewModel.getProductById(product.getId(), sharePreference.getTableId()) != null){
+            if (quantity == 0){
+                mViewModel.deleteProduct(product);
+            }
+            mViewModel.updateProduct(new Product(
+                    product.getIdProduct(),
+                    product.getId(), product.getName(), product.getUrlImage(), product.getPrice(), product.getTotal(), quantity,
+                    product.getType(),
+                    product.getIdCategory(),
+                    sharePreference.getTableId()
+            ));
+
+        }
+    }
+
+    private void handleAddProduct(Product product, int quantity) {
+        if (mViewModel.getProductById(product.getId(), sharePreference.getTableId()) == null){
+            mViewModel.insertProduct(new Product(
+                    null,
+                    product.getId(), product.getName(), product.getUrlImage(), product.getPrice(), product.getTotal(),
+                    quantity,
+                    product.getType(),
+                    product.getIdCategory(),
+                    sharePreference.getTableId()
+            ));
+        }else{
+            mViewModel.updateAmountProduct(quantity, product.getId(), sharePreference.getTableId());
+        }
+    }
+
+    private void initListener() {
+        mViewModel.getLocalProductsLiveData().observe(getViewLifecycleOwner(), new Observer<List<Product>>() {
+            @Override
+            public void onChanged(List<Product> products) {
+                if (products != null && products.size() != 0){
+
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onResume() {
+//        adapter.setList(mViewModel.getListProductByIdTable(sharePreference.getTableId()));
+        super.onResume();
     }
 }

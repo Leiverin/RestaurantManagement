@@ -24,8 +24,10 @@ import com.google.gson.Gson;
 import com.poly.myapplication.R;
 import com.poly.myapplication.data.models.Bill;
 import com.poly.myapplication.data.models.Table;
+import com.poly.myapplication.data.models.BodyDate;
 import com.poly.myapplication.databinding.ActivityHistoryBinding;
 import com.poly.myapplication.databinding.DialogFilterBinding;
+import com.poly.myapplication.ui.activities.manage.TableManageViewModel;
 import com.poly.myapplication.ui.bill.adapter.OnListener;
 import com.poly.myapplication.ui.history.adapter.HistoryAdapter;
 import com.poly.myapplication.ui.history.adapter.SpinnerTableAdapter;
@@ -34,6 +36,8 @@ import com.poly.myapplication.utils.view.CustomSpinner;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -43,12 +47,15 @@ public class HistoryActivity extends AppCompatActivity implements CustomSpinner.
     private List<Bill> list;
     private List<Table> tableList;
     private HistoryViewModel viewModel;
+    private TableManageViewModel tableManageViewModel;
     private SpinnerTableAdapter spinnerTableAdapter;
+    String firstDate, secondDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = new ViewModelProvider(this).get(HistoryViewModel.class);
+        tableManageViewModel = new ViewModelProvider(this).get(TableManageViewModel.class);
         binding = ActivityHistoryBinding.inflate(getLayoutInflater());
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -89,7 +96,6 @@ public class HistoryActivity extends AppCompatActivity implements CustomSpinner.
                 adapter.setList(list);
                 binding.rvHistory.setVisibility(View.VISIBLE);
                 binding.prgLoadBill.setVisibility(View.GONE);
-                Log.d("zzz", new Gson().toJson(list));
             }
         });
         viewModel.getHis();
@@ -109,6 +115,7 @@ public class HistoryActivity extends AppCompatActivity implements CustomSpinner.
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                 bindingFilter.timeFirstTv.setText("Time first :" + dayOfMonth + "/" + (month + 1) + "/" + year);
+                firstDate = +dayOfMonth + "/" + (month + 1) + "/" + year;
             }
         };
         // date second
@@ -119,6 +126,7 @@ public class HistoryActivity extends AppCompatActivity implements CustomSpinner.
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                 bindingFilter.timeSecondTv.setText("Time second :" + dayOfMonth + "/" + (month + 1) + "/" + year);
+                secondDate = dayOfMonth + "/" + (month + 1) + "/" + year;
             }
         };
         bindingFilter.btnFirstTime.setOnClickListener(view -> {
@@ -130,6 +138,14 @@ public class HistoryActivity extends AppCompatActivity implements CustomSpinner.
                     calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
         });
         bindingFilter.btnCloseDialog.setOnClickListener(view -> {
+            viewModel.mListHisLiveData.observe(this, new Observer<List<Bill>>() {
+                @Override
+                public void onChanged(List<Bill> bills) {
+                    list = bills;
+                    adapter.setList(list);
+                }
+            });
+            viewModel.getBillByDate(list.get(0).getTable().getId(), new BodyDate(firstDate, secondDate));
             dialog.dismiss();
         });
 
@@ -142,16 +158,27 @@ public class HistoryActivity extends AppCompatActivity implements CustomSpinner.
 
     private void spinnerTable() {
         binding.spinnerTable.setSpinnerEventsListener(this);
-        for (int i = 1; i <= 8; i++) {
-            tableList.add(new Table(null, "Table " + i, null, 0, null));
-        }
+        tableManageViewModel.mListTableLiveData.observe(this, new Observer<List<Table>>() {
+            @Override
+            public void onChanged(List<Table> tables) {
+                Collections.sort(tables, new Comparator<Table>() {
+                    @Override
+                    public int compare(Table t1, Table t2) {
+                        return t1.getName().compareTo(t2.getName());
+                    }
+                });
+                tableList = tables;
+                spinnerTableAdapter.setList(tables);
+            }
+        });
+        tableManageViewModel.callToGetTable();
         spinnerTableAdapter = new SpinnerTableAdapter(HistoryActivity.this, tableList);
         binding.spinnerTable.setAdapter(spinnerTableAdapter);
         binding.spinnerTable.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                int index = adapterView.getSelectedItemPosition();
-                Log.d("abc", String.valueOf(index));
+                Table table = tableList.get(i);
+                filter(table.getName());
             }
 
             @Override
@@ -169,5 +196,15 @@ public class HistoryActivity extends AppCompatActivity implements CustomSpinner.
     @Override
     public void onPopupWindowClosed(Spinner spinner) {
         binding.spinnerTable.setBackground(getResources().getDrawable(R.drawable.bg_spinner_table));
+    }
+
+    private void filter(String text) {
+        List<Bill> billList = new ArrayList<>();
+        for (Bill bill : list) {
+            if (bill.getTable().getName().contains(text)) {
+                billList.add(bill);
+            }
+        }
+        adapter.setList(billList);
     }
 }

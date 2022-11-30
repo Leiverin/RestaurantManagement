@@ -17,7 +17,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:fontFamily="@font/josefinslab_bold"
-        android:text="Name" />
+        android:fontFamily="@font/judson_regular"
+        android:text="Name"
+        android:textColor="@color/black" />
 
 </LinearLayout>

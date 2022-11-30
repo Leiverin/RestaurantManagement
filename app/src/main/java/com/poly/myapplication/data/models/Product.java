@@ -12,8 +12,9 @@ import com.google.gson.annotations.SerializedName;
 @Entity(tableName = "Product")
 public class Product implements Parcelable {
     @NonNull
+    @PrimaryKey(autoGenerate = true)
+    private Long idProduct;
     @SerializedName("_id")
-    @PrimaryKey(autoGenerate = false)
     private String id;
     private String name;
     private String urlImage;
@@ -22,11 +23,13 @@ public class Product implements Parcelable {
     private int amount;
     private int type;
     private String idCategory;
+    private String idTable;
 
     public Product() {
     }
 
-    public Product(String id, String name, String urlImage, double price, int total, int amount, int type, String idCategory) {
+    public Product(Long idProduct, String id, String name, String urlImage, double price, int total, int amount, int type, String idCategory, String idTable) {
+        this.idProduct = idProduct;
         this.id = id;
         this.name = name;
         this.urlImage = urlImage;
@@ -35,10 +38,15 @@ public class Product implements Parcelable {
         this.amount = amount;
         this.type = type;
         this.idCategory = idCategory;
+        this.idTable = idTable;
     }
 
-
     protected Product(Parcel in) {
+        if (in.readByte() == 0) {
+            idProduct = null;
+        } else {
+            idProduct = in.readLong();
+        }
         id = in.readString();
         name = in.readString();
         urlImage = in.readString();
@@ -47,10 +55,17 @@ public class Product implements Parcelable {
         amount = in.readInt();
         type = in.readInt();
         idCategory = in.readString();
+        idTable = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        if (idProduct == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(idProduct);
+        }
         dest.writeString(id);
         dest.writeString(name);
         dest.writeString(urlImage);
@@ -59,6 +74,7 @@ public class Product implements Parcelable {
         dest.writeInt(amount);
         dest.writeInt(type);
         dest.writeString(idCategory);
+        dest.writeString(idTable);
     }
 
     @Override
@@ -77,6 +93,15 @@ public class Product implements Parcelable {
             return new Product[size];
         }
     };
+
+    @NonNull
+    public Long getIdProduct() {
+        return idProduct;
+    }
+
+    public void setIdProduct(@NonNull Long idProduct) {
+        this.idProduct = idProduct;
+    }
 
     public String getId() {
         return id;
@@ -142,5 +167,11 @@ public class Product implements Parcelable {
         this.amount = amount;
     }
 
+    public String getIdTable() {
+        return idTable;
+    }
 
+    public void setIdTable(String idTable) {
+        this.idTable = idTable;
+    }
 }

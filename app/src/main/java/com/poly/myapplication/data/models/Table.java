@@ -13,17 +13,15 @@ public class Table implements Parcelable {
     private String name;
     private String capacity;
     private int status;
-    private List<Staff> staffs;
 
     public Table() {
     }
 
-    public Table(String id, String name, String capacity, int status, List<Staff> staffs) {
+    public Table(String id, String name, String capacity, int status) {
         this.id = id;
         this.name = name;
         this.capacity = capacity;
         this.status = status;
-        this.staffs = staffs;
     }
 
     protected Table(Parcel in) {
@@ -75,14 +73,6 @@ public class Table implements Parcelable {
 
     public void setStatus(int status) {
         this.status = status;
-    }
-
-    public List<Staff> getStaffs() {
-        return staffs;
-    }
-
-    public void setStaffs(List<Staff> staffs) {
-        this.staffs = staffs;
     }
 
     @Override

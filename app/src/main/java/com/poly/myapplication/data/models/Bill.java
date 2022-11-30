@@ -9,30 +9,29 @@ import java.util.List;
 
 public class Bill implements Parcelable {
     @SerializedName("_id")
-    private String id = null;
-    private String date = null;
-    private String time = null;
-    private double totalPrice = 0;
-    private int checkoutType = 0;
-    private int status = 0;
-    @SerializedName("foods")
-    private List<Product> products;
-    private String idTable = null;
-    private String idCustomer = null;
-    private String idStaff = null;
+    private String id;
+    private String date;
+    private String time;
+    private double totalPrice;
+    private int checkoutType;
+    private int status;
+    private List<Product> foods;
+    private Table table;
+    private String idCustomer;
+    private String idStaff;
 
     public Bill() {
     }
 
-    public Bill(String id, String date, String time, double totalPrice, int checkoutType, int status, List<Product> products, String idTable, String idCustomer, String idStaff) {
+    public Bill(String id, String date, String time, double totalPrice, int checkoutType, int status, List<Product> foods, Table table, String idCustomer, String idStaff) {
         this.id = id;
         this.date = date;
         this.time = time;
         this.totalPrice = totalPrice;
         this.checkoutType = checkoutType;
         this.status = status;
-        this.products = products;
-        this.idTable = idTable;
+        this.foods = foods;
+        this.table = table;
         this.idCustomer = idCustomer;
         this.idStaff = idStaff;
     }
@@ -45,8 +44,7 @@ public class Bill implements Parcelable {
         totalPrice = in.readDouble();
         checkoutType = in.readInt();
         status = in.readInt();
-        products = in.createTypedArrayList(Product.CREATOR);
-        idTable = in.readString();
+        table = in.readParcelable(Table.class.getClassLoader());
         idCustomer = in.readString();
         idStaff = in.readString();
     }
@@ -112,19 +110,19 @@ public class Bill implements Parcelable {
     }
 
     public List<Product> getProducts() {
-        return products;
+        return foods;
     }
 
-    public void setProducts(List<Product> products) {
-        this.products = products;
+    public void setProducts(List<Product> foods) {
+        this.foods = foods;
     }
 
-    public String getIdTable() {
-        return idTable;
+    public Table getTable() {
+        return table;
     }
 
-    public void setIdTable(String idTable) {
-        this.idTable = idTable;
+    public void setTable(Table table) {
+        this.table = table;
     }
 
     public String getIdCustomer() {
@@ -156,8 +154,7 @@ public class Bill implements Parcelable {
         parcel.writeDouble(totalPrice);
         parcel.writeInt(checkoutType);
         parcel.writeInt(status);
-        parcel.writeTypedList(products);
-        parcel.writeString(idTable);
+        parcel.writeParcelable(table, i);
         parcel.writeString(idCustomer);
         parcel.writeString(idStaff);
     }

@@ -5,15 +5,23 @@ public class Staff {
     private String name;
     private String phoneNumber;
     private int gender;
+    private String account;
+    private String password;
+    private int role;
+    private Floor floor;
 
     public Staff() {
     }
 
-    public Staff(String id, String name, String phoneNumber, int gender) {
+    public Staff(String id, String name, String phoneNumber, int gender, String account, String password, int role, Floor floor) {
         this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.gender = gender;
+        this.account = account;
+        this.password = password;
+        this.role = role;
+        this.floor = floor;
     }
 
     public String getId() {
@@ -46,5 +54,45 @@ public class Staff {
 
     public void setGender(int gender) {
         this.gender = gender;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public int getRole() {
+        return role;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
+    }
+
+    public Floor getFloor() {
+        return floor;
+    }
+
+    public void setFloor(Floor floor) {
+        this.floor = floor;
+    }
+
+    public Floor getIdFloor() {
+        return floor;
+    }
+
+    public void setIdFloor(Floor floor) {
+        this.floor = floor;
     }
 }
