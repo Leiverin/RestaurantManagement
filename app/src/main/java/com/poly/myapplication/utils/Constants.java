@@ -83,29 +83,6 @@ public class Constants {
         });
     }
 
-    public static String[] setNameById(String text) {
-        final String[] id = {null};
-        ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
-        Call<List<Table>> call = serviceAPI.getTableByFloorBill(1);
-        call.enqueue(new Callback<List<Table>>() {
-            @Override
-            public void onResponse(Call<List<Table>> call, Response<List<Table>> response) {
-                assert response.body() != null;
-                for (int i = 0; i < response.body().size(); i++) {
-                    if (Objects.equals(text, response.body().get(i).getName())) {
-                        id[i] =response.body().get(i).getId();
-                        Log.d("idTb", id[i]);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Table>> call, Throwable t) {
-            }
-        });
-        return id;
-    }
-
     public static void setOnStatus(Bill bill) {
         Bill bill1 = new Bill();
         bill1.setStatus(1);
