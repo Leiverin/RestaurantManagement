@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.google.gson.Gson;
 import com.poly.myapplication.data.models.Bill;
 import com.poly.myapplication.data.models.Product;
 import com.poly.myapplication.data.retrofit.RetroInstance;

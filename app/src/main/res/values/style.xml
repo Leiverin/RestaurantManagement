@@ -14,7 +14,7 @@
     // fragment login
     <style name="backFragmentLogin">
         <item name="android:paddingHorizontal" tools:targetApi="o">20dp</item>
-        <item name="android:background">@color/backColorLogin</item>
+        <item name="android:background">@color/color_bottom_sheet</item>
         <item name="android:gravity">center</item>
     </style>
 
@@ -54,14 +54,14 @@
     <style name="backBtnLogin">
         <item name="android:layout_marginTop">10dp</item>
         <item name="android:layout_gravity">center</item>
-        <item name="cardBackgroundColor">@color/backColorBtnLogin</item>
+        <item name="cardBackgroundColor">@color/white</item>
         <item name="cardCornerRadius">20dp</item>
     </style>
 
     <style name="textBtnLogin">
         <item name="android:fontFamily">@font/judson_regular</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/textColorBtnLogin</item>
+        <item name="android:textColor">@color/black</item>
         <item name="android:textSize">18sp</item>
         <item name="android:paddingRight">50dp</item>
         <item name="android:paddingLeft">50dp</item>
@@ -135,6 +135,16 @@
     </style>
 
     // style table
+
+    <style name="text_size_56sp_bold">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">56sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/judson_bold</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
     <style name="text_size_22sp_bold">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>

@@ -2,6 +2,7 @@ package com.poly.myapplication.data.retrofit;
 
 import com.poly.myapplication.data.models.Bill;
 import com.poly.myapplication.data.models.Product;
+import com.poly.myapplication.data.models.Staff;
 import com.poly.myapplication.data.models.Table;
 
 import java.util.List;
@@ -9,6 +10,8 @@ import java.util.List;
 import io.reactivex.rxjava3.core.Observable;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -60,4 +63,12 @@ public interface ServiceAPI {
             @Body Bill bill,
             @Query("_method") String method
     );
+
+    // login
+    @POST("staff/login")
+    Observable<Staff> login(
+            @Field("account") String account,
+            @Field("password") String password
+    );
+
 }

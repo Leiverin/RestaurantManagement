@@ -65,8 +65,6 @@ public class DrinksFragment extends Fragment {
                 int quantity = Integer.parseInt(tvQuantity.getText().toString().subSequence(1, tvQuantity.getText().toString().length()).toString());
                 handleAddProduct(product, quantity);
                 adapter.getMListProduct().get(position).setAmount(quantity);
-                Log.d("TAG", "quantity: "+ quantity);
-                Log.d("TAG", "onClickIncrease: "+ new Gson().toJson(mViewModel.getListProductByIdTable(sharePreference.getTableId())));
             }
 
             @Override
@@ -75,7 +73,6 @@ public class DrinksFragment extends Fragment {
                 int quantity = Integer.parseInt(tvQuantity.getText().toString().subSequence(1, tvQuantity.getText().toString().length()).toString());
                 handleDecreaseProduct(product, quantity);
                 adapter.getMListProduct().get(position).setAmount(quantity);
-                Log.d("TAG", "onClickDecrease: "+ new Gson().toJson(mViewModel.getListProductByIdTable(sharePreference.getTableId())));
             }
 
             @Override
