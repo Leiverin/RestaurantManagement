@@ -11,7 +11,9 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface ServiceAPI {
 
@@ -43,5 +45,19 @@ public interface ServiceAPI {
     @GET("bill/{idTable}/product")
     Observable<List<Product>> getListProductInBill(
         @Path("idTable") String idTable
+    );
+
+    // Check bill exist
+    @GET("bill/{idTable}/check")
+    Observable<List<Bill>> getBillIfExists(
+            @Path("idTable") String idTable
+    );
+
+    // Check bill exist
+    @PUT("bill/update/{id}")
+    Observable<Bill> updateBillById(
+            @Path("id") String id,
+            @Body Bill bill,
+            @Query("_method") String method
     );
 }
