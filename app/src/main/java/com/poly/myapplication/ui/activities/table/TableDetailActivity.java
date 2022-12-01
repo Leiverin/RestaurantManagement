@@ -158,8 +158,12 @@ public class TableDetailActivity extends AppCompatActivity {
         viewModel.mBillLiveData.observe(this, new Observer<List<Bill>>() {
             @Override
             public void onChanged(List<Bill> bill) {
-                if (bill != null){
-                    viewModel.callToUpdateBill(bill.get(0).getId(), new Bill(bill.get(0).getId(), date, time, total, 0, 0, mListProduct, table, "12321312", "6385ade7180bbd1b100746b6"));
+                if (bill != null && bill.size() != 0){
+                    if (mListProduct.size() != 0){
+                        viewModel.callToUpdateBill(bill.get(0).getId(), new Bill(bill.get(0).getId(), date, time, total, 0, 0, mListProduct, table, "12321312", "6385ade7180bbd1b100746b6"));
+                    }else{
+                        Toast.makeText(TableDetailActivity.this, "No products", Toast.LENGTH_SHORT).show();
+                    }
                 }else{
                     viewModel.callToCreateBill(new Bill(null, date, time, total, 0, 0, mListProduct, table, "12321312", "6385ade7180bbd1b100746b6"));
                 }

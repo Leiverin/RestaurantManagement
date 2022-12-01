@@ -101,6 +101,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:padding="16dp"
+                android:visibility="gone"
                 android:layout_gravity="bottom"
                 android:background="@color/color_bottom_sheet"
                 android:elevation="12dp"

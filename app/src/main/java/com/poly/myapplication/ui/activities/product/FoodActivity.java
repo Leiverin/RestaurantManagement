@@ -116,10 +116,10 @@ public class FoodActivity extends AppCompatActivity {
             }
         });
 
-        binding.viewContent.setOnClickListener(new View.OnClickListener() {
+        binding.btnOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                finish();
             }
         });
 
