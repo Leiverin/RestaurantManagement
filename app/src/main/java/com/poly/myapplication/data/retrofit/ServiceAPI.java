@@ -1,6 +1,8 @@
 package com.poly.myapplication.data.retrofit;
 
 import com.poly.myapplication.data.models.Bill;
+import com.poly.myapplication.data.models.MyResponse;
+import com.poly.myapplication.data.models.NotificationSender;
 import com.poly.myapplication.data.models.Product;
 import com.poly.myapplication.data.models.Table;
 import com.poly.myapplication.data.models.BodyDate;
@@ -11,6 +13,7 @@ import io.reactivex.rxjava3.core.Observable;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -66,4 +69,13 @@ public interface ServiceAPI {
             @Path("idTable") String idTable,
             @Body BodyDate bodyDate
     );
+    @Headers(
+            {
+                    "Content-Type:application/json",
+                    "Authorization:key=xxxxxxxxxxxxxxxxxxx" // Your server key refer to video for finding your server key
+            }
+    )
+
+    @POST("fcm/send")
+    Call<MyResponse> sendNotifcation(@Body NotificationSender body);
 }

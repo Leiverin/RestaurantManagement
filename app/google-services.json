@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "870241454894",
+    "project_id": "restaurantnoti-f0b62",
+    "storage_bucket": "restaurantnoti-f0b62.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:870241454894:android:50d6783bf3d060ec65c8bf",
+        "android_client_info": {
+          "package_name": "com.poly.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "870241454894-hce5132kkve5j50426mt221qj9ep7rel.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANAka55YulhYeKDlBGChuk6WRYdaA8MNE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "870241454894-hce5132kkve5j50426mt221qj9ep7rel.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

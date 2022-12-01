@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,11 +19,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.gson.Gson;
 import com.poly.myapplication.R;
 import com.poly.myapplication.data.models.Bill;
-import com.poly.myapplication.data.models.Table;
 import com.poly.myapplication.data.models.BodyDate;
+import com.poly.myapplication.data.models.Table;
 import com.poly.myapplication.databinding.ActivityHistoryBinding;
 import com.poly.myapplication.databinding.DialogFilterBinding;
 import com.poly.myapplication.ui.activities.manage.TableManageViewModel;
@@ -49,7 +47,9 @@ public class HistoryActivity extends AppCompatActivity implements CustomSpinner.
     private HistoryViewModel viewModel;
     private TableManageViewModel tableManageViewModel;
     private SpinnerTableAdapter spinnerTableAdapter;
-    String firstDate, secondDate;
+    private String firstDate, secondDate;
+    private Table table;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,7 +115,7 @@ public class HistoryActivity extends AppCompatActivity implements CustomSpinner.
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                 bindingFilter.timeFirstTv.setText("Time first :" + dayOfMonth + "/" + (month + 1) + "/" + year);
-                firstDate = +dayOfMonth + "/" + (month + 1) + "/" + year;
+                firstDate = dayOfMonth + "/" + (month + 1) + "/" + year;
             }
         };
         // date second
@@ -145,7 +145,8 @@ public class HistoryActivity extends AppCompatActivity implements CustomSpinner.
                     adapter.setList(list);
                 }
             });
-            viewModel.getBillByDate(list.get(0).getTable().getId(), new BodyDate(firstDate, secondDate));
+
+            viewModel.getBillByDate(table.getId(), new BodyDate(firstDate, secondDate));
             dialog.dismiss();
         });
 
@@ -158,26 +159,13 @@ public class HistoryActivity extends AppCompatActivity implements CustomSpinner.
 
     private void spinnerTable() {
         binding.spinnerTable.setSpinnerEventsListener(this);
-        tableManageViewModel.mListTableLiveData.observe(this, new Observer<List<Table>>() {
-            @Override
-            public void onChanged(List<Table> tables) {
-                Collections.sort(tables, new Comparator<Table>() {
-                    @Override
-                    public int compare(Table t1, Table t2) {
-                        return t1.getName().compareTo(t2.getName());
-                    }
-                });
-                tableList = tables;
-                spinnerTableAdapter.setList(tables);
-            }
-        });
-        tableManageViewModel.callToGetTable();
+        getTableSpin();
         spinnerTableAdapter = new SpinnerTableAdapter(HistoryActivity.this, tableList);
         binding.spinnerTable.setAdapter(spinnerTableAdapter);
         binding.spinnerTable.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Table table = tableList.get(i);
+                table = tableList.get(i);
                 filter(table.getName());
             }
 
@@ -206,5 +194,22 @@ public class HistoryActivity extends AppCompatActivity implements CustomSpinner.
             }
         }
         adapter.setList(billList);
+    }
+
+    private void getTableSpin() {
+        tableManageViewModel.mListTableLiveData.observe(this, new Observer<List<Table>>() {
+            @Override
+            public void onChanged(List<Table> tables) {
+                Collections.sort(tables, new Comparator<Table>() {
+                    @Override
+                    public int compare(Table t1, Table t2) {
+                        return t1.getName().compareTo(t2.getName());
+                    }
+                });
+                tableList = tables;
+                spinnerTableAdapter.setList(tables);
+            }
+        });
+        tableManageViewModel.callToGetTable();
     }
 }

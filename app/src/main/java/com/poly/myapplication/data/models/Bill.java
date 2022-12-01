@@ -23,6 +23,11 @@ public class Bill implements Parcelable {
     public Bill() {
     }
 
+    public Bill(String time, String id) {
+        this.time = time;
+        this.id = id;
+    }
+
     public Bill(String id, String date, String time, double totalPrice, int checkoutType, int status, List<Product> foods, Table table, String idCustomer, String idStaff) {
         this.id = id;
         this.date = date;

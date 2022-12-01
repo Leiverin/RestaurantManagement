@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,14 +12,12 @@ import android.widget.TextView;
 
 import com.poly.myapplication.R;
 import com.poly.myapplication.data.models.Bill;
-import com.poly.myapplication.data.models.Table;
 import com.poly.myapplication.data.retrofit.RetroInstance;
 import com.poly.myapplication.data.retrofit.ServiceAPI;
 import com.poly.myapplication.databinding.DialogShowDetailBillBinding;
 import com.poly.myapplication.ui.bill.adapter.ShowDetailProductBillAdapter;
 
 import java.util.List;
-import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -64,6 +61,7 @@ public class Constants {
             }
         }
     }
+
     public static void setOnStatus(Bill bill) {
         Bill bill1 = new Bill();
         bill1.setStatus(1);
@@ -84,6 +82,7 @@ public class Constants {
             }
         });
     }
+
     public static void dialogShowDetailBill(Bill bill, Context context) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         DialogShowDetailBillBinding showDetailBillBinding = DialogShowDetailBillBinding.inflate(LayoutInflater.from(context));
