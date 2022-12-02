@@ -25,21 +25,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding=ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        if (FirebaseAuth.getInstance().getCurrentUser()!= null) {
-            startActivity(new Intent(this, NotificationActivity.class));
-        } else {
-            binding.btnLogin.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    FirebaseAuth.getInstance().signInWithEmailAndPassword(binding.edUsername.getText().toString().trim(), binding.edPass.getText().toString().trim()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                        @Override
-                        public void onSuccess(AuthResult authResult) {
-                            startActivity(new Intent(LoginActivity.this, NotificationActivity.class));
-                        }
-                    });
-                }
-            });
-        }
     }
     @Override
     protected void onStart() {

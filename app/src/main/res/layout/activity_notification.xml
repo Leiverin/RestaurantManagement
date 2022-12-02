@@ -16,17 +16,24 @@
         app:cardCornerRadius="20dp">
 
         <EditText
-            android:id="@+id/id"
+            android:id="@+id/ed_search"
             style="@style/editTextSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Tìm kiếm thông báo" />
     </androidx.cardview.widget.CardView>
     <EditText
+        android:hint="title"
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-    <TextView
+    <EditText
+        android:hint="message"
+        android:id="@+id/message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:layout_gravity="center"
         android:id="@+id/test"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
