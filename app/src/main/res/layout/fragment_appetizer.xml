@@ -5,7 +5,7 @@
     <data>
         <variable
             name="appetizerViewModel"
-            type="com.poly.myapplication.ui.activities.product.appetizer.AppetizerViewModel" />
+            type="com.poly.restaurant.ui.activities.product.appetizer.AppetizerViewModel" />
     </data>
 
     <FrameLayout

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.poly.myapplication">
+    package="com.poly.restaurant">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:allowBackup="true"
@@ -15,14 +16,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
+
         <activity
-            android:name=".ui.activities.detail.DetailProductActivity"
+            android:name="com.poly.restaurant.ui.activities.product.FoodActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activities.product.FoodActivity"
-            android:exported="false" />
+            android:name="com.poly.restaurant.ui.activities.manage.TableManageActivity"
+            android:exported="true"/>
         <activity
-            android:name=".ui.activities.manage.TableManageActivity"
+            android:name="com.poly.restaurant.ui.activities.login.LoginActivity"
+            android:exported="true">
+
+        </activity>
+        <activity
+            android:name="com.poly.restaurant.ui.activities.splash.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,20 +38,34 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activities.login.LoginActivity"
+            android:name="com.poly.restaurant.ui.activities.table.TableDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activities.splash.SplashActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.activities.table.TableDetailActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.activities.MainActivity"
+            android:name="com.poly.restaurant.ui.activities.MainActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.activities.verify.VerifyActivity"
+            android:name="com.poly.restaurant.ui.activities.verify.VerifyActivity"
             android:exported="false" />
-    </application>
 
+        <service
+            android:name=".service.MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+<!--        &lt;!&ndash; Set custom default icon. This is used when no icon is set for incoming notification messages.-->
+<!--             See README(https://goo.gl/l4GJaQ) for more. &ndash;&gt;-->
+<!--        <meta-data-->
+<!--            android:name="com.google.firebase.messaging.default_notification_icon"-->
+<!--            android:resource="@drawable/ic_stat_ic_notification" />-->
+<!--        &lt;!&ndash; Set color used with incoming notification messages. This is used when no color is set for the incoming-->
+<!--             notification message. See README(https://goo.gl/6BKBk7) for more. &ndash;&gt;-->
+<!--        <meta-data-->
+<!--            android:name="com.google.firebase.messaging.default_notification_color"-->
+<!--            android:resource="@color/colorAccent" />-->
+<!--        <meta-data-->
+<!--            android:name="com.google.firebase.messaging.default_notification_channel_id"-->
+<!--            android:value="@string/default_notification_channel_id" />-->
+    </application>
 </manifest>

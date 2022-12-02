@@ -6,7 +6,7 @@
     <data>
         <variable
             name="foodViewModel"
-            type="com.poly.myapplication.ui.activities.product.FoodViewModel" />
+            type="com.poly.restaurant.ui.activities.product.FoodViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

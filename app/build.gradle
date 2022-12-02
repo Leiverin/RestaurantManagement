@@ -3,13 +3,14 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
+    id 'com.google.gms.google-services'
 }
 
 android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.poly.myapplication"
+        applicationId "com.poly.restaurant"
         minSdk 24
         targetSdk 32
         versionCode 1
@@ -36,6 +37,11 @@ android {
 }
 
 dependencies {
+
+    // Firebase
+    implementation platform('com.google.firebase:firebase-bom:31.1.0')
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-messaging:23.1.0'
 
     // room
     implementation("androidx.room:room-runtime:2.4.3")
@@ -73,6 +79,8 @@ dependencies {
     implementation "io.reactivex.rxjava3:rxjava:3.1.5"
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
     implementation("io.reactivex.rxjava3:rxkotlin:3.0.1")
+
+
 
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.google.android.material:material:1.6.1'

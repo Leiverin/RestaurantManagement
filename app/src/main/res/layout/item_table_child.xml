@@ -5,7 +5,7 @@
     <data>
         <variable
             name="table"
-            type="com.poly.myapplication.data.models.Table" />
+            type="com.poly.restaurant.data.models.Table" />
     </data>
 
     <LinearLayout
