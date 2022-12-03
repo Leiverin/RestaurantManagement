@@ -6,7 +6,7 @@
     <data>
         <variable
             name="tableManageViewModel"
-            type="com.poly.myapplication.ui.activities.manage.TableManageViewModel" />
+            type="com.poly.restaurant.ui.activities.manage.TableManageViewModel" />
     </data>
 
     <LinearLayout

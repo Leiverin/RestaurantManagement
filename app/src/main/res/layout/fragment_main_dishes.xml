@@ -5,7 +5,7 @@
     <data>
         <variable
             name="mainDishesViewModel"
-            type="com.poly.myapplication.ui.activities.product.main.MainDishesViewModel" />
+            type="com.poly.restaurant.ui.activities.product.main.MainDishesViewModel" />
     </data>
 
     <FrameLayout

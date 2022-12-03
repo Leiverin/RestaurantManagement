@@ -33,7 +33,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <com.poly.myapplication.utils.view.CustomSpinner
+                    <com.poly.restaurant.utils.view.CustomSpinner
                         android:id="@+id/spinner_table"
                         android:layout_width="match_parent"
                         android:layout_height="35dp"

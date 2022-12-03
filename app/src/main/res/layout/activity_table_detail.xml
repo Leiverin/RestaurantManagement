@@ -5,7 +5,7 @@
     <data>
         <variable
             name="tableDetailViewModel"
-            type="com.poly.myapplication.ui.activities.table.TableDetailViewModel"/>
+            type="com.poly.restaurant.ui.activities.table.TableDetailViewModel"/>
     </data>
 
     <LinearLayout

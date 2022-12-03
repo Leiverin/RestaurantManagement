@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.poly.myapplication">
+    package="com.poly.restaurant">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -20,47 +20,48 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
-            android:name=".ui.activities.product.FoodActivity"
+            android:name="com.poly.restaurant.ui.activities.product.FoodActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activities.manage.TableManageActivity"
+            android:name="com.poly.restaurant.ui.activities.manage.TableManageActivity"
             android:exported="true">
 
         </activity>
         <activity
-            android:name=".ui.activities.login.LoginActivity"
+            android:name="com.poly.restaurant.ui.activities.login.LoginActivity"
             android:exported="true">
 
         </activity>
         <activity
-            android:name=".ui.activities.splash.SplashActivity"
+            android:name="com.poly.restaurant.ui.activities.splash.SplashActivity"
             android:exported="true">
 
         </activity>
         <activity
-            android:name=".ui.activities.table.TableDetailActivity"
-            android:exported="true"></activity>
+            android:name="com.poly.restaurant.ui.activities.table.TableDetailActivity"
+            android:exported="true">
+        </activity>
         <activity
-            android:name=".ui.activities.MainActivity"
+            android:name="com.poly.restaurant.ui.activities.MainActivity"
             android:exported="true">
 
         </activity>
         <activity
-            android:name=".ui.history.HistoryActivity"
+            android:name="com.poly.restaurant.ui.history.HistoryActivity"
             android:exported="true">
 
         </activity>
         <activity
-            android:name=".ui.FeedBackActivity"
+            android:name="com.poly.restaurant.ui.FeedBackActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.activities.verify.VerifyActivity"
+            android:name="com.poly.restaurant.ui.activities.verify.VerifyActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.bill.BillActivity"
+            android:name="com.poly.restaurant.ui.bill.BillActivity"
             android:exported="true"></activity>
         <activity
-            android:name=".ui.notification.NotificationActivity"
+            android:name="com.poly.restaurant.ui.notification.NotificationActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -69,7 +70,7 @@
             </intent-filter>
         </activity>
         <service
-            android:name=".ui.notification.PushNotificationService"
+            android:name="com.poly.restaurant.ui.notification.PushNotificationService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

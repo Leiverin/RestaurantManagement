@@ -6,7 +6,7 @@
     <data>
         <variable
             name="tableParent"
-            type="com.poly.myapplication.data.models.TableParent" />
+            type="com.poly.restaurant.data.models.TableParent" />
     </data>
 
     <LinearLayout
