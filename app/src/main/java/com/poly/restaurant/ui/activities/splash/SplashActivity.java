@@ -15,13 +15,15 @@ import android.util.Log;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.gson.Gson;
 import com.poly.restaurant.databinding.ActivitySplashBinding;
 import com.poly.restaurant.ui.activities.login.LoginActivity;
 import com.poly.restaurant.utils.Constants;
 
 public class SplashActivity extends AppCompatActivity {
     private ActivitySplashBinding binding;
-
+    private FirebaseMessaging fcm;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +39,9 @@ public class SplashActivity extends AppCompatActivity {
             }
         }, 4000);
 
+        fcm = FirebaseMessaging.getInstance();
+        Log.d("TAG", "onCreate: "+ new Gson().toJson(fcm.getToken()));
+        
         createChannelNotification();
     }
 

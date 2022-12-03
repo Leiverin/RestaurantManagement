@@ -1,6 +1,7 @@
 package com.poly.restaurant.data.retrofit;
 
 import com.poly.restaurant.data.models.Bill;
+import com.poly.restaurant.data.models.BodyDate;
 import com.poly.restaurant.data.models.Product;
 import com.poly.restaurant.data.models.Staff;
 import com.poly.restaurant.data.models.Table;
@@ -8,6 +9,7 @@ import com.poly.restaurant.data.models.Table;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Observable;
+import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -69,6 +71,26 @@ public interface ServiceAPI {
     Observable<Staff> login(
             @Field("account") String account,
             @Field("password") String password
+    );
+
+
+    @GET("bill/all")
+    Call<List<Bill>> getBill();
+
+    @PUT("bill/update/{id}")
+    Call<List<Bill>> doneBill(
+            @Path("id") String id,
+            @Query("_method") String method,
+            @Body Bill bill
+    );
+
+    @GET("bill/all/{status}")
+    Call<List<Bill>> getTypeBill(@Path("status") int status);
+
+    @POST("bill/filter/{idTable}")
+    Call<List<Bill>> getBillByDate(
+            @Path("idTable") String idTable,
+            @Body BodyDate bodyDate
     );
 
 }

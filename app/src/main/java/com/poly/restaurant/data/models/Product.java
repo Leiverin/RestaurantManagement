@@ -1,5 +1,8 @@
 package com.poly.restaurant.data.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -7,7 +10,7 @@ import androidx.room.PrimaryKey;
 import com.google.gson.annotations.SerializedName;
 
 @Entity(tableName = "Product")
-public class Product {
+public class Product implements Parcelable {
     @NonNull
     @PrimaryKey(autoGenerate = true)
     private Long idProduct;
@@ -37,6 +40,59 @@ public class Product {
         this.idCategory = idCategory;
         this.idTable = idTable;
     }
+
+    protected Product(Parcel in) {
+        if (in.readByte() == 0) {
+            idProduct = null;
+        } else {
+            idProduct = in.readLong();
+        }
+        id = in.readString();
+        name = in.readString();
+        urlImage = in.readString();
+        price = in.readDouble();
+        total = in.readInt();
+        amount = in.readInt();
+        type = in.readInt();
+        idCategory = in.readString();
+        idTable = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (idProduct == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(idProduct);
+        }
+        dest.writeString(id);
+        dest.writeString(name);
+        dest.writeString(urlImage);
+        dest.writeDouble(price);
+        dest.writeInt(total);
+        dest.writeInt(amount);
+        dest.writeInt(type);
+        dest.writeString(idCategory);
+        dest.writeString(idTable);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Product> CREATOR = new Creator<Product>() {
+        @Override
+        public Product createFromParcel(Parcel in) {
+            return new Product(in);
+        }
+
+        @Override
+        public Product[] newArray(int size) {
+            return new Product[size];
+        }
+    };
 
     @NonNull
     public Long getIdProduct() {

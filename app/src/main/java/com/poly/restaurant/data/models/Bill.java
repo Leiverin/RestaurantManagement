@@ -1,10 +1,13 @@
 package com.poly.restaurant.data.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Bill {
+public class Bill implements Parcelable {
     @SerializedName("_id")
     private String id;
     private String date;
@@ -17,6 +20,13 @@ public class Bill {
     private String idCustomer;
     private String idStaff;
 
+    public Bill() {
+    }
+
+    public Bill(String time, String id) {
+        this.time = time;
+        this.id = id;
+    }
 
     public Bill(String id, String date, String time, double totalPrice, int checkoutType, int status, List<Product> foods, Table table, String idCustomer, String idStaff) {
         this.id = id;
@@ -30,6 +40,31 @@ public class Bill {
         this.idCustomer = idCustomer;
         this.idStaff = idStaff;
     }
+
+
+    protected Bill(Parcel in) {
+        id = in.readString();
+        date = in.readString();
+        time = in.readString();
+        totalPrice = in.readDouble();
+        checkoutType = in.readInt();
+        status = in.readInt();
+        table = in.readParcelable(Table.class.getClassLoader());
+        idCustomer = in.readString();
+        idStaff = in.readString();
+    }
+
+    public static final Creator<Bill> CREATOR = new Creator<Bill>() {
+        @Override
+        public Bill createFromParcel(Parcel in) {
+            return new Bill(in);
+        }
+
+        @Override
+        public Bill[] newArray(int size) {
+            return new Bill[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -109,5 +144,23 @@ public class Bill {
 
     public void setIdStaff(String idStaff) {
         this.idStaff = idStaff;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(id);
+        parcel.writeString(date);
+        parcel.writeString(time);
+        parcel.writeDouble(totalPrice);
+        parcel.writeInt(checkoutType);
+        parcel.writeInt(status);
+        parcel.writeParcelable(table, i);
+        parcel.writeString(idCustomer);
+        parcel.writeString(idStaff);
     }
 }
