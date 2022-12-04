@@ -13,5 +13,6 @@ public class AccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding=ActivityAccountBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
     }
 }

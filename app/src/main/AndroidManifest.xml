@@ -34,11 +34,7 @@
         <activity
             android:name="com.poly.restaurant.ui.activities.splash.SplashActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name="com.poly.restaurant.ui.activities.table.TableDetailActivity"
@@ -57,18 +53,17 @@
             android:exported="false" />
         <activity
             android:name="com.poly.restaurant.ui.bill.BillActivity"
-            android:exported="true" />
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name="com.poly.restaurant.ui.notification.NotificationActivity"
             android:exported="true"/>
 
-        <service
-            android:name="com.poly.restaurant.ui.notification.PushNotificationService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
     </application>
 
 </manifest>
