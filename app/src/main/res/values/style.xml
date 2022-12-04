@@ -89,8 +89,9 @@
     </style>
 
     <style name="imgIcon">
-        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_gravity">top</item>
         <item name="android:layout_margin">5dp</item>
+        <item name="android:layout_marginTop">10dp</item>
     </style>
     <style name="textTable">
         <item name="android:layout_marginTop">2dp</item>
