@@ -2,13 +2,14 @@
     <string name="app_name">Restaurant Management</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="titleSplashScreenFragment">Cof-Life</string>
+    <string name="titleSplashScreenFragment">Restaurant Management</string>
     <string name="titleLoginFragment">Login</string>
     <string name="hintUsernameLogin">Username</string>
     <string name="hintPassLogin">Password</string>
     <string name="textContactManagement">Liên hệ quản lý</string>
     <string name="textBtnLogin">Login</string>
     <string name="titleTableFragment">Orders Management</string>
+
     <string name="textTableFlow">Flow 1</string>
     <string name="textLiveTable">Live table : 0</string>
     <string name="textEmptyTable">Empty table : 7</string>
@@ -17,9 +18,23 @@
     <string name="textOrderOnTable">Order on table</string>
     <string name="textNameTableItem">Table 1</string>
     <string name="textAddFood">This table is not have a product</string>
-    <string name="hintSearchFood">Search food ...</string>
-    <string name="tab1">Appetizer</string>
-    <string name="tab2">Main dishes</string>
-    <string name="tab3">Desserts</string>
-    <string name="tab4">Drinks</string>
+    <string name="hintSearchFood">Search food …</string>
+
+    <string name="quanityHistory">Số lượng : 1</string>
+    <string name="intoMoney">Thành tiền :</string>
+    <string name="money">150$</string>
+    <string name="time">15:30 P.M 8-9-2022</string>
+    <string name="done">Done</string>
+    <string name="thankYou">Thank you so much</string>
+    <!--    Tab layout-->
+    <string name="appetizer">Appetizer</string>
+    <string name="main">Main dishes</string>
+    <string name="desserts">Desserts</string>
+    <string name="drinks">Drinks</string>
+
+    <string name="floor">Floor</string>
+    <string name="add">Add</string>
+    <string name="push_product">Push product</string>
+    <string name="check_bill">Check bill</string>
+    <string name="remember">Remember me</string>
 </resources>
