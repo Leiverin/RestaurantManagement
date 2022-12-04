@@ -11,13 +11,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.poly.restaurant.R;
 import com.poly.restaurant.data.models.Product;
 import com.poly.restaurant.databinding.FragmentDrinksBinding;
@@ -64,8 +62,6 @@ public class DrinksFragment extends Fragment {
                 int quantity = Integer.parseInt(tvQuantity.getText().toString().subSequence(1, tvQuantity.getText().toString().length()).toString());
                 handleAddProduct(product, quantity);
                 adapter.getMListProduct().get(position).setAmount(quantity);
-                Log.d("TAG", "quantity: "+ quantity);
-                Log.d("TAG", "onClickIncrease: "+ new Gson().toJson(mViewModel.getListProductByIdTable(sharePreference.getTableId())));
             }
 
             @Override
@@ -74,7 +70,6 @@ public class DrinksFragment extends Fragment {
                 int quantity = Integer.parseInt(tvQuantity.getText().toString().subSequence(1, tvQuantity.getText().toString().length()).toString());
                 handleDecreaseProduct(product, quantity);
                 adapter.getMListProduct().get(position).setAmount(quantity);
-                Log.d("TAG", "onClickDecrease: "+ new Gson().toJson(mViewModel.getListProductByIdTable(sharePreference.getTableId())));
             }
 
             @Override

@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.poly.restaurant.databinding.ActivityMainBinding;
 
-
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
 

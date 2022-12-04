@@ -21,11 +21,15 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class TableDetailViewModel extends BaseViewModel {
     public MutableLiveData<List<Product>> mListProductLiveData;
     public MutableLiveData<Boolean> wasCreated;
+    public MutableLiveData<List<Bill>> mBillLiveData;
+    public MutableLiveData<Boolean> wasUpdated;
 
     public TableDetailViewModel(Context context) {
         super(context);
         mListProductLiveData = new MutableLiveData<>();
         wasCreated = new MutableLiveData<>();
+        mBillLiveData = new MutableLiveData<>();
+        wasUpdated = new MutableLiveData<>();
     }
 
     void getListProductInBill(String idTable){
@@ -34,16 +38,15 @@ public class TableDetailViewModel extends BaseViewModel {
         mBillObservable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
-                .subscribe(this::onRetrieveBillSuccess, this::handleErrorsProduct);
+                .subscribe(this::onRetrieveBillListSuccess, this::handleErrorsProduct);
     }
 
-    private void onRetrieveBillSuccess(List<Product> products) {
+    private void onRetrieveBillListSuccess(List<Product> products) {
         mListProductLiveData.postValue(products);
     }
 
     private void handleErrorsProduct(Throwable throwable) {
         mListProductLiveData.postValue(null);
-        Log.e("TAG", "handleErrors: "+ throwable.getMessage());
     }
 
 
@@ -66,6 +69,41 @@ public class TableDetailViewModel extends BaseViewModel {
 
     private void handleErrors(Throwable throwable) {
         wasCreated.postValue(false);
-        Log.e("TAG", "Error in create bill: "+ throwable.getMessage());
     }
+
+    // Check bill exists
+    public void callToGetBillExist(String idTable){
+        ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
+        Observable<List<Bill>> mListDrinkObservable = serviceAPI.getBillIfExists(idTable);
+        mListDrinkObservable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::onRetrieveBillSuccess, this::handleErrorsGetBill);
+    }
+
+    private void onRetrieveBillSuccess(List<Bill> result) {
+        mBillLiveData.postValue(result);
+    }
+
+    private void handleErrorsGetBill(Throwable throwable) {
+        mBillLiveData.postValue(null);
+    }
+
+    // Check bill exists
+    public void callToUpdateBill(String id, Bill bill){
+        ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
+        Observable<Bill> mListDrinkObservable = serviceAPI.updateBillById(id, bill, "PUT");
+        mListDrinkObservable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::onRetrieveUpdateBillSuccess, this::handleErrorsUpdateBill);
+    }
+
+    private void onRetrieveUpdateBillSuccess(Bill result) {
+        wasUpdated.postValue(true);
+    }
+
+    private void handleErrorsUpdateBill(Throwable throwable) {
+        wasUpdated.postValue(false);
+        Log.d("TAG", "handleErrorsUpdateBill: "+ throwable.getMessage());
+    }
+
 }

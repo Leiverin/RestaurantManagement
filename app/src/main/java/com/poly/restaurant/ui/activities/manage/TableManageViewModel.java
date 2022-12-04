@@ -22,9 +22,9 @@ public class TableManageViewModel extends ViewModel {
         mListTableLiveData = new MutableLiveData<>();
     }
 
-    public void callToGetTable(){
+    public void callToGetTable(int floor){
         ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
-        Observable<List<Table>> observable = serviceAPI.getTableByFloor(1);
+        Observable<List<Table>> observable = serviceAPI.getTableByFloor(floor);
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onRetrieveTableListSuccess, this::onHandleError);

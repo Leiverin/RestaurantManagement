@@ -1,6 +1,9 @@
 package com.poly.restaurant.data.models;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Staff {
+    @SerializedName("_id")
     private String id;
     private String name;
     private String phoneNumber;
@@ -85,14 +88,6 @@ public class Staff {
     }
 
     public void setFloor(Floor floor) {
-        this.floor = floor;
-    }
-
-    public Floor getIdFloor() {
-        return floor;
-    }
-
-    public void setIdFloor(Floor floor) {
         this.floor = floor;
     }
 }

@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.poly.restaurant.ui.activities.login.LoginViewModel;
 import com.poly.restaurant.ui.activities.product.FoodViewModel;
 import com.poly.restaurant.ui.activities.product.appetizer.AppetizerViewModel;
 import com.poly.restaurant.ui.activities.product.desserts.DessertViewModel;
@@ -41,6 +42,8 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             return (T) new MainDishesViewModel(context);
         }else if (modelClass == TableDetailViewModel.class){
             return (T) new TableDetailViewModel(context);
+        }else if (modelClass == LoginViewModel.class){
+            return (T) new LoginViewModel(context);
         }else{
             return ViewModelProvider.Factory.super.create(modelClass);
         }

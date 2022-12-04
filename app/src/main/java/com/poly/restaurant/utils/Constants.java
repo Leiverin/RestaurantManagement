@@ -3,19 +3,20 @@ package com.poly.restaurant.utils;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.poly.restaurant.R;
 import com.poly.restaurant.data.models.Bill;
+import com.poly.restaurant.data.models.Staff;
 import com.poly.restaurant.data.retrofit.RetroInstance;
 import com.poly.restaurant.data.retrofit.ServiceAPI;
-import com.poly.restaurant.databinding.DialogAlertCompleteBinding;
 import com.poly.restaurant.databinding.DialogShowDetailBillBinding;
 import com.poly.restaurant.ui.bill.adapter.ShowDetailProductBillAdapter;
 
@@ -29,11 +30,13 @@ import retrofit2.Response;
 public class Constants {
     public static String EXTRA_TABLE_TO_DETAIL = "extra_table_to_detail";
     public static String TABLE_ID_SELECTED = "TABLE_ID_SELECTED";
-    public static String BASE_URL = "https://restaurant-server-eight.vercel.app/restaurant/api/";
     public static int TYPE_IN_TABLE = 0;
     public static int TYPE_IN_PRODUCT = 1;
+    public static String BASE_URL = "https://restaurant-server-eight.vercel.app/restaurant/api/";
     public static int CHECKOUT_BY_TRANSFER = 1;
     public static int CHECKOUT_BY_SWIPE = 1;
+    public static Staff staff;
+    public static String CHANNEL_ID = "Restaurant Chanel";
 
     public static void handleIncrease(TextView tvQuantity, int type) {
         if (type == TYPE_IN_TABLE) {
@@ -45,7 +48,6 @@ public class Constants {
             quantity++;
             tvQuantity.setText("x" + quantity);
         }
-
     }
 
     public static void handleDecrease(TextView tvQuantity, int type) {
@@ -63,6 +65,7 @@ public class Constants {
             }
         }
     }
+
 
     public static void setOnStatus(Bill bill) {
         Bill bill1 = new Bill();
@@ -108,5 +111,25 @@ public class Constants {
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         dialog.getWindow().setGravity(Gravity.CENTER);
     }
+
+    public static void changePasswordStaff(String pass) {
+        Staff staff1 = new Staff();
+        staff1.setPassword(pass);
+        ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
+        Call<List<Staff>> changePass = serviceAPI.changePassword(staff.getId(), "PUT", staff1);
+        changePass.enqueue(new Callback<List<Staff>>() {
+            @Override
+            public void onResponse(Call<List<Staff>> call, Response<List<Staff>> response) {
+                if (response.isSuccessful()) {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Staff>> call, Throwable t) {
+            }
+        });
+    }
+
 
 }

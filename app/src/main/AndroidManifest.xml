@@ -4,6 +4,7 @@
     package="com.poly.restaurant">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -21,30 +22,35 @@
         tools:targetApi="31">
         <activity
             android:name=".ui.activities.account.AccountActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name="com.poly.restaurant.ui.activities.product.FoodActivity"
             android:exported="false" />
         <activity
             android:name="com.poly.restaurant.ui.activities.manage.TableManageActivity"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name="com.poly.restaurant.ui.activities.login.LoginActivity"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name="com.poly.restaurant.ui.activities.splash.SplashActivity"
             android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name="com.poly.restaurant.ui.activities.table.TableDetailActivity"
-            android:exported="true"/>
+            android:exported="false" />
+
         <activity
             android:name="com.poly.restaurant.ui.activities.MainActivity"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name="com.poly.restaurant.ui.history.HistoryActivity"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name="com.poly.restaurant.ui.FeedBackActivity"
             android:exported="true" />
@@ -53,17 +59,10 @@
             android:exported="false" />
         <activity
             android:name="com.poly.restaurant.ui.bill.BillActivity"
-            android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="true" />
         <activity
             android:name="com.poly.restaurant.ui.notification.NotificationActivity"
-            android:exported="true"/>
+            android:exported="true" />
 
     </application>
-
 </manifest>

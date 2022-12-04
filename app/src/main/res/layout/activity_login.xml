@@ -1,73 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    style="@style/backFragmentLogin"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.activities.login.LoginActivity">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        style="@style/titleLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/titleLoginFragment" />
+    <data>
 
-    <LinearLayout
-        style="@style/backEditLogin"
+    </data>
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_username" />
-
-        <EditText
-            android:id="@+id/ed_username"
-            style="@style/editTextLogin"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="@string/hintUsernameLogin" />
-    </LinearLayout>
+            android:orientation="vertical"
+            style="@style/backFragmentLogin"
+            tools:context=".ui.activities.login.LoginActivity">
 
-    <LinearLayout
-        style="@style/backEditLogin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+            <TextView
+                style="@style/text_size_56sp_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/titleLoginFragment"
+                android:layout_marginBottom="32dp"
+                android:textColor="@color/white" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_password" />
+            <LinearLayout
+                style="@style/backEditLogin"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginBottom="6dp"
+                android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/ed_pass"
-            style="@style/editTextLogin"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="@string/hintPassLogin" />
-    </LinearLayout>
+                <ImageView
+                    android:src="@drawable/ic_username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
-    <TextView
-        android:id="@+id/txtContactManager"
-        style="@style/contactManagerLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/textContactManagement" />
+                <EditText
+                    android:id="@+id/ed_username"
+                    android:hint="@string/hintUsernameLogin"
+                    style="@style/editTextLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/btnLogin"
-        style="@style/backBtnLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+            <LinearLayout
+                style="@style/backEditLogin"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
 
-        <TextView
-            style="@style/textBtnLogin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/textBtnLogin" />
-    </androidx.cardview.widget.CardView>
-</LinearLayout>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_password" />
+
+                <EditText
+                    android:id="@+id/ed_pass"
+                    android:hint="@string/hintPassLogin"
+                    style="@style/editTextLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txtContactManager"
+                style="@style/contactManagerLogin"
+                android:text="@string/textContactManagement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/btnLogin"
+                style="@style/backBtnLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginTop="12dp">
+
+                <TextView
+                    style="@style/textBtnLogin"
+                    android:text="@string/textBtnLogin"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/prg_load_table"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:indeterminateOnly="true"
+            android:indeterminateDrawable="@drawable/progress_custom_circle"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:indeterminateDuration="600"
+            />
+
+    </FrameLayout>
+
+</layout>

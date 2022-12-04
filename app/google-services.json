@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "870241454894",
-    "project_id": "restaurantnoti-f0b62",
-    "storage_bucket": "restaurantnoti-f0b62.appspot.com"
+    "project_number": "941187178023",
+    "project_id": "restaurant-order-d1125",
+    "storage_bucket": "restaurant-order-d1125.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:870241454894:android:50d6783bf3d060ec65c8bf",
+        "mobilesdk_app_id": "1:941187178023:android:cd3b3048544ce95d437802",
         "android_client_info": {
-          "package_name": "com.poly.myapplication"
+          "package_name": "com.poly.restaurant"
         }
       },
       "oauth_client": [
         {
-          "client_id": "870241454894-hce5132kkve5j50426mt221qj9ep7rel.apps.googleusercontent.com",
+          "client_id": "941187178023-7acjr05sesb7kea0fh2cp54ap9jcg0am.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyANAka55YulhYeKDlBGChuk6WRYdaA8MNE"
+          "current_key": "AIzaSyDpzZLclQHCqFQj-YXIvkfLnr6YMbQM9Qg"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "870241454894-hce5132kkve5j50426mt221qj9ep7rel.apps.googleusercontent.com",
+              "client_id": "941187178023-7acjr05sesb7kea0fh2cp54ap9jcg0am.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

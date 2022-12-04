@@ -14,6 +14,12 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.view.View;
+import android.view.Window;
+
 import com.poly.restaurant.R;
 import com.poly.restaurant.data.models.Table;
 import com.poly.restaurant.data.models.TableParent;
@@ -36,7 +42,6 @@ public class TableManageActivity extends AppCompatActivity {
     private List<TableParent> mListTableMain;
     private Handler handler = new Handler();
     private Runnable runnable;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +74,7 @@ public class TableManageActivity extends AppCompatActivity {
                 adapter.setList(mListTableMain);
             }
         });
-        viewModel.callToGetTable();
+        viewModel.callToGetTable(Constants.staff.getFloor().getNumberFloor());
         binding.imgMenu.setOnClickListener(view -> {
             showPopupMenu();
         });

@@ -1,15 +1,18 @@
 package com.poly.restaurant.data.retrofit;
 
 import com.poly.restaurant.data.models.Bill;
-import com.poly.restaurant.data.models.Product;
-import com.poly.restaurant.data.models.Table;
 import com.poly.restaurant.data.models.BodyDate;
+import com.poly.restaurant.data.models.Product;
+import com.poly.restaurant.data.models.Staff;
+import com.poly.restaurant.data.models.Table;
 
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Observable;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -48,6 +51,29 @@ public interface ServiceAPI {
             @Path("idTable") String idTable
     );
 
+    // Check bill exist
+    @GET("bill/{idTable}/check")
+    Observable<List<Bill>> getBillIfExists(
+            @Path("idTable") String idTable
+    );
+
+    // Check bill exist
+    @PUT("bill/update/{id}")
+    Observable<Bill> updateBillById(
+            @Path("id") String id,
+            @Body Bill bill,
+            @Query("_method") String method
+    );
+
+    // login
+    @FormUrlEncoded
+    @POST("staff/login")
+    Observable<Staff> login(
+            @Field("account") String account,
+            @Field("password") String password
+    );
+
+
     @GET("bill/all")
     Call<List<Bill>> getBill();
 
@@ -66,4 +92,12 @@ public interface ServiceAPI {
             @Path("idTable") String idTable,
             @Body BodyDate bodyDate
     );
+
+    @PUT("staff/update/{id}")
+    Call<List<Staff>> changePassword(
+            @Path("id") String id,
+            @Query("_method") String method,
+            @Body Staff staff
+    );
+
 }

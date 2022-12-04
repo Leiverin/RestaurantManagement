@@ -47,7 +47,7 @@
         android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/tvNameOffice"
+        android:id="@+id/tvNameRole"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -88,10 +88,12 @@
                 android:textColor="@color/black" />
 
             <TextView
+                android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/judson_regular"
                 android:gravity="end"
+                android:inputType="textPassword"
                 android:text="thinhdbcony"
                 android:textColor="#FF7F50" />
         </LinearLayout>
@@ -130,6 +132,7 @@
                 android:textColor="@color/black" />
 
             <TextView
+                android:id="@+id/nameStaff"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/judson_regular"
@@ -172,6 +175,7 @@
                 android:textColor="@color/black" />
 
             <TextView
+                android:id="@+id/tvGender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/judson_regular"
@@ -215,10 +219,12 @@
                 android:textColor="@color/black" />
 
             <TextView
+                android:id="@+id/tvPhone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/judson_regular"
                 android:gravity="end"
+                android:inputType="phone"
                 android:text="0123456789"
                 android:textColor="#FF7F50" />
         </LinearLayout>
@@ -231,7 +237,7 @@
         android:layout_height="wrap_content">
 
         <TextView
-            style="@style/textBtnLogin"
+            style="@style/textBtnLogout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Logout" />

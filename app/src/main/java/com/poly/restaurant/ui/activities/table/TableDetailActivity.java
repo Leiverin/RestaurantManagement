@@ -116,12 +116,12 @@ public class TableDetailActivity extends AppCompatActivity {
                         visibleBottomSheet();
                         isShowing = true;
                     }
+                    total = 0;
                     for (Product product : products) {
                         total += Double.parseDouble((product.getPrice() * product.getAmount())+"");
                     }
                     binding.tvTotalDishes.setText("Total dishes: "+products.size()+" dishes");
                     binding.tvTotalPrice.setText("Total price: "+total+"$");
-                    total = 0;
                     mListProduct = products;
                     adapter.setList(products);
                 }else{
@@ -137,7 +137,7 @@ public class TableDetailActivity extends AppCompatActivity {
         binding.btnOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                viewModel.callToCreateBill(new Bill(null, date, time, total, 0, 0, mListProduct, table, "12321312", "6385ade7180bbd1b100746b6"));
+                viewModel.callToGetBillExist(sharePreference.getTableId());
             }
         });
 
@@ -148,6 +148,32 @@ public class TableDetailActivity extends AppCompatActivity {
                     Toast.makeText(TableDetailActivity.this, "Create bill successfully", Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(TableDetailActivity.this, "Failed to create bill successfully", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        viewModel.mBillLiveData.observe(this, new Observer<List<Bill>>() {
+            @Override
+            public void onChanged(List<Bill> bill) {
+                if (bill != null && bill.size() != 0){
+                    if (mListProduct.size() != 0){
+                        viewModel.callToUpdateBill(bill.get(0).getId(), new Bill(bill.get(0).getId(), date, time, total, 0, 0, mListProduct, table, "12321312", "6385ade7180bbd1b100746b6"));
+                    }else{
+                        Toast.makeText(TableDetailActivity.this, "No products", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    viewModel.callToCreateBill(new Bill(null, date, time, total, 0, 0, mListProduct, table, "12321312", "6385ade7180bbd1b100746b6"));
+                }
+            }
+        });
+
+        viewModel.wasUpdated.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean wasUpdated) {
+                if (wasUpdated){
+                    Toast.makeText(TableDetailActivity.this, "Updated", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(TableDetailActivity.this, "Failed to update", Toast.LENGTH_SHORT).show();
                 }
             }
         });

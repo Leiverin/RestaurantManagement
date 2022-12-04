@@ -111,10 +111,10 @@ public class FoodActivity extends AppCompatActivity {
             }
         });
 
-        binding.viewContent.setOnClickListener(new View.OnClickListener() {
+        binding.btnOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                finish();
             }
         });
 
@@ -129,6 +129,5 @@ public class FoodActivity extends AppCompatActivity {
         binding.viewBottomSheet.setAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_top_to_bottom));
         binding.viewBottomSheet.setVisibility(View.GONE);
     }
-
 
 }

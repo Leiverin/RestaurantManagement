@@ -210,6 +210,6 @@ public class HistoryActivity extends AppCompatActivity implements CustomSpinner.
                 spinnerTableAdapter.setList(tables);
             }
         });
-        tableManageViewModel.callToGetTable();
+        tableManageViewModel.callToGetTable(Constants.staff.getFloor().getNumberFloor());
     }
 }
