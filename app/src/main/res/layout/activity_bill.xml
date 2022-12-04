@@ -35,7 +35,8 @@
                         android:text="Bill"
                         android:fontFamily="@font/judson_regular"
                         android:textSize="22sp"
-                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>

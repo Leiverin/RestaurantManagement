@@ -61,15 +61,39 @@
                     android:hint="@string/hintPassLogin"
                     style="@style/editTextLogin"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:inputType="textPassword"
+                    />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/txtContactManager"
-                style="@style/contactManagerLogin"
-                android:text="@string/textContactManagement"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_marginTop="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <CheckBox
+                    android:id="@+id/cbx_remember"
+                    style="@style/contactManagerLogin"
+                    android:text="@string/remember"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|center"
+                    android:layout_weight="1"
+                    android:buttonTint="@color/white"
+                    />
+
+                <TextView
+                    android:id="@+id/txtContactManager"
+                    style="@style/contactManagerLogin"
+                    android:text="@string/textContactManagement"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:layout_gravity="right|center"
+                    />
+            </LinearLayout>
+
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/btnLogin"

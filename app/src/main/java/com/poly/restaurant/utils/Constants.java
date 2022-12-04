@@ -8,16 +8,20 @@ import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.TextView;
 
 import com.poly.restaurant.R;
 import com.poly.restaurant.data.models.Bill;
+import com.poly.restaurant.data.models.Product;
 import com.poly.restaurant.data.models.Staff;
 import com.poly.restaurant.data.retrofit.RetroInstance;
 import com.poly.restaurant.data.retrofit.ServiceAPI;
 import com.poly.restaurant.databinding.DialogShowDetailBillBinding;
+import com.poly.restaurant.ui.activities.product.appetizer.adapter.ProductAdapter;
 import com.poly.restaurant.ui.bill.adapter.ShowDetailProductBillAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -27,7 +31,16 @@ import retrofit2.Response;
 @SuppressLint("SetTextI18n")
 public class Constants {
     public static String EXTRA_TABLE_TO_DETAIL = "extra_table_to_detail";
+
     public static String TABLE_ID_SELECTED = "TABLE_ID_SELECTED";
+    public static String KEY_BEFORE_TABLE_ID = "KEY_BEFORE_TABLE_ID";
+
+    public static String KEY_ID_STAFF = "KEY_ID_STAFF";
+    public static String KEY_USERNAME = "KEY_USERNAME";
+    public static String KEY_PASSWORD = "KEY_PASSWORD";
+    public static String KEY_REMEMBER = "KEY_REMEMBER";
+    public static int TYPE_CLICK = 0;
+    public static int TYPE_NON_CLICK = 1;
     public static int TYPE_IN_TABLE = 0;
     public static int TYPE_IN_PRODUCT = 1;
     public static int CHECKOUT_BY_TRANSFER = 1;
@@ -103,11 +116,20 @@ public class Constants {
             showDetailBillBinding.rvProductBillDetail.setAdapter(adapterShowDetailBill);
         }
         dialog.show();
-        dialog.setCancelable(false);
+        dialog.setCancelable(true);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         dialog.getWindow().setGravity(Gravity.CENTER);
     }
 
 
+    public static void filterList(String s, List<Product> mListProduct, ProductAdapter adapter) {
+        List<Product> mListFilter = new ArrayList<>();
+        for (Product product: mListProduct){
+            if (product.getName().toLowerCase().contains(s.toLowerCase())){
+                mListFilter.add(product);
+            }
+            adapter.setList(mListFilter);
+        }
+    }
 }

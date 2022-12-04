@@ -11,12 +11,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.poly.restaurant.R;
 import com.poly.restaurant.data.models.Bill;
 import com.poly.restaurant.data.models.Product;
@@ -26,6 +28,7 @@ import com.poly.restaurant.preference.AppSharePreference;
 import com.poly.restaurant.ui.activities.product.FoodActivity;
 import com.poly.restaurant.ui.activities.table.adapter.IOnItemProductTableListener;
 import com.poly.restaurant.ui.activities.table.adapter.ProductTableAdapter;
+import com.poly.restaurant.ui.bill.BillActivity;
 import com.poly.restaurant.utils.Constants;
 import com.poly.restaurant.utils.helps.ViewModelFactory;
 
@@ -42,6 +45,7 @@ public class TableDetailActivity extends AppCompatActivity {
     private List<Product> mListProduct;
     private ProductTableAdapter adapter;
     private AppSharePreference sharePreference;
+    private Table table;
     private boolean isShowing = false;
     private double total = 0;
     private String date = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Calendar.getInstance().getTime());
@@ -58,7 +62,7 @@ public class TableDetailActivity extends AppCompatActivity {
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_color));
         mListProduct = new ArrayList();
         sharePreference = new AppSharePreference(this);
-        Table table = getIntent().getParcelableExtra(Constants.EXTRA_TABLE_TO_DETAIL);
+        table = getIntent().getParcelableExtra(Constants.EXTRA_TABLE_TO_DETAIL);
         sharePreference.setTableId(table.getId());
         binding.tvNameTable.setText(table.getName());
 
@@ -68,7 +72,7 @@ public class TableDetailActivity extends AppCompatActivity {
         adapter = new ProductTableAdapter(mListProduct, new IOnItemProductTableListener() {
             @Override
             public void onClickDelete(@NonNull Product product) {
-
+                viewModel.deleteProduct(product);
             }
 
             @Override
@@ -92,22 +96,19 @@ public class TableDetailActivity extends AppCompatActivity {
 
             }
         });
+
         binding.rvFood.setAdapter(adapter);
 
-        binding.btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(TableDetailActivity.this, FoodActivity.class));
-            }
-        });
+        eventScrollRecycleView();
+        initEvent();
+        initEventViewModel();
+        if (!sharePreference.getTableId().equals(sharePreference.getBeforeTableId()) && viewModel.getListProductByIdTable(table.getId()).size() == 0){
+            viewModel.callToGetBillExist(sharePreference.getTableId(), Constants.TYPE_NON_CLICK);
+            sharePreference.setBeforeTableId(table.getId());
+        }
+    }
 
-        binding.imgAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(TableDetailActivity.this, FoodActivity.class));
-            }
-        });
-
+    private void initEventViewModel() {
         viewModel.getListProductByIdTableLive(sharePreference.getTableId()).observe(this, new Observer<List<Product>>() {
             @Override
             public void onChanged(List<Product> products) {
@@ -132,15 +133,6 @@ public class TableDetailActivity extends AppCompatActivity {
             }
         });
 
-        eventScrollRecycleView();
-
-        binding.btnOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                viewModel.callToGetBillExist(sharePreference.getTableId());
-            }
-        });
-
         viewModel.wasCreated.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean wasCreated) {
@@ -149,6 +141,7 @@ public class TableDetailActivity extends AppCompatActivity {
                 }else{
                     Toast.makeText(TableDetailActivity.this, "Failed to create bill successfully", Toast.LENGTH_SHORT).show();
                 }
+                binding.btnOrder.setEnabled(true);
             }
         });
 
@@ -175,6 +168,34 @@ public class TableDetailActivity extends AppCompatActivity {
                 }else{
                     Toast.makeText(TableDetailActivity.this, "Failed to update", Toast.LENGTH_SHORT).show();
                 }
+                binding.btnOrder.setEnabled(true);
+            }
+        });
+
+        viewModel.mBilExist.observe(this, new Observer<List<Bill>>() {
+            @Override
+            public void onChanged(List<Bill> bills) {
+                if ((bills != null ? bills.size() : 0) != 0){
+                    for (Product product: bills.get(0).getProducts()){
+                        viewModel.insertProduct(new Product(
+                                null,
+                                product.getId(), product.getName(), product.getUrlImage(), product.getPrice(), product.getTotal(), product.getAmount(),
+                                product.getType(),
+                                product.getIdCategory(),
+                                sharePreference.getTableId()
+                        ));
+                    }
+                }
+            }
+        });
+    }
+
+    private void initEvent() {
+        binding.btnOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewModel.callToGetBillExist(sharePreference.getTableId(), Constants.TYPE_CLICK);
+                binding.btnOrder.setEnabled(false);
             }
         });
     }
@@ -188,6 +209,20 @@ public class TableDetailActivity extends AppCompatActivity {
                 }else{
                     hideBottomSheet();
                 }
+            }
+        });
+
+        binding.btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(TableDetailActivity.this, FoodActivity.class));
+            }
+        });
+
+        binding.imgAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(TableDetailActivity.this, FoodActivity.class));
             }
         });
     }

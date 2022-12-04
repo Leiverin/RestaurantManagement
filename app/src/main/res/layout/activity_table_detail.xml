@@ -16,7 +16,7 @@
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp">
+            android:layout_height="80dp">
 
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
@@ -38,16 +38,10 @@
                     <ImageView
                         android:id="@+id/imgAdd"
                         style="@style/imgIcon"
+                        android:layout_gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_icon_add" />
-
-                    <ImageView
-                        android:id="@+id/imgBill"
-                        style="@style/imgIcon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_icon_bill" />
                 </LinearLayout>
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.AppBarLayout>

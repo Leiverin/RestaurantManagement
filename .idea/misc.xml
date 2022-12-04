@@ -11,16 +11,21 @@
         <entry key="..\:/DATN/RestaurantManagement/app/src/main/res/layout/item_table.xml" value="0.259375" />
         <entry key="..\:/Home/RestaurantManagement/app/src/main/res/drawable/bg_btn_add.xml" value="0.2225" />
         <entry key="..\:/Home/RestaurantManagement/app/src/main/res/drawable/bg_btn_order.xml" value="0.28" />
+        <entry key="..\:/Home/RestaurantManagement/app/src/main/res/drawable/bg_edit_search.xml" value="0.2355" />
         <entry key="..\:/Home/RestaurantManagement/app/src/main/res/drawable/bg_quantity.xml" value="0.2825" />
         <entry key="..\:/Home/RestaurantManagement/app/src/main/res/drawable/btn_decrease_product.xml" value="0.2225" />
         <entry key="..\:/Home/RestaurantManagement/app/src/main/res/drawable/btn_increase_product.xml" value="0.2225" />
         <entry key="..\:/Home/RestaurantManagement/app/src/main/res/drawable/ic_icon_add.xml" value="0.2225" />
         <entry key="..\:/Home/RestaurantManagement/app/src/main/res/drawable/progress_custom_circle.xml" value="0.2225" />
+        <entry key="..\:/Home/RestaurantManagement/app/src/main/res/layout/activity_bill.xml" value="0.25" />
         <entry key="..\:/Home/RestaurantManagement/app/src/main/res/layout/activity_detail_product.xml" value="0.2765625" />
         <entry key="..\:/Home/RestaurantManagement/app/src/main/res/layout/activity_food.xml" value="0.22" />
+        <entry key="..\:/Home/RestaurantManagement/app/src/main/res/layout/activity_history.xml" value="0.3067708333333333" />
         <entry key="..\:/Home/RestaurantManagement/app/src/main/res/layout/activity_login.xml" value="0.24895833333333334" />
         <entry key="..\:/Home/RestaurantManagement/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
-        <entry key="..\:/Home/RestaurantManagement/app/src/main/res/layout/activity_table_detail.xml" value="0.22" />
+        <entry key="..\:/Home/RestaurantManagement/app/src/main/res/layout/activity_notification.xml" value="0.36666666666666664" />
+        <entry key="..\:/Home/RestaurantManagement/app/src/main/res/layout/activity_splash.xml" value="0.28125" />
+        <entry key="..\:/Home/RestaurantManagement/app/src/main/res/layout/activity_table_detail.xml" value="0.25" />
         <entry key="..\:/Home/RestaurantManagement/app/src/main/res/layout/activity_table_manage.xml" value="0.23505434782608695" />
         <entry key="..\:/Home/RestaurantManagement/app/src/main/res/layout/activity_verify.xml" value="0.22" />
         <entry key="..\:/Home/RestaurantManagement/app/src/main/res/layout/fragment_appetizer.xml" value="0.3605072463768116" />

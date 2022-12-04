@@ -11,6 +11,7 @@ import com.poly.restaurant.data.models.Product;
 import com.poly.restaurant.data.retrofit.RetroInstance;
 import com.poly.restaurant.data.retrofit.ServiceAPI;
 import com.poly.restaurant.ui.base.BaseViewModel;
+import com.poly.restaurant.utils.Constants;
 
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class TableDetailViewModel extends BaseViewModel {
     public MutableLiveData<List<Product>> mListProductLiveData;
     public MutableLiveData<Boolean> wasCreated;
     public MutableLiveData<List<Bill>> mBillLiveData;
+    public MutableLiveData<List<Bill>> mBilExist;
     public MutableLiveData<Boolean> wasUpdated;
 
     public TableDetailViewModel(Context context) {
@@ -30,6 +32,7 @@ public class TableDetailViewModel extends BaseViewModel {
         wasCreated = new MutableLiveData<>();
         mBillLiveData = new MutableLiveData<>();
         wasUpdated = new MutableLiveData<>();
+        mBilExist = new MutableLiveData<>();
     }
 
     void getListProductInBill(String idTable){
@@ -72,20 +75,32 @@ public class TableDetailViewModel extends BaseViewModel {
     }
 
     // Check bill exists
-    public void callToGetBillExist(String idTable){
+    public void callToGetBillExist(String idTable, int type){
         ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
         Observable<List<Bill>> mListDrinkObservable = serviceAPI.getBillIfExists(idTable);
         mListDrinkObservable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::onRetrieveBillSuccess, this::handleErrorsGetBill);
+                .subscribe(
+                        result -> onRetrieveBillSuccess(result, type),
+                        err -> handleErrorsGetBill(err, type)
+                );
     }
 
-    private void onRetrieveBillSuccess(List<Bill> result) {
-        mBillLiveData.postValue(result);
+    private void handleErrorsGetBill(Throwable err, int type) {
+        if (type == Constants.TYPE_CLICK){
+            mBillLiveData.postValue(null);
+        }else{
+            mBilExist.postValue(null);
+        }
+        Log.d("TAG", "handleErrorsGetBill: " + err.getMessage());
     }
 
-    private void handleErrorsGetBill(Throwable throwable) {
-        mBillLiveData.postValue(null);
+    private void onRetrieveBillSuccess(List<Bill> result, int type) {
+        if (type == Constants.TYPE_CLICK){
+            mBillLiveData.postValue(result);
+        }else{
+            mBilExist.postValue(result);
+        }
     }
 
     // Check bill exists
@@ -105,5 +120,6 @@ public class TableDetailViewModel extends BaseViewModel {
         wasUpdated.postValue(false);
         Log.d("TAG", "handleErrorsUpdateBill: "+ throwable.getMessage());
     }
+
 
 }

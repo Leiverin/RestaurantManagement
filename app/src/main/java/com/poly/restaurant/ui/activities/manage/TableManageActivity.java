@@ -22,10 +22,13 @@ import com.poly.restaurant.ui.activities.account.AccountActivity;
 import com.poly.restaurant.ui.activities.manage.adapters.IOnClickItemParent;
 import com.poly.restaurant.ui.activities.manage.adapters.TableManageAdapter;
 import com.poly.restaurant.ui.activities.table.TableDetailActivity;
+import com.poly.restaurant.ui.bill.BillActivity;
 import com.poly.restaurant.ui.history.HistoryActivity;
+import com.poly.restaurant.ui.notification.NotificationActivity;
 import com.poly.restaurant.utils.Constants;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class TableManageActivity extends AppCompatActivity {
@@ -36,7 +39,6 @@ public class TableManageActivity extends AppCompatActivity {
     private List<TableParent> mListTableMain;
     private Handler handler = new Handler();
     private Runnable runnable;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,13 +72,36 @@ public class TableManageActivity extends AppCompatActivity {
             }
         });
         viewModel.callToGetTable(Constants.staff.getFloor().getNumberFloor());
+
+        binding.imgNotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(TableManageActivity.this, NotificationActivity.class);
+                startActivity(intent);
+            }
+        });
+
         binding.imgMenu.setOnClickListener(view -> {
             showPopupMenu();
+        });
+
+        binding.imgBill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(TableManageActivity.this, BillActivity.class);
+                startActivity(intent);
+            }
         });
     }
 
     private List<TableParent> getListTableMain() {
         List<TableParent> mTableMain = new ArrayList<>();
+        mListTables.sort(new Comparator<Table>() {
+            @Override
+            public int compare(Table t1, Table t2) {
+                return t1.getName().compareTo(t2.getName());
+            }
+        });
         mTableMain.add(new TableParent("Empty table", mListTables));
         return mTableMain;
     }
@@ -89,12 +114,12 @@ public class TableManageActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        handler.postDelayed(runnable = new Runnable() {
-            @Override
-            public void run() {
-                handler.postDelayed(runnable, 5000);
-            }
-        }, 5000);
+//        handler.postDelayed(runnable = new Runnable() {
+//            @Override
+//            public void run() {
+//                handler.postDelayed(runnable, 5000);
+//            }
+//        }, 5000);
         super.onResume();
     }
 
