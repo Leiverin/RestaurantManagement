@@ -1,5 +1,7 @@
 package com.poly.restaurant.ui.activities.product.main;
 
+import androidx.appcompat.widget.SearchView;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -9,7 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +23,7 @@ import com.poly.restaurant.R;
 import com.poly.restaurant.data.models.Product;
 import com.poly.restaurant.databinding.FragmentMainDishesBinding;
 import com.poly.restaurant.preference.AppSharePreference;
+import com.poly.restaurant.ui.activities.product.FoodActivity;
 import com.poly.restaurant.ui.activities.product.appetizer.adapter.IOnEventProductListener;
 import com.poly.restaurant.ui.activities.product.appetizer.adapter.ProductAdapter;
 import com.poly.restaurant.utils.Constants;
@@ -91,6 +96,9 @@ public class MainDishesFragment extends Fragment {
                 }
             }
         });
+
+        initListener();
+        eventScrollRecycleView();
         mViewModel.callToGetDrink();
         return binding.getRoot();
     }
@@ -111,6 +119,21 @@ public class MainDishesFragment extends Fragment {
         }
     }
 
+    private void eventScrollRecycleView() {
+        int height = ((FoodActivity) requireActivity()).findViewById(R.id.view_bottom_sheet).getHeight();
+        binding.rvMainDishes.setPadding(0, 0, 0, height);
+        binding.rvMainDishes.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                if (newState == 0){
+                    ((FoodActivity) requireActivity()).isScrollingLiveData.postValue(false);
+                }else{
+                    ((FoodActivity) requireActivity()).isScrollingLiveData.postValue(true);
+                }
+            }
+        });
+    }
+
     private void handleAddProduct(Product product, int quantity) {
         if (mViewModel.getProductById(product.getId(), sharePreference.getTableId()) == null){
             mViewModel.insertProduct(new Product(null,
@@ -125,18 +148,24 @@ public class MainDishesFragment extends Fragment {
     }
 
     private void initListener() {
-        mViewModel.getLocalProductsLiveData().observe(getViewLifecycleOwner(), new Observer<List<Product>>() {
+        SearchView searchView = ((FoodActivity) getActivity()).findViewById(R.id.sv_food);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public void onChanged(List<Product> products) {
-                if (products != null && products.size() != 0){
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
 
-                }
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Constants.filterList(newText, mListMainDishes, adapter);
+                return true;
             }
         });
     }
 
     @Override
     public void onResume() {
+        initListener();
 //        adapter.setList(mViewModel.getListProductByIdTable(sharePreference.getTableId()));
         super.onResume();
     }

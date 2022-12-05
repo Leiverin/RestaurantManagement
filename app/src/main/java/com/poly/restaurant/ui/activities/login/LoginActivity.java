@@ -2,15 +2,21 @@ package com.poly.restaurant.ui.activities.login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.poly.restaurant.data.models.Staff;
 import com.poly.restaurant.databinding.ActivityLoginBinding;
+import com.poly.restaurant.preference.AppSharePreference;
 import com.poly.restaurant.ui.activities.manage.TableManageActivity;
 import com.poly.restaurant.utils.Constants;
 import com.poly.restaurant.utils.helps.ViewModelFactory;
@@ -18,6 +24,9 @@ import com.poly.restaurant.utils.helps.ViewModelFactory;
 public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding binding;
     private LoginViewModel viewModel;
+    private AppSharePreference sharePreference;
+    private FirebaseMessaging fcm;
+    private String mToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +36,24 @@ public class LoginActivity extends AppCompatActivity {
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         binding.prgLoadTable.setVisibility(View.GONE);
+        sharePreference = new AppSharePreference(this);
+        fcm = FirebaseMessaging.getInstance();
+        fcm.getToken().addOnCompleteListener(new OnCompleteListener<String>() {
+            @Override
+            public void onComplete(@NonNull Task<String> task) {
+                mToken = task.getResult();
+                Log.d("TAG", "onComplete: " + mToken);
+            }
+        });
+        if (sharePreference.getRemember()) {
+            binding.edUsername.setText(sharePreference.getUsername());
+            binding.edPass.setText(sharePreference.getPassword());
+            binding.cbxRemember.setChecked(true);
+        } else {
+            binding.edUsername.setText("");
+            binding.edPass.setText("");
+            binding.cbxRemember.setChecked(false);
+        }
         viewModel.mStaffLiveData.observe(this, new Observer<Staff>() {
             @Override
             public void onChanged(Staff staff) {
@@ -47,7 +74,6 @@ public class LoginActivity extends AppCompatActivity {
         binding.btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                binding.prgLoadTable.setVisibility(View.VISIBLE);
                 String username = binding.edUsername.getText().toString().trim();
                 String password = binding.edPass.getText().toString().trim();
                 if (username.equals("")) {
@@ -55,10 +81,12 @@ public class LoginActivity extends AppCompatActivity {
                 } else if (password.equals("")) {
                     Toast.makeText(LoginActivity.this, "Please enter your password", Toast.LENGTH_SHORT).show();
                 } else {
-                    viewModel.callToLogin(username, password);
+                    binding.prgLoadTable.setVisibility(View.VISIBLE);
+                    viewModel.callToLogin(username, password, mToken);
                     binding.btnLogin.setEnabled(false);
                 }
             }
         });
+
     }
 }

@@ -14,13 +14,13 @@
         android:layout_margin="10dp"
         app:cardBackgroundColor="#D8D8D8"
         app:cardCornerRadius="20dp">
-
         <EditText
             android:id="@+id/ed_search"
             style="@style/editTextSearch"
+            android:padding="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Tìm kiếm thông báo" />
+            android:hint="Search ..." />
     </androidx.cardview.widget.CardView>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_notification"

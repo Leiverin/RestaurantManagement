@@ -18,7 +18,10 @@
             android:id="@+id/rv_main_dishes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:listitem="@layout/item_product" />
+            android:layoutAnimation="@anim/layout_animation_slide_from_bottom"
+            tools:listitem="@layout/item_product"
+            android:clipToPadding="false"
+            />
 
         <ProgressBar
             android:id="@+id/prg_load_product"

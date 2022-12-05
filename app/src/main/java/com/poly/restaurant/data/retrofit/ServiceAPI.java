@@ -2,6 +2,7 @@ package com.poly.restaurant.data.retrofit;
 
 import com.poly.restaurant.data.models.Bill;
 import com.poly.restaurant.data.models.BodyDate;
+import com.poly.restaurant.data.models.Notification;
 import com.poly.restaurant.data.models.Product;
 import com.poly.restaurant.data.models.Staff;
 import com.poly.restaurant.data.models.Table;
@@ -70,7 +71,8 @@ public interface ServiceAPI {
     @POST("staff/login")
     Observable<Staff> login(
             @Field("account") String account,
-            @Field("password") String password
+            @Field("password") String password,
+            @Field("tokenFCM") String tokenFCM
     );
 
     // update status in bill
@@ -102,4 +104,20 @@ public interface ServiceAPI {
     );
 
     // push notification
+    @POST("notification/create")
+    Call<Notification> pushNotification(
+            @Field("title") String title,
+            @Field("content") String content,
+            @Field("date") String date,
+            @Field("time") String time,
+            @Field("sender") Staff staffSender,
+            @Field("receiver") Staff staffReceiver
+    );
+
+    // get notification
+    @GET("notification/{idStaff}")
+    Call<List<Notification>> getNotification(
+            @Path("idStaff") String idStaff
+    );
+
 }

@@ -114,7 +114,7 @@ public class HistoryActivity extends AppCompatActivity implements CustomSpinner.
                 calendar.set(Calendar.YEAR, year);
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                bindingFilter.timeFirstTv.setText("Time first :" + dayOfMonth + "/" + (month + 1) + "/" + year);
+                bindingFilter.timeFirstTv.setText("Date first :" + dayOfMonth + "/" + (month + 1) + "/" + year);
                 firstDate = dayOfMonth + "/" + (month + 1) + "/" + year;
             }
         };
@@ -125,7 +125,7 @@ public class HistoryActivity extends AppCompatActivity implements CustomSpinner.
                 calendar.set(Calendar.YEAR, year);
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                bindingFilter.timeSecondTv.setText("Time second :" + dayOfMonth + "/" + (month + 1) + "/" + year);
+                bindingFilter.timeSecondTv.setText("Date second :" + dayOfMonth + "/" + (month + 1) + "/" + year);
                 secondDate = dayOfMonth + "/" + (month + 1) + "/" + year;
             }
         };

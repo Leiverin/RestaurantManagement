@@ -19,6 +19,7 @@
             android:id="@+id/rv_drinks"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layoutAnimation="@anim/layout_animation_slide_from_bottom"
             tools:listitem="@layout/item_product"
             android:clipToPadding="false"
             />

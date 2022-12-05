@@ -23,9 +23,9 @@ public class LoginViewModel extends BaseViewModel {
     }
 
     // Create bill
-    public void callToLogin(String account, String password){
+    public void callToLogin(String account, String password, String tokenFCM){
         ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
-        Observable<Staff> mListDrinkObservable = serviceAPI.login(account, password);
+        Observable<Staff> mListDrinkObservable = serviceAPI.login(account, password, tokenFCM);
         mListDrinkObservable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onRetrieveStaffSuccess, this::handleErrors);

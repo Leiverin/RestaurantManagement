@@ -12,11 +12,12 @@ public class Staff {
     private String password;
     private int role;
     private Floor floor;
+    private String tokenFCM;
 
     public Staff() {
     }
 
-    public Staff(String id, String name, String phoneNumber, int gender, String account, String password, int role, Floor floor) {
+    public Staff(String id, String name, String phoneNumber, int gender, String account, String password, int role, Floor floor, String tokenFCM) {
         this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
@@ -25,6 +26,7 @@ public class Staff {
         this.password = password;
         this.role = role;
         this.floor = floor;
+        this.tokenFCM = tokenFCM;
     }
 
     public String getId() {
@@ -89,5 +91,13 @@ public class Staff {
 
     public void setFloor(Floor floor) {
         this.floor = floor;
+    }
+
+    public String getTokenFCM() {
+        return tokenFCM;
+    }
+
+    public void setTokenFCM(String tokenFCM) {
+        this.tokenFCM = tokenFCM;
     }
 }

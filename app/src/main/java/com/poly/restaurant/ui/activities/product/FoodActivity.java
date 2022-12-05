@@ -2,15 +2,22 @@ package com.poly.restaurant.ui.activities.product;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 
 import com.google.android.material.tabs.TabLayout;
@@ -20,6 +27,10 @@ import com.poly.restaurant.data.models.Product;
 import com.poly.restaurant.databinding.ActivityFoodBinding;
 import com.poly.restaurant.preference.AppSharePreference;
 import com.poly.restaurant.ui.activities.product.adapters.PagerProductAdapter;
+import com.poly.restaurant.ui.activities.product.appetizer.AppetizerFragment;
+import com.poly.restaurant.ui.activities.product.desserts.DessertFragment;
+import com.poly.restaurant.ui.activities.product.drinks.DrinksFragment;
+import com.poly.restaurant.ui.activities.product.main.MainDishesFragment;
 import com.poly.restaurant.ui.bottomsheet.BottomSheetProduct;
 import com.poly.restaurant.utils.helps.ViewModelFactory;
 
@@ -29,7 +40,6 @@ public class FoodActivity extends AppCompatActivity {
     private PagerProductAdapter pagerProductAdapter;
     private ActivityFoodBinding binding;
     private FoodViewModel viewModel;
-    private BottomSheetProduct bottomSheetProduct;
     public MutableLiveData<Boolean> isScrollingLiveData;
     private boolean isShowing = false;
     private AppSharePreference sharePreference;
@@ -48,7 +58,6 @@ public class FoodActivity extends AppCompatActivity {
 
         pagerProductAdapter = new PagerProductAdapter(getSupportFragmentManager(), getLifecycle());
         binding.pager.setAdapter(pagerProductAdapter);
-        bottomSheetProduct = new BottomSheetProduct();
         new TabLayoutMediator(binding.tabLayout, binding.pager, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {

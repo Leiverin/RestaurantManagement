@@ -39,10 +39,10 @@
                             android:layout_marginEnd="15dp"
                             android:layout_height="wrap_content">
 
-                            <EditText
+                            <androidx.appcompat.widget.SearchView
+                                android:id="@+id/sv_food"
                                 style="@style/editTextSearch"
-                                android:id="@+id/ed_search"
-                                android:hint="@string/hintSearchFood"
+                                app:queryHint="@string/hintSearchFood"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content" />
 
@@ -53,8 +53,7 @@
                                 android:layout_height="wrap_content"
                                 android:background="@color/color_bottom_sheet"
                                 style="@style/text_in_tab_style"
-                                app:tabTextAppearance="@style/text_size_18sp_regular"
-                                android:textSize="16sp"
+                                app:tabTextAppearance="@style/text_appearance_tab_layout"
                                 />
                         </LinearLayout>
                     </androidx.appcompat.widget.Toolbar>

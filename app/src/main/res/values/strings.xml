@@ -2,7 +2,7 @@
     <string name="app_name">Restaurant Management</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="titleSplashScreenFragment">Cof-Life</string>
+    <string name="titleSplashScreenFragment">Restaurant Management</string>
     <string name="titleLoginFragment">Login</string>
     <string name="hintUsernameLogin">Username</string>
     <string name="hintPassLogin">Password</string>
@@ -37,4 +37,5 @@
     <string name="push_product">Push product</string>
     <string name="text_alert">Bạn có chắc chắn muốn thanh toán hóa đơn %1s này ?</string>
     <string name="check_bill">Check bill</string>
+    <string name="remember">Remember me</string>
 </resources>

@@ -16,6 +16,7 @@ import androidx.core.app.NotificationManagerCompat;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.poly.restaurant.R;
 import com.poly.restaurant.ui.activities.splash.SplashActivity;
 import com.poly.restaurant.utils.Constants;
 
@@ -43,6 +44,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Notification notification = new NotificationCompat.Builder(this, Constants.CHANNEL_ID)
                 .setContentTitle(title)
                 .setContentText(message)
+                .setSmallIcon(R.drawable.logo_app)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(false)
                 .build();

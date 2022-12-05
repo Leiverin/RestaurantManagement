@@ -1,5 +1,7 @@
 package com.poly.restaurant.ui.activities.product.appetizer;
 
+import androidx.appcompat.widget.SearchView;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -39,6 +41,7 @@ public class AppetizerFragment extends Fragment {
     private ProductAdapter adapter;
     private List<Product> mListAppetizer;
     private AppSharePreference sharePreference;
+
     public static AppetizerFragment newInstance() {
         return new AppetizerFragment();
     }
@@ -163,18 +166,24 @@ public class AppetizerFragment extends Fragment {
     }
 
     private void initListener() {
-        mViewModel.getLocalProductsLiveData().observe(getViewLifecycleOwner(), new Observer<List<Product>>() {
+        SearchView searchView = ((FoodActivity) getActivity()).findViewById(R.id.sv_food);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public void onChanged(List<Product> products) {
-                if (products != null && products.size() != 0){
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
 
-                }
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Constants.filterList(newText, mListAppetizer, adapter);
+                return true;
             }
         });
     }
 
     @Override
     public void onResume() {
+        initListener();
 //        adapter.setList(mViewModel.getListProductByIdTable(sharePreference.getTableId()));
         super.onResume();
     }
