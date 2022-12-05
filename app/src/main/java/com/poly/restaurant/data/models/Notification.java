@@ -10,6 +10,12 @@ public class Notification {
     public Notification() {
     }
 
+    public Notification(String title, String content, String time) {
+        this.title = title;
+        this.content = content;
+        this.time = time;
+    }
+
     public Notification(String title, String content, String date, String time, Staff sender, Staff receiver) {
         this.title = title;
         this.content = content;

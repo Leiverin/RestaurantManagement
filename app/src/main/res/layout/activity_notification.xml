@@ -1,31 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EBEBEB"
-    android:orientation="vertical"
     tools:context="com.poly.restaurant.ui.notification.NotificationActivity">
 
-    <androidx.cardview.widget.CardView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        app:cardBackgroundColor="#D8D8D8"
-        app:cardCornerRadius="20dp">
-        <EditText
-            android:id="@+id/ed_search"
-            style="@style/editTextSearch"
-            android:padding="10dp"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="#FF7F50">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toobar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    app:cardCornerRadius="5dp">
+
+                    <EditText
+                        android:id="@+id/ed_search"
+                        style="@style/editTextSearch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Search ..."
+                        android:padding="10dp" />
+                </androidx.cardview.widget.CardView>
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <Button
+            android:layout_gravity="center"
+            android:id="@+id/btnPush"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="push" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_notification"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Search ..." />
-    </androidx.cardview.widget.CardView>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_notification"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_noti" />
-</LinearLayout>
+            android:layoutAnimation="@anim/layout_animation_slide_from_bottom"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_noti" />
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/prg_load_bill"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        android:indeterminateDrawable="@drawable/progress_custom_circle"
+        android:indeterminateDuration="600"
+        android:indeterminateOnly="true"
+        android:visibility="gone" />
+</FrameLayout>

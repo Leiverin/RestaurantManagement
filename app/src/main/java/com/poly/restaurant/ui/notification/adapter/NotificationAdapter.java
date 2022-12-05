@@ -15,10 +15,12 @@ import java.util.List;
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder> {
     private Context context;
     private List<Notification> list;
+    private OnListenerNotification listenerNotification;
 
-    public NotificationAdapter(Context context, List<Notification> list) {
+    public NotificationAdapter(Context context, List<Notification> list, OnListenerNotification listenerNotification) {
         this.context = context;
         this.list = list;
+        this.listenerNotification = listenerNotification;
     }
 
     public void setList(List<Notification> list) {
@@ -39,6 +41,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             holder.binding.title.setText(notification.getTitle());
             holder.binding.content.setText(notification.getContent());
             holder.binding.timeAgo.setText(notification.getTime());
+            holder.binding.getRoot().setOnClickListener(view -> {
+                listenerNotification.onClickShowDetailNotification(notification);
+            });
         }
     }
 
