@@ -73,10 +73,7 @@ public interface ServiceAPI {
             @Field("password") String password
     );
 
-
-    @GET("bill/all")
-    Call<List<Bill>> getBill();
-
+    // update status in bill
     @PUT("bill/update/{id}")
     Call<List<Bill>> doneBill(
             @Path("id") String id,
@@ -84,15 +81,19 @@ public interface ServiceAPI {
             @Body Bill bill
     );
 
+    // get List Bill in status
     @GET("bill/all/{status}")
     Call<List<Bill>> getTypeBill(@Path("status") int status);
 
+    // filter history in firstDate and secondDate
     @POST("bill/filter/{idTable}")
     Call<List<Bill>> getBillByDate(
             @Path("idTable") String idTable,
             @Body BodyDate bodyDate
     );
 
+
+    // change Password staff
     @PUT("staff/update/{id}")
     Call<List<Staff>> changePassword(
             @Path("id") String id,
@@ -100,4 +101,5 @@ public interface ServiceAPI {
             @Body Staff staff
     );
 
+    // push notification
 }

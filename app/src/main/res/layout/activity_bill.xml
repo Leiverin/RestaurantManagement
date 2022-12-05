@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EBEBEB"
-    tools:context=".ui.bill.BillActivity">
+    tools:context="com.poly.restaurant.ui.bill.BillActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

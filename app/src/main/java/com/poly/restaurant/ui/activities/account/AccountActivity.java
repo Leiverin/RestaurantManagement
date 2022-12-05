@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 
@@ -26,14 +25,15 @@ public class AccountActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         binding.tvName.setText(Constants.staff.getName());
         binding.tvNameAccount.setText(Constants.staff.getAccount());
-        if (Constants.staff.getRole() == 0) {
+        if (Constants.staff.getRole() == 0 || Constants.staff.getGender() == 0) {
             binding.tvNameRole.setText("Nhân viên");
-        } else if (Constants.staff.getRole() == 1) {
+            binding.tvGender.setText("Nam");
+        } else if (Constants.staff.getRole() == 1 || Constants.staff.getGender() == 1) {
             binding.tvNameRole.setText("Admin");
+            binding.tvGender.setText("Nữ");
         }
         binding.password.setText(Constants.staff.getPassword());
         binding.nameStaff.setText(Constants.staff.getName());
-        binding.tvGender.setText(Constants.staff.getGender() + "");
         binding.tvPhone.setText(Constants.staff.getPhoneNumber());
         binding.btnLogout.setOnClickListener(view -> {
 
@@ -66,13 +66,10 @@ public class AccountActivity extends AppCompatActivity {
             String passNewAgain = changePassBinding.passNewAgain.getText().toString().trim();
             if (passOld.equals("") || passNew.equals("") || passNewAgain.equals("")) {
                 Snackbar.make(changePassBinding.getRoot(), "Vui lòng điền đầy đủ thông tin !", Snackbar.LENGTH_LONG).show();
-                return;
             } else if (!passOld.equals(Constants.staff.getPassword())) {
                 Snackbar.make(changePassBinding.getRoot(), "Mật khẩu cũ không đúng !", Snackbar.LENGTH_LONG).show();
-                return;
             } else if (!passNew.equals(passNewAgain)) {
                 Snackbar.make(changePassBinding.getRoot(), "Mật khẩu mới không khớp !", Snackbar.LENGTH_LONG).show();
-                return;
             } else {
                 Constants.changePasswordStaff(passNewAgain);
                 Snackbar.make(changePassBinding.getRoot(), "Đổi mật khẩu thành công !", Snackbar.LENGTH_LONG).show();

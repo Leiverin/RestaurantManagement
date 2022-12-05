@@ -14,12 +14,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Handler;
-import android.view.View;
-import android.view.Window;
-
 import com.poly.restaurant.R;
 import com.poly.restaurant.data.models.Table;
 import com.poly.restaurant.data.models.TableParent;
@@ -29,6 +23,7 @@ import com.poly.restaurant.ui.activities.manage.adapters.IOnClickItemParent;
 import com.poly.restaurant.ui.activities.manage.adapters.TableManageAdapter;
 import com.poly.restaurant.ui.activities.table.TableDetailActivity;
 import com.poly.restaurant.ui.history.HistoryActivity;
+import com.poly.restaurant.ui.notification.NotificationActivity;
 import com.poly.restaurant.utils.Constants;
 
 import java.util.ArrayList;
@@ -42,6 +37,7 @@ public class TableManageActivity extends AppCompatActivity {
     private List<TableParent> mListTableMain;
     private Handler handler = new Handler();
     private Runnable runnable;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +74,9 @@ public class TableManageActivity extends AppCompatActivity {
         binding.imgMenu.setOnClickListener(view -> {
             showPopupMenu();
         });
+        binding.imgAlert.setOnClickListener(view -> {
+            startActivity(new Intent(this, NotificationActivity.class));
+        });
     }
 
     private List<TableParent> getListTableMain() {
@@ -111,7 +110,7 @@ public class TableManageActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem menuItem) {
                 if (menuItem.getItemId() == R.id.action_account) {
                     startActivity(new Intent(TableManageActivity.this, AccountActivity.class));
-                }else if(menuItem.getItemId()==R.id.action_history){
+                } else if (menuItem.getItemId() == R.id.action_history) {
                     startActivity(new Intent(TableManageActivity.this, HistoryActivity.class));
                 }
                 return true;
