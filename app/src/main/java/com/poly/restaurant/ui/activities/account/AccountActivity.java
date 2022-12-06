@@ -4,13 +4,15 @@ import android.app.AlertDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.poly.restaurant.R;
+import com.poly.restaurant.data.models.Staff;
 import com.poly.restaurant.databinding.ActivityAccountBinding;
 import com.poly.restaurant.databinding.DialogChangePassBinding;
 import com.poly.restaurant.ui.base.BaseActivity;
@@ -24,21 +26,7 @@ public class AccountActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityAccountBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        binding.tvName.setText(Constants.staff.getName());
-        binding.tvNameAccount.setText(Constants.staff.getAccount());
-        if (Constants.staff.getRole() == 0 || Constants.staff.getGender() == 0) {
-            binding.tvNameRole.setText("Nhân viên");
-            binding.tvGender.setText("Nam");
-        } else if (Constants.staff.getRole() == 1 || Constants.staff.getGender() == 1) {
-            binding.tvNameRole.setText("Admin");
-            binding.tvGender.setText("Nữ");
-        }
-        binding.password.setText(Constants.staff.getPassword());
-        binding.nameStaff.setText(Constants.staff.getName());
-        binding.tvPhone.setText(Constants.staff.getPhoneNumber());
-        binding.btnLogout.setOnClickListener(view -> {
-
-        });
+        initData(Constants.staff);
         binding.passAccount.setOnClickListener(view -> {
             showDialogChangePass();
         });
@@ -50,6 +38,9 @@ public class AccountActivity extends BaseActivity {
         });
         binding.phoneAccount.setOnClickListener(view -> {
             Snackbar.make(binding.getRoot(), "Thông tin số điện thoại không được sửa !", Snackbar.LENGTH_LONG).show();
+        });
+        binding.btnLogout.setOnClickListener(view -> {
+
         });
     }
 
@@ -72,6 +63,18 @@ public class AccountActivity extends BaseActivity {
             } else if (!passNew.equals(passNewAgain)) {
                 Snackbar.make(changePassBinding.getRoot(), "Mật khẩu mới không khớp !", Snackbar.LENGTH_LONG).show();
             } else {
+                binding.refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                binding.refresh.setRefreshing(false);
+                                initData(Constants.staff);
+                            }
+                        }, 2000);
+                    }
+                });
                 Constants.changePasswordStaff(passNewAgain);
                 Snackbar.make(changePassBinding.getRoot(), "Đổi mật khẩu thành công !", Snackbar.LENGTH_LONG).show();
                 dialog.dismiss();
@@ -82,5 +85,20 @@ public class AccountActivity extends BaseActivity {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         dialog.getWindow().setGravity(Gravity.CENTER);
+    }
+
+    private void initData(Staff staff) {
+        binding.tvName.setText(staff.getName());
+        binding.tvNameAccount.setText(staff.getAccount());
+        if (staff.getRole() == 0 || staff.getGender() == 0) {
+            binding.tvNameRole.setText("Nhân viên");
+            binding.tvGender.setText("Nam");
+        } else if (staff.getRole() == 1 || staff.getGender() == 1) {
+            binding.tvNameRole.setText("Admin");
+            binding.tvGender.setText("Nữ");
+        }
+        binding.password.setText(staff.getPassword());
+        binding.nameStaff.setText(staff.getName());
+        binding.tvPhone.setText(staff.getPhoneNumber());
     }
 }
