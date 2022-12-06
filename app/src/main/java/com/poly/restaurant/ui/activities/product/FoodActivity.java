@@ -31,12 +31,13 @@ import com.poly.restaurant.ui.activities.product.appetizer.AppetizerFragment;
 import com.poly.restaurant.ui.activities.product.desserts.DessertFragment;
 import com.poly.restaurant.ui.activities.product.drinks.DrinksFragment;
 import com.poly.restaurant.ui.activities.product.main.MainDishesFragment;
+import com.poly.restaurant.ui.base.BaseActivity;
 import com.poly.restaurant.ui.bottomsheet.BottomSheetProduct;
 import com.poly.restaurant.utils.helps.ViewModelFactory;
 
 import java.util.List;
 
-public class FoodActivity extends AppCompatActivity {
+public class FoodActivity extends BaseActivity {
     private PagerProductAdapter pagerProductAdapter;
     private ActivityFoodBinding binding;
     private FoodViewModel viewModel;

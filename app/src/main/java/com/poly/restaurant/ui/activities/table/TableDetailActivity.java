@@ -28,6 +28,7 @@ import com.poly.restaurant.preference.AppSharePreference;
 import com.poly.restaurant.ui.activities.product.FoodActivity;
 import com.poly.restaurant.ui.activities.table.adapter.IOnItemProductTableListener;
 import com.poly.restaurant.ui.activities.table.adapter.ProductTableAdapter;
+import com.poly.restaurant.ui.base.BaseActivity;
 import com.poly.restaurant.ui.bill.BillActivity;
 import com.poly.restaurant.utils.Constants;
 import com.poly.restaurant.utils.helps.ViewModelFactory;
@@ -39,7 +40,7 @@ import java.util.List;
 import java.util.Locale;
 
 @SuppressLint("SetTextI18n")
-public class TableDetailActivity extends AppCompatActivity {
+public class TableDetailActivity extends BaseActivity {
     private ActivityTableDetailBinding binding;
     private TableDetailViewModel viewModel;
     private List<Product> mListProduct;

@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="@font/judson_regular"
-            android:text="Time first"
+            android:text="Date first"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="@font/judson_regular"
-            android:text="Second first"
+            android:text="Date first"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -56,12 +56,12 @@
     </LinearLayout>
     <androidx.cardview.widget.CardView
         android:id="@+id/btn_close_dialog"
-        style="@style/backBtnLogin"
+        style="@style/backBtnLogout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
         <TextView
-            style="@style/textBtnLogin"
+            style="@style/textBtnLogout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Find" />

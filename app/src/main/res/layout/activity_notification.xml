@@ -29,22 +29,21 @@
                     android:layout_marginEnd="15dp"
                     app:cardCornerRadius="5dp">
 
-                    <EditText
-                        android:id="@+id/ed_search"
+                    <androidx.appcompat.widget.SearchView
+                        android:id="@+id/sv_noti"
                         style="@style/editTextSearch"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Search ..."
-                        android:padding="10dp" />
+                        app:queryHint="Search notification .." />
                 </androidx.cardview.widget.CardView>
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.AppBarLayout>
 
         <Button
-            android:layout_gravity="center"
             android:id="@+id/btnPush"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="push" />
 
         <androidx.recyclerview.widget.RecyclerView

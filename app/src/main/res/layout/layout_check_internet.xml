@@ -3,15 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#DAAD6A"
-    android:orientation="vertical"
+    android:background="@drawable/bg_dialog_check_internet"
     android:gravity="center"
+    android:orientation="vertical"
     android:padding="10dp">
+
     <ImageView
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:src="@drawable/ic_baseline_wifi_off_24"
         app:tint="#5C3F13" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,18 +21,21 @@
         android:text="OOPS!"
         android:textColor="#5C3F13"
         android:textSize="30dp" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="No Internet Connection"
         android:textColor="#5C3F13"
         android:textSize="20dp" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Please check your connection"
         android:textColor="#5C3F13"
         android:textSize="14dp" />
+
     <androidx.cardview.widget.CardView
         android:id="@+id/btnRetry"
         android:layout_width="match_parent"

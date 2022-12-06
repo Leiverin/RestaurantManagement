@@ -19,6 +19,7 @@ import com.poly.restaurant.R;
 import com.poly.restaurant.data.models.Bill;
 import com.poly.restaurant.databinding.ActivityBillBinding;
 import com.poly.restaurant.databinding.DialogAlertCompleteBinding;
+import com.poly.restaurant.ui.base.BaseActivity;
 import com.poly.restaurant.ui.bill.adapter.BillAdapter;
 import com.poly.restaurant.ui.bill.adapter.OnListener;
 import com.poly.restaurant.utils.Constants;
@@ -26,7 +27,7 @@ import com.poly.restaurant.utils.Constants;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BillActivity extends AppCompatActivity {
+public class BillActivity extends BaseActivity {
     private ActivityBillBinding binding;
     private BillAdapter adapter;
     private List<Bill> list;

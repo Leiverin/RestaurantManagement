@@ -18,10 +18,11 @@ import com.poly.restaurant.data.models.Staff;
 import com.poly.restaurant.databinding.ActivityLoginBinding;
 import com.poly.restaurant.preference.AppSharePreference;
 import com.poly.restaurant.ui.activities.manage.TableManageActivity;
+import com.poly.restaurant.ui.base.BaseActivity;
 import com.poly.restaurant.utils.Constants;
 import com.poly.restaurant.utils.helps.ViewModelFactory;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
     private ActivityLoginBinding binding;
     private LoginViewModel viewModel;
     private AppSharePreference sharePreference;

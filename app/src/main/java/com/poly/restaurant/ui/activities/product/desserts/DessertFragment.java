@@ -25,13 +25,14 @@ import com.poly.restaurant.preference.AppSharePreference;
 import com.poly.restaurant.ui.activities.product.FoodActivity;
 import com.poly.restaurant.ui.activities.product.appetizer.adapter.IOnEventProductListener;
 import com.poly.restaurant.ui.activities.product.appetizer.adapter.ProductAdapter;
+import com.poly.restaurant.ui.base.BaseFragment;
 import com.poly.restaurant.utils.Constants;
 import com.poly.restaurant.utils.helps.ViewModelFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DessertFragment extends Fragment {
+public class DessertFragment extends BaseFragment {
     private FragmentDessertBinding binding;
     private DessertViewModel mViewModel;
     private ProductAdapter adapter;

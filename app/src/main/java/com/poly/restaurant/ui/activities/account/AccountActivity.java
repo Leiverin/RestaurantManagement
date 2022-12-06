@@ -13,9 +13,10 @@ import com.google.android.material.snackbar.Snackbar;
 import com.poly.restaurant.R;
 import com.poly.restaurant.databinding.ActivityAccountBinding;
 import com.poly.restaurant.databinding.DialogChangePassBinding;
+import com.poly.restaurant.ui.base.BaseActivity;
 import com.poly.restaurant.utils.Constants;
 
-public class AccountActivity extends AppCompatActivity {
+public class AccountActivity extends BaseActivity {
     private ActivityAccountBinding binding;
 
     @Override
