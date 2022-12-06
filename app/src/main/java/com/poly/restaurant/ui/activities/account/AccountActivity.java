@@ -4,11 +4,8 @@ import android.app.AlertDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.poly.restaurant.R;
@@ -63,19 +60,8 @@ public class AccountActivity extends BaseActivity {
             } else if (!passNew.equals(passNewAgain)) {
                 Snackbar.make(changePassBinding.getRoot(), "Mật khẩu mới không khớp !", Snackbar.LENGTH_LONG).show();
             } else {
-                binding.refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                    @Override
-                    public void onRefresh() {
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                binding.refresh.setRefreshing(false);
-                                initData(Constants.staff);
-                            }
-                        }, 2000);
-                    }
-                });
                 Constants.changePasswordStaff(passNewAgain);
+                binding.password.setText(passNewAgain);
                 Snackbar.make(changePassBinding.getRoot(), "Đổi mật khẩu thành công !", Snackbar.LENGTH_LONG).show();
                 dialog.dismiss();
             }
