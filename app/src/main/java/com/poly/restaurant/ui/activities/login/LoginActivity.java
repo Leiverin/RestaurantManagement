@@ -1,16 +1,15 @@
 package com.poly.restaurant.ui.activities.login;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -19,11 +18,11 @@ import com.poly.restaurant.data.models.Staff;
 import com.poly.restaurant.databinding.ActivityLoginBinding;
 import com.poly.restaurant.preference.AppSharePreference;
 import com.poly.restaurant.ui.activities.manage.TableManageActivity;
-import com.poly.restaurant.ui.activities.table.TableDetailActivity;
+import com.poly.restaurant.ui.base.BaseActivity;
 import com.poly.restaurant.utils.Constants;
 import com.poly.restaurant.utils.helps.ViewModelFactory;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
     private ActivityLoginBinding binding;
     private LoginViewModel viewModel;
     private AppSharePreference sharePreference;
@@ -44,14 +43,14 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<String> task) {
                 mToken = task.getResult();
-                Log.d("TAG", "onComplete: "+ mToken);
+                Log.d("TAG", "onComplete: " + mToken);
             }
         });
-        if (sharePreference.getRemember()){
+        if (sharePreference.getRemember()) {
             binding.edUsername.setText(sharePreference.getUsername());
             binding.edPass.setText(sharePreference.getPassword());
             binding.cbxRemember.setChecked(true);
-        }else{
+        } else {
             binding.edUsername.setText("");
             binding.edPass.setText("");
             binding.cbxRemember.setChecked(false);
@@ -60,16 +59,13 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onChanged(Staff staff) {
                 binding.prgLoadTable.setVisibility(View.GONE);
-                if (staff != null){
-                    sharePreference.setRemember(binding.cbxRemember.isChecked());
-                    sharePreference.setUsername(staff.getAccount());
-                    sharePreference.setPassword(staff.getPassword());
+                if (staff != null) {
                     Constants.staff = staff;
                     Toast.makeText(LoginActivity.this, "Login successfully", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(LoginActivity.this, TableManageActivity.class);
                     startActivity(intent);
                     finish();
-                }else{
+                } else {
                     Toast.makeText(LoginActivity.this, "Incorrect account or password", Toast.LENGTH_SHORT).show();
                 }
                 binding.btnLogin.setEnabled(true);
@@ -81,11 +77,11 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String username = binding.edUsername.getText().toString().trim();
                 String password = binding.edPass.getText().toString().trim();
-                if (username.equals("")){
+                if (username.equals("")) {
                     Toast.makeText(LoginActivity.this, "Please enter your username", Toast.LENGTH_SHORT).show();
-                }else if (password.equals("")){
+                } else if (password.equals("")) {
                     Toast.makeText(LoginActivity.this, "Please enter your password", Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     binding.prgLoadTable.setVisibility(View.VISIBLE);
                     viewModel.callToLogin(username, password, mToken);
                     binding.btnLogin.setEnabled(false);

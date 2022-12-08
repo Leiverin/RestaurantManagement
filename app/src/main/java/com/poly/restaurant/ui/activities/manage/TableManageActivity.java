@@ -22,6 +22,7 @@ import com.poly.restaurant.ui.activities.account.AccountActivity;
 import com.poly.restaurant.ui.activities.manage.adapters.IOnClickItemParent;
 import com.poly.restaurant.ui.activities.manage.adapters.TableManageAdapter;
 import com.poly.restaurant.ui.activities.table.TableDetailActivity;
+import com.poly.restaurant.ui.base.BaseActivity;
 import com.poly.restaurant.ui.bill.BillActivity;
 import com.poly.restaurant.ui.history.HistoryActivity;
 import com.poly.restaurant.ui.notification.NotificationActivity;
@@ -31,7 +32,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class TableManageActivity extends AppCompatActivity {
+public class TableManageActivity extends BaseActivity {
     private ActivityTableManageBinding binding;
     private TableManageViewModel viewModel;
     private TableManageAdapter adapter;
@@ -84,6 +85,9 @@ public class TableManageActivity extends AppCompatActivity {
         binding.imgMenu.setOnClickListener(view -> {
             showPopupMenu();
         });
+        binding.imgNotification.setOnClickListener(view -> {
+            startActivity(new Intent(this, NotificationActivity.class));
+        });
 
         binding.imgBill.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,7 +135,7 @@ public class TableManageActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem menuItem) {
                 if (menuItem.getItemId() == R.id.action_account) {
                     startActivity(new Intent(TableManageActivity.this, AccountActivity.class));
-                }else if(menuItem.getItemId()==R.id.action_history){
+                } else if (menuItem.getItemId() == R.id.action_history) {
                     startActivity(new Intent(TableManageActivity.this, HistoryActivity.class));
                 }
                 return true;

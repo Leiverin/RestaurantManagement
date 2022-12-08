@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginEnd="10dp"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="10dp">
 
@@ -30,22 +32,25 @@
 
                 <TextView
                     android:id="@+id/title"
-                    android:layout_width="wrap_content"
+                    android:layout_width="250dp"
                     android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-black"
+                    android:fontFamily="@font/judson_bold"
+                    android:singleLine="true"
                     android:text="Title"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/content"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/judson_regular"
                     android:text="Content"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
             </LinearLayout>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -58,14 +63,16 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_time" />
+
             <TextView
                 android:id="@+id/time_ago"
-                android:textSize="12sp"
-                android:layout_marginStart="5dp"
-                android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2 Days Ago" />
+                android:layout_marginStart="5dp"
+                android:fontFamily="@font/judson_regular"
+                android:text="2 Days Ago"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
         </LinearLayout>
     </FrameLayout>
 </androidx.cardview.widget.CardView>

@@ -5,11 +5,13 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.poly.restaurant.R;
 import com.poly.restaurant.data.models.Bill;
@@ -43,35 +45,36 @@ public class Constants {
     public static int TYPE_NON_CLICK = 1;
     public static int TYPE_IN_TABLE = 0;
     public static int TYPE_IN_PRODUCT = 1;
+    public static String BASE_URL = "https://restaurant-server-eight.vercel.app/restaurant/api/";
     public static int CHECKOUT_BY_TRANSFER = 1;
     public static int CHECKOUT_BY_SWIPE = 1;
     public static Staff staff;
     public static String CHANNEL_ID = "Restaurant Chanel";
 
-    public static void handleIncrease(TextView tvQuantity, int type){
-        if (type == TYPE_IN_TABLE){
+    public static void handleIncrease(TextView tvQuantity, int type) {
+        if (type == TYPE_IN_TABLE) {
             int quantity = Integer.parseInt(tvQuantity.getText().toString());
             quantity++;
-            tvQuantity.setText(quantity+"");
-        }else{
+            tvQuantity.setText(quantity + "");
+        } else {
             int quantity = Integer.parseInt(tvQuantity.getText().toString().subSequence(1, tvQuantity.getText().toString().length()).toString());
             quantity++;
-            tvQuantity.setText("x"+quantity);
+            tvQuantity.setText("x" + quantity);
         }
     }
 
-    public static void handleDecrease(TextView tvQuantity, int type){
-        if (type == TYPE_IN_TABLE){
+    public static void handleDecrease(TextView tvQuantity, int type) {
+        if (type == TYPE_IN_TABLE) {
             int quantity = Integer.parseInt(tvQuantity.getText().toString());
-            if (quantity > 0){
+            if (quantity > 0) {
                 quantity--;
-                tvQuantity.setText(quantity+"");
+                tvQuantity.setText(quantity + "");
             }
-        }else{
+        } else {
             int quantity = Integer.parseInt(tvQuantity.getText().toString().subSequence(1, tvQuantity.getText().toString().length()).toString());
-            if (quantity > 0){
+            if (quantity > 0) {
                 quantity--;
-                tvQuantity.setText("x"+quantity);
+                tvQuantity.setText("x" + quantity);
             }
         }
     }
@@ -120,6 +123,25 @@ public class Constants {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         dialog.getWindow().setGravity(Gravity.CENTER);
+    }
+
+    public static void changePasswordStaff(String pass) {
+        Staff staff1 = new Staff();
+        staff1.setPassword(pass);
+        ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
+        Call<List<Staff>> changePass = serviceAPI.changePassword(staff.getId(), "PUT", staff1);
+        changePass.enqueue(new Callback<List<Staff>>() {
+            @Override
+            public void onResponse(Call<List<Staff>> call, Response<List<Staff>> response) {
+                if (response.isSuccessful()) {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Staff>> call, Throwable t) {
+            }
+        });
     }
 
 

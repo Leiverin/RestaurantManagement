@@ -26,6 +26,7 @@ import com.poly.restaurant.data.models.Table;
 import com.poly.restaurant.databinding.ActivityHistoryBinding;
 import com.poly.restaurant.databinding.DialogFilterBinding;
 import com.poly.restaurant.ui.activities.manage.TableManageViewModel;
+import com.poly.restaurant.ui.base.BaseActivity;
 import com.poly.restaurant.ui.bill.adapter.OnListener;
 import com.poly.restaurant.ui.history.adapter.HistoryAdapter;
 import com.poly.restaurant.ui.history.adapter.SpinnerTableAdapter;
@@ -39,7 +40,7 @@ import java.util.Comparator;
 import java.util.List;
 
 
-public class HistoryActivity extends AppCompatActivity implements CustomSpinner.OnSpinnerEventsListener {
+public class HistoryActivity extends BaseActivity implements CustomSpinner.OnSpinnerEventsListener {
     private ActivityHistoryBinding binding;
     private HistoryAdapter adapter;
     private List<Bill> list;
@@ -114,7 +115,7 @@ public class HistoryActivity extends AppCompatActivity implements CustomSpinner.
                 calendar.set(Calendar.YEAR, year);
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                bindingFilter.timeFirstTv.setText("Time first :" + dayOfMonth + "/" + (month + 1) + "/" + year);
+                bindingFilter.timeFirstTv.setText("Date first :" + dayOfMonth + "/" + (month + 1) + "/" + year);
                 firstDate = dayOfMonth + "/" + (month + 1) + "/" + year;
             }
         };
@@ -125,7 +126,7 @@ public class HistoryActivity extends AppCompatActivity implements CustomSpinner.
                 calendar.set(Calendar.YEAR, year);
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                bindingFilter.timeSecondTv.setText("Time second :" + dayOfMonth + "/" + (month + 1) + "/" + year);
+                bindingFilter.timeSecondTv.setText("Date second :" + dayOfMonth + "/" + (month + 1) + "/" + year);
                 secondDate = dayOfMonth + "/" + (month + 1) + "/" + year;
             }
         };

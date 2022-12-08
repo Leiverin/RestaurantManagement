@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EBEBEB"
-    tools:context=".ui.bill.BillActivity">
+    tools:context="com.poly.restaurant.ui.bill.BillActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,10 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:background="#FF7F50"
-            android:padding="5dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:padding="5dp">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toobar"

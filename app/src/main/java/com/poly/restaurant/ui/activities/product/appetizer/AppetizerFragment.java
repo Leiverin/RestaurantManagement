@@ -26,6 +26,7 @@ import com.poly.restaurant.preference.AppSharePreference;
 import com.poly.restaurant.ui.activities.product.FoodActivity;
 import com.poly.restaurant.ui.activities.product.appetizer.adapter.IOnEventProductListener;
 import com.poly.restaurant.ui.activities.product.appetizer.adapter.ProductAdapter;
+import com.poly.restaurant.ui.base.BaseFragment;
 import com.poly.restaurant.utils.Constants;
 import com.poly.restaurant.utils.helps.ViewModelFactory;
 
@@ -35,7 +36,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-public class AppetizerFragment extends Fragment {
+public class AppetizerFragment extends BaseFragment {
     private FragmentAppetizerBinding binding;
     private AppetizerViewModel mViewModel;
     private ProductAdapter adapter;
