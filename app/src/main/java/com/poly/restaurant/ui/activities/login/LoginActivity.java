@@ -89,6 +89,7 @@ public class LoginActivity extends BaseActivity {
                     binding.prgLoadTable.setVisibility(View.VISIBLE);
                     viewModel.callToLogin(username, password, mToken);
                     binding.btnLogin.setEnabled(false);
+                    sharePreference.setRemember(binding.cbxRemember.isChecked());
                 }
             }
         });
