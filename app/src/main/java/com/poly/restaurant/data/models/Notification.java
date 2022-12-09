@@ -6,6 +6,7 @@ public class Notification {
     private String date;
     private String time;
     private Staff sender,receiver;
+    private String idBill;
 
     public Notification() {
     }
@@ -16,13 +17,14 @@ public class Notification {
         this.time = time;
     }
 
-    public Notification(String title, String content, String date, String time, Staff sender, Staff receiver) {
+    public Notification(String title, String content, String date, String time, Staff sender, Staff receiver, String idBill) {
         this.title = title;
         this.content = content;
         this.date = date;
         this.time = time;
         this.sender = sender;
         this.receiver = receiver;
+        this.idBill = idBill;
     }
 
     public String getTitle() {
@@ -71,5 +73,13 @@ public class Notification {
 
     public void setReceiver(Staff receiver) {
         this.receiver = receiver;
+    }
+
+    public String getIdBill() {
+        return idBill;
+    }
+
+    public void setIdBill(String idBill) {
+        this.idBill = idBill;
     }
 }

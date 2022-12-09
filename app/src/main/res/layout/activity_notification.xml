@@ -34,17 +34,10 @@
                         style="@style/editTextSearch"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:queryHint="Search notification .." />
+                        app:queryHint="Search notification ..." />
                 </androidx.cardview.widget.CardView>
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.AppBarLayout>
-
-        <Button
-            android:id="@+id/btnPush"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="push" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_notification"
