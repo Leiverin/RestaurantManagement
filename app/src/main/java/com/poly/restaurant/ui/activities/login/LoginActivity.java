@@ -60,6 +60,10 @@ public class LoginActivity extends BaseActivity {
             public void onChanged(Staff staff) {
                 binding.prgLoadTable.setVisibility(View.GONE);
                 if (staff != null) {
+                    String username = binding.edUsername.getText().toString().trim();
+                    String password = binding.edPass.getText().toString().trim();
+                    sharePreference.setUsername(username);
+                    sharePreference.setPassword(password);
                     Constants.staff = staff;
                     Toast.makeText(LoginActivity.this, "Login successfully", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(LoginActivity.this, TableManageActivity.class);

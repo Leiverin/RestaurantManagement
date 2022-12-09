@@ -134,10 +134,15 @@ public class TableDetailActivity extends BaseActivity {
             }
         });
 
-        viewModel.wasCreated.observe(this, new Observer<Boolean>() {
+        viewModel.wasBillCreated.observe(this, new Observer<Bill>() {
             @Override
-            public void onChanged(Boolean wasCreated) {
-                if (wasCreated){
+            public void onChanged(Bill bill) {
+                if (bill != null){
+                    viewModel.callToPushNotification(
+                            "dTKEeNa0QdOK-m0_NROzsl:APA91bHya_ttWelcBJUKidukxlU0ocK-pHbh9eaWJ8mj81BqV6c00A55RVxSr9fuH4itQmwZHYsSoAPXDggDHS9ONs7NcHAoi0ovverLzX26CaKC4aFSMg3KqEZZ8kwCkvUgWXD8vXQ_",
+                            "Notification",
+                            "Thinh an lol",
+                            bill.getId());
                     Toast.makeText(TableDetailActivity.this, "Create bill successfully", Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(TableDetailActivity.this, "Failed to create bill successfully", Toast.LENGTH_SHORT).show();

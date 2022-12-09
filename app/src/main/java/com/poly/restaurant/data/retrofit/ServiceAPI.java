@@ -120,4 +120,14 @@ public interface ServiceAPI {
             @Path("idStaff") String idStaff
     );
 
+    // get notification
+    @FormUrlEncoded
+    @POST("bill/notify")
+    Observable<Bill> pushNotificationToStaff(
+            @Field("tokenFCM") String token,
+            @Field("title") String title,
+            @Field("content") String content,
+            @Field("idBill") String idBill
+    );
+
 }
