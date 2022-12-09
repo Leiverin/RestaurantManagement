@@ -156,7 +156,9 @@ public class TableDetailActivity extends BaseActivity {
             public void onChanged(List<Bill> bill) {
                 if (bill != null && bill.size() != 0){
                     if (mListProduct.size() != 0){
-                        viewModel.callToUpdateBill(bill.get(0).getId(), new Bill(bill.get(0).getId(), date, time, total, 0, 0, mListProduct, table, "12321312", "6385ade7180bbd1b100746b6"));
+                        viewModel.callToUpdateBill(bill.get(0).getId(), new Bill(bill.get(0).getId(), date, time, total, 0, 0, mListProduct,
+                                new Table(table.getId(), table.getName(), table.getFloor(), table.getCapacity(), 0),
+                                "12321312", "6385ade7180bbd1b100746b6"));
                     }else{
                         Toast.makeText(TableDetailActivity.this, "No products", Toast.LENGTH_SHORT).show();
                     }
