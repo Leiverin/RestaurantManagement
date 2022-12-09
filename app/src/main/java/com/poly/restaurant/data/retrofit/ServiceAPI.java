@@ -103,16 +103,6 @@ public interface ServiceAPI {
             @Body Staff staff
     );
 
-    // push notification
-    @POST("notification/create")
-    Call<Notification> pushNotification(
-            @Field("title") String title,
-            @Field("content") String content,
-            @Field("date") String date,
-            @Field("time") String time,
-            @Field("sender") Staff staffSender,
-            @Field("receiver") Staff staffReceiver
-    );
 
     // get notification
     @GET("notification/{idStaff}")

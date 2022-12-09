@@ -38,9 +38,6 @@ public class NotificationActivity extends BaseActivity {
         list = new ArrayList<>();
         initRec();
 //        initViewModel();
-        binding.btnPush.setOnClickListener(view -> {
-
-        });
     }
 
     private void initRec() {
