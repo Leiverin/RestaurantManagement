@@ -9,15 +9,17 @@ public class Table implements Parcelable {
     @SerializedName("_id")
     private String id;
     private String name;
+    private int floor;
     private String capacity;
     private int status;
 
     public Table() {
     }
 
-    public Table(String id, String name, String capacity, int status) {
+    public Table(String id, String name, int floor, String capacity, int status) {
         this.id = id;
         this.name = name;
+        this.floor = floor;
         this.capacity = capacity;
         this.status = status;
     }
@@ -25,6 +27,7 @@ public class Table implements Parcelable {
     protected Table(Parcel in) {
         id = in.readString();
         name = in.readString();
+        floor = in.readInt();
         capacity = in.readString();
         status = in.readInt();
     }
@@ -57,6 +60,14 @@ public class Table implements Parcelable {
         this.name = name;
     }
 
+    public int getFloor() {
+        return floor;
+    }
+
+    public void setFloor(int floor) {
+        this.floor = floor;
+    }
+
     public String getCapacity() {
         return capacity;
     }
@@ -82,6 +93,7 @@ public class Table implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(id);
         parcel.writeString(name);
+        parcel.writeInt(floor);
         parcel.writeString(capacity);
         parcel.writeInt(status);
     }
