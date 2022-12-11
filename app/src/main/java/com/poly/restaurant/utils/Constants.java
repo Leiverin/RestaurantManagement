@@ -32,6 +32,8 @@ import retrofit2.Response;
 
 @SuppressLint("SetTextI18n")
 public class Constants {
+    public static final int TABLE_EMPTY_STATUS = 0;
+    public static final int TABLE_LIVE_STATUS = 1;
     public static String EXTRA_TABLE_TO_DETAIL = "extra_table_to_detail";
 
     public static String TABLE_ID_SELECTED = "TABLE_ID_SELECTED";

@@ -134,15 +134,20 @@ public class TableDetailActivity extends BaseActivity {
             }
         });
 
+        /**
+         * Bill has been create and push notification to chef and manager
+         * */
         viewModel.wasBillCreated.observe(this, new Observer<Bill>() {
             @Override
             public void onChanged(Bill bill) {
                 if (bill != null){
                     viewModel.callToPushNotification(
                             "dTKEeNa0QdOK-m0_NROzsl:APA91bHya_ttWelcBJUKidukxlU0ocK-pHbh9eaWJ8mj81BqV6c00A55RVxSr9fuH4itQmwZHYsSoAPXDggDHS9ONs7NcHAoi0ovverLzX26CaKC4aFSMg3KqEZZ8kwCkvUgWXD8vXQ_",
-                            "Notification",
-                            "Thinh an lol",
+                            "Notification to chef",
+                            "Xin chào bạn Thịnh, tớ gửi bill cho bạn đây, đm bạn",
                             bill.getId());
+                    Table tableUpdate = new Table(table.getId(), table.getName(), table.getFloor(), table.getCapacity(), 1);
+                    viewModel.updateTable(table.getId(), tableUpdate);
                     Toast.makeText(TableDetailActivity.this, "Create bill successfully", Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(TableDetailActivity.this, "Failed to create bill successfully", Toast.LENGTH_SHORT).show();
@@ -151,23 +156,39 @@ public class TableDetailActivity extends BaseActivity {
             }
         });
 
+        /**
+         * bill has been created before
+         * */
         viewModel.mBillLiveData.observe(this, new Observer<List<Bill>>() {
             @Override
             public void onChanged(List<Bill> bill) {
                 if (bill != null && bill.size() != 0){
                     if (mListProduct.size() != 0){
+                        /**
+                         * Update bill
+                         * */
+                        // Update bill
+                        Table tableUpdate = new Table(table.getId(), table.getName(), table.getFloor(), table.getCapacity(), 1);
                         viewModel.callToUpdateBill(bill.get(0).getId(), new Bill(bill.get(0).getId(), date, time, total, 0, 0, mListProduct,
-                                new Table(table.getId(), table.getName(), table.getFloor(), table.getCapacity(), 0),
-                                "12321312", "6385ade7180bbd1b100746b6"));
+                                tableUpdate,
+                                null, Constants.staff.getId()));
+                        viewModel.updateTable(table.getId(), tableUpdate);
                     }else{
                         Toast.makeText(TableDetailActivity.this, "No products", Toast.LENGTH_SHORT).show();
                     }
                 }else{
-                    viewModel.callToCreateBill(new Bill(null, date, time, total, 0, 0, mListProduct, table, "12321312", "6385ade7180bbd1b100746b6"));
+                    /**
+                    * Create bill and update table
+                    * */
+                    Table tableUpdate = new Table(table.getId(), table.getName(), table.getFloor(), table.getCapacity(), 1);
+                    viewModel.callToCreateBill(new Bill(null, date, time, total, 0, 0, mListProduct, tableUpdate, null, Constants.staff.getId()));
                 }
             }
         });
 
+        /**
+        * Was updated bill successfully
+        * */
         viewModel.wasUpdated.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean wasUpdated) {
@@ -180,6 +201,9 @@ public class TableDetailActivity extends BaseActivity {
             }
         });
 
+        /**
+         * If bill has been created before and now show it to user
+         * */
         viewModel.mBilExist.observe(this, new Observer<List<Bill>>() {
             @Override
             public void onChanged(List<Bill> bills) {

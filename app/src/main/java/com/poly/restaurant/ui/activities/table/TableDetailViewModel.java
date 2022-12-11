@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.poly.restaurant.data.models.Bill;
 import com.poly.restaurant.data.models.Product;
+import com.poly.restaurant.data.models.Table;
 import com.poly.restaurant.data.retrofit.RetroInstance;
 import com.poly.restaurant.data.retrofit.ServiceAPI;
 import com.poly.restaurant.ui.base.BaseViewModel;
@@ -26,6 +27,7 @@ public class TableDetailViewModel extends BaseViewModel {
     public MutableLiveData<List<Bill>> mBilExist;
     public MutableLiveData<Boolean> wasUpdated;
     public MutableLiveData<Boolean> wasPushed;
+    public MutableLiveData<Boolean> wasUpdatedTable;
 
     public TableDetailViewModel(Context context) {
         super(context);
@@ -35,6 +37,7 @@ public class TableDetailViewModel extends BaseViewModel {
         wasUpdated = new MutableLiveData<>();
         mBilExist = new MutableLiveData<>();
         wasPushed = new MutableLiveData<>();
+        wasUpdatedTable = new MutableLiveData<>();
     }
 
     void getListProductInBill(String idTable){
@@ -124,7 +127,6 @@ public class TableDetailViewModel extends BaseViewModel {
     }
 
     // Push notification
-
     public void callToPushNotification(String token, String title, String content, String idBill){
         ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
         Observable<Bill> mListDrinkObservable = serviceAPI.pushNotificationToStaff(token, title, content, idBill);
@@ -140,5 +142,24 @@ public class TableDetailViewModel extends BaseViewModel {
     private void handleErrorsNotificationBill(Throwable throwable) {
         wasPushed.postValue(false);
         Log.d("TAG", "handleErrorsUpdateBill: "+ throwable.getMessage());
+    }
+
+    // Update table
+    public void updateTable(String idTable, Table table){
+        ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
+        Observable<Table> mListDrinkObservable = serviceAPI.updateTable(idTable, table, "PUT");
+        mListDrinkObservable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::onRetrieveTableSuccess, this::handleErrorsGetTable);
+    }
+
+
+    private void onRetrieveTableSuccess(Table result) {
+        wasUpdatedTable.postValue(true);
+    }
+
+    private void handleErrorsGetTable(Throwable throwable) {
+        wasUpdatedTable.postValue(false);
+        Log.d("TAG", "Handle error update table: "+ throwable.getMessage());
     }
 }
