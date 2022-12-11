@@ -84,14 +84,22 @@ public interface ServiceAPI {
     );
 
     // get List Bill in status
-    @GET("bill/all/{status}")
-    Call<List<Bill>> getTypeBill(@Path("status") int status);
+    @FormUrlEncoded
+    @POST("/restaurant/api/bill/live/{status}")
+    Call<List<Bill>> getTypeBill(@Path("status") int status,
+                                 @Field("numberFloor") int numberFloor,
+                                 @Field("idStaff") String idStaff
+    );
 
     // filter history in firstDate and secondDate
+    @FormUrlEncoded
     @POST("bill/filter/{idTable}")
     Call<List<Bill>> getBillByDate(
             @Path("idTable") String idTable,
-            @Body BodyDate bodyDate
+            @Field("status") int status,
+            @Body BodyDate bodyDate,
+            @Field("floor") int floor,
+            @Field("idStaff") String idStaff
     );
 
 
@@ -110,7 +118,7 @@ public interface ServiceAPI {
             @Path("idStaff") String idStaff
     );
 
-    // get notification
+    // push notification
     @FormUrlEncoded
     @POST("bill/notify")
     Observable<Bill> pushNotificationToStaff(

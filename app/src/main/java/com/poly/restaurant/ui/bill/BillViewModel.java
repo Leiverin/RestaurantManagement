@@ -20,9 +20,9 @@ public class BillViewModel extends ViewModel {
         mListBillLiveData = new MutableLiveData<>();
     }
 
-    public void getBill() {
+    public void getBill(int numberFloor,String idStaff) {
         ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
-        Call<List<Bill>> call = serviceAPI.getTypeBill(0);
+        Call<List<Bill>> call = serviceAPI.getTypeBill(0,numberFloor,idStaff);
         call.enqueue(new Callback<List<Bill>>() {
             @Override
             public void onResponse(Call<List<Bill>> call, Response<List<Bill>> response) {

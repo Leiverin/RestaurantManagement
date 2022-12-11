@@ -15,7 +15,6 @@ import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -99,7 +98,7 @@ public class HistoryActivity extends BaseActivity implements CustomSpinner.OnSpi
                 binding.prgLoadBill.setVisibility(View.GONE);
             }
         });
-        viewModel.getHis();
+        viewModel.getHis(Constants.staff.getFloor().getNumberFloor(), Constants.staff.getId());
     }
 
     private void dialogBottomSheetFilter() {
@@ -147,7 +146,7 @@ public class HistoryActivity extends BaseActivity implements CustomSpinner.OnSpi
                 }
             });
 
-            viewModel.getBillByDate(table.getId(), new BodyDate(firstDate, secondDate));
+            viewModel.getBillByDate(table.getId(), 1, new BodyDate(firstDate, secondDate), Constants.staff.getFloor().getNumberFloor(), Constants.staff.getId());
             dialog.dismiss();
         });
 

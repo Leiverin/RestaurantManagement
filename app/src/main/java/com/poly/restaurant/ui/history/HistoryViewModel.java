@@ -21,9 +21,9 @@ public class HistoryViewModel extends ViewModel {
         mListHisLiveData = new MutableLiveData<>();
     }
 
-    public void getHis() {
+    public void getHis(int numberFloor,String idStaff) {
         ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
-        Call<List<Bill>> call = serviceAPI.getTypeBill(1);
+        Call<List<Bill>> call = serviceAPI.getTypeBill(1, numberFloor,idStaff);
         call.enqueue(new Callback<List<Bill>>() {
             @Override
             public void onResponse(Call<List<Bill>> call, Response<List<Bill>> response) {
@@ -36,9 +36,10 @@ public class HistoryViewModel extends ViewModel {
             }
         });
     }
-    public void getBillByDate(String idTable, BodyDate bodyDate){
+
+    public void getBillByDate(String idTable, int status, BodyDate bodyDate, int floor, String idStaff) {
         ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
-        Call<List<Bill>> call = serviceAPI.getBillByDate(idTable, bodyDate);
+        Call<List<Bill>> call = serviceAPI.getBillByDate(idTable, status, bodyDate, floor, idStaff);
         call.enqueue(new Callback<List<Bill>>() {
             @Override
             public void onResponse(Call<List<Bill>> call, Response<List<Bill>> response) {

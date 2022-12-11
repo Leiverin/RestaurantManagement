@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -74,7 +73,7 @@ public class BillActivity extends BaseActivity {
                 binding.prgLoadBill.setVisibility(View.GONE);
             }
         });
-        viewModel.getBill();
+        viewModel.getBill(Constants.staff.getFloor().getNumberFloor(), Constants.staff.getId());
     }
 
     private void showDialogComplete(Bill bill) {
@@ -93,6 +92,7 @@ public class BillActivity extends BaseActivity {
             list.remove(bill);
             adapter.setList(list);
             adapter.notifyDataSetChanged();
+            dialog.dismiss();
         });
 
         dialog.show();
