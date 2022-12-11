@@ -1,7 +1,6 @@
 package com.poly.restaurant.data.retrofit;
 
 import com.poly.restaurant.data.models.Bill;
-import com.poly.restaurant.data.models.BodyDate;
 import com.poly.restaurant.data.models.Notification;
 import com.poly.restaurant.data.models.Product;
 import com.poly.restaurant.data.models.Staff;
@@ -84,7 +83,7 @@ public interface ServiceAPI {
 
     // update status in bill
     @PUT("bill/update/{id}")
-    Call<List<Bill>> doneBill(
+    Call<Bill> doneBill(
             @Path("id") String id,
             @Query("_method") String method,
             @Body Bill bill
@@ -104,7 +103,8 @@ public interface ServiceAPI {
     Call<List<Bill>> getBillByDate(
             @Path("idTable") String idTable,
             @Field("status") int status,
-            @Body BodyDate bodyDate,
+            @Field("firstDate") String firstDate,
+            @Field("secondDate") String secondDate,
             @Field("floor") int floor,
             @Field("idStaff") String idStaff
     );
@@ -112,7 +112,7 @@ public interface ServiceAPI {
 
     // change Password staff
     @PUT("staff/update/{id}")
-    Call<List<Staff>> changePassword(
+    Call<Staff> changePassword(
             @Path("id") String id,
             @Query("_method") String method,
             @Body Staff staff

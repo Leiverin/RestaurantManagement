@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.poly.restaurant.data.models.Bill;
-import com.poly.restaurant.data.models.BodyDate;
 import com.poly.restaurant.data.retrofit.RetroInstance;
 import com.poly.restaurant.data.retrofit.ServiceAPI;
 
@@ -21,9 +20,9 @@ public class HistoryViewModel extends ViewModel {
         mListHisLiveData = new MutableLiveData<>();
     }
 
-    public void getHis(int numberFloor,String idStaff) {
+    public void getHis(int numberFloor, String idStaff) {
         ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
-        Call<List<Bill>> call = serviceAPI.getTypeBill(1, numberFloor,idStaff);
+        Call<List<Bill>> call = serviceAPI.getTypeBill(1, numberFloor, idStaff);
         call.enqueue(new Callback<List<Bill>>() {
             @Override
             public void onResponse(Call<List<Bill>> call, Response<List<Bill>> response) {
@@ -37,9 +36,9 @@ public class HistoryViewModel extends ViewModel {
         });
     }
 
-    public void getBillByDate(String idTable, int status, BodyDate bodyDate, int floor, String idStaff) {
+    public void getBillByDate(String idTable, int status, String firstDate, String secondDate, int floor, String idStaff) {
         ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
-        Call<List<Bill>> call = serviceAPI.getBillByDate(idTable, status, bodyDate, floor, idStaff);
+        Call<List<Bill>> call = serviceAPI.getBillByDate(idTable, status, firstDate, secondDate, floor, idStaff);
         call.enqueue(new Callback<List<Bill>>() {
             @Override
             public void onResponse(Call<List<Bill>> call, Response<List<Bill>> response) {

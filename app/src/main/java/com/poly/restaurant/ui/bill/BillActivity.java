@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.poly.restaurant.R;
 import com.poly.restaurant.data.models.Bill;
+import com.poly.restaurant.data.models.Table;
 import com.poly.restaurant.databinding.ActivityBillBinding;
 import com.poly.restaurant.databinding.DialogAlertCompleteBinding;
 import com.poly.restaurant.ui.base.BaseActivity;
@@ -92,6 +93,8 @@ public class BillActivity extends BaseActivity {
             list.remove(bill);
             adapter.setList(list);
             adapter.notifyDataSetChanged();
+            Table table = new Table(bill.getTable().getId(), bill.getTable().getName(), bill.getTable().getFloor(), bill.getTable().getCapacity(), 0);
+            viewModel.updateTable(table.getId(), table);
             dialog.dismiss();
         });
 

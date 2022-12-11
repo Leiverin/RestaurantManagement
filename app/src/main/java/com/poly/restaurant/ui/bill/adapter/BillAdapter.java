@@ -39,6 +39,15 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillHolder> {
     public void onBindViewHolder(@NonNull BillHolder holder, int position) {
         Bill bill = mListBill.get(position);
         if (bill != null) {
+            if (bill.getStatus() == 0) {
+                holder.binding.setStatusTv.setText("Đang cho bếp xử lý");
+            } else if (bill.getStatus() == 1) {
+                holder.binding.setStatusTv.setText("Đã xử lý");
+            } else if (bill.getStatus() == 2) {
+                holder.binding.setStatusTv.setText("Đang chờ thanh toán");
+            } else if (bill.getStatus() == 3) {
+                holder.binding.setStatusTv.setText("Đã thanh toán");
+            }
             holder.binding.txtNameTable.setText(bill.getTable().getName());
             holder.binding.txtMoney.setText(" " + bill.getTotalPrice());
             holder.binding.txtTime.setText(bill.getTime());

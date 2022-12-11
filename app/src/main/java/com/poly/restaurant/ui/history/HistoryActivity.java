@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,9 +19,9 @@ import android.widget.Spinner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.gson.Gson;
 import com.poly.restaurant.R;
 import com.poly.restaurant.data.models.Bill;
-import com.poly.restaurant.data.models.BodyDate;
 import com.poly.restaurant.data.models.Table;
 import com.poly.restaurant.databinding.ActivityHistoryBinding;
 import com.poly.restaurant.databinding.DialogFilterBinding;
@@ -32,10 +33,13 @@ import com.poly.restaurant.ui.history.adapter.SpinnerTableAdapter;
 import com.poly.restaurant.utils.Constants;
 import com.poly.restaurant.utils.view.CustomSpinner;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 
@@ -47,7 +51,7 @@ public class HistoryActivity extends BaseActivity implements CustomSpinner.OnSpi
     private HistoryViewModel viewModel;
     private TableManageViewModel tableManageViewModel;
     private SpinnerTableAdapter spinnerTableAdapter;
-    private String firstDate, secondDate;
+    private String firstDateParam, secondDateParam;
     private Table table;
 
 
@@ -115,7 +119,17 @@ public class HistoryActivity extends BaseActivity implements CustomSpinner.OnSpi
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                 bindingFilter.timeFirstTv.setText("Date first :" + dayOfMonth + "/" + (month + 1) + "/" + year);
-                firstDate = dayOfMonth + "/" + (month + 1) + "/" + year;
+                String firstDate = dayOfMonth + "/" + (month + 1) + "/" + year;
+                SimpleDateFormat dateFormatOfStringInDB = new SimpleDateFormat("dd/MM/yyyy");
+                Date d1 = null;
+                try {
+                    d1 = dateFormatOfStringInDB.parse(firstDate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                SimpleDateFormat dateFormatYouWant = new SimpleDateFormat("dd/MM/yyyy");
+                firstDateParam = dateFormatYouWant.format(d1);
+
             }
         };
         // date second
@@ -126,7 +140,17 @@ public class HistoryActivity extends BaseActivity implements CustomSpinner.OnSpi
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                 bindingFilter.timeSecondTv.setText("Date second :" + dayOfMonth + "/" + (month + 1) + "/" + year);
-                secondDate = dayOfMonth + "/" + (month + 1) + "/" + year;
+                String secondDate = dayOfMonth + "/" + (month + 1) + "/" + year;
+                SimpleDateFormat dateFormatOfStringInDB = new SimpleDateFormat("dd/MM/yyyy");
+                Date d1 = null;
+                try {
+                    d1 = dateFormatOfStringInDB.parse(secondDate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                SimpleDateFormat dateFormatYouWant = new SimpleDateFormat("dd/MM/yyyy");
+                secondDateParam = dateFormatYouWant.format(d1);
+
             }
         };
         bindingFilter.btnFirstTime.setOnClickListener(view -> {
@@ -145,8 +169,7 @@ public class HistoryActivity extends BaseActivity implements CustomSpinner.OnSpi
                     adapter.setList(list);
                 }
             });
-
-            viewModel.getBillByDate(table.getId(), 1, new BodyDate(firstDate, secondDate), Constants.staff.getFloor().getNumberFloor(), Constants.staff.getId());
+            viewModel.getBillByDate(table.getId(), 3, firstDateParam, secondDateParam, Constants.staff.getFloor().getNumberFloor(), Constants.staff.getId());
             dialog.dismiss();
         });
 
@@ -208,6 +231,8 @@ public class HistoryActivity extends BaseActivity implements CustomSpinner.OnSpi
                 });
                 tableList = tables;
                 spinnerTableAdapter.setList(tables);
+                binding.rvHistory.setVisibility(View.VISIBLE);
+                binding.prgLoadBill.setVisibility(View.GONE);
             }
         });
         tableManageViewModel.callToGetTable(Constants.staff.getFloor().getNumberFloor());

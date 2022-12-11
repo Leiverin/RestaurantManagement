@@ -5,13 +5,10 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.poly.restaurant.R;
 import com.poly.restaurant.data.models.Bill;
@@ -23,7 +20,10 @@ import com.poly.restaurant.databinding.DialogShowDetailBillBinding;
 import com.poly.restaurant.ui.activities.product.appetizer.adapter.ProductAdapter;
 import com.poly.restaurant.ui.bill.adapter.ShowDetailProductBillAdapter;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -83,21 +83,19 @@ public class Constants {
 
 
     public static void setOnStatus(Bill bill) {
-        Bill bill1 = new Bill();
-        bill1.setStatus(1);
-        bill1.setTotalPrice(bill.getTotalPrice());
+        Bill bill1 = new Bill(bill.getId(), bill.getDate(), bill.getTime(), bill.getTotalPrice(), bill.getCheckoutType(), 1, bill.getProducts(), bill.getTable(), bill.getIdCustomer(), bill.getIdStaff());
         ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
-        Call<List<Bill>> callDon = serviceAPI.doneBill(bill.getId(), "PUT", bill1);
-        callDon.enqueue(new Callback<List<Bill>>() {
+        Call<Bill> callDon = serviceAPI.doneBill(bill.getId(), "PUT", bill1);
+        callDon.enqueue(new Callback<Bill>() {
             @Override
-            public void onResponse(Call<List<Bill>> call, Response<List<Bill>> response) {
+            public void onResponse(Call<Bill> call, Response<Bill> response) {
                 if (response.isSuccessful()) {
 
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Bill>> call, Throwable t) {
+            public void onFailure(Call<Bill> call, Throwable t) {
 
             }
         });
@@ -131,17 +129,18 @@ public class Constants {
         Staff staff1 = new Staff();
         staff1.setPassword(pass);
         ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
-        Call<List<Staff>> changePass = serviceAPI.changePassword(staff.getId(), "PUT", staff1);
-        changePass.enqueue(new Callback<List<Staff>>() {
+        Call<Staff> changePass = serviceAPI.changePassword(staff.getId(), "PUT", staff1);
+        changePass.enqueue(new Callback<Staff>() {
             @Override
-            public void onResponse(Call<List<Staff>> call, Response<List<Staff>> response) {
+            public void onResponse(Call<Staff> call, Response<Staff> response) {
                 if (response.isSuccessful()) {
 
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Staff>> call, Throwable t) {
+            public void onFailure(Call<Staff> call, Throwable t) {
+
             }
         });
     }
@@ -149,8 +148,8 @@ public class Constants {
 
     public static void filterList(String s, List<Product> mListProduct, ProductAdapter adapter) {
         List<Product> mListFilter = new ArrayList<>();
-        for (Product product: mListProduct){
-            if (product.getName().toLowerCase().contains(s.toLowerCase())){
+        for (Product product : mListProduct) {
+            if (product.getName().toLowerCase().contains(s.toLowerCase())) {
                 mListFilter.add(product);
             }
             adapter.setList(mListFilter);
