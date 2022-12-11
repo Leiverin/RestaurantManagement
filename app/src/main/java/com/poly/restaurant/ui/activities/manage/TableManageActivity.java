@@ -1,5 +1,6 @@
 package com.poly.restaurant.ui.activities.manage;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -41,6 +42,7 @@ public class TableManageActivity extends BaseActivity {
     private List<TableParent> mListTableMain;
     private Handler handler = new Handler();
     private Runnable runnable;
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,14 +65,18 @@ public class TableManageActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
+        binding.tvNumFloor.setText("Floor: "+Constants.staff.getFloor().getNumberFloor());
         binding.rvTable.setAdapter(adapter);
         binding.rvTable.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         viewModel.mListEmptyTableLiveData.observe(this, new Observer<List<Table>>() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onChanged(List<Table> tables) {
                 binding.prgLoadTable.setVisibility(View.GONE);
+
                 if (tables != null){
                     mListTablesEmpty = tables;
+                    binding.tvNumEmptyTable.setText("Empty table: "+tables.size());
                     mListTableMain = getListTableMain();
                     adapter.setList(mListTableMain);
                 }
@@ -78,11 +84,13 @@ public class TableManageActivity extends BaseActivity {
         });
 
         viewModel.mListLiveTableLiveData.observe(this, new Observer<List<Table>>() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onChanged(List<Table> tables) {
                 binding.prgLoadTable.setVisibility(View.GONE);
                 if (tables != null){
                     mListTablesLive = tables;
+                    binding.tvNumLiveTable.setText("Live table: "+tables.size());
                     mListTableMain = getListTableMain();
                     adapter.setList(mListTableMain);
                 }
