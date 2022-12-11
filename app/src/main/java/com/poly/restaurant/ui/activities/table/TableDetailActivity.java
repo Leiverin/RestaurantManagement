@@ -27,6 +27,7 @@ import com.poly.restaurant.data.models.Product;
 import com.poly.restaurant.data.models.Table;
 import com.poly.restaurant.databinding.ActivityTableDetailBinding;
 import com.poly.restaurant.preference.AppSharePreference;
+import com.poly.restaurant.ui.activities.MainActivity;
 import com.poly.restaurant.ui.activities.product.FoodActivity;
 import com.poly.restaurant.ui.activities.table.adapter.IOnItemProductTableListener;
 import com.poly.restaurant.ui.activities.table.adapter.ProductTableAdapter;
@@ -106,6 +107,8 @@ public class TableDetailActivity extends BaseActivity {
         initEvent();
         initEventViewModel();
 
+        viewModel.checkBillAlreadyExists(table.getId());
+
         if (!sharePreference.getTableId().equals(sharePreference.getBeforeTableId()) && viewModel.getListProductByIdTable(table.getId()).size() == 0){
             viewModel.callToGetBillExist(sharePreference.getTableId(), Constants.TYPE_NON_CLICK);
             sharePreference.setBeforeTableId(table.getId());
@@ -152,12 +155,11 @@ public class TableDetailActivity extends BaseActivity {
                             bill.getId());
                     Table tableUpdate = new Table(table.getId(), table.getName(), table.getFloor(), table.getCapacity(), 1);
                     viewModel.updateTable(table.getId(), tableUpdate);
-                    binding.btnOrder.setBackground(ContextCompat.getDrawable(TableDetailActivity.this, R.drawable.bg_btn_order_black));
-                    binding.btnOrder.setTextColor(Color.WHITE);
+                    binding.btnOrder.setBackgroundResource(R.drawable.bg_btn_order_black);
+                    binding.btnOrder.setText("Update");
+                    binding.tvStatus.setText("Đang giao cho nhà bếp xử lý");
                     Toast.makeText(TableDetailActivity.this, "Create bill successfully", Toast.LENGTH_SHORT).show();
                 }else{
-                    binding.btnOrder.setBackground(ContextCompat.getDrawable(TableDetailActivity.this, R.drawable.bg_btn_order));
-                    binding.btnOrder.setTextColor(Color.BLACK);
                     Toast.makeText(TableDetailActivity.this, "Failed to create bill successfully", Toast.LENGTH_SHORT).show();
                 }
                 binding.btnOrder.setEnabled(true);
@@ -190,6 +192,8 @@ public class TableDetailActivity extends BaseActivity {
                     * */
                     Table tableUpdate = new Table(table.getId(), table.getName(), table.getFloor(), table.getCapacity(), 1);
                     viewModel.callToCreateBill(new Bill(null, date, time, total, 0, 0, mListProduct, tableUpdate, null, Constants.staff.getId()));
+                    binding.btnOrder.setBackgroundResource(R.drawable.bg_btn_order);
+                    binding.btnOrder.setText("Order");
                 }
             }
         });
@@ -216,8 +220,6 @@ public class TableDetailActivity extends BaseActivity {
             @Override
             public void onChanged(List<Bill> bills) {
                 if ((bills != null ? bills.size() : 0) != 0){
-                    binding.btnOrder.setBackgroundResource(R.drawable.bg_btn_order_black);
-                    binding.btnOrder.setTextColor(Color.WHITE);
                     for (Product product: bills.get(0).getProducts()){
                         viewModel.insertProduct(new Product(
                                 null,
@@ -230,6 +232,26 @@ public class TableDetailActivity extends BaseActivity {
                 }
             }
         });
+
+        viewModel.statusBillExistLiveData.observe(this, new Observer<List<Bill>>() {
+            @Override
+            public void onChanged(List<Bill> bills) {
+                if (bills != null && bills.size() != 0){
+                    if (bills.get(0).getStatus() == 0){
+                        binding.btnOrder.setBackgroundResource(R.drawable.bg_btn_order_black);
+                        binding.btnOrder.setText("Update");
+                        binding.tvStatus.setText("Đang giao cho nhà bếp xử lý");
+                    }else{
+
+                    }
+                }else{
+                    binding.btnOrder.setBackgroundResource(R.drawable.bg_btn_order);
+                    binding.btnOrder.setText("Order");
+                    binding.tvStatus.setText("Bill chưa được tạo");
+                }
+            }
+        });
+
     }
 
     private void initEvent() {

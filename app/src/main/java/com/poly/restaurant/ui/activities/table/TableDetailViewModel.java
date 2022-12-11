@@ -28,6 +28,8 @@ public class TableDetailViewModel extends BaseViewModel {
     public MutableLiveData<Boolean> wasUpdated;
     public MutableLiveData<Boolean> wasPushed;
     public MutableLiveData<Boolean> wasUpdatedTable;
+    public MutableLiveData<List<Bill>> statusBillExistLiveData;
+
 
     public TableDetailViewModel(Context context) {
         super(context);
@@ -38,6 +40,7 @@ public class TableDetailViewModel extends BaseViewModel {
         mBilExist = new MutableLiveData<>();
         wasPushed = new MutableLiveData<>();
         wasUpdatedTable = new MutableLiveData<>();
+        statusBillExistLiveData = new MutableLiveData<>();
     }
 
     void getListProductInBill(String idTable){
@@ -160,6 +163,24 @@ public class TableDetailViewModel extends BaseViewModel {
 
     private void handleErrorsGetTable(Throwable throwable) {
         wasUpdatedTable.postValue(false);
+        Log.d("TAG", "Handle error update table: "+ throwable.getMessage());
+    }
+
+    // Update table
+    public void checkBillAlreadyExists(String idTable){
+        ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
+        Observable<List<Bill>> mListDrinkObservable = serviceAPI.getBillIfExists(idTable);
+        mListDrinkObservable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::onRetrieveBillExist, this::handleErrorsBillExist);
+    }
+
+    private void onRetrieveBillExist(List<Bill> result) {
+        statusBillExistLiveData.postValue(result);
+    }
+
+    private void handleErrorsBillExist(Throwable throwable) {
+        statusBillExistLiveData.postValue(null);
         Log.d("TAG", "Handle error update table: "+ throwable.getMessage());
     }
 }
