@@ -28,6 +28,13 @@ public interface ServiceAPI {
             @Path("floor") int floor
     );
 
+    // Get table by floor and status
+    @GET("table")
+    Observable<List<Table>> getTableByFloorAndStatus(
+            @Query("floor") int floor,
+            @Query("status") int status
+    );
+
     // Get list product by category
     @GET("products/all/{category}")
     Observable<List<Product>> getProductByCategory(
@@ -112,7 +119,7 @@ public interface ServiceAPI {
     );
 
 
-    // get notification
+    // get list notification
     @GET("notification/{idStaff}")
     Call<List<Notification>> getNotification(
             @Path("idStaff") String idStaff
@@ -126,6 +133,14 @@ public interface ServiceAPI {
             @Field("title") String title,
             @Field("content") String content,
             @Field("idBill") String idBill
+    );
+
+    // update table
+    @PUT("table/update/{idTable}")
+    Observable<Table> updateTable(
+            @Path("idTable") String idTable,
+            @Body Table table,
+            @Query("_method") String method
     );
 
 }

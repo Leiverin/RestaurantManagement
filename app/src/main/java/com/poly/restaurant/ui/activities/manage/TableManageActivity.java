@@ -36,7 +36,8 @@ public class TableManageActivity extends BaseActivity {
     private ActivityTableManageBinding binding;
     private TableManageViewModel viewModel;
     private TableManageAdapter adapter;
-    private List<Table> mListTables;
+    private List<Table> mListTablesEmpty;
+    private List<Table> mListTablesLive;
     private List<TableParent> mListTableMain;
     private Handler handler = new Handler();
     private Runnable runnable;
@@ -50,7 +51,8 @@ public class TableManageActivity extends BaseActivity {
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_color));
         binding.prgLoadTable.setVisibility(View.VISIBLE);
 
-        mListTables = new ArrayList<>();
+        mListTablesEmpty = new ArrayList<>();
+        mListTablesLive = new ArrayList<>();
         mListTableMain = new ArrayList<>();
 
         adapter = new TableManageAdapter(mListTableMain, this, new IOnClickItemParent() {
@@ -63,16 +65,29 @@ public class TableManageActivity extends BaseActivity {
         });
         binding.rvTable.setAdapter(adapter);
         binding.rvTable.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        viewModel.mListTableLiveData.observe(this, new Observer<List<Table>>() {
+        viewModel.mListEmptyTableLiveData.observe(this, new Observer<List<Table>>() {
             @Override
             public void onChanged(List<Table> tables) {
-                mListTables = tables;
-                mListTableMain = getListTableMain();
                 binding.prgLoadTable.setVisibility(View.GONE);
-                adapter.setList(mListTableMain);
+                if (tables != null){
+                    mListTablesEmpty = tables;
+                    mListTableMain = getListTableMain();
+                    adapter.setList(mListTableMain);
+                }
             }
         });
-        viewModel.callToGetTable(Constants.staff.getFloor().getNumberFloor());
+
+        viewModel.mListLiveTableLiveData.observe(this, new Observer<List<Table>>() {
+            @Override
+            public void onChanged(List<Table> tables) {
+                binding.prgLoadTable.setVisibility(View.GONE);
+                if (tables != null){
+                    mListTablesLive = tables;
+                    mListTableMain = getListTableMain();
+                    adapter.setList(mListTableMain);
+                }
+            }
+        });
 
         binding.imgNotification.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,6 +100,7 @@ public class TableManageActivity extends BaseActivity {
         binding.imgMenu.setOnClickListener(view -> {
             showPopupMenu();
         });
+
         binding.imgNotification.setOnClickListener(view -> {
             startActivity(new Intent(this, NotificationActivity.class));
         });
@@ -100,13 +116,24 @@ public class TableManageActivity extends BaseActivity {
 
     private List<TableParent> getListTableMain() {
         List<TableParent> mTableMain = new ArrayList<>();
-        mListTables.sort(new Comparator<Table>() {
+        if (mListTablesEmpty.size() != 0){
+            mListTablesEmpty.sort(new Comparator<Table>() {
             @Override
             public int compare(Table t1, Table t2) {
                 return t1.getName().compareTo(t2.getName());
-            }
-        });
-        mTableMain.add(new TableParent("Empty table", mListTables));
+                }
+            });
+            mTableMain.add(new TableParent("Empty table", mListTablesEmpty));
+        }
+        if (mListTablesLive.size() != 0){
+            mListTablesLive.sort(new Comparator<Table>() {
+                @Override
+                public int compare(Table t1, Table t2) {
+                    return t1.getName().compareTo(t2.getName());
+                }
+            });
+            mTableMain.add(new TableParent("Live table", mListTablesLive));
+        }
         return mTableMain;
     }
 
@@ -118,12 +145,8 @@ public class TableManageActivity extends BaseActivity {
 
     @Override
     protected void onResume() {
-//        handler.postDelayed(runnable = new Runnable() {
-//            @Override
-//            public void run() {
-//                handler.postDelayed(runnable, 5000);
-//            }
-//        }, 5000);
+        viewModel.callToGetTableEmpty(Constants.staff.getFloor().getNumberFloor(), Constants.TABLE_EMPTY_STATUS);
+        viewModel.callToGetTableLive(Constants.staff.getFloor().getNumberFloor(), Constants.TABLE_LIVE_STATUS);
         super.onResume();
     }
 
