@@ -40,7 +40,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillHolder> {
         Bill bill = mListBill.get(position);
         if (bill != null) {
             if (bill.getStatus() == 0) {
-                holder.binding.setStatusTv.setText("Đang cho bếp xử lý");
+                holder.binding.setStatusTv.setText("Đang chờ bếp xử lý");
             } else if (bill.getStatus() == 1) {
                 holder.binding.setStatusTv.setText("Đã xử lý");
             } else if (bill.getStatus() == 2) {

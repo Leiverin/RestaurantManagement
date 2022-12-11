@@ -1,6 +1,7 @@
 package com.poly.restaurant.ui.activities.account;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -12,17 +13,22 @@ import com.poly.restaurant.R;
 import com.poly.restaurant.data.models.Staff;
 import com.poly.restaurant.databinding.ActivityAccountBinding;
 import com.poly.restaurant.databinding.DialogChangePassBinding;
+import com.poly.restaurant.preference.AppSharePreference;
+import com.poly.restaurant.ui.activities.login.LoginActivity;
+import com.poly.restaurant.ui.activities.manage.TableManageActivity;
 import com.poly.restaurant.ui.base.BaseActivity;
 import com.poly.restaurant.utils.Constants;
 
 public class AccountActivity extends BaseActivity {
     private ActivityAccountBinding binding;
+    private AppSharePreference sharePreference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityAccountBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        sharePreference = new AppSharePreference(AccountActivity.this);
         initData(Constants.staff);
         binding.passAccount.setOnClickListener(view -> {
             showDialogChangePass();
@@ -37,7 +43,12 @@ public class AccountActivity extends BaseActivity {
             Snackbar.make(binding.getRoot(), "Thông tin số điện thoại không được sửa !", Snackbar.LENGTH_LONG).show();
         });
         binding.btnLogout.setOnClickListener(view -> {
-
+            sharePreference.setRemember(false);
+            Constants.staff = null;
+            Intent i = new Intent(AccountActivity.this, LoginActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(i);
+            finish();
         });
     }
 
@@ -61,6 +72,7 @@ public class AccountActivity extends BaseActivity {
                 Snackbar.make(changePassBinding.getRoot(), "Mật khẩu mới không khớp !", Snackbar.LENGTH_LONG).show();
             } else {
                 Constants.changePasswordStaff(passNewAgain);
+                sharePreference.setPassword(passNewAgain);
                 binding.password.setText(passNewAgain);
                 Snackbar.make(changePassBinding.getRoot(), "Đổi mật khẩu thành công !", Snackbar.LENGTH_LONG).show();
                 dialog.dismiss();
