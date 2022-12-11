@@ -9,7 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -103,10 +105,12 @@ public class TableDetailActivity extends BaseActivity {
         eventScrollRecycleView();
         initEvent();
         initEventViewModel();
+
         if (!sharePreference.getTableId().equals(sharePreference.getBeforeTableId()) && viewModel.getListProductByIdTable(table.getId()).size() == 0){
             viewModel.callToGetBillExist(sharePreference.getTableId(), Constants.TYPE_NON_CLICK);
             sharePreference.setBeforeTableId(table.getId());
         }
+
     }
 
     private void initEventViewModel() {
@@ -148,8 +152,12 @@ public class TableDetailActivity extends BaseActivity {
                             bill.getId());
                     Table tableUpdate = new Table(table.getId(), table.getName(), table.getFloor(), table.getCapacity(), 1);
                     viewModel.updateTable(table.getId(), tableUpdate);
+                    binding.btnOrder.setBackground(ContextCompat.getDrawable(TableDetailActivity.this, R.drawable.bg_btn_order_black));
+                    binding.btnOrder.setTextColor(Color.WHITE);
                     Toast.makeText(TableDetailActivity.this, "Create bill successfully", Toast.LENGTH_SHORT).show();
                 }else{
+                    binding.btnOrder.setBackground(ContextCompat.getDrawable(TableDetailActivity.this, R.drawable.bg_btn_order));
+                    binding.btnOrder.setTextColor(Color.BLACK);
                     Toast.makeText(TableDetailActivity.this, "Failed to create bill successfully", Toast.LENGTH_SHORT).show();
                 }
                 binding.btnOrder.setEnabled(true);
@@ -208,6 +216,8 @@ public class TableDetailActivity extends BaseActivity {
             @Override
             public void onChanged(List<Bill> bills) {
                 if ((bills != null ? bills.size() : 0) != 0){
+                    binding.btnOrder.setBackgroundResource(R.drawable.bg_btn_order_black);
+                    binding.btnOrder.setTextColor(Color.WHITE);
                     for (Product product: bills.get(0).getProducts()){
                         viewModel.insertProduct(new Product(
                                 null,
