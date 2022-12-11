@@ -119,7 +119,7 @@ public class Constants {
             showDetailBillBinding.rvProductBillDetail.setAdapter(adapterShowDetailBill);
         }
         dialog.show();
-        dialog.setCancelable(true);
+        dialog.setCancelable(false);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         dialog.getWindow().setGravity(Gravity.CENTER);
