@@ -1,9 +1,13 @@
 package com.poly.restaurant.ui.activities.manage;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -13,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.poly.restaurant.R;
@@ -50,6 +55,7 @@ public class TableManageActivity extends BaseActivity {
         binding = ActivityTableManageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         Window window = getWindow();
+
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_color));
         binding.prgLoadTable.setVisibility(View.VISIBLE);
 
@@ -120,6 +126,28 @@ public class TableManageActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
+
+        LocalBroadcastManager.getInstance(this).registerReceiver((receiver),
+                new IntentFilter(Constants.REQUEST_TO_ACTIVITY)
+        );
+    }
+
+    private final BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            try {
+                String idBill = intent.getStringExtra(Constants.EXTRA_ID_BILL_TO_TABLE_DETAIL);
+                Log.d("TAG", "onReceive: "+ idBill);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    };
+
+    @Override
+    protected void onStop() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
+        super.onStop();
     }
 
     private List<TableParent> getListTableMain() {

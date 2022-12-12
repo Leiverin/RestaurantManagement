@@ -34,6 +34,7 @@ import retrofit2.Response;
 public class Constants {
     public static final int TABLE_EMPTY_STATUS = 0;
     public static final int TABLE_LIVE_STATUS = 1;
+    public static final String EXTRA_ID_BILL_TO_TABLE_DETAIL = "EXTRA_ID_BILL_TO_TABLE_DETAIL";
     public static String EXTRA_TABLE_TO_DETAIL = "extra_table_to_detail";
 
     public static String TABLE_ID_SELECTED = "TABLE_ID_SELECTED";
@@ -52,6 +53,8 @@ public class Constants {
     public static int CHECKOUT_BY_SWIPE = 1;
     public static Staff staff;
     public static String CHANNEL_ID = "Restaurant Chanel";
+    public static String EXTRA_ID_BILL_TO_BROADCAST = "EXTRA_ID_BILL_TO_BROADCAST";
+    public static String REQUEST_TO_ACTIVITY = "REQUEST_TO_ACTIVITY";
 
     public static void handleIncrease(TextView tvQuantity, int type) {
         if (type == TYPE_IN_TABLE) {
