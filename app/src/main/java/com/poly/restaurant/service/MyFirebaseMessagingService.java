@@ -14,12 +14,14 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.google.gson.Gson;
 import com.poly.restaurant.R;
 import com.poly.restaurant.ui.activities.splash.SplashActivity;
+import com.poly.restaurant.ui.activities.table.TableDetailActivity;
 import com.poly.restaurant.utils.Constants;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
@@ -33,11 +35,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(@NonNull RemoteMessage message) {
         if (message.getNotification() != null){
-            sendNotification(message.getNotification().getTitle(), message.getNotification().getBody());
-            Log.d("TAG", "1: "+ new Gson().toJson(message.getNotification().getBody()));
+            String title = message.getNotification().getTitle();
+            String idBill = message.getData().get("idBill");
+            sendNotification(title, message.getNotification().getBody());
+            LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(getBaseContext());
+            Intent intent = new Intent(Constants.REQUEST_TO_ACTIVITY);
+            intent.putExtra(Constants.EXTRA_ID_BILL_TO_TABLE_DETAIL, idBill);
+            broadcastManager.sendBroadcast(intent);
         }
-
-
         super.onMessageReceived(message);
     }
 

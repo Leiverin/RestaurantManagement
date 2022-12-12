@@ -18,7 +18,7 @@ public class Bill implements Parcelable {
     private List<Product> foods;
     private Table table;
     private String idCustomer;
-    private String idStaff;
+    private Staff staff;
 
     public Bill() {
     }
@@ -28,7 +28,7 @@ public class Bill implements Parcelable {
         this.id = id;
     }
 
-    public Bill(String id, String date, String time, double totalPrice, int checkoutType, int status, List<Product> foods, Table table, String idCustomer, String idStaff) {
+    public Bill(String id, String date, String time, double totalPrice, int checkoutType, int status, List<Product> foods, Table table, String idCustomer, Staff staff) {
         this.id = id;
         this.date = date;
         this.time = time;
@@ -38,7 +38,7 @@ public class Bill implements Parcelable {
         this.foods = foods;
         this.table = table;
         this.idCustomer = idCustomer;
-        this.idStaff = idStaff;
+        this.staff = staff;
     }
 
 
@@ -49,9 +49,10 @@ public class Bill implements Parcelable {
         totalPrice = in.readDouble();
         checkoutType = in.readInt();
         status = in.readInt();
+        foods = in.createTypedArrayList(Product.CREATOR);
         table = in.readParcelable(Table.class.getClassLoader());
         idCustomer = in.readString();
-        idStaff = in.readString();
+        staff = in.readParcelable(Staff.class.getClassLoader());
     }
 
     public static final Creator<Bill> CREATOR = new Creator<Bill>() {
@@ -138,12 +139,12 @@ public class Bill implements Parcelable {
         this.idCustomer = idCustomer;
     }
 
-    public String getIdStaff() {
-        return idStaff;
+    public Staff getStaff() {
+        return staff;
     }
 
-    public void setIdStaff(String idStaff) {
-        this.idStaff = idStaff;
+    public void setStaff(Staff staff) {
+        this.staff = staff;
     }
 
     @Override
@@ -159,8 +160,9 @@ public class Bill implements Parcelable {
         parcel.writeDouble(totalPrice);
         parcel.writeInt(checkoutType);
         parcel.writeInt(status);
+        parcel.writeTypedList(foods);
         parcel.writeParcelable(table, i);
         parcel.writeString(idCustomer);
-        parcel.writeString(idStaff);
+        parcel.writeParcelable(staff, i);
     }
 }

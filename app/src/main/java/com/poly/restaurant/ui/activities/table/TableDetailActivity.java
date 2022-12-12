@@ -5,12 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -114,6 +117,10 @@ public class TableDetailActivity extends BaseActivity {
             sharePreference.setBeforeTableId(table.getId());
         }
 
+        LocalBroadcastManager.getInstance(this).registerReceiver((receiver),
+                new IntentFilter(Constants.REQUEST_TO_ACTIVITY)
+        );
+
     }
 
     private void initEventViewModel() {
@@ -181,7 +188,7 @@ public class TableDetailActivity extends BaseActivity {
                         Table tableUpdate = new Table(table.getId(), table.getName(), table.getFloor(), table.getCapacity(), 1);
                         viewModel.callToUpdateBill(bill.get(0).getId(), new Bill(bill.get(0).getId(), date, time, total, 0, 0, mListProduct,
                                 tableUpdate,
-                                null, Constants.staff.getId()));
+                                null, Constants.staff));
                         viewModel.updateTable(table.getId(), tableUpdate);
                     }else{
                         Toast.makeText(TableDetailActivity.this, "No products", Toast.LENGTH_SHORT).show();
@@ -191,7 +198,7 @@ public class TableDetailActivity extends BaseActivity {
                     * Create bill and update table
                     * */
                     Table tableUpdate = new Table(table.getId(), table.getName(), table.getFloor(), table.getCapacity(), 1);
-                    viewModel.callToCreateBill(new Bill(null, date, time, total, 0, 0, mListProduct, tableUpdate, null, Constants.staff.getId()));
+                    viewModel.callToCreateBill(new Bill(null, date, time, total, 0, 0, mListProduct, tableUpdate, null, Constants.staff));
                     binding.btnOrder.setBackgroundResource(R.drawable.bg_btn_order);
                     binding.btnOrder.setText("Order");
                 }
@@ -344,5 +351,23 @@ public class TableDetailActivity extends BaseActivity {
     private void hideBottomSheet(){
         binding.viewBottomSheet.setAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_top_to_bottom));
         binding.viewBottomSheet.setVisibility(View.GONE);
+    }
+
+    private final BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            try {
+                String idBill = intent.getStringExtra(Constants.EXTRA_ID_BILL_TO_TABLE_DETAIL);
+                Log.d("TAG", "onReceive: "+ idBill);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    };
+
+    @Override
+    protected void onStop() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
+        super.onStop();
     }
 }
