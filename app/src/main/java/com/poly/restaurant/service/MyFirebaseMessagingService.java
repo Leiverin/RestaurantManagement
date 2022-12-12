@@ -9,6 +9,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
@@ -16,6 +17,7 @@ import androidx.core.app.NotificationManagerCompat;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.google.gson.Gson;
 import com.poly.restaurant.R;
 import com.poly.restaurant.ui.activities.splash.SplashActivity;
 import com.poly.restaurant.utils.Constants;
@@ -32,7 +34,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public void onMessageReceived(@NonNull RemoteMessage message) {
         if (message.getNotification() != null){
             sendNotification(message.getNotification().getTitle(), message.getNotification().getBody());
+            Log.d("TAG", "1: "+ new Gson().toJson(message.getNotification().getBody()));
         }
+
+
         super.onMessageReceived(message);
     }
 
