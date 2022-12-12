@@ -137,7 +137,8 @@ public class TableManageActivity extends BaseActivity {
         public void onReceive(Context context, Intent intent) {
             try {
                 String idBill = intent.getStringExtra(Constants.EXTRA_ID_BILL_TO_TABLE_DETAIL);
-                Log.d("TAG", "onReceive: "+ idBill);
+                viewModel.callToGetTableEmpty(Constants.staff.getFloor().getNumberFloor(), Constants.TABLE_EMPTY_STATUS);
+                viewModel.callToGetTableLive(Constants.staff.getFloor().getNumberFloor(), Constants.TABLE_LIVE_STATUS);
             } catch (Exception e) {
                 e.printStackTrace();
             }

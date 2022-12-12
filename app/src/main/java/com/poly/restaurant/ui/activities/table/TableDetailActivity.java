@@ -248,8 +248,17 @@ public class TableDetailActivity extends BaseActivity {
                         binding.btnOrder.setBackgroundResource(R.drawable.bg_btn_order_black);
                         binding.btnOrder.setText("Update");
                         binding.tvStatus.setText("Đang giao cho nhà bếp xử lý");
-                    }else{
-
+                    }else if(bills.get(0).getStatus() == 1){
+                        binding.tvStatus.setText("Đồ ăn đã hoàn thành. Bàn đang hoạt động.");
+                    }else if(bills.get(0).getStatus() == 2){
+                        binding.tvStatus.setText("Thu ngân đang tiến hành thanh toán");
+                    }else if(bills.get(0).getStatus() == 3){
+                        binding.tvStatus.setText("Thanh toán thành công");
+                        for (Product product: bills.get(0).getProducts()){
+                            viewModel.deleteProduct(product);
+                        }
+                        binding.btnOrder.setBackgroundResource(R.drawable.bg_btn_order);
+                        binding.btnOrder.setText("Order");
                     }
                 }else{
                     binding.btnOrder.setBackgroundResource(R.drawable.bg_btn_order);
@@ -259,6 +268,29 @@ public class TableDetailActivity extends BaseActivity {
             }
         });
 
+        viewModel.mBillByIdLiveData.observe(this, new Observer<Bill>() {
+            @Override
+            public void onChanged(Bill bill) {
+                if (bill != null){
+                    if (bill.getStatus() == 0){
+                        binding.btnOrder.setBackgroundResource(R.drawable.bg_btn_order_black);
+                        binding.btnOrder.setText("Update");
+                        binding.tvStatus.setText("Đang giao cho nhà bếp xử lý");
+                    }else if(bill.getStatus() == 1){
+                        binding.tvStatus.setText("Đồ ăn đã hoàn thành. Bàn đang hoạt động.");
+                    }else if(bill.getStatus() == 2){
+                        binding.tvStatus.setText("Thu ngân đang tiến hành thanh toán");
+                    }else if(bill.getStatus() == 3){
+                        binding.tvStatus.setText("Thanh toán thành công");
+                        for (Product product: bill.getProducts()){
+                            viewModel.deleteProduct(product);
+                        }
+                        binding.btnOrder.setBackgroundResource(R.drawable.bg_btn_order);
+                        binding.btnOrder.setText("Order");
+                    }
+                }
+            }
+        });
     }
 
     private void initEvent() {
@@ -358,7 +390,7 @@ public class TableDetailActivity extends BaseActivity {
         public void onReceive(Context context, Intent intent) {
             try {
                 String idBill = intent.getStringExtra(Constants.EXTRA_ID_BILL_TO_TABLE_DETAIL);
-                Log.d("TAG", "onReceive: "+ idBill);
+                viewModel.getBillById(idBill);
             } catch (Exception e) {
                 e.printStackTrace();
             }
