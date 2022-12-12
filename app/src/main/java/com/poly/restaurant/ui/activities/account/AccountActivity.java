@@ -15,7 +15,6 @@ import com.poly.restaurant.databinding.ActivityAccountBinding;
 import com.poly.restaurant.databinding.DialogChangePassBinding;
 import com.poly.restaurant.preference.AppSharePreference;
 import com.poly.restaurant.ui.activities.login.LoginActivity;
-import com.poly.restaurant.ui.activities.manage.TableManageActivity;
 import com.poly.restaurant.ui.base.BaseActivity;
 import com.poly.restaurant.utils.Constants;
 

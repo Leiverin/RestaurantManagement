@@ -83,7 +83,7 @@ public class Constants {
 
 
     public static void setOnStatus(Bill bill) {
-        Bill bill1 = new Bill(bill.getId(), bill.getDate(), bill.getTime(), bill.getTotalPrice(), bill.getCheckoutType(), 1, bill.getProducts(), bill.getTable(), bill.getIdCustomer(), bill.getIdStaff());
+        Bill bill1 = new Bill(bill.getId(), bill.getDate(), bill.getTime(), bill.getTotalPrice(), bill.getCheckoutType(), 3, bill.getProducts(), bill.getTable(), bill.getIdCustomer(), bill.getIdStaff());
         ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
         Call<Bill> callDon = serviceAPI.doneBill(bill.getId(), "PUT", bill1);
         callDon.enqueue(new Callback<Bill>() {
