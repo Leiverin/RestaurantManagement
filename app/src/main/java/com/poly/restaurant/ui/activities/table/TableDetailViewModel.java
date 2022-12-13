@@ -193,7 +193,11 @@ public class TableDetailViewModel extends BaseViewModel {
         Observable<Response<Bill>> mBillObservable = serviceAPI.getBillById(id);
         mBillObservable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::onRetrieveBillById, this::handleErrorsBillById);
+                .subscribe
+                        (
+                                this::onRetrieveBillById,
+                        this::handleErrorsBillById
+        );
     }
 
     private void onRetrieveBillById(Response<Bill> result) {

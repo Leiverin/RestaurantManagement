@@ -182,6 +182,9 @@ public class TableManageActivity extends BaseActivity {
 
     @Override
     protected void onResume() {
+        LocalBroadcastManager.getInstance(this).registerReceiver((receiver),
+                new IntentFilter(Constants.REQUEST_TO_ACTIVITY)
+        );
         viewModel.callToGetTableEmpty(Constants.staff.getFloor().getNumberFloor(), Constants.TABLE_EMPTY_STATUS);
         viewModel.callToGetTableLive(Constants.staff.getFloor().getNumberFloor(), Constants.TABLE_LIVE_STATUS);
         super.onResume();

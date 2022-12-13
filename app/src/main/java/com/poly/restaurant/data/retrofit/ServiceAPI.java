@@ -147,7 +147,7 @@ public interface ServiceAPI {
     );
 
     // update table
-    @PUT("bill")
+    @GET("bill")
     Observable<Response<Bill>> getBillById(
             @Query("id") String id
     );
