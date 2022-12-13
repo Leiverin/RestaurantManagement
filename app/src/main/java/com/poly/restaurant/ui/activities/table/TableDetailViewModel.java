@@ -19,6 +19,7 @@ import java.util.List;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import retrofit2.Response;
 
 public class TableDetailViewModel extends BaseViewModel {
     public MutableLiveData<List<Product>> mListProductLiveData;
@@ -29,6 +30,7 @@ public class TableDetailViewModel extends BaseViewModel {
     public MutableLiveData<Boolean> wasPushed;
     public MutableLiveData<Boolean> wasUpdatedTable;
     public MutableLiveData<List<Bill>> statusBillExistLiveData;
+    public MutableLiveData<Bill> mBillByIdLiveData;
 
 
     public TableDetailViewModel(Context context) {
@@ -41,6 +43,7 @@ public class TableDetailViewModel extends BaseViewModel {
         wasPushed = new MutableLiveData<>();
         wasUpdatedTable = new MutableLiveData<>();
         statusBillExistLiveData = new MutableLiveData<>();
+        mBillByIdLiveData = new MutableLiveData<>();
     }
 
     void getListProductInBill(String idTable){
@@ -181,6 +184,30 @@ public class TableDetailViewModel extends BaseViewModel {
 
     private void handleErrorsBillExist(Throwable throwable) {
         statusBillExistLiveData.postValue(null);
+        Log.d("TAG", "Handle error update table: "+ throwable.getMessage());
+    }
+
+    // Get bill by id
+    public void getBillById(String id){
+        ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
+        Observable<Response<Bill>> mBillObservable = serviceAPI.getBillById(id);
+        mBillObservable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe
+                        (
+                                this::onRetrieveBillById,
+                        this::handleErrorsBillById
+        );
+    }
+
+    private void onRetrieveBillById(Response<Bill> result) {
+        if (result.isSuccessful()){
+            mBillByIdLiveData.postValue(result.body());
+        }
+    }
+
+    private void handleErrorsBillById(Throwable throwable) {
+        mBillByIdLiveData.postValue(null);
         Log.d("TAG", "Handle error update table: "+ throwable.getMessage());
     }
 }

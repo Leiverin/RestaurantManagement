@@ -10,6 +10,7 @@ import java.util.List;
 
 import io.reactivex.rxjava3.core.Observable;
 import retrofit2.Call;
+import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -141,6 +142,12 @@ public interface ServiceAPI {
             @Path("idTable") String idTable,
             @Body Table table,
             @Query("_method") String method
+    );
+
+    // update table
+    @GET("bill")
+    Observable<Response<Bill>> getBillById(
+            @Query("id") String id
     );
 
 }
