@@ -28,9 +28,9 @@ public class BillViewModel extends ViewModel {
         wasUpdatedTable = new MutableLiveData<>();
     }
 
-    public void getBill(int numberFloor,String idStaff) {
+    public void getBill(int status,int numberFloor,String idStaff) {
         ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
-        Call<List<Bill>> call = serviceAPI.getTypeBill(0,numberFloor,idStaff);
+        Call<List<Bill>> call = serviceAPI.getTypeBill(status,numberFloor,idStaff);
         call.enqueue(new Callback<List<Bill>>() {
             @Override
             public void onResponse(Call<List<Bill>> call, Response<List<Bill>> response) {

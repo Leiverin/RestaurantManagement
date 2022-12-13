@@ -22,7 +22,7 @@ public class HistoryViewModel extends ViewModel {
 
     public void getHis(int numberFloor, String idStaff) {
         ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
-        Call<List<Bill>> call = serviceAPI.getTypeBill(1, numberFloor, idStaff);
+        Call<List<Bill>> call = serviceAPI.getTypeBill(3, numberFloor, idStaff);
         call.enqueue(new Callback<List<Bill>>() {
             @Override
             public void onResponse(Call<List<Bill>> call, Response<List<Bill>> response) {

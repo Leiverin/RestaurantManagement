@@ -74,7 +74,7 @@ public class BillActivity extends BaseActivity {
                 binding.prgLoadBill.setVisibility(View.GONE);
             }
         });
-        viewModel.getBill(Constants.staff.getFloor().getNumberFloor(), Constants.staff.getId());
+        viewModel.getBill(0,Constants.staff.getFloor().getNumberFloor(), Constants.staff.getId());
     }
 
     private void showDialogComplete(Bill bill) {
@@ -93,8 +93,8 @@ public class BillActivity extends BaseActivity {
             list.remove(bill);
             adapter.setList(list);
             adapter.notifyDataSetChanged();
-            Table table = new Table(bill.getTable().getId(), bill.getTable().getName(), bill.getTable().getFloor(), bill.getTable().getCapacity(), 0);
-            viewModel.updateTable(table.getId(), table);
+//            Table table = new Table(bill.getTable().getId(), bill.getTable().getName(), bill.getTable().getFloor(), bill.getTable().getCapacity(), 0);
+//            viewModel.updateTable(table.getId(), table);
             dialog.dismiss();
         });
 
