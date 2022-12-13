@@ -14,6 +14,7 @@ import com.poly.restaurant.R;
 import com.poly.restaurant.data.models.Bill;
 import com.poly.restaurant.data.models.Product;
 import com.poly.restaurant.data.models.Staff;
+import com.poly.restaurant.data.models.Table;
 import com.poly.restaurant.data.retrofit.RetroInstance;
 import com.poly.restaurant.data.retrofit.ServiceAPI;
 import com.poly.restaurant.databinding.DialogShowDetailBillBinding;
@@ -83,7 +84,8 @@ public class Constants {
 
 
     public static void setOnStatus(Bill bill) {
-        Bill bill1 = new Bill(bill.getId(), bill.getDate(), bill.getTime(), bill.getTotalPrice(), bill.getCheckoutType(), 3, bill.getProducts(), bill.getTable(), bill.getIdCustomer(), bill.getIdStaff());
+        Table table=new Table(bill.getTable().getId(),bill.getTable().getName(),bill.getTable().getFloor(),bill.getTable().getCapacity(),0);
+        Bill bill1 = new Bill(bill.getId(), bill.getDate(), bill.getTime(), bill.getTotalPrice(), bill.getCheckoutType(), 3, bill.getProducts(), table, bill.getIdCustomer(), bill.getIdStaff());
         ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
         Call<Bill> callDon = serviceAPI.doneBill(bill.getId(), "PUT", bill1);
         callDon.enqueue(new Callback<Bill>() {
