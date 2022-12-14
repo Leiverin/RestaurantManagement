@@ -22,10 +22,12 @@ import retrofit2.Response;
 public class BillViewModel extends ViewModel {
     public MutableLiveData<List<Bill>> mListBillLiveData;
     public MutableLiveData<Boolean> wasUpdatedTable;
+    public MutableLiveData<Bill> mBillByIdLiveData;
 
     public BillViewModel() {
         mListBillLiveData = new MutableLiveData<>();
         wasUpdatedTable = new MutableLiveData<>();
+        mBillByIdLiveData=new MutableLiveData<>();
     }
 
     public void getBill(int status,int numberFloor,String idStaff) {
@@ -56,6 +58,27 @@ public class BillViewModel extends ViewModel {
 
     private void handleErrorsGetTable(Throwable throwable) {
         wasUpdatedTable.postValue(false);
+        Log.d("TAG", "Handle error update table: "+ throwable.getMessage());
+    }
+    public void getBillById(String id){
+        ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
+        Observable<Response<Bill>> mBillObservable = serviceAPI.getBillById(id);
+        mBillObservable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        this::onRetrieveBillById,
+                        this::handleErrorsBillById
+                );
+    }
+
+    private void onRetrieveBillById(Response<Bill> result) {
+        if (result.isSuccessful()){
+            mBillByIdLiveData.postValue(result.body());
+        }
+    }
+
+    private void handleErrorsBillById(Throwable throwable) {
+        mBillByIdLiveData.postValue(null);
         Log.d("TAG", "Handle error update table: "+ throwable.getMessage());
     }
 }
