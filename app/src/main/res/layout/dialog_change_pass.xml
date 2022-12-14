@@ -28,23 +28,24 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/pass_old_input_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
-        app:passwordToggleEnabled="true">
+        android:hint="Mật khẩu cũ"
+        app:passwordToggleEnabled="true"
+        app:shapeAppearance="@style/Cut">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/pass_old"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_edit_login"
             android:fontFamily="@font/judson_regular"
-            android:hint="Mật khẩu cũ"
-            android:paddingStart="20dp"
             android:inputType="textPassword"
             android:padding="10dp"
+            android:paddingStart="20dp"
             android:textColor="@color/black"
             android:textSize="18sp" />
 
@@ -53,23 +54,24 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/pass_new_input_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
-        app:passwordToggleEnabled="true">
+        android:hint="Mật khẩu mới"
+        app:passwordToggleEnabled="true"
+        app:shapeAppearance="@style/Cut">
 
         <EditText
             android:id="@+id/pass_new"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_edit_login"
             android:fontFamily="@font/judson_regular"
-            android:hint="Mật khẩu mới"
-            android:paddingStart="20dp"
             android:inputType="textPassword"
             android:padding="10dp"
+            android:paddingStart="20dp"
             android:textColor="@color/black"
             android:textSize="18sp" />
 
@@ -77,23 +79,24 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/pass_new_again_input_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
-        app:passwordToggleEnabled="true">
+        android:hint="Nhập lại mật khẩu mới"
+        app:passwordToggleEnabled="true"
+        app:shapeAppearance="@style/Cut">
 
         <EditText
             android:id="@+id/pass_new_again"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_edit_login"
             android:fontFamily="@font/judson_regular"
-            android:hint="Nhập lại mật khẩu mới"
-            android:paddingStart="20dp"
             android:inputType="textPassword"
             android:padding="10dp"
+            android:paddingStart="20dp"
             android:textColor="@color/black"
             android:textSize="18sp" />
 
