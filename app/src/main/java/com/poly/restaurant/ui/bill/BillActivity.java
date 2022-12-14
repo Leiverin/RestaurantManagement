@@ -68,10 +68,17 @@ public class BillActivity extends BaseActivity {
         viewModel.mListBillLiveData.observe(this, new Observer<List<Bill>>() {
             @Override
             public void onChanged(List<Bill> bills) {
-                list = bills;
-                adapter.setList(list);
-                binding.rvBill.setVisibility(View.VISIBLE);
-                binding.prgLoadBill.setVisibility(View.GONE);
+                if(bills.isEmpty()){
+                    binding.empty.setVisibility(View.VISIBLE);
+                    binding.prgLoadBill.setVisibility(View.GONE);
+                }else {
+                    list = bills;
+                    adapter.setList(list);
+                    binding.rvBill.setVisibility(View.VISIBLE);
+                    binding.prgLoadBill.setVisibility(View.GONE);
+                    binding.empty.setVisibility(View.GONE);
+                }
+
             }
         });
         viewModel.getBill(Constants.staff.getFloor().getNumberFloor(), Constants.staff.getId());

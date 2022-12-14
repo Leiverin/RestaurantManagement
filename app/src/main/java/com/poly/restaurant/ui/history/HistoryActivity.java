@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +18,6 @@ import android.widget.Spinner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.gson.Gson;
 import com.poly.restaurant.R;
 import com.poly.restaurant.data.models.Bill;
 import com.poly.restaurant.data.models.Table;
@@ -96,10 +94,17 @@ public class HistoryActivity extends BaseActivity implements CustomSpinner.OnSpi
         viewModel.mListHisLiveData.observe(this, new Observer<List<Bill>>() {
             @Override
             public void onChanged(List<Bill> bills) {
-                list = bills;
-                adapter.setList(list);
-                binding.rvHistory.setVisibility(View.VISIBLE);
-                binding.prgLoadBill.setVisibility(View.GONE);
+                if (bills.isEmpty()) {
+                    binding.empty.setVisibility(View.VISIBLE);
+                    binding.prgLoadBill.setVisibility(View.GONE);
+                } else {
+                    list = bills;
+                    adapter.setList(list);
+                    binding.rvHistory.setVisibility(View.VISIBLE);
+                    binding.prgLoadBill.setVisibility(View.GONE);
+                    binding.empty.setVisibility(View.GONE);
+                }
+
             }
         });
         viewModel.getHis(Constants.staff.getFloor().getNumberFloor(), Constants.staff.getId());
@@ -214,6 +219,9 @@ public class HistoryActivity extends BaseActivity implements CustomSpinner.OnSpi
         for (Bill bill : list) {
             if (bill.getTable().getName().contains(text)) {
                 billList.add(bill);
+                binding.empty.setVisibility(View.GONE);
+            }else {
+                binding.empty.setVisibility(View.VISIBLE);
             }
         }
         adapter.setList(billList);
