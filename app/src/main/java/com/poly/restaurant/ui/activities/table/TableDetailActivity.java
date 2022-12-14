@@ -297,6 +297,10 @@ public class TableDetailActivity extends BaseActivity {
             public void onChanged(List<Bill> bills) {
                 if (bills != null && bills.size() != 0){
                     setStatusTable(bills.get(0));
+                }else{
+                    for (Product product: viewModel.getListProductByIdTable(sharePreference.getTableId())){
+                        viewModel.deleteProduct(product);
+                    }
                 }
             }
         });
