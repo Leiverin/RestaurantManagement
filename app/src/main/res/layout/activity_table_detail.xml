@@ -56,6 +56,14 @@
                     </LinearLayout>
 
                     <ImageView
+                        android:id="@+id/img_done"
+                        style="@style/imgIcon"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_pay_bill" />
+
+                    <ImageView
                         android:id="@+id/imgAdd"
                         style="@style/imgIcon"
                         android:layout_gravity="center"
@@ -115,7 +123,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:padding="16dp"
-                android:visibility="gone"
                 android:layout_gravity="bottom"
                 android:background="@color/color_bottom_sheet"
                 android:elevation="12dp"

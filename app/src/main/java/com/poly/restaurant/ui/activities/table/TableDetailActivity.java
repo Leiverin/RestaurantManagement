@@ -66,6 +66,7 @@ public class TableDetailActivity extends BaseActivity {
         viewModel = new ViewModelProvider(this, factory).get(TableDetailViewModel.class);
         binding = ActivityTableDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
         Window window = getWindow();
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_color));
         mListProduct = new ArrayList();
@@ -73,6 +74,7 @@ public class TableDetailActivity extends BaseActivity {
         table = getIntent().getParcelableExtra(Constants.EXTRA_TABLE_TO_DETAIL);
         sharePreference.setTableId(table.getId());
         binding.tvNameTable.setText(table.getName());
+        binding.imgDone.setVisibility(View.GONE);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         binding.rvFood.setLayoutManager(layoutManager);
@@ -166,8 +168,8 @@ public class TableDetailActivity extends BaseActivity {
                 if (bill != null){
                     viewModel.callToPushNotification(
                             "dTKEeNa0QdOK-m0_NROzsl:APA91bHya_ttWelcBJUKidukxlU0ocK-pHbh9eaWJ8mj81BqV6c00A55RVxSr9fuH4itQmwZHYsSoAPXDggDHS9ONs7NcHAoi0ovverLzX26CaKC4aFSMg3KqEZZ8kwCkvUgWXD8vXQ_",
-                            "Notification to chef",
-                            "Xin chào bạn Thịnh, tớ gửi bill cho bạn đây, đm bạn",
+                            "Thông báo",
+                            "Bill bàn "+bill.getTable().getName()+" đã được tạo. Hành động thôi nào :))",
                             bill.getId());
                     Table tableUpdate = new Table(table.getId(), table.getName(), table.getFloor(), table.getCapacity(), 1);
                     viewModel.updateTable(table.getId(), tableUpdate);
@@ -183,7 +185,7 @@ public class TableDetailActivity extends BaseActivity {
         });
 
         /**
-         * bill has been created before
+         * If bill already exist, update it. If not, create it
          * */
         viewModel.mBillLiveData.observe(this, new Observer<List<Bill>>() {
             @Override
@@ -193,29 +195,26 @@ public class TableDetailActivity extends BaseActivity {
                         /**
                          * Update bill
                          * */
-                        // Update bill
                         Table tableUpdate = new Table(table.getId(), table.getName(), table.getFloor(), table.getCapacity(), 1);
-                        viewModel.callToUpdateBill(bill.get(0).getId(), new Bill(bill.get(0).getId(), date, time, total, 0, 2, mListProduct,
+                        viewModel.callToUpdateBill(bill.get(0).getId(), new Bill(bill.get(0).getId(), date, time, total, 0, 0, mListProduct,
                                 tableUpdate,
-                                null, Constants.staff));
-                        viewModel.updateTable(table.getId(), tableUpdate);
-
+                                null, Constants.staff), Constants.TYPE_UPDATE);
                         viewModel.callToPushNotification(
-                                "cCvkqM_VCyS5V_iMt3XSlw:APA91bEStWrvanpkTGWf0FLVH90ToxShO1hTIOA7S-HMehtoZaLMtzB_CIKcok0-pU_UQLZXV45PkQOsGPfM00krzNBzc-wolTtb7B5xeuV5SxRYGbOouwpvLyZ2PWvNCg4i0Nqk_6gl",
-                                "Notification to web",
-                                "Bàn "+ bill.get(0).getTable().getName()+ " đang chờ xác nhận",
+                                "dTKEeNa0QdOK-m0_NROzsl:APA91bHya_ttWelcBJUKidukxlU0ocK-pHbh9eaWJ8mj81BqV6c00A55RVxSr9fuH4itQmwZHYsSoAPXDggDHS9ONs7NcHAoi0ovverLzX26CaKC4aFSMg3KqEZZ8kwCkvUgWXD8vXQ_",
+                                "Thông báo bổ sung món",
+                                "Bill bàn "+bill.get(0).getTable().getName()+" vừa bổ sung thêm món",
                                 bill.get(0).getId());
                     }else{
                         Toast.makeText(TableDetailActivity.this, "No products", Toast.LENGTH_SHORT).show();
                     }
                 }else{
                     /**
-                    * Create bill and update table
+                    * Create bill
                     * */
-
                     Table tableUpdate = new Table(table.getId(), table.getName(), table.getFloor(), table.getCapacity(), 1);
                     viewModel.callToCreateBill(new Bill(null, date, time, total, 0, 0, mListProduct, tableUpdate, null, Constants.staff));
                     binding.btnOrder.setBackgroundResource(R.drawable.bg_btn_order);
+                    binding.imgDone.setVisibility(View.VISIBLE);
                     binding.btnOrder.setText("Order");
                 }
             }
@@ -232,6 +231,7 @@ public class TableDetailActivity extends BaseActivity {
                 }else{
                     Toast.makeText(TableDetailActivity.this, "Failed to update", Toast.LENGTH_SHORT).show();
                 }
+
                 binding.btnOrder.setEnabled(true);
             }
         });
@@ -243,6 +243,8 @@ public class TableDetailActivity extends BaseActivity {
             @Override
             public void onChanged(List<Bill> bills) {
                 if ((bills != null ? bills.size() : 0) != 0){
+                    binding.imgDone.setVisibility(View.VISIBLE);
+                    setStatusTable(bills.get(0));
                     for (Product product: bills.get(0).getProducts()){
                         viewModel.insertProduct(new Product(
                                 null,
@@ -256,59 +258,48 @@ public class TableDetailActivity extends BaseActivity {
             }
         });
 
-        viewModel.statusBillExistLiveData.observe(this, new Observer<List<Bill>>() {
-            @Override
-            public void onChanged(List<Bill> bills) {
-                if (bills != null && bills.size() != 0){
-                    if (bills.get(0).getStatus() == 0){
-                        binding.btnOrder.setBackgroundResource(R.drawable.bg_btn_order_black);
-                        binding.btnOrder.setText("Update");
-                        binding.tvStatus.setText("Đang giao cho nhà bếp xử lý");
-                    }else if(bills.get(0).getStatus() == 1){
-                        type = 1;
-                        binding.tvStatus.setText("Đồ ăn đã hoàn thành. Bàn đang hoạt động.");
-                    }else if(bills.get(0).getStatus() == 2){
-                        binding.tvStatus.setText("Thu ngân đang tiến hành thanh toán");
-                    }else if(bills.get(0).getStatus() == 3){
-                        type = 0;
-                        binding.tvStatus.setText("Thanh toán thành công");
-                        for (Product product: bills.get(0).getProducts()){
-                            viewModel.deleteProduct(product);
-                        }
-                        binding.btnOrder.setBackgroundResource(R.drawable.bg_btn_order);
-                        binding.btnOrder.setText("Order");
-                    }
-                }else{
-                    binding.btnOrder.setBackgroundResource(R.drawable.bg_btn_order);
-                    binding.btnOrder.setText("Order");
-                    binding.tvStatus.setText("Bill chưa được tạo");
-                }
-            }
-        });
-
         viewModel.mBillByIdLiveData.observe(this, new Observer<Bill>() {
             @Override
             public void onChanged(Bill bill) {
                 Log.d("TAG", "onChanged: "+ viewModel.getListProduct());
                 if (bill != null){
-                    if (bill.getStatus() == 0){
-                        binding.btnOrder.setBackgroundResource(R.drawable.bg_btn_order_black);
-                        binding.btnOrder.setText("Update");
-                        binding.tvStatus.setText("Đang giao cho nhà bếp xử lý");
-                    }else if(bill.getStatus() == 1){
-                        binding.btnOrder.setBackgroundResource(R.drawable.bg_btn_order_black);
-                        binding.btnOrder.setText("Update");
-                        binding.tvStatus.setText("Đồ ăn đã hoàn thành. Bàn đang hoạt động.");
-                        type = 1;
-                    }else if(bill.getStatus() == 2){
-                        binding.tvStatus.setText("Thu ngân đang tiến hành thanh toán");
-                    }else if(bill.getStatus() == 3){
-                        binding.tvStatus.setText("Thanh toán thành công");
-                        for (Product product: bill.getProducts()){
-                            viewModel.deleteProduct(product);
-                        }
-                        binding.btnOrder.setBackgroundResource(R.drawable.bg_btn_order);
-                        binding.btnOrder.setText("Order");
+                    setStatusTable(bill);
+                }
+            }
+        });
+
+        /**
+         * Live data to pay bill
+         * */
+        viewModel.payBillLiveData.observe(this, new Observer<List<Bill>>() {
+            @Override
+            public void onChanged(List<Bill> bills) {
+                if (bills != null && bills.size() != 0){
+                    Table tableUpdate = new Table(table.getId(), table.getName(), table.getFloor(), table.getCapacity(), 1);
+                    viewModel.callToUpdateBill(bills.get(0).getId(), new Bill(bills.get(0).getId(), date, time, total, 0, 2, mListProduct,
+                            tableUpdate,
+                            null, Constants.staff), Constants.TYPE_PAY);
+
+                    viewModel.callToPushNotification(
+                            "cCvkqM_VCyS5V_iMt3XSlw:APA91bEStWrvanpkTGWf0FLVH90ToxShO1hTIOA7S-HMehtoZaLMtzB_CIKcok0-pU_UQLZXV45PkQOsGPfM00krzNBzc-wolTtb7B5xeuV5SxRYGbOouwpvLyZ2PWvNCg4i0Nqk_6gl",
+                            "Thông báo xác nhận hóa đơn",
+                            "Bàn "+ bills.get(0).getTable().getName()+ " đang chờ xác nhận thanh toán",
+                            bills.get(0).getId());
+
+                    binding.tvStatus.setText("Thu ngân đang tiến hành thanh toán");
+
+                }
+            }
+        });
+
+        viewModel.statusBillExistLiveData.observe(this, new Observer<List<Bill>>() {
+            @Override
+            public void onChanged(List<Bill> bills) {
+                if (bills != null && bills.size() != 0){
+                    setStatusTable(bills.get(0));
+                }else{
+                    for (Product product: viewModel.getListProductByIdTable(sharePreference.getTableId())){
+                        viewModel.deleteProduct(product);
                     }
                 }
             }
@@ -322,9 +313,14 @@ public class TableDetailActivity extends BaseActivity {
                 if (type == 0){
                     viewModel.callToGetBillExist(sharePreference.getTableId(), Constants.TYPE_CLICK);
                     binding.btnOrder.setEnabled(false);
-                }else if (type == 1){
-                    viewModel.callToGetBillExist(sharePreference.getTableId(), Constants.TYPE_CLICK);
                 }
+            }
+        });
+        binding.imgDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewModel.callToGetBillExist(sharePreference.getTableId(), Constants.TYPE_PAY_BILL);
+                binding.btnOrder.setEnabled(false);
             }
         });
     }
@@ -427,5 +423,29 @@ public class TableDetailActivity extends BaseActivity {
     protected void onStop() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
         super.onStop();
+    }
+
+    private void setStatusTable(Bill bill){
+        if (bill != null){
+            if (bill.getStatus() == 0){
+                binding.btnOrder.setBackgroundResource(R.drawable.bg_btn_order_black);
+                binding.btnOrder.setText("Update");
+                binding.tvStatus.setText("Đang giao cho nhà bếp xử lý");
+                binding.imgDone.setVisibility(View.VISIBLE);
+            }else if(bill.getStatus() == 1){
+                binding.btnOrder.setBackgroundResource(R.drawable.bg_btn_order_black);
+                binding.btnOrder.setText("Update");
+                binding.tvStatus.setText("Đồ ăn đã hoàn thành. Bàn đang hoạt động.");
+                binding.imgDone.setVisibility(View.VISIBLE);
+            }else if(bill.getStatus() == 3){
+                binding.tvStatus.setText("Thanh toán thành công");
+                for (Product product: viewModel.getListProductByIdTable(bill.getTable().getId())){
+                    viewModel.deleteProduct(product);
+                }
+                binding.btnOrder.setBackgroundResource(R.drawable.bg_btn_order);
+                binding.btnOrder.setText("Order");
+                binding.imgDone.setVisibility(View.GONE);
+            }
+        }
     }
 }
