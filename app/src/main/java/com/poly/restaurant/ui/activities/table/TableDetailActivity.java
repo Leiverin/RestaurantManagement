@@ -167,7 +167,7 @@ public class TableDetailActivity extends BaseActivity {
             public void onChanged(Bill bill) {
                 if (bill != null){
                     viewModel.callToPushNotification(
-                            "dTKEeNa0QdOK-m0_NROzsl:APA91bHya_ttWelcBJUKidukxlU0ocK-pHbh9eaWJ8mj81BqV6c00A55RVxSr9fuH4itQmwZHYsSoAPXDggDHS9ONs7NcHAoi0ovverLzX26CaKC4aFSMg3KqEZZ8kwCkvUgWXD8vXQ_",
+                            "cb3aRBUuRq22zvGJ6veBie:APA91bGhWlomOBFZUjK_Vi6i5G_DtPkOtMJi372XvwEO0sA9Iq300CVb15BcumFYCttUilTXONcFLlOG5yLXUBOFpAeDWU0840OeXId-nDpdx2W0FvdDABfaxTuu1qDOGx_4_rLDMEdn",
                             "Thông báo",
                             "Bill bàn "+bill.getTable().getName()+" đã được tạo. Hành động thôi nào :))",
                             bill.getId());
@@ -200,7 +200,7 @@ public class TableDetailActivity extends BaseActivity {
                                 tableUpdate,
                                 null, Constants.staff), Constants.TYPE_UPDATE);
                         viewModel.callToPushNotification(
-                                "dTKEeNa0QdOK-m0_NROzsl:APA91bHya_ttWelcBJUKidukxlU0ocK-pHbh9eaWJ8mj81BqV6c00A55RVxSr9fuH4itQmwZHYsSoAPXDggDHS9ONs7NcHAoi0ovverLzX26CaKC4aFSMg3KqEZZ8kwCkvUgWXD8vXQ_",
+                                "cb3aRBUuRq22zvGJ6veBie:APA91bGhWlomOBFZUjK_Vi6i5G_DtPkOtMJi372XvwEO0sA9Iq300CVb15BcumFYCttUilTXONcFLlOG5yLXUBOFpAeDWU0840OeXId-nDpdx2W0FvdDABfaxTuu1qDOGx_4_rLDMEdn",
                                 "Thông báo bổ sung món",
                                 "Bill bàn "+bill.get(0).getTable().getName()+" vừa bổ sung thêm món",
                                 bill.get(0).getId());

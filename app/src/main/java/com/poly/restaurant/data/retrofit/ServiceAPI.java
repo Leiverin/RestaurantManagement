@@ -150,4 +150,12 @@ public interface ServiceAPI {
             @Query("id") String id
     );
 
+    @FormUrlEncoded
+    @POST("bill/live/current/{idStaff}")
+    Call<List<Bill>> getBill(
+            @Path("idStaff") String idStaff,
+            @Field("numberFloor") int numberFloor
+    );
+
+
 }

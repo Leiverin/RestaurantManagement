@@ -103,6 +103,7 @@ public class HistoryActivity extends BaseActivity implements CustomSpinner.OnSpi
                     binding.rvHistory.setVisibility(View.VISIBLE);
                     binding.prgLoadBill.setVisibility(View.GONE);
                     binding.empty.setVisibility(View.GONE);
+                    spinnerTable();
                 }
 
             }

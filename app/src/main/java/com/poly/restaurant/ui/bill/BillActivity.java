@@ -9,6 +9,7 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +37,7 @@ public class BillActivity extends BaseActivity {
     private BillAdapter adapter;
     private List<Bill> list;
     private BillViewModel viewModel;
-    private Bill billStatus;
+    private Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,26 +90,9 @@ public class BillActivity extends BaseActivity {
 
             }
         });
-        viewModel.mBillByIdLiveData.observe(this, new Observer<Bill>() {
-            @Override
-            public void onChanged(Bill bill) {
-
-            }
-        });
-        viewModel.getBill(0, Constants.staff.getFloor().getNumberFloor(), Constants.staff.getId());
+        viewModel.getBill(Constants.staff.getId(), Constants.staff.getFloor().getNumberFloor());
     }
 
-    private final BroadcastReceiver receiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            try {
-                String idBill = intent.getStringExtra(Constants.EXTRA_ID_BILL_TO_TABLE_DETAIL);
-                viewModel.getBillById(idBill);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    };
 
     private void showDialogComplete(Bill bill) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -138,12 +122,29 @@ public class BillActivity extends BaseActivity {
         dialog.getWindow().setGravity(Gravity.CENTER);
     }
 
+    private final BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            try {
+                viewModel.getBill(Constants.staff.getId(), Constants.staff.getFloor().getNumberFloor());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    };
+
+    @Override
+    protected void onStop() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
+        super.onStop();
+    }
+
     @Override
     protected void onResume() {
         LocalBroadcastManager.getInstance(this).registerReceiver((receiver),
                 new IntentFilter(Constants.REQUEST_TO_ACTIVITY)
         );
+        viewModel.getBill(Constants.staff.getId(), Constants.staff.getFloor().getNumberFloor());
         super.onResume();
     }
-
 }
