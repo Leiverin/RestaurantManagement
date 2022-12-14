@@ -44,8 +44,14 @@ public class Constants {
     public static String KEY_USERNAME = "KEY_USERNAME";
     public static String KEY_PASSWORD = "KEY_PASSWORD";
     public static String KEY_REMEMBER = "KEY_REMEMBER";
+
     public static int TYPE_CLICK = 0;
     public static int TYPE_NON_CLICK = 1;
+    public static final int TYPE_PAY_BILL = 2;
+
+    public static final int TYPE_PAY = 1;
+    public static final int TYPE_UPDATE = 2;
+
     public static int TYPE_IN_TABLE = 0;
     public static int TYPE_IN_PRODUCT = 1;
     public static String BASE_URL = "https://restaurant-server-eight.vercel.app/restaurant/api/";

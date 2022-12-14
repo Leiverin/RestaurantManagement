@@ -109,10 +109,11 @@ public class FoodActivity extends BaseActivity {
         isScrollingLiveData.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isScrolling) {
+                Log.d("TAG", "onChanged: "+ isScrolling);
                 if (isScrolling){
                     hideBottomSheet();
                 }else{
-                    if (viewModel.getLocalProducts().size() == 0){
+                    if (viewModel.getListProductByIdTable(sharePreference.getTableId()).size() == 0){
                         binding.viewBottomSheet.setVisibility(View.GONE);
                     }else{
                         visibleBottomSheet();
