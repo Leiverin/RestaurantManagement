@@ -204,6 +204,7 @@ public class TableDetailActivity extends BaseActivity {
                                 "Thông báo bổ sung món",
                                 "Bill bàn "+bill.get(0).getTable().getName()+" vừa bổ sung thêm món",
                                 bill.get(0).getId());
+                        binding.tvStatus.setText("Đang giao cho nhà bếp xử lý");
                     }else{
                         Toast.makeText(TableDetailActivity.this, "No products", Toast.LENGTH_SHORT).show();
                     }

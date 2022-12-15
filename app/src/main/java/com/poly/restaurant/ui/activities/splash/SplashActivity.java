@@ -36,6 +36,8 @@ public class SplashActivity extends AppCompatActivity {
             }
         }, 4000);
 
+
+
         fcm = FirebaseMessaging.getInstance();
         createChannelNotification();
         Log.d("token", new Gson().toJson(fcm.getToken()));
