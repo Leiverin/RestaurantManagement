@@ -38,4 +38,5 @@
     <string name="text_alert">Bạn có chắc chắn muốn thanh toán hóa đơn %1s này ?</string>
     <string name="check_bill">Check bill</string>
     <string name="remember">Remember me</string>
+    <string name="url_feedback">https://feedback-final.vercel.app/id=%1s</string>
 </resources>

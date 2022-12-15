@@ -51,7 +51,7 @@
             android:name="com.poly.restaurant.ui.history.HistoryActivity"
             android:exported="true" />
         <activity
-            android:name="com.poly.restaurant.ui.FeedBackActivity"
+            android:name="com.poly.restaurant.ui.feedback.FeedBackActivity"
             android:exported="true" />
         <activity
             android:name="com.poly.restaurant.ui.activities.verify.VerifyActivity"

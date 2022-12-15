@@ -2,6 +2,7 @@ package com.poly.restaurant.ui.history;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import com.poly.restaurant.data.models.Bill;
 import com.poly.restaurant.data.models.Table;
 import com.poly.restaurant.databinding.ActivityHistoryBinding;
 import com.poly.restaurant.databinding.DialogFilterBinding;
+import com.poly.restaurant.ui.feedback.FeedBackActivity;
 import com.poly.restaurant.ui.activities.manage.TableManageViewModel;
 import com.poly.restaurant.ui.base.BaseActivity;
 import com.poly.restaurant.ui.bill.adapter.OnListener;
@@ -83,9 +85,12 @@ public class HistoryActivity extends BaseActivity implements CustomSpinner.OnSpi
             }
 
             @Override
-            public void onStatus(Bill bill) {
-
+            public void onClickFeedback(Bill bill) {
+                Intent intent = new Intent(HistoryActivity.this, FeedBackActivity.class);
+                intent.putExtra(Constants.CREATE_FEEDBACK, bill);
+                startActivity(intent);
             }
+
         });
         binding.rvHistory.setAdapter(adapter);
     }
@@ -221,7 +226,7 @@ public class HistoryActivity extends BaseActivity implements CustomSpinner.OnSpi
             if (bill.getTable().getName().contains(text)) {
                 billList.add(bill);
                 binding.empty.setVisibility(View.GONE);
-            }else {
+            } else {
                 binding.empty.setVisibility(View.VISIBLE);
             }
         }

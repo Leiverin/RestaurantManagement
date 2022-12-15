@@ -1,6 +1,7 @@
 package com.poly.restaurant.data.retrofit;
 
 import com.poly.restaurant.data.models.Bill;
+import com.poly.restaurant.data.models.Feedback;
 import com.poly.restaurant.data.models.Notification;
 import com.poly.restaurant.data.models.Product;
 import com.poly.restaurant.data.models.Staff;
@@ -157,5 +158,9 @@ public interface ServiceAPI {
             @Field("numberFloor") int numberFloor
     );
 
+    @POST("feedback/create")
+    Call<Feedback> createFeedBack(
+           @Body Feedback feedback
+    );
 
 }

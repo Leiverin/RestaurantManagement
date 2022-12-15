@@ -62,6 +62,7 @@ public class Constants {
     public static String CHANNEL_ID = "Restaurant Chanel";
     public static String EXTRA_ID_BILL_TO_BROADCAST = "EXTRA_ID_BILL_TO_BROADCAST";
     public static String REQUEST_TO_ACTIVITY = "REQUEST_TO_ACTIVITY";
+    public static String CREATE_FEEDBACK = "CREATE_FEEDBACK";
 
     public static void handleIncrease(TextView tvQuantity, int type) {
         if (type == TYPE_IN_TABLE) {
