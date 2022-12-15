@@ -163,4 +163,7 @@ public interface ServiceAPI {
            @Body Feedback feedback
     );
 
+    @GET("feedback/all")
+    Call<List<Feedback>> getAllFeedback();
+
 }

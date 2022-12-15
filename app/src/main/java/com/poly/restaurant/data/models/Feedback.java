@@ -12,8 +12,9 @@ public class Feedback {
     private Staff staff;
     private String date;
     private String time;
+    private String idBill;
 
-    public Feedback(String id, int status, int title, String content, Table table, Staff staff, String date, String time) {
+    public Feedback(String id, int status, int title, String content, Table table, Staff staff, String date, String time, String idBill) {
         this.id = id;
         this.status = status;
         this.title = title;
@@ -22,6 +23,7 @@ public class Feedback {
         this.staff = staff;
         this.date = date;
         this.time = time;
+        this.idBill = idBill;
     }
 
     public String getId() {
@@ -86,5 +88,13 @@ public class Feedback {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public String getIdBill() {
+        return idBill;
+    }
+
+    public void setIdBill(String idBill) {
+        this.idBill = idBill;
     }
 }

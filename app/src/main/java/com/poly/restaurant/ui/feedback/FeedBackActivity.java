@@ -1,5 +1,9 @@
 package com.poly.restaurant.ui.feedback;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -7,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
@@ -22,7 +27,9 @@ import com.poly.restaurant.utils.Constants;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class FeedBackActivity extends BaseActivity {
     private ActivityFeedBackBinding binding;
@@ -38,8 +45,10 @@ public class FeedBackActivity extends BaseActivity {
         binding = ActivityFeedBackBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         bill = getIntent().getParcelableExtra(Constants.CREATE_FEEDBACK);
-        initViewModel();
-
+        checkBillFeedback();
+        LocalBroadcastManager.getInstance(this).registerReceiver((receiver),
+                new IntentFilter(Constants.REQUEST_TO_ACTIVITY)
+        );
     }
 
     private void initViewModel() {
@@ -64,6 +73,48 @@ public class FeedBackActivity extends BaseActivity {
                 }
             }
         });
-        viewModel.createFeedback(new Feedback(null, 4, 2, "Rất tốt", bill.getTable(), bill.getStaff(), date, time));
+        viewModel.createFeedback(new Feedback(null, 4, 2, "Rất tốt", bill.getTable(), bill.getStaff(), date, time, bill.getId()));
+    }
+
+    private final BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            try {
+                viewModel.getFeedback();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    };
+
+    private void checkBillFeedback() {
+        viewModel.mListFeedLiveData.observe(this, new Observer<List<Feedback>>() {
+            @Override
+            public void onChanged(List<Feedback> feedbacks) {
+                for (int i = 0; i < feedbacks.size(); i++) {
+                    if (Objects.equals(bill.getId(), feedbacks.get(i).getIdBill())) {
+
+                    } else {
+                        initViewModel();
+                    }
+                }
+            }
+        });
+        viewModel.getFeedback();
+    }
+
+    @Override
+    protected void onStop() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
+        super.onStop();
+    }
+
+    @Override
+    protected void onResume() {
+        LocalBroadcastManager.getInstance(this).registerReceiver((receiver),
+                new IntentFilter(Constants.REQUEST_TO_ACTIVITY)
+        );
+        viewModel.getFeedback();
+        super.onResume();
     }
 }
