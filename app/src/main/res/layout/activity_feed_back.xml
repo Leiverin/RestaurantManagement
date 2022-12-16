@@ -1,32 +1,239 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#EBEBEB"
-    android:gravity="center"
     tools:context="com.poly.restaurant.ui.feedback.FeedBackActivity">
-    <ImageView
-        android:id="@+id/qr_code"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <androidx.cardview.widget.CardView
-        android:id="@+id/btnTest"
-        app:cardCornerRadius="20dp"
-        android:layout_marginTop="20dp"
-        app:cardBackgroundColor="#FF7F50"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <TextView
-            android:fontFamily="@font/judson_regular"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_margin="10dp"
-            android:textColor="@color/white"
-            android:text="@string/thankYou"
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/notFeedback"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/qr_code"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </androidx.cardview.widget.CardView>
-</LinearLayout>
+            android:layout_height="wrap_content" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/btnTest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:cardBackgroundColor="#FF7F50"
+            app:cardCornerRadius="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/labelleaurore_regular"
+                android:text="@string/thankYou"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/haveFeedback"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:background="@color/white"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/logo_app" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif-black"
+            android:text="Cảm ơn quý khách đã gửi đánh giá !"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Chúng tôi đánh giá cao phản hồi về trải nghiệm của bạn."
+            android:textColor="@color/black" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_margin="10dp"
+            android:background="#59A5A5A5" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif-black"
+            android:text="Đánh giá của bạn về chất lượng phục vụ"
+            android:textColor="@color/black" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/star1"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/star" />
+
+            <ImageView
+                android:id="@+id/star2"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/star" />
+
+            <ImageView
+                android:id="@+id/star3"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/star" />
+
+            <ImageView
+                android:id="@+id/star4"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/star" />
+
+            <ImageView
+                android:id="@+id/star5"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/star" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Not Likely"
+                android:textSize="12sp" />
+
+            <View
+                android:layout_width="150dp"
+                android:layout_height="1dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:background="#59A5A5A5" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Very Likely"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_margin="10dp"
+            android:background="#59A5A5A5" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif-black"
+            android:text="Đánh giá chi tiết"
+            android:textColor="@color/black" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/title_feedback_1"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_title_feedback"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="Nhiều vấn đề chưa tốt"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/title_feedback_2"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/bg_title_feedback"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="Một số vấn đề chưa tốt"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/title_feedback_3"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/bg_title_feedback"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="Mọi thứ hoàn hảo"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_margin="10dp"
+            android:background="#59A5A5A5" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif-black"
+            android:text="Nội dung đánh giá của khách hàng"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/content_feedback"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/bg_content_feedback"
+            android:gravity="start"
+            android:padding="10dp"
+            android:text="Nội dung đánh giá"
+            android:textColor="@color/black" />
+    </LinearLayout>
+</FrameLayout>

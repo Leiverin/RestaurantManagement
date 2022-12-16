@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.lifecycle.Observer;
@@ -26,6 +27,7 @@ import com.poly.restaurant.ui.base.BaseActivity;
 import com.poly.restaurant.utils.Constants;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -36,7 +38,8 @@ public class FeedBackActivity extends BaseActivity {
     private Bill bill;
     private FeedbackViewModel viewModel;
     private String date = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Calendar.getInstance().getTime());
-    private String time = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(Calendar.getInstance().getTime());
+    private String time = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Calendar.getInstance().getTime());
+    private List<Feedback> feedbacks=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,8 @@ public class FeedBackActivity extends BaseActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver((receiver),
                 new IntentFilter(Constants.REQUEST_TO_ACTIVITY)
         );
+//        binding.star1.setColorFilter(ContextCompat.getColor(this, R.color.color_star), PorterDuff.Mode.MULTIPLY);
+//        binding.titleFeedback1.setBackgroundResource(R.drawable.bg_select_title_feedback);
     }
 
     private void initViewModel() {
@@ -65,6 +70,7 @@ public class FeedBackActivity extends BaseActivity {
                         BarcodeEncoder encoder = new BarcodeEncoder();
                         Bitmap bitmap = encoder.createBitmap(matrix);
                         binding.qrCode.setImageBitmap(bitmap);
+                        binding.notFeedback.setVisibility(View.VISIBLE);
                     } catch (WriterException e) {
                         e.printStackTrace();
                     }
@@ -91,17 +97,21 @@ public class FeedBackActivity extends BaseActivity {
         viewModel.mListFeedLiveData.observe(this, new Observer<List<Feedback>>() {
             @Override
             public void onChanged(List<Feedback> feedbacks) {
-                for (int i = 0; i < feedbacks.size(); i++) {
-                    if (Objects.equals(bill.getId(), feedbacks.get(i).getIdBill())) {
-
-                    } else {
-                        initViewModel();
+                if (feedbacks.isEmpty()) {
+                    initViewModel();
+                } else {
+                    for (int i = 0; i < feedbacks.size(); i++) {
+                        // time post != time update thì hiển thị get
+                        if (Objects.equals(bill.getId(), feedbacks.get(i).getIdBill()) && !Objects.equals(time, feedbacks.get(i).getTime())) {
+                            binding.haveFeedback.setVisibility(View.VISIBLE);
+                        }
                     }
                 }
             }
         });
         viewModel.getFeedback();
     }
+
 
     @Override
     protected void onStop() {
