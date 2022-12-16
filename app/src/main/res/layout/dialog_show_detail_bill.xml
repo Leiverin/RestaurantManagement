@@ -40,7 +40,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/judson_regular"
-                android:text="15:30    "
+                android:text="15:30"
+                android:layout_marginEnd="10dp"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
 

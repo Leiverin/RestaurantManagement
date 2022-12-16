@@ -31,12 +31,13 @@ import com.poly.restaurant.ui.activities.product.appetizer.AppetizerFragment;
 import com.poly.restaurant.ui.activities.product.desserts.DessertFragment;
 import com.poly.restaurant.ui.activities.product.drinks.DrinksFragment;
 import com.poly.restaurant.ui.activities.product.main.MainDishesFragment;
+import com.poly.restaurant.ui.base.BaseActivity;
 import com.poly.restaurant.ui.bottomsheet.BottomSheetProduct;
 import com.poly.restaurant.utils.helps.ViewModelFactory;
 
 import java.util.List;
 
-public class FoodActivity extends AppCompatActivity {
+public class FoodActivity extends BaseActivity {
     private PagerProductAdapter pagerProductAdapter;
     private ActivityFoodBinding binding;
     private FoodViewModel viewModel;
@@ -108,10 +109,11 @@ public class FoodActivity extends AppCompatActivity {
         isScrollingLiveData.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isScrolling) {
+                Log.d("TAG", "onChanged: "+ isScrolling);
                 if (isScrolling){
                     hideBottomSheet();
                 }else{
-                    if (viewModel.getLocalProducts().size() == 0){
+                    if (viewModel.getListProductByIdTable(sharePreference.getTableId()).size() == 0){
                         binding.viewBottomSheet.setVisibility(View.GONE);
                     }else{
                         visibleBottomSheet();

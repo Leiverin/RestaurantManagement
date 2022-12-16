@@ -1,6 +1,12 @@
 package com.poly.restaurant.data.models;
 
-public class Staff {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import com.google.gson.annotations.SerializedName;
+
+public class Staff implements Parcelable {
+    @SerializedName("_id")
     private String id;
     private String name;
     private String phoneNumber;
@@ -25,6 +31,30 @@ public class Staff {
         this.floor = floor;
         this.tokenFCM = tokenFCM;
     }
+
+    protected Staff(Parcel in) {
+        id = in.readString();
+        name = in.readString();
+        phoneNumber = in.readString();
+        gender = in.readInt();
+        account = in.readString();
+        password = in.readString();
+        role = in.readInt();
+        floor = in.readParcelable(Floor.class.getClassLoader());
+        tokenFCM = in.readString();
+    }
+
+    public static final Creator<Staff> CREATOR = new Creator<Staff>() {
+        @Override
+        public Staff createFromParcel(Parcel in) {
+            return new Staff(in);
+        }
+
+        @Override
+        public Staff[] newArray(int size) {
+            return new Staff[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -96,5 +126,23 @@ public class Staff {
 
     public void setTokenFCM(String tokenFCM) {
         this.tokenFCM = tokenFCM;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(id);
+        parcel.writeString(name);
+        parcel.writeString(phoneNumber);
+        parcel.writeInt(gender);
+        parcel.writeString(account);
+        parcel.writeString(password);
+        parcel.writeInt(role);
+        parcel.writeParcelable(floor, i);
+        parcel.writeString(tokenFCM);
     }
 }

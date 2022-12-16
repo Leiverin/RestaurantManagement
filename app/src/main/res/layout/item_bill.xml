@@ -91,7 +91,8 @@
             android:layout_height="wrap_content">
 
             <TextView
-                style="@style/textBtnLogin"
+                android:id="@+id/setStatus_tv"
+                style="@style/textBtnLogout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/done" />

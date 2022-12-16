@@ -15,31 +15,33 @@ import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.poly.restaurant.R;
 import com.poly.restaurant.data.models.Bill;
-import com.poly.restaurant.data.models.BodyDate;
 import com.poly.restaurant.data.models.Table;
 import com.poly.restaurant.databinding.ActivityHistoryBinding;
 import com.poly.restaurant.databinding.DialogFilterBinding;
 import com.poly.restaurant.ui.activities.manage.TableManageViewModel;
+import com.poly.restaurant.ui.base.BaseActivity;
 import com.poly.restaurant.ui.bill.adapter.OnListener;
 import com.poly.restaurant.ui.history.adapter.HistoryAdapter;
 import com.poly.restaurant.ui.history.adapter.SpinnerTableAdapter;
 import com.poly.restaurant.utils.Constants;
 import com.poly.restaurant.utils.view.CustomSpinner;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 
-public class HistoryActivity extends AppCompatActivity implements CustomSpinner.OnSpinnerEventsListener {
+public class HistoryActivity extends BaseActivity implements CustomSpinner.OnSpinnerEventsListener {
     private ActivityHistoryBinding binding;
     private HistoryAdapter adapter;
     private List<Bill> list;
@@ -47,7 +49,7 @@ public class HistoryActivity extends AppCompatActivity implements CustomSpinner.
     private HistoryViewModel viewModel;
     private TableManageViewModel tableManageViewModel;
     private SpinnerTableAdapter spinnerTableAdapter;
-    private String firstDate, secondDate;
+    private String firstDateParam, secondDateParam;
     private Table table;
 
 
@@ -92,13 +94,20 @@ public class HistoryActivity extends AppCompatActivity implements CustomSpinner.
         viewModel.mListHisLiveData.observe(this, new Observer<List<Bill>>() {
             @Override
             public void onChanged(List<Bill> bills) {
-                list = bills;
-                adapter.setList(list);
-                binding.rvHistory.setVisibility(View.VISIBLE);
-                binding.prgLoadBill.setVisibility(View.GONE);
+                if (bills.isEmpty()) {
+                    binding.empty.setVisibility(View.VISIBLE);
+                    binding.prgLoadBill.setVisibility(View.GONE);
+                } else {
+                    list = bills;
+                    adapter.setList(list);
+                    binding.rvHistory.setVisibility(View.VISIBLE);
+                    binding.prgLoadBill.setVisibility(View.GONE);
+                    binding.empty.setVisibility(View.GONE);
+                }
+
             }
         });
-        viewModel.getHis();
+        viewModel.getHis(Constants.staff.getFloor().getNumberFloor(), Constants.staff.getId());
     }
 
     private void dialogBottomSheetFilter() {
@@ -114,8 +123,18 @@ public class HistoryActivity extends AppCompatActivity implements CustomSpinner.
                 calendar.set(Calendar.YEAR, year);
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                bindingFilter.timeFirstTv.setText("Time first :" + dayOfMonth + "/" + (month + 1) + "/" + year);
-                firstDate = dayOfMonth + "/" + (month + 1) + "/" + year;
+                bindingFilter.timeFirstTv.setText("Date first :" + dayOfMonth + "/" + (month + 1) + "/" + year);
+                String firstDate = dayOfMonth + "/" + (month + 1) + "/" + year;
+                SimpleDateFormat dateFormatOfStringInDB = new SimpleDateFormat("dd/MM/yyyy");
+                Date d1 = null;
+                try {
+                    d1 = dateFormatOfStringInDB.parse(firstDate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                SimpleDateFormat dateFormatYouWant = new SimpleDateFormat("dd/MM/yyyy");
+                firstDateParam = dateFormatYouWant.format(d1);
+
             }
         };
         // date second
@@ -125,8 +144,18 @@ public class HistoryActivity extends AppCompatActivity implements CustomSpinner.
                 calendar.set(Calendar.YEAR, year);
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                bindingFilter.timeSecondTv.setText("Time second :" + dayOfMonth + "/" + (month + 1) + "/" + year);
-                secondDate = dayOfMonth + "/" + (month + 1) + "/" + year;
+                bindingFilter.timeSecondTv.setText("Date second :" + dayOfMonth + "/" + (month + 1) + "/" + year);
+                String secondDate = dayOfMonth + "/" + (month + 1) + "/" + year;
+                SimpleDateFormat dateFormatOfStringInDB = new SimpleDateFormat("dd/MM/yyyy");
+                Date d1 = null;
+                try {
+                    d1 = dateFormatOfStringInDB.parse(secondDate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                SimpleDateFormat dateFormatYouWant = new SimpleDateFormat("dd/MM/yyyy");
+                secondDateParam = dateFormatYouWant.format(d1);
+
             }
         };
         bindingFilter.btnFirstTime.setOnClickListener(view -> {
@@ -145,8 +174,7 @@ public class HistoryActivity extends AppCompatActivity implements CustomSpinner.
                     adapter.setList(list);
                 }
             });
-
-            viewModel.getBillByDate(table.getId(), new BodyDate(firstDate, secondDate));
+            viewModel.getBillByDate(table.getId(), 3, firstDateParam, secondDateParam, Constants.staff.getFloor().getNumberFloor(), Constants.staff.getId());
             dialog.dismiss();
         });
 
@@ -191,6 +219,9 @@ public class HistoryActivity extends AppCompatActivity implements CustomSpinner.
         for (Bill bill : list) {
             if (bill.getTable().getName().contains(text)) {
                 billList.add(bill);
+                binding.empty.setVisibility(View.GONE);
+            }else {
+                binding.empty.setVisibility(View.VISIBLE);
             }
         }
         adapter.setList(billList);
@@ -208,6 +239,8 @@ public class HistoryActivity extends AppCompatActivity implements CustomSpinner.
                 });
                 tableList = tables;
                 spinnerTableAdapter.setList(tables);
+                binding.rvHistory.setVisibility(View.VISIBLE);
+                binding.prgLoadBill.setVisibility(View.GONE);
             }
         });
         tableManageViewModel.callToGetTable(Constants.staff.getFloor().getNumberFloor());

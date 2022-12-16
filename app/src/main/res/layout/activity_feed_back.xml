@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:background="#EBEBEB"
     android:gravity="center"
-    tools:context=".ui.FeedBackActivity">
+    tools:context="com.poly.restaurant.ui.FeedBackActivity">
     <ImageView
         android:src="@drawable/qr"
         android:layout_width="wrap_content"

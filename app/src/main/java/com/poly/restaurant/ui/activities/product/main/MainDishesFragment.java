@@ -26,13 +26,14 @@ import com.poly.restaurant.preference.AppSharePreference;
 import com.poly.restaurant.ui.activities.product.FoodActivity;
 import com.poly.restaurant.ui.activities.product.appetizer.adapter.IOnEventProductListener;
 import com.poly.restaurant.ui.activities.product.appetizer.adapter.ProductAdapter;
+import com.poly.restaurant.ui.base.BaseFragment;
 import com.poly.restaurant.utils.Constants;
 import com.poly.restaurant.utils.helps.ViewModelFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainDishesFragment extends Fragment {
+public class MainDishesFragment extends BaseFragment {
 
     private FragmentMainDishesBinding binding;
     private MainDishesViewModel mViewModel;
@@ -83,9 +84,9 @@ public class MainDishesFragment extends Fragment {
                 if (products != null){
                     for (int i = 0; i < products.size(); i++){
                         if (mViewModel.getListProduct().size() != 0){
-                            for (int j = 0; j < mViewModel.getListProduct().size(); j++){
-                                if (products.get(i).getId().equals(mViewModel.getListProduct().get(j).getId())){
-                                    products.set(i, mViewModel.getListProduct().get(j));
+                            for (int j = 0; j < mViewModel.getListProductByIdTable(sharePreference.getTableId()).size(); j++){
+                                if (products.get(i).getId().equals(mViewModel.getListProductByIdTable(sharePreference.getTableId()).get(j).getId())){
+                                    products.set(i, mViewModel.getListProductByIdTable(sharePreference.getTableId()).get(j));
                                 }
                             }
                         }

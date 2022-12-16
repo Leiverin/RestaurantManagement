@@ -17,6 +17,7 @@ import com.poly.restaurant.databinding.ActivityVerifyBinding;
 import com.poly.restaurant.preference.AppSharePreference;
 import com.poly.restaurant.ui.activities.product.appetizer.adapter.IOnEventProductListener;
 import com.poly.restaurant.ui.activities.product.appetizer.adapter.ProductAdapter;
+import com.poly.restaurant.ui.base.BaseActivity;
 import com.poly.restaurant.utils.Constants;
 import com.poly.restaurant.utils.helps.ViewModelFactory;
 
@@ -26,7 +27,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-public class VerifyActivity extends AppCompatActivity {
+public class VerifyActivity extends BaseActivity {
     private ActivityVerifyBinding binding;
     private VerifyViewModel mViewModel;
     private ProductAdapter adapter;

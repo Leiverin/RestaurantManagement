@@ -26,6 +26,7 @@ import com.poly.restaurant.preference.AppSharePreference;
 import com.poly.restaurant.ui.activities.product.FoodActivity;
 import com.poly.restaurant.ui.activities.product.appetizer.adapter.IOnEventProductListener;
 import com.poly.restaurant.ui.activities.product.appetizer.adapter.ProductAdapter;
+import com.poly.restaurant.ui.base.BaseFragment;
 import com.poly.restaurant.utils.Constants;
 import com.poly.restaurant.utils.helps.ViewModelFactory;
 
@@ -35,7 +36,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-public class AppetizerFragment extends Fragment {
+public class AppetizerFragment extends BaseFragment {
     private FragmentAppetizerBinding binding;
     private AppetizerViewModel mViewModel;
     private ProductAdapter adapter;
@@ -85,9 +86,9 @@ public class AppetizerFragment extends Fragment {
                 if (products != null){
                     for (int i = 0; i < products.size(); i++){
                         if (mViewModel.getListProduct().size() != 0){
-                            for (int j = 0; j < mViewModel.getListProduct().size(); j++){
-                                if (products.get(i).getId().equals(mViewModel.getListProduct().get(j).getId())){
-                                    products.set(i, mViewModel.getListProduct().get(j));
+                            for (int j = 0; j < mViewModel.getListProductByIdTable(sharePreference.getTableId()).size(); j++){
+                                if (products.get(i).getId().equals(mViewModel.getListProductByIdTable(sharePreference.getTableId()).get(j).getId())){
+                                    products.set(i, mViewModel.getListProductByIdTable(sharePreference.getTableId()).get(j));
                                 }
                             }
                         }

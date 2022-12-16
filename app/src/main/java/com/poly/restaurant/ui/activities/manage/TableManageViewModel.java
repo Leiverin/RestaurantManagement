@@ -17,9 +17,13 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class TableManageViewModel extends ViewModel {
     public MutableLiveData<List<Table>> mListTableLiveData;
+    public MutableLiveData<List<Table>> mListLiveTableLiveData;
+    public MutableLiveData<List<Table>> mListEmptyTableLiveData;
 
     public TableManageViewModel() {
         mListTableLiveData = new MutableLiveData<>();
+        mListLiveTableLiveData = new MutableLiveData<>();
+        mListEmptyTableLiveData = new MutableLiveData<>();
     }
 
     public void callToGetTable(int floor){
@@ -36,6 +40,39 @@ public class TableManageViewModel extends ViewModel {
 
     private void onHandleError(Throwable throwable){
         Log.e("TAG", "handleErrors: " + throwable.getMessage());
+    }
+
+    public void callToGetTableLive(int floor, int status){
+        ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
+        Observable<List<Table>> observable = serviceAPI.getTableByFloorAndStatus(floor, status);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::onRetrieveTableLiveSuccess, this::onHandleErrorTableLive);
+    }
+
+    private void onRetrieveTableLiveSuccess(List<Table> tables){
+        mListLiveTableLiveData.postValue(tables);
+    }
+
+    private void onHandleErrorTableLive(Throwable throwable){
+        Log.e("TAG", "handle error live: " + throwable.getMessage());
+        mListLiveTableLiveData.postValue(null);
+    }
+    public void callToGetTableEmpty(int floor, int status){
+        ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
+        Observable<List<Table>> observable = serviceAPI.getTableByFloorAndStatus(floor, status);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::onRetrieveTableEmptySuccess, this::onHandleErrorTableEmpty);
+    }
+
+    private void onRetrieveTableEmptySuccess(List<Table> tables){
+        mListEmptyTableLiveData.postValue(tables);
+    }
+
+    private void onHandleErrorTableEmpty(Throwable throwable){
+        Log.e("TAG", "handle error empty: " + throwable.getMessage());
+        mListEmptyTableLiveData.postValue(null);
     }
 }
 
