@@ -1,7 +1,13 @@
 package com.poly.restaurant.ui.activities.splash;
 
-import androidx.lifecycle.ViewModel;
 
-public class SplashViewModel extends ViewModel {
+import android.content.Context;
 
+import com.poly.restaurant.ui.base.BaseViewModel;
+
+public class SplashViewModel extends BaseViewModel {
+
+    protected SplashViewModel(Context context) {
+        super(context);
+    }
 }

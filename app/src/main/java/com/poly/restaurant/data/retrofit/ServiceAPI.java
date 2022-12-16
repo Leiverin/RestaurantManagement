@@ -150,4 +150,9 @@ public interface ServiceAPI {
             @Query("id") String id
     );
 
+    // get staff by role
+    @GET("staff")
+    Observable<Response<List<Staff>>> getListStaffByRole(
+            @Query("role") int role
+    );
 }
