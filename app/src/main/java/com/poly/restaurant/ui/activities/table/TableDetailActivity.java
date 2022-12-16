@@ -167,7 +167,7 @@ public class TableDetailActivity extends BaseActivity {
             public void onChanged(Bill bill) {
                 if (bill != null){
                     viewModel.callToPushNotification(
-                            "dTKEeNa0QdOK-m0_NROzsl:APA91bHya_ttWelcBJUKidukxlU0ocK-pHbh9eaWJ8mj81BqV6c00A55RVxSr9fuH4itQmwZHYsSoAPXDggDHS9ONs7NcHAoi0ovverLzX26CaKC4aFSMg3KqEZZ8kwCkvUgWXD8vXQ_",
+                            "cb3aRBUuRq22zvGJ6veBie:APA91bGhWlomOBFZUjK_Vi6i5G_DtPkOtMJi372XvwEO0sA9Iq300CVb15BcumFYCttUilTXONcFLlOG5yLXUBOFpAeDWU0840OeXId-nDpdx2W0FvdDABfaxTuu1qDOGx_4_rLDMEdn",
                             "Thông báo",
                             "Bill bàn "+bill.getTable().getName()+" đã được tạo. Hành động thôi nào :))",
                             bill.getId());
@@ -200,7 +200,7 @@ public class TableDetailActivity extends BaseActivity {
                                 tableUpdate,
                                 null, Constants.staff), Constants.TYPE_UPDATE);
                         viewModel.callToPushNotification(
-                                "dTKEeNa0QdOK-m0_NROzsl:APA91bHya_ttWelcBJUKidukxlU0ocK-pHbh9eaWJ8mj81BqV6c00A55RVxSr9fuH4itQmwZHYsSoAPXDggDHS9ONs7NcHAoi0ovverLzX26CaKC4aFSMg3KqEZZ8kwCkvUgWXD8vXQ_",
+                                "cb3aRBUuRq22zvGJ6veBie:APA91bGhWlomOBFZUjK_Vi6i5G_DtPkOtMJi372XvwEO0sA9Iq300CVb15BcumFYCttUilTXONcFLlOG5yLXUBOFpAeDWU0840OeXId-nDpdx2W0FvdDABfaxTuu1qDOGx_4_rLDMEdn",
                                 "Thông báo bổ sung món",
                                 "Bill bàn "+bill.get(0).getTable().getName()+" vừa bổ sung thêm món",
                                 bill.get(0).getId());
@@ -282,7 +282,7 @@ public class TableDetailActivity extends BaseActivity {
                             null, Constants.staff), Constants.TYPE_PAY);
 
                     viewModel.callToPushNotification(
-                            "cCvkqM_VCyS5V_iMt3XSlw:APA91bEStWrvanpkTGWf0FLVH90ToxShO1hTIOA7S-HMehtoZaLMtzB_CIKcok0-pU_UQLZXV45PkQOsGPfM00krzNBzc-wolTtb7B5xeuV5SxRYGbOouwpvLyZ2PWvNCg4i0Nqk_6gl",
+                            "cCvkqM_VCyS5V_iMt3XSlw:APA91bFfrc2AxKEfyvCfvtmDfGDyhAP5i9QonkAN8tse94QZnz_r64BWYUsOaUf8P_5f_B3r9W2NWNPPefSyp7NidG2_2dx7SCB3LMWga6JGUfonfCgP9nNJexl_g1U4oSyIGhorAXk4",
                             "Thông báo xác nhận hóa đơn",
                             "Bàn "+ bills.get(0).getTable().getName()+ " đang chờ xác nhận thanh toán",
                             bills.get(0).getId());
