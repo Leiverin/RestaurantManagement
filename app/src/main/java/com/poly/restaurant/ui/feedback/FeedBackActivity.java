@@ -6,10 +6,12 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -27,7 +29,6 @@ import com.poly.restaurant.ui.base.BaseActivity;
 import com.poly.restaurant.utils.Constants;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -37,9 +38,8 @@ public class FeedBackActivity extends BaseActivity {
     private ActivityFeedBackBinding binding;
     private Bill bill;
     private FeedbackViewModel viewModel;
-    private String date = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Calendar.getInstance().getTime());
-    private String time = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Calendar.getInstance().getTime());
-    private List<Feedback> feedbacks=new ArrayList<>();
+    private final String date = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Calendar.getInstance().getTime());
+    private final String time = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Calendar.getInstance().getTime());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +52,6 @@ public class FeedBackActivity extends BaseActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver((receiver),
                 new IntentFilter(Constants.REQUEST_TO_ACTIVITY)
         );
-//        binding.star1.setColorFilter(ContextCompat.getColor(this, R.color.color_star), PorterDuff.Mode.MULTIPLY);
-//        binding.titleFeedback1.setBackgroundResource(R.drawable.bg_select_title_feedback);
     }
 
     private void initViewModel() {
@@ -97,19 +95,62 @@ public class FeedBackActivity extends BaseActivity {
         viewModel.mListFeedLiveData.observe(this, new Observer<List<Feedback>>() {
             @Override
             public void onChanged(List<Feedback> feedbacks) {
+                boolean checkCreateFeedback = false;
+                int i = -1;
                 if (feedbacks.isEmpty()) {
                     initViewModel();
                 } else {
-                    for (int i = 0; i < feedbacks.size(); i++) {
-                        // time post != time update thì hiển thị get
-                        if (Objects.equals(bill.getId(), feedbacks.get(i).getIdBill()) && !Objects.equals(time, feedbacks.get(i).getTime())) {
-                            binding.haveFeedback.setVisibility(View.VISIBLE);
+                    for (int index = 0; index < feedbacks.size(); index++) {
+                        if (Objects.equals(feedbacks.get(index).getIdBill(), bill.getId())) {
+                            if (!Objects.equals(time, feedbacks.get(index).getTime())) {
+                                checkCreateFeedback = true;
+                                // time post != time update thì hiển thị get
+                                i = index;
+                                break;
+                            }
                         }
                     }
+                    if (!checkCreateFeedback) {
+                        initViewModel();
+                    } else {
+                        if (i != -1) {
+                            binding.haveFeedback.setVisibility(View.VISIBLE);
+                            if (feedbacks.get(i).getStatus() == 0) {
+                                binding.star1.setColorFilter(ContextCompat.getColor(FeedBackActivity.this, R.color.color_star), PorterDuff.Mode.MULTIPLY);
+                            } else if (feedbacks.get(i).getStatus() == 1) {
+                                binding.star1.setColorFilter(ContextCompat.getColor(FeedBackActivity.this, R.color.color_star), PorterDuff.Mode.MULTIPLY);
+                                binding.star2.setColorFilter(ContextCompat.getColor(FeedBackActivity.this, R.color.color_star), PorterDuff.Mode.MULTIPLY);
+                            } else if (feedbacks.get(i).getStatus() == 2) {
+                                binding.star1.setColorFilter(ContextCompat.getColor(FeedBackActivity.this, R.color.color_star), PorterDuff.Mode.MULTIPLY);
+                                binding.star2.setColorFilter(ContextCompat.getColor(FeedBackActivity.this, R.color.color_star), PorterDuff.Mode.MULTIPLY);
+                                binding.star3.setColorFilter(ContextCompat.getColor(FeedBackActivity.this, R.color.color_star), PorterDuff.Mode.MULTIPLY);
+                            } else if (feedbacks.get(i).getStatus() == 3) {
+                                binding.star1.setColorFilter(ContextCompat.getColor(FeedBackActivity.this, R.color.color_star), PorterDuff.Mode.MULTIPLY);
+                                binding.star2.setColorFilter(ContextCompat.getColor(FeedBackActivity.this, R.color.color_star), PorterDuff.Mode.MULTIPLY);
+                                binding.star3.setColorFilter(ContextCompat.getColor(FeedBackActivity.this, R.color.color_star), PorterDuff.Mode.MULTIPLY);
+                                binding.star4.setColorFilter(ContextCompat.getColor(FeedBackActivity.this, R.color.color_star), PorterDuff.Mode.MULTIPLY);
+                            } else if (feedbacks.get(i).getStatus() == 4) {
+                                binding.star1.setColorFilter(ContextCompat.getColor(FeedBackActivity.this, R.color.color_star), PorterDuff.Mode.MULTIPLY);
+                                binding.star2.setColorFilter(ContextCompat.getColor(FeedBackActivity.this, R.color.color_star), PorterDuff.Mode.MULTIPLY);
+                                binding.star3.setColorFilter(ContextCompat.getColor(FeedBackActivity.this, R.color.color_star), PorterDuff.Mode.MULTIPLY);
+                                binding.star4.setColorFilter(ContextCompat.getColor(FeedBackActivity.this, R.color.color_star), PorterDuff.Mode.MULTIPLY);
+                                binding.star5.setColorFilter(ContextCompat.getColor(FeedBackActivity.this, R.color.color_star), PorterDuff.Mode.MULTIPLY);
+                            }
+                            if (feedbacks.get(i).getTitle() == 0) {
+                                binding.titleFeedback1.setBackgroundResource(R.drawable.bg_select_title_feedback);
+                            } else if (feedbacks.get(i).getTitle() == 1) {
+                                binding.titleFeedback2.setBackgroundResource(R.drawable.bg_select_title_feedback);
+                            } else if (feedbacks.get(i).getTitle() == 2) {
+                                binding.titleFeedback3.setBackgroundResource(R.drawable.bg_select_title_feedback);
+                            }
+                            binding.contentFeedback.setText(feedbacks.get(i).getContent());
+                        }
+
+                    }
                 }
+
             }
         });
-        viewModel.getFeedback();
     }
 
 

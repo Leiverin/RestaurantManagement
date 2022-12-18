@@ -20,6 +20,9 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
+            android:name=".ContactActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activities.account.AccountActivity"
             android:exported="true" />
         <activity
@@ -43,7 +46,6 @@
         <activity
             android:name="com.poly.restaurant.ui.activities.table.TableDetailActivity"
             android:exported="false" />
-
         <activity
             android:name="com.poly.restaurant.ui.activities.MainActivity"
             android:exported="true" />
@@ -61,7 +63,7 @@
             android:exported="true" />
         <activity
             android:name="com.poly.restaurant.ui.notification.NotificationActivity"
-            android:exported="true"/>
+            android:exported="true" />
 
         <service
             android:name="com.poly.restaurant.service.MyFirebaseMessagingService"
@@ -71,9 +73,9 @@
             </intent-filter>
         </service>
 
-        <receiver android:name=".service.MyBroadcastReceiver"
-            android:enabled="true"
-            />
+        <receiver
+            android:name=".service.MyBroadcastReceiver"
+            android:enabled="true" />
     </application>
 
 </manifest>
