@@ -134,7 +134,8 @@ public interface ServiceAPI {
             @Field("tokenFCM") String token,
             @Field("title") String title,
             @Field("content") String content,
-            @Field("idBill") String idBill
+            @Field("idBill") String idBill,
+            @Field("idStaff") String idStaff
     );
 
     // update table
@@ -149,6 +150,18 @@ public interface ServiceAPI {
     @GET("bill")
     Observable<Response<Bill>> getBillById(
             @Query("id") String id
+    );
+
+    // get staff by role
+    @GET("staff")
+    Observable<Response<List<Staff>>> getListStaffByRole(
+            @Query("role") int role
+    );
+
+    // create notification
+    @POST("notification/create")
+    Observable<Response<Notification>> createNotification(
+      @Body Notification notification
     );
 
     @FormUrlEncoded

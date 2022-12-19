@@ -24,12 +24,13 @@ import com.poly.restaurant.R;
 import com.poly.restaurant.data.models.Staff;
 import com.poly.restaurant.databinding.ActivityContactBinding;
 import com.poly.restaurant.databinding.DialogSendEmailBinding;
+import com.poly.restaurant.ui.base.BaseActivity;
 import com.poly.restaurant.utils.Constants;
 
 import java.util.List;
 import java.util.Objects;
 
-public class ContactActivity extends AppCompatActivity {
+public class ContactActivity extends BaseActivity {
     private ActivityContactBinding binding;
     private ContactViewModel viewModel;
 

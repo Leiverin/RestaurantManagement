@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,7 +21,9 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.gson.Gson;
 import com.poly.restaurant.R;
+import com.poly.restaurant.data.models.Staff;
 import com.poly.restaurant.data.models.Table;
 import com.poly.restaurant.data.models.TableParent;
 import com.poly.restaurant.databinding.ActivityTableManageBinding;
@@ -45,6 +48,8 @@ public class TableManageActivity extends BaseActivity {
     private List<Table> mListTablesEmpty;
     private List<Table> mListTablesLive;
     private List<TableParent> mListTableMain;
+    private List<Staff> mListAdmin;
+    private List<Staff> mListChef;
     private Handler handler = new Handler();
     private Runnable runnable;
     @SuppressLint("SetTextI18n")
@@ -58,16 +63,21 @@ public class TableManageActivity extends BaseActivity {
 
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_color));
         binding.prgLoadTable.setVisibility(View.VISIBLE);
+        binding.rvTable.setVisibility(View.GONE);
 
         mListTablesEmpty = new ArrayList<>();
         mListTablesLive = new ArrayList<>();
         mListTableMain = new ArrayList<>();
+        mListAdmin = new ArrayList<>();
+        mListChef = new ArrayList<>();
 
         adapter = new TableManageAdapter(mListTableMain, this, new IOnClickItemParent() {
             @Override
             public void onClick(Table table) {
                 Intent intent = new Intent(TableManageActivity.this, TableDetailActivity.class);
                 intent.putExtra(Constants.EXTRA_TABLE_TO_DETAIL, table);
+                intent.putParcelableArrayListExtra(Constants.EXTRA_ADMIN_TO_DETAIL, (ArrayList<? extends Parcelable>) mListAdmin);
+                intent.putParcelableArrayListExtra(Constants.EXTRA_CHEF_TO_DETAIL, (ArrayList<? extends Parcelable>) mListChef);
                 startActivity(intent);
             }
         });
@@ -78,8 +88,6 @@ public class TableManageActivity extends BaseActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onChanged(List<Table> tables) {
-                binding.prgLoadTable.setVisibility(View.GONE);
-
                 if (tables != null){
                     mListTablesEmpty = tables;
                     binding.tvNumEmptyTable.setText("Empty table: "+tables.size());
@@ -93,7 +101,6 @@ public class TableManageActivity extends BaseActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onChanged(List<Table> tables) {
-                binding.prgLoadTable.setVisibility(View.GONE);
                 if (tables != null){
                     mListTablesLive = tables;
                     binding.tvNumLiveTable.setText("Live table: "+tables.size());
@@ -103,6 +110,24 @@ public class TableManageActivity extends BaseActivity {
             }
         });
 
+        viewModel.mListChefLiveData.observe(this, new Observer<List<Staff>>() {
+            @Override
+            public void onChanged(List<Staff> staff) {
+                Log.d("TAG", "onChanged: "+ new Gson().toJson(staff));
+                binding.prgLoadTable.setVisibility(View.GONE);
+                mListChef = staff;
+                binding.rvTable.setVisibility(View.VISIBLE);
+            }
+        });
+
+        viewModel.mListAdminLiveData.observe(this, new Observer<List<Staff>>() {
+            @Override
+            public void onChanged(List<Staff> staff) {
+                mListAdmin = staff;
+            }
+        });
+
+        /** Handle event*/
         binding.imgNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -126,7 +151,6 @@ public class TableManageActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
-
         LocalBroadcastManager.getInstance(this).registerReceiver((receiver),
                 new IntentFilter(Constants.REQUEST_TO_ACTIVITY)
         );
@@ -187,6 +211,8 @@ public class TableManageActivity extends BaseActivity {
         );
         viewModel.callToGetTableEmpty(Constants.staff.getFloor().getNumberFloor(), Constants.TABLE_EMPTY_STATUS);
         viewModel.callToGetTableLive(Constants.staff.getFloor().getNumberFloor(), Constants.TABLE_LIVE_STATUS);
+        viewModel.callToGetAdmin();
+        viewModel.callToGetChef();
         super.onResume();
     }
 

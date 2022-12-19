@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.poly.restaurant.data.models.Bill;
+import com.poly.restaurant.data.models.Notification;
 import com.poly.restaurant.data.models.Product;
 import com.poly.restaurant.data.models.Table;
 import com.poly.restaurant.data.retrofit.RetroInstance;
@@ -130,9 +131,9 @@ public class TableDetailViewModel extends BaseViewModel {
     /**
      *  Push notification
      *  */
-    public void callToPushNotification(String token, String title, String content, String idBill){
+    public void callToPushNotification(String token, String title, String content, String idBill, String idStaff){
         ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
-        Observable<Bill> mListDrinkObservable = serviceAPI.pushNotificationToStaff(token, title, content, idBill);
+        Observable<Bill> mListDrinkObservable = serviceAPI.pushNotificationToStaff(token, title, content, idBill, idStaff);
         mListDrinkObservable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onRetrieveBillNotificationSuccess, this::handleErrorsNotificationBill);
@@ -210,4 +211,25 @@ public class TableDetailViewModel extends BaseViewModel {
         statusBillExistLiveData.postValue(null);
         Log.d("TAG", "Handle error update table: "+ throwable.getMessage());
     }
+
+    // Add notification to server
+    public void createNotification(Notification notification){
+        ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
+        Observable<Response<Notification>> mListNotification = serviceAPI.createNotification(notification);
+        mListNotification.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::onRetrieveCreateSuccessfully, this::handleErrorsCreateSuccessfully);
+    }
+
+    private void onRetrieveCreateSuccessfully(Response<Notification> result) {
+        if (result.isSuccessful()){
+
+        }
+    }
+
+    private void handleErrorsCreateSuccessfully(Throwable throwable) {
+        Log.d("TAG", "Handle error update table: "+ throwable.getMessage());
+    }
+
+
 }
