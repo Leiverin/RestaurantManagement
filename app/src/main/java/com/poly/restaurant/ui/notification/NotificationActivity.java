@@ -41,9 +41,6 @@ public class NotificationActivity extends BaseActivity {
     }
 
     private void initRec() {
-        for (int i = 0; i < 5; i++) {
-            list.add(new Notification("Tuấn Anh","Test notification","9h30"));
-        }
         adapter = new NotificationAdapter(this, list, new OnListenerNotification() {
             @Override
             public void onClickShowDetailNotification(Notification notification) {

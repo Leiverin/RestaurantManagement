@@ -21,14 +21,14 @@ public class TableManageViewModel extends ViewModel {
     public MutableLiveData<List<Table>> mListTableLiveData;
     public MutableLiveData<List<Table>> mListLiveTableLiveData;
     public MutableLiveData<List<Table>> mListEmptyTableLiveData;
-    public MutableLiveData<List<Staff>> mListAdMinLiveData;
+    public MutableLiveData<List<Staff>> mListAdminLiveData;
     public MutableLiveData<List<Staff>> mListChefLiveData;
 
     public TableManageViewModel() {
         mListTableLiveData = new MutableLiveData<>();
         mListLiveTableLiveData = new MutableLiveData<>();
         mListEmptyTableLiveData = new MutableLiveData<>();
-        mListAdMinLiveData = new MutableLiveData<>();
+        mListAdminLiveData = new MutableLiveData<>();
         mListChefLiveData = new MutableLiveData<>();
     }
 
@@ -85,7 +85,7 @@ public class TableManageViewModel extends ViewModel {
 
     public void callToGetAdmin(){
         ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
-        Observable<Response<List<Staff>>> observable = serviceAPI.getStaffByRole(1);
+        Observable<Response<List<Staff>>> observable = serviceAPI.getListStaffByRole(1);
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onRetrieveAdmin, this::onHandleErrorAdmin);
@@ -105,7 +105,7 @@ public class TableManageViewModel extends ViewModel {
 
     public void callToGetChef(){
         ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
-        Observable<Response<List<Staff>>> observable = serviceAPI.getStaffByRole(3);
+        Observable<Response<List<Staff>>> observable = serviceAPI.getListStaffByRole(3);
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onRetrieveChef, this::onHandleErrorChef);

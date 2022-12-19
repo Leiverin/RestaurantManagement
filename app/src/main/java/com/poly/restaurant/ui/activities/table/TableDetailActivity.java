@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.poly.restaurant.R;
 import com.poly.restaurant.data.models.Bill;
+import com.poly.restaurant.data.models.Notification;
 import com.poly.restaurant.data.models.Product;
 import com.poly.restaurant.data.models.Staff;
 import com.poly.restaurant.data.models.Table;
@@ -169,13 +170,20 @@ public class TableDetailActivity extends BaseActivity {
             @Override
             public void onChanged(Bill bill) {
                 if (bill != null){
+                    String title = "Thông báo";
+                    String content = "Bill bàn "+bill.getTable().getName()+" đã được tạo. Hành động thôi nào :))";
                     for (Staff s: mListChef){
                         countCreate++;
                         viewModel.callToPushNotification(
                                 s.getTokenFCM(),
-                                "Thông báo",
-                                "Bill bàn "+bill.getTable().getName()+" đã được tạo. Hành động thôi nào :))",
-                                bill.getId());
+                                title,
+                                content,
+                                bill.getId(),
+                                Constants.staff.getId()
+                        );
+                        viewModel.createNotification(new Notification(
+                                null, title, content, date, time, Constants.staff.getId(), bill.getId()
+                        ));
                     }
                     Table tableUpdate = new Table(table.getId(), table.getName(), table.getFloor(), table.getCapacity(), 1);
                     viewModel.updateTable(table.getId(), tableUpdate);
@@ -204,13 +212,20 @@ public class TableDetailActivity extends BaseActivity {
                         viewModel.callToUpdateBill(bill.get(0).getId(), new Bill(bill.get(0).getId(), date, time, total, 0, 0, mListProduct,
                                 tableUpdate,
                                 null, Constants.staff), Constants.TYPE_UPDATE);
+                        String title = "Thông báo bổ sung món";
+                        String content = "Bill bàn "+bill.get(0).getTable().getName()+" vừa bổ sung thêm món";
                         for (Staff s: mListChef){
                             count++;
                             viewModel.callToPushNotification(
                                     s.getTokenFCM(),
-                                    "Thông báo bổ sung món",
-                                    "Bill bàn "+bill.get(0).getTable().getName()+" vừa bổ sung thêm món",
-                                    bill.get(0).getId());
+                                    title,
+                                    content,
+                                    bill.get(0).getId(),
+                                    Constants.staff.getId()
+                            );
+                            viewModel.createNotification(new Notification(
+                                    null, title, content, date, time, Constants.staff.getId(), bill.get(0).getId()
+                            ));
                         }
                         if (count == mListChef.size()){
                             DialogAnnounce.getInstance("Đã gửi thực đơn cho nhà bếp").show(getSupportFragmentManager(), new DialogAnnounce().getTag());
@@ -291,16 +306,22 @@ public class TableDetailActivity extends BaseActivity {
                     viewModel.callToUpdateBill(bills.get(0).getId(), new Bill(bills.get(0).getId(), date, time, total, 0, 2, mListProduct,
                             tableUpdate,
                             null, Constants.staff), Constants.TYPE_PAY);
+                    String title = "Thông báo xác nhận hóa đơn";
+                    String content = "Bàn "+ bills.get(0).getTable().getName()+ " đang chờ xác nhận thanh toán";
                     for (Staff s: mListAdmin){
                         viewModel.callToPushNotification(
                                 s.getTokenFCM(),
-                                "Thông báo xác nhận hóa đơn",
-                                "Bàn "+ bills.get(0).getTable().getName()+ " đang chờ xác nhận thanh toán",
-                                bills.get(0).getId());
+                                title,
+                                content,
+                                bills.get(0).getId(),
+                                Constants.staff.getId()
+                        );
+                        viewModel.createNotification(new Notification(
+                                null, title, content, date, time, Constants.staff.getId(), bills.get(0).getId()
+                        ));
                     }
                     DialogAnnounce.getInstance("Đã gửi xác nhận cho quản lý").show(getSupportFragmentManager(), new DialogAnnounce().getTag());
                     binding.tvStatus.setText("Đang chờ tiến hành thanh toán");
-
                 }
             }
         });
