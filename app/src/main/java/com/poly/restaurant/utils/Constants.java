@@ -2,13 +2,19 @@ package com.poly.restaurant.utils;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.poly.restaurant.R;
 import com.poly.restaurant.data.models.Bill;
@@ -64,6 +70,8 @@ public class Constants {
     public static String REQUEST_TO_ACTIVITY = "REQUEST_TO_ACTIVITY";
     public static String CREATE_FEEDBACK = "CREATE_FEEDBACK";
 
+    public static String CALL_CENTER_NUMBER="0911604330";
+
     public static void handleIncrease(TextView tvQuantity, int type) {
         if (type == TYPE_IN_TABLE) {
             int quantity = Integer.parseInt(tvQuantity.getText().toString());
@@ -93,23 +101,22 @@ public class Constants {
     }
 
 
-    public static void setOnStatus(Bill bill) {
-        Bill bill1 = new Bill(bill.getId(), bill.getDate(), bill.getTime(), bill.getTotalPrice(), bill.getCheckoutType(), 3, bill.getProducts(), bill.getTable(), bill.getIdCustomer(), bill.getStaff());
-        ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
-        Call<Bill> callDon = serviceAPI.doneBill(bill.getId(), "PUT", bill1);
-        callDon.enqueue(new Callback<Bill>() {
-            @Override
-            public void onResponse(Call<Bill> call, Response<Bill> response) {
-                if (response.isSuccessful()) {
+    public static void skype(String number, Context ctx) {
+        try {
+            //Intent sky = new Intent("android.intent.action.CALL_PRIVILEGED");
+            //the above line tries to create an intent for which the skype app doesn't supply public api
+            Intent sky = new Intent("android.intent.action.VIEW");
+            sky.setData(Uri.parse("skype:" + number));
+            ctx.startActivity(sky);
+        } catch (ActivityNotFoundException e) {
+            String appPackageName = "com.skype.raider";
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(
+                    "https://play.google.com/store/apps/details?id=" + appPackageName));
+            intent.setPackage("com.android.vending");
+            ctx.startActivity(intent);
+        }
 
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Bill> call, Throwable t) {
-
-            }
-        });
     }
 
     public static void dialogShowDetailBill(Bill bill, Context context) {

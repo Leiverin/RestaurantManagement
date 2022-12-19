@@ -19,6 +19,7 @@ import com.poly.restaurant.databinding.ActivityLoginBinding;
 import com.poly.restaurant.preference.AppSharePreference;
 import com.poly.restaurant.ui.activities.manage.TableManageActivity;
 import com.poly.restaurant.ui.base.BaseActivity;
+import com.poly.restaurant.ui.contact.ContactActivity;
 import com.poly.restaurant.utils.Constants;
 import com.poly.restaurant.utils.helps.ViewModelFactory;
 
@@ -92,6 +93,9 @@ public class LoginActivity extends BaseActivity {
                     sharePreference.setRemember(binding.cbxRemember.isChecked());
                 }
             }
+        });
+        binding.txtContactManager.setOnClickListener(view -> {
+            startActivity(new Intent(this, ContactActivity.class));
         });
     }
 }

@@ -166,4 +166,6 @@ public interface ServiceAPI {
     @GET("feedback/all")
     Call<List<Feedback>> getAllFeedback();
 
+    @GET("staff/all")
+    Call<List<Staff>> getAdminContact();
 }

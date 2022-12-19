@@ -102,18 +102,19 @@ public class FeedBackActivity extends BaseActivity {
                 } else {
                     for (int index = 0; index < feedbacks.size(); index++) {
                         if (Objects.equals(feedbacks.get(index).getIdBill(), bill.getId())) {
-                            if (!Objects.equals(time, feedbacks.get(index).getTime())) {
+//                            if (!Objects.equals(time, feedbacks.get(index).getTime())) {
                                 checkCreateFeedback = true;
                                 // time post != time update thì hiển thị get
                                 i = index;
                                 break;
-                            }
+//                            }
                         }
                     }
                     if (!checkCreateFeedback) {
                         initViewModel();
                     } else {
                         if (i != -1) {
+                            binding.notFeedback.setVisibility(View.GONE);
                             binding.haveFeedback.setVisibility(View.VISIBLE);
                             if (feedbacks.get(i).getStatus() == 0) {
                                 binding.star1.setColorFilter(ContextCompat.getColor(FeedBackActivity.this, R.color.color_star), PorterDuff.Mode.MULTIPLY);
