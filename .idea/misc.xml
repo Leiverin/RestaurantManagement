@@ -45,8 +45,10 @@
         <entry key="..\:/abc/RestaurantManagement/app/src/main/res/layout/activity_history.xml" value="0.259375" />
         <entry key="..\:/abc/RestaurantManagement/app/src/main/res/layout/activity_login.xml" value="0.259375" />
         <entry key="..\:/abc/RestaurantManagement/app/src/main/res/layout/activity_notification.xml" value="0.259375" />
+        <entry key="..\:/abc/RestaurantManagement/app/src/main/res/layout/activity_splash.xml" value="0.259375" />
         <entry key="..\:/abc/RestaurantManagement/app/src/main/res/layout/dialog_alert_complete.xml" value="0.259375" />
         <entry key="..\:/abc/RestaurantManagement/app/src/main/res/layout/dialog_change_pass.xml" value="0.259375" />
+        <entry key="..\:/abc/RestaurantManagement/app/src/main/res/layout/dialog_send_email.xml" value="0.2553846153846154" />
         <entry key="..\:/abc/RestaurantManagement/app/src/main/res/layout/dialog_show_detail_bill.xml" value="0.259375" />
         <entry key="..\:/abc/RestaurantManagement/app/src/main/res/layout/item_bill.xml" value="0.259375" />
       </map>

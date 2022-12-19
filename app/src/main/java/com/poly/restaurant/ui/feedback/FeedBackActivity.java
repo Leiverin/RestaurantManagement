@@ -103,10 +103,11 @@ public class FeedBackActivity extends BaseActivity {
                     for (int index = 0; index < feedbacks.size(); index++) {
                         if (Objects.equals(feedbacks.get(index).getIdBill(), bill.getId())) {
 //                            if (!Objects.equals(time, feedbacks.get(index).getTime())) {
-                                checkCreateFeedback = true;
-                                // time post != time update thì hiển thị get
-                                i = index;
-                                break;
+                            checkCreateFeedback = true;
+                            // time post != time update thì hiển thị get
+                            i = index;
+                            binding.haveFeedback.setVisibility(View.VISIBLE);
+                            break;
 //                            }
                         }
                     }

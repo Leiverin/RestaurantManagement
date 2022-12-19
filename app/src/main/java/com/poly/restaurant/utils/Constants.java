@@ -70,7 +70,7 @@ public class Constants {
     public static String REQUEST_TO_ACTIVITY = "REQUEST_TO_ACTIVITY";
     public static String CREATE_FEEDBACK = "CREATE_FEEDBACK";
 
-    public static String CALL_CENTER_NUMBER="0911604330";
+    public static String CALL_CENTER_NUMBER="0372546891";
 
     public static void handleIncrease(TextView tvQuantity, int type) {
         if (type == TYPE_IN_TABLE) {

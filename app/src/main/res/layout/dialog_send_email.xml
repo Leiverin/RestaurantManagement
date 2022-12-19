@@ -35,7 +35,6 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
         android:hint="Tiêu đề"
-        app:passwordToggleEnabled="true"
         app:shapeAppearance="@style/Rounded">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -43,7 +42,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/judson_regular"
-            android:inputType="textPassword"
             android:padding="10dp"
             android:paddingStart="20dp"
             android:textColor="@color/black"
@@ -61,7 +59,6 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
         android:hint="Nội dung"
-        app:passwordToggleEnabled="true"
         app:shapeAppearance="@style/Rounded">
 
         <EditText
@@ -69,7 +66,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/judson_regular"
-            android:inputType="textPassword"
             android:padding="10dp"
             android:paddingStart="20dp"
             android:textColor="@color/black"

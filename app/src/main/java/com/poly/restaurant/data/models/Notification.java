@@ -1,11 +1,14 @@
 package com.poly.restaurant.data.models;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Notification {
+    @SerializedName("_id")
     private String title;
     private String content;
     private String date;
     private String time;
-    private Staff sender,receiver;
+    private Staff sender;
     private String idBill;
 
     public Notification() {
@@ -17,13 +20,12 @@ public class Notification {
         this.time = time;
     }
 
-    public Notification(String title, String content, String date, String time, Staff sender, Staff receiver, String idBill) {
+    public Notification(String title, String content, String date, String time, Staff sender, String idBill) {
         this.title = title;
         this.content = content;
         this.date = date;
         this.time = time;
         this.sender = sender;
-        this.receiver = receiver;
         this.idBill = idBill;
     }
 
@@ -65,14 +67,6 @@ public class Notification {
 
     public void setSender(Staff sender) {
         this.sender = sender;
-    }
-
-    public Staff getReceiver() {
-        return receiver;
-    }
-
-    public void setReceiver(Staff receiver) {
-        this.receiver = receiver;
     }
 
     public String getIdBill() {

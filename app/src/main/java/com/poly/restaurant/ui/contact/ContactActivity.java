@@ -120,12 +120,11 @@ public class ContactActivity extends AppCompatActivity {
             } else {
                 Intent i = new Intent(Intent.ACTION_SEND);
                 i.setType("message/rfc822");
-                i.putExtra(Intent.EXTRA_EMAIL, new String[]{"trinhhung31102001@gmail.com"});
+                i.putExtra(Intent.EXTRA_EMAIL, new String[]{"thinhndph18079@fpt.edu.vn"});
                 i.putExtra(Intent.EXTRA_SUBJECT, titleSend);
                 i.putExtra(Intent.EXTRA_TEXT, contentSend);
                 try {
                     startActivity(Intent.createChooser(i, "Send mail..."));
-                    Snackbar.make(sendEmailBinding.getRoot(), "Tin nhắn đã gửi thành công !", Snackbar.LENGTH_LONG).show();
                 } catch (android.content.ActivityNotFoundException ex) {
                     Toast.makeText(ContactActivity.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
                 }
