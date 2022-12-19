@@ -83,29 +83,44 @@ public class TableManageViewModel extends ViewModel {
         mListEmptyTableLiveData.postValue(null);
     }
 
-    public void callToGetListStaffByRole(int role){
+    public void callToGetAdmin(){
         ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
-        Observable<Response<List<Staff>>> observable = serviceAPI.getListStaffByRole(role);
+        Observable<Response<List<Staff>>> observable = serviceAPI.getStaffByRole(1);
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(result -> onRetrieveListStaffSuccess(result, role), error -> onHandleErrorListStaff(error, role));
+                .subscribe(this::onRetrieveAdmin, this::onHandleErrorAdmin);
     }
 
-    private void onRetrieveListStaffSuccess(Response<List<Staff>> staffs, int role){
+    private void onRetrieveAdmin(Response<List<Staff>> staffs){
         if (staffs.isSuccessful()){
-            if (role == 3){
-                mListChefLiveData.postValue(staffs.body());
-            }else if (role == 2){
-                mListAdMinLiveData.postValue(staffs.body());
-            }
+            mListAdminLiveData.postValue(staffs.body());
         }
     }
 
-    private void onHandleErrorListStaff(Throwable throwable, int role){
-        Log.e("TAG", "handle error empty: " + throwable.getMessage());
-        mListEmptyTableLiveData.postValue(null);
+    private void onHandleErrorAdmin(Throwable throwable){
+        Log.e("TAG", "handle error admin: " + throwable.getMessage());
+        mListAdminLiveData.postValue(null);
     }
 
+
+    public void callToGetChef(){
+        ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
+        Observable<Response<List<Staff>>> observable = serviceAPI.getStaffByRole(3);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::onRetrieveChef, this::onHandleErrorChef);
+    }
+
+    private void onRetrieveChef(Response<List<Staff>> staffs){
+        if (staffs.isSuccessful()){
+            mListChefLiveData.postValue(staffs.body());
+        }
+    }
+
+    private void onHandleErrorChef(Throwable throwable){
+        Log.e("TAG", "handle error admin: " + throwable.getMessage());
+        mListChefLiveData.postValue(null);
+    }
 
 
 }

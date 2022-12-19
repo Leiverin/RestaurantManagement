@@ -36,7 +36,10 @@ public class Constants {
     public static final int TABLE_EMPTY_STATUS = 0;
     public static final int TABLE_LIVE_STATUS = 1;
     public static final String EXTRA_ID_BILL_TO_TABLE_DETAIL = "EXTRA_ID_BILL_TO_TABLE_DETAIL";
+    public static final String STRING_CONTENT_TO_ANNOUNCE = "content_to_announce";
     public static String EXTRA_TABLE_TO_DETAIL = "extra_table_to_detail";
+    public static String EXTRA_ADMIN_TO_DETAIL = "extra_admin_to_detail";
+    public static String EXTRA_CHEF_TO_DETAIL = "extra_chef_to_detail";
 
     public static String TABLE_ID_SELECTED = "TABLE_ID_SELECTED";
     public static String KEY_BEFORE_TABLE_ID = "KEY_BEFORE_TABLE_ID";
