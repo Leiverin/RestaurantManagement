@@ -2,6 +2,7 @@ package com.poly.restaurant.ui.history;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ import com.poly.restaurant.databinding.DialogFilterBinding;
 import com.poly.restaurant.ui.activities.manage.TableManageViewModel;
 import com.poly.restaurant.ui.base.BaseActivity;
 import com.poly.restaurant.ui.bill.adapter.OnListener;
+import com.poly.restaurant.ui.feedback.FeedBackActivity;
 import com.poly.restaurant.ui.history.adapter.HistoryAdapter;
 import com.poly.restaurant.ui.history.adapter.SpinnerTableAdapter;
 import com.poly.restaurant.utils.Constants;
@@ -83,9 +85,12 @@ public class HistoryActivity extends BaseActivity implements CustomSpinner.OnSpi
             }
 
             @Override
-            public void onStatus(Bill bill) {
-
+            public void onClickFeedback(Bill bill) {
+                Intent intent = new Intent(HistoryActivity.this, FeedBackActivity.class);
+                intent.putExtra(Constants.CREATE_FEEDBACK, bill);
+                startActivity(intent);
             }
+
         });
         binding.rvHistory.setAdapter(adapter);
     }
@@ -103,6 +108,7 @@ public class HistoryActivity extends BaseActivity implements CustomSpinner.OnSpi
                     binding.rvHistory.setVisibility(View.VISIBLE);
                     binding.prgLoadBill.setVisibility(View.GONE);
                     binding.empty.setVisibility(View.GONE);
+                    spinnerTable();
                 }
 
             }
@@ -170,8 +176,14 @@ public class HistoryActivity extends BaseActivity implements CustomSpinner.OnSpi
             viewModel.mListHisLiveData.observe(this, new Observer<List<Bill>>() {
                 @Override
                 public void onChanged(List<Bill> bills) {
-                    list = bills;
-                    adapter.setList(list);
+                    if(bills.isEmpty()){
+                        binding.empty.setVisibility(View.VISIBLE);
+                    }else {
+                        list = bills;
+                        adapter.setList(list);
+                        binding.empty.setVisibility(View.GONE);
+                    }
+
                 }
             });
             viewModel.getBillByDate(table.getId(), 3, firstDateParam, secondDateParam, Constants.staff.getFloor().getNumberFloor(), Constants.staff.getId());
@@ -220,7 +232,8 @@ public class HistoryActivity extends BaseActivity implements CustomSpinner.OnSpi
             if (bill.getTable().getName().contains(text)) {
                 billList.add(bill);
                 binding.empty.setVisibility(View.GONE);
-            }else {
+            }
+            if(billList.isEmpty()){
                 binding.empty.setVisibility(View.VISIBLE);
             }
         }

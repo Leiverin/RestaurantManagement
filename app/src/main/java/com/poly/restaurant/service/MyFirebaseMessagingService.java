@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -27,7 +28,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(@NonNull RemoteMessage message) {
-        if (message.getNotification() != null){
+        if (message.getNotification() != null) {
             String title = message.getNotification().getTitle();
             String idBill = message.getData().get("idBill");
             String idStaff = message.getData().get("idStaff");
@@ -41,7 +42,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         super.onMessageReceived(message);
     }
 
-    public void sendNotification(String title, String message){
+    public void sendNotification(String title, String message) {
         Intent intent = new Intent(this, SplashActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         @SuppressLint("UnspecifiedImmutableFlag")
@@ -52,6 +53,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setSmallIcon(R.drawable.logo_app)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(false)
+                .setSound(Uri.parse(R.raw.notification + ""))
                 .build();
         NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
         managerCompat.notify(111, notification);

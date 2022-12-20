@@ -1,6 +1,7 @@
 package com.poly.restaurant.data.retrofit;
 
 import com.poly.restaurant.data.models.Bill;
+import com.poly.restaurant.data.models.Feedback;
 import com.poly.restaurant.data.models.Notification;
 import com.poly.restaurant.data.models.Product;
 import com.poly.restaurant.data.models.Staff;
@@ -163,4 +164,21 @@ public interface ServiceAPI {
       @Body Notification notification
     );
 
+    @FormUrlEncoded
+    @POST("bill/live/current/{idStaff}")
+    Call<List<Bill>> getBill(
+            @Path("idStaff") String idStaff,
+            @Field("numberFloor") int numberFloor
+    );
+
+    @POST("feedback/create")
+    Call<Feedback> createFeedBack(
+           @Body Feedback feedback
+    );
+
+    @GET("feedback/all")
+    Call<List<Feedback>> getAllFeedback();
+
+    @GET("staff/all")
+    Call<List<Staff>> getAdminContact();
 }

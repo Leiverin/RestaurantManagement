@@ -21,29 +21,27 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:fontFamily="@font/judson_regular"
-            android:text="Change Password"
+            android:text="Send Email"
             android:textColor="@color/white"
             android:textSize="28sp" />
     </LinearLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/pass_old_input_layout"
+        android:id="@+id/title_input_layout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
-        android:hint="Mật khẩu cũ"
-        app:passwordToggleEnabled="true"
+        android:hint="Tiêu đề"
         app:shapeAppearance="@style/Rounded">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/pass_old"
+            android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/judson_regular"
-            android:inputType="textPassword"
             android:padding="10dp"
             android:paddingStart="20dp"
             android:textColor="@color/black"
@@ -53,23 +51,21 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/pass_new_input_layout"
+        android:id="@+id/content_input_layout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
-        android:hint="Mật khẩu mới"
-        app:passwordToggleEnabled="true"
+        android:hint="Nội dung"
         app:shapeAppearance="@style/Rounded">
 
         <EditText
-            android:id="@+id/pass_new"
+            android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/judson_regular"
-            android:inputType="textPassword"
             android:padding="10dp"
             android:paddingStart="20dp"
             android:textColor="@color/black"
@@ -77,30 +73,6 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/pass_new_again_input_layout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="10dp"
-        android:hint="Nhập lại mật khẩu mới"
-        app:passwordToggleEnabled="true"
-        app:shapeAppearance="@style/Rounded">
-
-        <EditText
-            android:id="@+id/pass_new_again"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/judson_regular"
-            android:inputType="textPassword"
-            android:padding="10dp"
-            android:paddingStart="20dp"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
-
-    </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -140,7 +112,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:fontFamily="@font/judson_regular"
-                android:text="Có"
+                android:text="Gửi"
                 android:textColor="@color/white"
                 android:textSize="22sp" />
         </androidx.cardview.widget.CardView>

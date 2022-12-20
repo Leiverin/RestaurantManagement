@@ -40,4 +40,5 @@
     <string name="remember">Remember me</string>
     <string name="updated">Đã gửi đơn cho nhà bếp !!</string>
     <string name="text_request_pay">Bạn muốn thanh toán hóa đơn này?</string>
+    <string name="url_feedback">https://feedback-final.vercel.app/id=%1s</string>
 </resources>
