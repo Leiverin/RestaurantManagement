@@ -1,30 +1,33 @@
 package com.poly.restaurant.data.models;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Notification {
+    @SerializedName("_id")
+    private String id;
     private String title;
     private String content;
     private String date;
     private String time;
-    private Staff sender,receiver;
+    private String idSender;
     private String idBill;
 
-    public Notification() {
-    }
-
-    public Notification(String title, String content, String time) {
-        this.title = title;
-        this.content = content;
-        this.time = time;
-    }
-
-    public Notification(String title, String content, String date, String time, Staff sender, Staff receiver, String idBill) {
+    public Notification(String id, String title, String content, String date, String time, String idSender, String idBill) {
+        this.id = id;
         this.title = title;
         this.content = content;
         this.date = date;
         this.time = time;
-        this.sender = sender;
-        this.receiver = receiver;
+        this.idSender = idSender;
         this.idBill = idBill;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -59,20 +62,12 @@ public class Notification {
         this.time = time;
     }
 
-    public Staff getSender() {
-        return sender;
+    public String getIdSender() {
+        return idSender;
     }
 
-    public void setSender(Staff sender) {
-        this.sender = sender;
-    }
-
-    public Staff getReceiver() {
-        return receiver;
-    }
-
-    public void setReceiver(Staff receiver) {
-        this.receiver = receiver;
+    public void setIdSender(String idSender) {
+        this.idSender = idSender;
     }
 
     public String getIdBill() {

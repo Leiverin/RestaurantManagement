@@ -1,17 +1,21 @@
 package com.poly.restaurant.ui.notification;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import com.poly.restaurant.R;
+import com.poly.restaurant.data.models.Bill;
 import com.poly.restaurant.data.models.Notification;
 import com.poly.restaurant.databinding.ActivityNotificationBinding;
-import com.poly.restaurant.ui.activities.product.FoodActivity;
 import com.poly.restaurant.ui.base.BaseActivity;
 import com.poly.restaurant.ui.notification.adapter.NotificationAdapter;
 import com.poly.restaurant.ui.notification.adapter.OnListenerNotification;
@@ -33,21 +37,20 @@ public class NotificationActivity extends BaseActivity {
         viewModel = new ViewModelProvider(this).get(NotificationViewModel.class);
         binding = ActivityNotificationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-//        binding.prgLoadBill.setVisibility(View.VISIBLE);
-//        binding.rvNotification.setVisibility(View.GONE);
+        binding.prgLoadBill.setVisibility(View.VISIBLE);
+        binding.rvNotification.setVisibility(View.GONE);
         list = new ArrayList<>();
         initRec();
-//        initViewModel();
+        initViewModel();
+        initListener();
     }
 
     private void initRec() {
-        for (int i = 0; i < 5; i++) {
-            list.add(new Notification("Tuấn Anh","Test notification","9h30"));
-        }
         adapter = new NotificationAdapter(this, list, new OnListenerNotification() {
             @Override
             public void onClickShowDetailNotification(Notification notification) {
-
+                showDetailNoti();
+                viewModel.getBillById(notification.getIdBill());
             }
         });
         binding.rvNotification.setAdapter(adapter);
@@ -57,13 +60,19 @@ public class NotificationActivity extends BaseActivity {
         viewModel.mListNotiLiveData.observe(this, new Observer<List<Notification>>() {
             @Override
             public void onChanged(List<Notification> notifications) {
-                list = notifications;
-                adapter.setList(list);
-                binding.rvNotification.setVisibility(View.VISIBLE);
-                binding.prgLoadBill.setVisibility(View.GONE);
+                if (notifications.isEmpty()) {
+                    binding.empty.setVisibility(View.VISIBLE);
+                    binding.prgLoadBill.setVisibility(View.GONE);
+                } else {
+                    list = notifications;
+                    adapter.setList(list);
+                    binding.rvNotification.setVisibility(View.VISIBLE);
+                    binding.prgLoadBill.setVisibility(View.GONE);
+                    binding.empty.setVisibility(View.GONE);
+                }
+
             }
         });
-        viewModel.getNotification(Constants.staff.getId());
     }
 
     private void initListener() {
@@ -75,8 +84,64 @@ public class NotificationActivity extends BaseActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                String search = newText.trim();
+                if (search.isEmpty()) {
+                    initViewModel();
+                } else {
+                    filterNoti(newText);
+                }
                 return true;
             }
         });
+    }
+
+    private void filterNoti(String text) {
+        List<Notification> notificationList = new ArrayList<>();
+        for (Notification notification : list) {
+            if (notification.getTitle().contains(text) || notification.getContent().contains(text)) {
+                notificationList.add(notification);
+            }
+            if (notificationList.isEmpty()) {
+                binding.empty.setVisibility(View.VISIBLE);
+            }
+        }
+        adapter.setList(notificationList);
+    }
+
+    private void showDetailNoti() {
+        viewModel.mBillByIdLiveData.observe(this, new Observer<Bill>() {
+            @Override
+            public void onChanged(Bill bill) {
+                if (bill != null) {
+                    Constants.dialogShowDetailBill(bill, NotificationActivity.this);
+                }
+            }
+        });
+    }
+
+    private final BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            try {
+                viewModel.getNotification(Constants.staff.getId());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    };
+
+    @Override
+    protected void onStop() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
+        super.onStop();
+    }
+
+    @Override
+    protected void onResume() {
+        LocalBroadcastManager.getInstance(this).registerReceiver((receiver),
+                new IntentFilter(Constants.REQUEST_TO_ACTIVITY)
+        );
+        viewModel.getNotification(Constants.staff.getId());
+        super.onResume();
     }
 }

@@ -2,9 +2,12 @@ package com.poly.restaurant.utils;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,17 +17,13 @@ import com.poly.restaurant.R;
 import com.poly.restaurant.data.models.Bill;
 import com.poly.restaurant.data.models.Product;
 import com.poly.restaurant.data.models.Staff;
-import com.poly.restaurant.data.models.Table;
 import com.poly.restaurant.data.retrofit.RetroInstance;
 import com.poly.restaurant.data.retrofit.ServiceAPI;
 import com.poly.restaurant.databinding.DialogShowDetailBillBinding;
 import com.poly.restaurant.ui.activities.product.appetizer.adapter.ProductAdapter;
 import com.poly.restaurant.ui.bill.adapter.ShowDetailProductBillAdapter;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -36,7 +35,11 @@ public class Constants {
     public static final int TABLE_EMPTY_STATUS = 0;
     public static final int TABLE_LIVE_STATUS = 1;
     public static final String EXTRA_ID_BILL_TO_TABLE_DETAIL = "EXTRA_ID_BILL_TO_TABLE_DETAIL";
+    public static final String EXTRA_ID_STAFF_TO_TABLE_DETAIL = "EXTRA_ID_STAFF_TO_TABLE_DETAIL";
+    public static final String STRING_CONTENT_TO_ANNOUNCE = "content_to_announce";
     public static String EXTRA_TABLE_TO_DETAIL = "extra_table_to_detail";
+    public static String EXTRA_ADMIN_TO_DETAIL = "extra_admin_to_detail";
+    public static String EXTRA_CHEF_TO_DETAIL = "extra_chef_to_detail";
 
     public static String TABLE_ID_SELECTED = "TABLE_ID_SELECTED";
     public static String KEY_BEFORE_TABLE_ID = "KEY_BEFORE_TABLE_ID";
@@ -62,6 +65,9 @@ public class Constants {
     public static String CHANNEL_ID = "Restaurant Chanel";
     public static String EXTRA_ID_BILL_TO_BROADCAST = "EXTRA_ID_BILL_TO_BROADCAST";
     public static String REQUEST_TO_ACTIVITY = "REQUEST_TO_ACTIVITY";
+    public static String CREATE_FEEDBACK = "CREATE_FEEDBACK";
+
+    public static String CALL_CENTER_NUMBER = "0372546891";
 
     public static void handleIncrease(TextView tvQuantity, int type) {
         if (type == TYPE_IN_TABLE) {
@@ -92,23 +98,22 @@ public class Constants {
     }
 
 
-    public static void setOnStatus(Bill bill) {
-        Bill bill1 = new Bill(bill.getId(), bill.getDate(), bill.getTime(), bill.getTotalPrice(), bill.getCheckoutType(), 3, bill.getProducts(), bill.getTable(), bill.getIdCustomer(), bill.getStaff());
-        ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
-        Call<Bill> callDon = serviceAPI.doneBill(bill.getId(), "PUT", bill1);
-        callDon.enqueue(new Callback<Bill>() {
-            @Override
-            public void onResponse(Call<Bill> call, Response<Bill> response) {
-                if (response.isSuccessful()) {
+    public static void skype(String number, Context ctx) {
+        try {
+            //Intent sky = new Intent("android.intent.action.CALL_PRIVILEGED");
+            //the above line tries to create an intent for which the skype app doesn't supply public api
+            Intent sky = new Intent("android.intent.action.VIEW");
+            sky.setData(Uri.parse("skype:" + number));
+            ctx.startActivity(sky);
+        } catch (ActivityNotFoundException e) {
+            String appPackageName = "com.skype.raider";
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(
+                    "https://play.google.com/store/apps/details?id=" + appPackageName));
+            intent.setPackage("com.android.vending");
+            ctx.startActivity(intent);
+        }
 
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Bill> call, Throwable t) {
-
-            }
-        });
     }
 
     public static void dialogShowDetailBill(Bill bill, Context context) {

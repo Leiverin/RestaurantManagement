@@ -1,7 +1,6 @@
 package com.poly.restaurant.ui.history.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.poly.restaurant.data.models.Bill;
 import com.poly.restaurant.databinding.ItemHistoryBinding;
-import com.poly.restaurant.ui.FeedBackActivity;
 import com.poly.restaurant.ui.bill.adapter.OnListener;
 
 import java.util.List;
@@ -49,7 +47,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
             holder.binding.imgFeedback.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    context.startActivity(new Intent(context, FeedBackActivity.class));
+                    onListener.onClickFeedback(bill);
                 }
             });
             holder.binding.getRoot().setOnClickListener(view -> {
