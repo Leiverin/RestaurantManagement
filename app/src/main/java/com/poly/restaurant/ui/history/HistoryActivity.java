@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 
+import androidx.cardview.widget.CardView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -80,8 +81,8 @@ public class HistoryActivity extends BaseActivity implements CustomSpinner.OnSpi
     private void initRec() {
         adapter = new HistoryAdapter(HistoryActivity.this, list, new OnListener() {
             @Override
-            public void onClickBill(Bill bill) {
-                Constants.dialogShowDetailBill(bill, HistoryActivity.this);
+            public void onClickBill(Bill bill, CardView cardView) {
+                Constants.dialogShowDetailBill(bill, HistoryActivity.this,cardView);
             }
 
             @Override

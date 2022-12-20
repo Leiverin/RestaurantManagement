@@ -41,8 +41,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             holder.binding.title.setText(notification.getTitle());
             holder.binding.content.setText(notification.getContent());
             holder.binding.timeAgo.setText(notification.getTime());
-            holder.binding.getRoot().setOnClickListener(view -> {
-                listenerNotification.onClickShowDetailNotification(notification);
+            holder.binding.itemView.setOnClickListener(view -> {
+                listenerNotification.onClickShowDetailNotification(notification, holder.binding.itemView);
             });
         }
     }

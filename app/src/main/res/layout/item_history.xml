@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:id="@+id/item_view"
     style="@style/styleItemHistory"
-    >
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
-                style="@style/textNameTable"
                 android:id="@+id/txtNameTable"
+                style="@style/textNameTable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/textNameTableItem" />
@@ -32,17 +34,16 @@
                     android:src="@drawable/ic_clock" />
 
                 <TextView
-                    style="@style/textTimeTable"
                     android:id="@+id/txtTime"
+                    style="@style/textTimeTable"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/time"
-                    />
+                    android:text="@string/time" />
             </LinearLayout>
 
             <TextView
-                style="@style/textMountTableHistory"
                 android:id="@+id/txtMount"
+                style="@style/textMountTableHistory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/quanityHistory" />
@@ -61,12 +62,11 @@
                     android:text="@string/intoMoney" />
 
                 <TextView
-                    style="@style/textMoneyTable"
                     android:id="@+id/txtMoney"
+                    style="@style/textMoneyTable"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/money"
-                    />
+                    android:text="@string/money" />
             </LinearLayout>
         </LinearLayout>
 

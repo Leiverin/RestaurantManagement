@@ -1,17 +1,16 @@
 package com.poly.restaurant.ui.notification;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.widget.SearchView;
+import androidx.cardview.widget.CardView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.google.gson.Gson;
+import com.poly.restaurant.data.models.Bill;
 import com.poly.restaurant.data.models.Notification;
 import com.poly.restaurant.databinding.ActivityNotificationBinding;
 import com.poly.restaurant.ui.base.BaseActivity;
@@ -40,14 +39,14 @@ public class NotificationActivity extends BaseActivity {
         list = new ArrayList<>();
         initRec();
         initViewModel();
-        initListener();
+//        initListener();
     }
 
     private void initRec() {
         adapter = new NotificationAdapter(this, list, new OnListenerNotification() {
             @Override
-            public void onClickShowDetailNotification(Notification notification) {
-
+            public void onClickShowDetailNotification(Notification notification, CardView cardView) {
+                Constants.dialogShowDetailNoti(notification.getIdBill(),NotificationActivity.this,cardView);
             }
         });
         binding.rvNotification.setAdapter(adapter);
@@ -70,7 +69,7 @@ public class NotificationActivity extends BaseActivity {
 
             }
         });
-
+        viewModel.getNotification(Constants.staff.getId());
     }
 
     private void initListener() {
@@ -106,29 +105,29 @@ public class NotificationActivity extends BaseActivity {
         adapter.setList(notificationList);
     }
 
-    private final BroadcastReceiver receiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            try {
-                viewModel.getNotification(Constants.staff.getId());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    };
-
-    @Override
-    protected void onStop() {
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
-        super.onStop();
-    }
-
-    @Override
-    protected void onResume() {
-        LocalBroadcastManager.getInstance(this).registerReceiver((receiver),
-                new IntentFilter(Constants.REQUEST_TO_ACTIVITY)
-        );
-        viewModel.getNotification(Constants.staff.getId());
-        super.onResume();
-    }
+//    private final BroadcastReceiver receiver = new BroadcastReceiver() {
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//            try {
+//                viewModel.getNotification(Constants.staff.getId());
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    };
+//
+//    @Override
+//    protected void onStop() {
+//        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
+//        super.onStop();
+//    }
+//
+//    @Override
+//    protected void onResume() {
+//        LocalBroadcastManager.getInstance(this).registerReceiver((receiver),
+//                new IntentFilter(Constants.REQUEST_TO_ACTIVITY)
+//        );
+//        viewModel.getNotification(Constants.staff.getId());
+//        super.onResume();
+//    }
 }

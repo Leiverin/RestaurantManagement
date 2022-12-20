@@ -181,4 +181,7 @@ public interface ServiceAPI {
 
     @GET("staff/all")
     Call<List<Staff>> getAdminContact();
+
+    @GET("bill/all")
+    Call<List<Bill>> getBillNoti();
 }
