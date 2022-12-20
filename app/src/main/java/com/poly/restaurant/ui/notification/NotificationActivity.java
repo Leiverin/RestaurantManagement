@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.widget.SearchView;
@@ -12,6 +13,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.poly.restaurant.data.models.Bill;
 import com.poly.restaurant.data.models.Notification;
 import com.poly.restaurant.databinding.ActivityNotificationBinding;
 import com.poly.restaurant.ui.base.BaseActivity;
@@ -47,7 +49,8 @@ public class NotificationActivity extends BaseActivity {
         adapter = new NotificationAdapter(this, list, new OnListenerNotification() {
             @Override
             public void onClickShowDetailNotification(Notification notification) {
-
+                showDetailNoti();
+                viewModel.getBillById(notification.getIdBill());
             }
         });
         binding.rvNotification.setAdapter(adapter);
@@ -70,7 +73,6 @@ public class NotificationActivity extends BaseActivity {
 
             }
         });
-
     }
 
     private void initListener() {
@@ -104,6 +106,17 @@ public class NotificationActivity extends BaseActivity {
             }
         }
         adapter.setList(notificationList);
+    }
+
+    private void showDetailNoti() {
+        viewModel.mBillByIdLiveData.observe(this, new Observer<Bill>() {
+            @Override
+            public void onChanged(Bill bill) {
+                if (bill != null) {
+                    Constants.dialogShowDetailBill(bill, NotificationActivity.this);
+                }
+            }
+        });
     }
 
     private final BroadcastReceiver receiver = new BroadcastReceiver() {

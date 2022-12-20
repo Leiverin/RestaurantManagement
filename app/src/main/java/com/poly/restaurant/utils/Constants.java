@@ -5,32 +5,25 @@ import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.poly.restaurant.R;
 import com.poly.restaurant.data.models.Bill;
 import com.poly.restaurant.data.models.Product;
 import com.poly.restaurant.data.models.Staff;
-import com.poly.restaurant.data.models.Table;
 import com.poly.restaurant.data.retrofit.RetroInstance;
 import com.poly.restaurant.data.retrofit.ServiceAPI;
 import com.poly.restaurant.databinding.DialogShowDetailBillBinding;
 import com.poly.restaurant.ui.activities.product.appetizer.adapter.ProductAdapter;
 import com.poly.restaurant.ui.bill.adapter.ShowDetailProductBillAdapter;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -74,7 +67,7 @@ public class Constants {
     public static String REQUEST_TO_ACTIVITY = "REQUEST_TO_ACTIVITY";
     public static String CREATE_FEEDBACK = "CREATE_FEEDBACK";
 
-    public static String CALL_CENTER_NUMBER="0372546891";
+    public static String CALL_CENTER_NUMBER = "0372546891";
 
     public static void handleIncrease(TextView tvQuantity, int type) {
         if (type == TYPE_IN_TABLE) {
