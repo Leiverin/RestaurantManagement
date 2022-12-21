@@ -189,7 +189,6 @@ public class Constants {
                 for (int i = 0; i < response.body().size(); i++) {
                     if (Objects.equals(idBill, response.body().get(i).getId())) {
                         Toast.makeText(context, "Yêu cầu xác nhận thông tin", Toast.LENGTH_SHORT).show();
-                        cardView.setEnabled(false);
                         AlertDialog.Builder builder = new AlertDialog.Builder(context);
                         DialogShowDetailBillBinding showDetailBillBinding = DialogShowDetailBillBinding.inflate(LayoutInflater.from(context));
                         builder.setView(showDetailBillBinding.getRoot());
