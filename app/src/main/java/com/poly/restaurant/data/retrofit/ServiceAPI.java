@@ -122,8 +122,13 @@ public interface ServiceAPI {
 
 
     // get list notification
-    @GET("notification/{idStaff}")
-    Call<List<Notification>> getNotification(
+    @GET("notification/sender/{idStaff}")
+    Call<List<Notification>> getNotificationSender(
+            @Path("idStaff") String idStaff
+    );
+
+    @GET("notification/receiver/{idStaff}")
+    Call<List<Notification>> getNotificationReceiver(
             @Path("idStaff") String idStaff
     );
 

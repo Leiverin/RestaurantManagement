@@ -25,7 +25,7 @@ public class SendNotificationViewModel extends BaseViewModel {
 
     public void getNotificationSender(String sender) {
         ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
-        Call<List<Notification>> call = serviceAPI.getNotification(sender);
+        Call<List<Notification>> call = serviceAPI.getNotificationSender(sender);
         call.enqueue(new Callback<List<Notification>>() {
             @Override
             public void onResponse(Call<List<Notification>> call, Response<List<Notification>> response) {

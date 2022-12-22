@@ -23,9 +23,9 @@ public class ReceiptNoticeViewModel extends BaseViewModel {
         mListNotiLiveData = new MutableLiveData<>();
     }
 
-    public void getNotificationReceider(String receider) {
+    public void getNotificationReceiver(String receiver) {
         ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
-        Call<List<Notification>> call = serviceAPI.getNotification(receider);
+        Call<List<Notification>> call = serviceAPI.getNotificationReceiver(receiver);
         call.enqueue(new Callback<List<Notification>>() {
             @Override
             public void onResponse(Call<List<Notification>> call, Response<List<Notification>> response) {

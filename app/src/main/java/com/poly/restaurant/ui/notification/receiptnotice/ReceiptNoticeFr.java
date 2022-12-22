@@ -105,7 +105,7 @@ public class ReceiptNoticeFr extends BaseFragment {
         @Override
         public void onReceive(Context context, Intent intent) {
             try {
-                viewModel.getNotificationReceider(Constants.staff.getId());
+                viewModel.getNotificationReceiver(Constants.staff.getId());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -123,7 +123,7 @@ public class ReceiptNoticeFr extends BaseFragment {
         LocalBroadcastManager.getInstance(getContext()).registerReceiver((receiver),
                 new IntentFilter(Constants.REQUEST_TO_ACTIVITY)
         );
-        viewModel.getNotificationReceider(Constants.staff.getId());
+        viewModel.getNotificationReceiver(Constants.staff.getId());
         super.onResume();
     }
 }

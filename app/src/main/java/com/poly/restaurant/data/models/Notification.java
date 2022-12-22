@@ -9,16 +9,18 @@ public class Notification {
     private String content;
     private String date;
     private String time;
-    private String idSender;
+    private Staff sender;
+    private Staff receiver;
     private String idBill;
 
-    public Notification(String id, String title, String content, String date, String time, String idSender, String idBill) {
+    public Notification(String id, String title, String content, String date, String time, Staff sender, Staff receiver, String idBill) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.date = date;
         this.time = time;
-        this.idSender = idSender;
+        this.sender = sender;
+        this.receiver = receiver;
         this.idBill = idBill;
     }
 
@@ -62,12 +64,20 @@ public class Notification {
         this.time = time;
     }
 
-    public String getIdSender() {
-        return idSender;
+    public Staff getSender() {
+        return sender;
     }
 
-    public void setIdSender(String idSender) {
-        this.idSender = idSender;
+    public void setSender(Staff sender) {
+        this.sender = sender;
+    }
+
+    public Staff getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(Staff receiver) {
+        this.receiver = receiver;
     }
 
     public String getIdBill() {
