@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +19,7 @@ import androidx.cardview.widget.CardView;
 
 import com.poly.restaurant.R;
 import com.poly.restaurant.data.models.Bill;
+import com.poly.restaurant.data.models.Notification;
 import com.poly.restaurant.data.models.Product;
 import com.poly.restaurant.data.models.Staff;
 import com.poly.restaurant.data.retrofit.RetroInstance;
@@ -25,6 +27,7 @@ import com.poly.restaurant.data.retrofit.ServiceAPI;
 import com.poly.restaurant.databinding.DialogShowDetailBillBinding;
 import com.poly.restaurant.ui.activities.product.appetizer.adapter.ProductAdapter;
 import com.poly.restaurant.ui.bill.adapter.ShowDetailProductBillAdapter;
+import com.poly.restaurant.ui.notification.adapter.NotificationAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -221,6 +224,16 @@ public class Constants {
 
             }
         });
+    }
+
+    public static void filterNoti(String text, List<Notification> list, NotificationAdapter adapter) {
+        List<Notification> notificationList = new ArrayList<>();
+        for (Notification notification : list) {
+            if (notification.getTitle().contains(text) || notification.getContent().contains(text)) {
+                notificationList.add(notification);
+            }
+        }
+        adapter.setList(notificationList);
     }
 
 }
