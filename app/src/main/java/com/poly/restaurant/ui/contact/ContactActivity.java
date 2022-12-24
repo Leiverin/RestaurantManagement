@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -74,6 +73,7 @@ public class ContactActivity extends BaseActivity {
             Constants.skype("live:563fc1cace9806ca", this);
         });
         binding.actionMail.setOnClickListener(view -> {
+            binding.actionMail.setEnabled(false);
             dialogSendEmail();
         });
 
@@ -111,6 +111,7 @@ public class ContactActivity extends BaseActivity {
         builder.setView(sendEmailBinding.getRoot());
         AlertDialog dialog = builder.create();
         sendEmailBinding.btnNo.setOnClickListener(view -> {
+            binding.actionMail.setEnabled(true);
             dialog.dismiss();
         });
         sendEmailBinding.btnYes.setOnClickListener(view -> {
@@ -129,6 +130,7 @@ public class ContactActivity extends BaseActivity {
                 } catch (android.content.ActivityNotFoundException ex) {
                     Toast.makeText(ContactActivity.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
                 }
+                binding.actionMail.setEnabled(true);
                 dialog.dismiss();
             }
         });

@@ -30,6 +30,7 @@ public class AccountActivity extends BaseActivity {
         sharePreference = new AppSharePreference(AccountActivity.this);
         initData(Constants.staff);
         binding.passAccount.setOnClickListener(view -> {
+            binding.passAccount.setEnabled(false);
             showDialogChangePass();
         });
         binding.nameAccount.setOnClickListener(view -> {
@@ -73,6 +74,7 @@ public class AccountActivity extends BaseActivity {
                 Constants.changePasswordStaff(passNewAgain);
                 sharePreference.setPassword(passNewAgain);
                 binding.password.setText(passNewAgain);
+                binding.passAccount.setEnabled(true);
                 Snackbar.make(changePassBinding.getRoot(), "Đổi mật khẩu thành công !", Snackbar.LENGTH_LONG).show();
                 dialog.dismiss();
             }
