@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import androidx.cardview.widget.CardView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -52,8 +53,8 @@ public class BillActivity extends BaseActivity {
     private void initRec() {
         adapter = new BillAdapter(this, list, new OnListener() {
             @Override
-            public void onClickBill(Bill bill) {
-                Constants.dialogShowDetailBill(bill, BillActivity.this);
+            public void onClickBill(Bill bill, CardView cardView) {
+                Constants.dialogShowDetailBill(bill, BillActivity.this,cardView);
             }
 
             @Override

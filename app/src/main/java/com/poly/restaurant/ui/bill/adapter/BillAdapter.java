@@ -55,7 +55,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillHolder> {
             holder.binding.viewItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    onListener.onClickBill(bill);
+                    onListener.onClickBill(bill, holder.binding.viewItem);
                 }
             });
             holder.binding.btnDone.setOnClickListener(new View.OnClickListener() {

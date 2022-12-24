@@ -50,8 +50,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
                     onListener.onClickFeedback(bill);
                 }
             });
-            holder.binding.getRoot().setOnClickListener(view -> {
-                onListener.onClickBill(bill);
+            holder.binding.itemView.setOnClickListener(view -> {
+                onListener.onClickBill(bill, holder.binding.itemView);
             });
         }
     }

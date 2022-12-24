@@ -15,7 +15,7 @@
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:background="#FF7F50">
 
             <androidx.appcompat.widget.Toolbar
@@ -23,52 +23,41 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <androidx.cardview.widget.CardView
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:layout_marginEnd="15dp"
-                    app:cardCornerRadius="5dp">
+                    android:orientation="vertical">
 
-                    <androidx.appcompat.widget.SearchView
-                        android:id="@+id/sv_noti"
-                        style="@style/editTextSearch"
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        app:cardCornerRadius="5dp">
+
+                        <androidx.appcompat.widget.SearchView
+                            android:id="@+id/sv_noti"
+                            style="@style/editTextSearch"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textCapSentences"
+                            app:queryHint="Search notification ..." />
+                    </androidx.cardview.widget.CardView>
+
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/tab_layout"
+                        style="@style/text_in_tab_style"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:queryHint="Search notification ..." />
-                </androidx.cardview.widget.CardView>
+                        android:background="@android:color/transparent"
+                        app:tabTextAppearance="@style/text_appearance_tab_layout" />
+                </LinearLayout>
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.AppBarLayout>
 
-        <LinearLayout
-            android:id="@+id/empty"
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/pager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/empty" />
-        </LinearLayout>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_notification"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layoutAnimation="@anim/layout_animation_slide_from_bottom"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_noti" />
+            android:layout_height="match_parent" />
     </LinearLayout>
-
-    <ProgressBar
-        android:id="@+id/prg_load_bill"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_gravity="center"
-        android:indeterminateDrawable="@drawable/progress_custom_circle"
-        android:indeterminateDuration="600"
-        android:indeterminateOnly="true"
-        android:visibility="gone" />
 </FrameLayout>

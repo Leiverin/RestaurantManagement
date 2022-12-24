@@ -182,7 +182,7 @@ public class TableDetailActivity extends BaseActivity {
                                 Constants.staff.getId()
                         );
                         viewModel.createNotification(new Notification(
-                                null, title, content, date, time, Constants.staff.getId(), bill.getId()
+                                null, title, content, date, time, Constants.staff, s, bill.getId()
                         ));
                     }
                     Table tableUpdate = new Table(table.getId(), table.getName(), table.getFloor(), table.getCapacity(), 1);
@@ -224,7 +224,7 @@ public class TableDetailActivity extends BaseActivity {
                                     Constants.staff.getId()
                             );
                             viewModel.createNotification(new Notification(
-                                    null, title, content, date, time, Constants.staff.getId(), bill.get(0).getId()
+                                    null, title, content, date, time, Constants.staff, s, bill.get(0).getId()
                             ));
                         }
                         if (count == mListChef.size()){
@@ -317,7 +317,7 @@ public class TableDetailActivity extends BaseActivity {
                                 Constants.staff.getId()
                         );
                         viewModel.createNotification(new Notification(
-                                null, title, content, date, time, Constants.staff.getId(), bills.get(0).getId()
+                                null, title, content, date, time, Constants.staff, s, bills.get(0).getId()
                         ));
                     }
                     DialogAnnounce.getInstance("Đã gửi xác nhận cho quản lý").show(getSupportFragmentManager(), new DialogAnnounce().getTag());

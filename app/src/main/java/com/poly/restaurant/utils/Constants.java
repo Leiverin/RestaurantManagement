@@ -11,10 +11,15 @@ import android.net.Uri;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.cardview.widget.CardView;
 
 import com.poly.restaurant.R;
 import com.poly.restaurant.data.models.Bill;
+import com.poly.restaurant.data.models.Notification;
 import com.poly.restaurant.data.models.Product;
 import com.poly.restaurant.data.models.Staff;
 import com.poly.restaurant.data.retrofit.RetroInstance;
@@ -22,9 +27,11 @@ import com.poly.restaurant.data.retrofit.ServiceAPI;
 import com.poly.restaurant.databinding.DialogShowDetailBillBinding;
 import com.poly.restaurant.ui.activities.product.appetizer.adapter.ProductAdapter;
 import com.poly.restaurant.ui.bill.adapter.ShowDetailProductBillAdapter;
+import com.poly.restaurant.ui.notification.adapter.NotificationAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -116,28 +123,33 @@ public class Constants {
 
     }
 
-    public static void dialogShowDetailBill(Bill bill, Context context) {
+    public static void dialogShowDetailBill(Bill bill, Context context, CardView cardView) {
+        Toast.makeText(context, "Yêu cầu xác nhận thông tin", Toast.LENGTH_SHORT).show();
+        cardView.setEnabled(false);
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         DialogShowDetailBillBinding showDetailBillBinding = DialogShowDetailBillBinding.inflate(LayoutInflater.from(context));
         builder.setView(showDetailBillBinding.getRoot());
         AlertDialog dialog = builder.create();
+        dialog.show();
+        dialog.setCancelable(false);
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.getWindow().setGravity(Gravity.CENTER);
         showDetailBillBinding.txtNameTable.setText(bill.getTable().getName());
         showDetailBillBinding.tvTime.setText(bill.getTime());
         showDetailBillBinding.tvDate.setText(bill.getDate());
         showDetailBillBinding.tvPrice.setText(bill.getTotalPrice() + "");
-        showDetailBillBinding.btnPay.setOnClickListener(view -> {
-            dialog.dismiss();
-        });
         if (bill.getProducts() != null) {
             showDetailBillBinding.rvProductBillDetail.setVisibility(View.VISIBLE);
             ShowDetailProductBillAdapter adapterShowDetailBill = new ShowDetailProductBillAdapter(context, bill.getProducts());
             showDetailBillBinding.rvProductBillDetail.setAdapter(adapterShowDetailBill);
         }
-        dialog.show();
-        dialog.setCancelable(false);
+        showDetailBillBinding.btnPay.setOnClickListener(view -> {
+            dialog.dismiss();
+            cardView.setEnabled(true);
+            Toast.makeText(context, "Đã xác nhận thông tin", Toast.LENGTH_SHORT).show();
+        });
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
-        dialog.getWindow().setGravity(Gravity.CENTER);
+
     }
 
     public static void changePasswordStaff(String pass) {
@@ -170,4 +182,58 @@ public class Constants {
             adapter.setList(mListFilter);
         }
     }
+
+    public static void dialogShowDetailNoti(String idBill, Context context, CardView cardView) {
+        ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
+        Call<List<Bill>> listCall = serviceAPI.getBillNoti();
+        listCall.enqueue(new Callback<List<Bill>>() {
+            @Override
+            public void onResponse(Call<List<Bill>> call, Response<List<Bill>> response) {
+                for (int i = 0; i < response.body().size(); i++) {
+                    if (Objects.equals(idBill, response.body().get(i).getId())) {
+                        Toast.makeText(context, "Yêu cầu xác nhận thông tin", Toast.LENGTH_SHORT).show();
+                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                        DialogShowDetailBillBinding showDetailBillBinding = DialogShowDetailBillBinding.inflate(LayoutInflater.from(context));
+                        builder.setView(showDetailBillBinding.getRoot());
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                        dialog.setCancelable(false);
+                        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+                        dialog.getWindow().setGravity(Gravity.CENTER);
+                        showDetailBillBinding.txtNameTable.setText(response.body().get(i).getTable().getName());
+                        showDetailBillBinding.tvTime.setText(response.body().get(i).getTime());
+                        showDetailBillBinding.tvDate.setText(response.body().get(i).getDate());
+                        showDetailBillBinding.tvPrice.setText(response.body().get(i).getTotalPrice() + "");
+                        if (response.body().get(i).getProducts() != null) {
+                            showDetailBillBinding.rvProductBillDetail.setVisibility(View.VISIBLE);
+                            ShowDetailProductBillAdapter adapterShowDetailBill = new ShowDetailProductBillAdapter(context, response.body().get(i).getProducts());
+                            showDetailBillBinding.rvProductBillDetail.setAdapter(adapterShowDetailBill);
+                        }
+                        showDetailBillBinding.btnPay.setOnClickListener(view -> {
+                            dialog.dismiss();
+                            cardView.setEnabled(true);
+                            Toast.makeText(context, "Đã xác nhận thông tin", Toast.LENGTH_SHORT).show();
+                        });
+                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Bill>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public static void filterNoti(String text, List<Notification> list, NotificationAdapter adapter) {
+        List<Notification> notificationList = new ArrayList<>();
+        for (Notification notification : list) {
+            if (notification.getTitle().contains(text) || notification.getContent().contains(text)) {
+                notificationList.add(notification);
+            }
+        }
+        adapter.setList(notificationList);
+    }
+
 }
