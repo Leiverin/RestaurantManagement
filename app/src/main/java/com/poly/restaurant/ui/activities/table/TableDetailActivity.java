@@ -162,8 +162,8 @@ public class TableDetailActivity extends BaseActivity {
                     for (Product product : products) {
                         total += Double.parseDouble((product.getPrice() * product.getAmount())+"");
                     }
-                    binding.tvTotalDishes.setText("Total dishes: "+products.size()+" dishes");
-                    binding.tvTotalPrice.setText("Total price: "+total+"$");
+                    binding.tvTotalDishes.setText("Tổng món: "+products.size()+" món");
+                    binding.tvTotalPrice.setText("Tổng giá: "+total+"$");
                     mListProduct = products;
                     adapter.setList(products);
                 }else{
