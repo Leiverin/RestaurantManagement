@@ -15,13 +15,12 @@
         android:orientation="horizontal"
         android:padding="10dp">
 
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:fontFamily="@font/judson_regular"
-            android:text="Send Email"
+            android:text="Gửi Email"
             android:textColor="@color/white"
             android:textSize="28sp" />
     </LinearLayout>

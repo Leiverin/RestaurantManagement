@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.Window;
 import android.widget.PopupMenu;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -52,6 +51,7 @@ public class TableManageActivity extends BaseActivity {
     private List<Staff> mListChef;
     private Handler handler = new Handler();
     private Runnable runnable;
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,16 +81,16 @@ public class TableManageActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
-        binding.tvNumFloor.setText("Floor: "+Constants.staff.getFloor().getNumberFloor());
+        binding.tvNumFloor.setText("Tầng: " + Constants.staff.getFloor().getNumberFloor());
         binding.rvTable.setAdapter(adapter);
         binding.rvTable.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         viewModel.mListEmptyTableLiveData.observe(this, new Observer<List<Table>>() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onChanged(List<Table> tables) {
-                if (tables != null){
+                if (tables != null) {
                     mListTablesEmpty = tables;
-                    binding.tvNumEmptyTable.setText("Empty table: "+tables.size());
+                    binding.tvNumEmptyTable.setText("Chưa sử dụng: " + tables.size());
                     mListTableMain = getListTableMain();
                     adapter.setList(mListTableMain);
                 }
@@ -101,9 +101,9 @@ public class TableManageActivity extends BaseActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onChanged(List<Table> tables) {
-                if (tables != null){
+                if (tables != null) {
                     mListTablesLive = tables;
-                    binding.tvNumLiveTable.setText("Live table: "+tables.size());
+                    binding.tvNumLiveTable.setText("Đang sử dụng: " + tables.size());
                     mListTableMain = getListTableMain();
                     adapter.setList(mListTableMain);
                 }
@@ -113,7 +113,7 @@ public class TableManageActivity extends BaseActivity {
         viewModel.mListChefLiveData.observe(this, new Observer<List<Staff>>() {
             @Override
             public void onChanged(List<Staff> staff) {
-                Log.d("TAG", "onChanged: "+ new Gson().toJson(staff));
+                Log.d("TAG", "onChanged: " + new Gson().toJson(staff));
                 binding.prgLoadTable.setVisibility(View.GONE);
                 mListChef = staff;
                 binding.rvTable.setVisibility(View.VISIBLE);
@@ -177,16 +177,16 @@ public class TableManageActivity extends BaseActivity {
 
     private List<TableParent> getListTableMain() {
         List<TableParent> mTableMain = new ArrayList<>();
-        if (mListTablesEmpty.size() != 0){
+        if (mListTablesEmpty.size() != 0) {
             mListTablesEmpty.sort(new Comparator<Table>() {
-            @Override
-            public int compare(Table t1, Table t2) {
-                return t1.getName().compareTo(t2.getName());
+                @Override
+                public int compare(Table t1, Table t2) {
+                    return t1.getName().compareTo(t2.getName());
                 }
             });
             mTableMain.add(new TableParent("Empty table", mListTablesEmpty));
         }
-        if (mListTablesLive.size() != 0){
+        if (mListTablesLive.size() != 0) {
             mListTablesLive.sort(new Comparator<Table>() {
                 @Override
                 public int compare(Table t1, Table t2) {

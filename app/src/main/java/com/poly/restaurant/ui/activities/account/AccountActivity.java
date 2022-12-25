@@ -30,8 +30,8 @@ public class AccountActivity extends BaseActivity {
         sharePreference = new AppSharePreference(AccountActivity.this);
         initData(Constants.staff);
         binding.passAccount.setOnClickListener(view -> {
-            binding.passAccount.setEnabled(false);
             showDialogChangePass();
+            binding.passAccount.setEnabled(false);
         });
         binding.nameAccount.setOnClickListener(view -> {
             Snackbar.make(binding.getRoot(), "Thông tin tên đầy đủ không được sửa !", Snackbar.LENGTH_LONG).show();
@@ -59,6 +59,7 @@ public class AccountActivity extends BaseActivity {
         AlertDialog dialog = builder.create();
         changePassBinding.btnNo.setOnClickListener(view -> {
             dialog.dismiss();
+            binding.passAccount.setEnabled(true);
         });
         changePassBinding.btnYes.setOnClickListener(view -> {
             String passOld = changePassBinding.passOld.getText().toString().trim();

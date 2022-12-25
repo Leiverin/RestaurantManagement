@@ -33,10 +33,10 @@ public class NotificationActivity extends BaseActivity {
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
                 switch (position) {
                     case 0:
-                        tab.setText("Send notification");
+                        tab.setText("Gửi");
                         break;
                     case 1:
-                        tab.setText("Receipt notice");
+                        tab.setText("Nhận");
                         break;
                 }
             }
