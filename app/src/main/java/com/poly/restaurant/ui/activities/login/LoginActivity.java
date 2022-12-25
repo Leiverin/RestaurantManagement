@@ -44,7 +44,6 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onComplete(@NonNull Task<String> task) {
                 mToken = task.getResult();
-                Log.d("TAG", "onComplete: " + mToken);
             }
         });
         if (sharePreference.getRemember()) {
@@ -65,11 +64,25 @@ public class LoginActivity extends BaseActivity {
                     String password = binding.edPass.getText().toString().trim();
                     sharePreference.setUsername(username);
                     sharePreference.setPassword(password);
-                    Constants.staff = staff;
-                    Toast.makeText(LoginActivity.this, "Login successfully", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(LoginActivity.this, TableManageActivity.class);
-                    startActivity(intent);
-                    finish();
+                    if (staff.getRole() != 0){
+                        Constants.staff = new Staff(
+                                staff.getId(),
+                                staff.getName(),
+                                staff.getPhoneNumber(),
+                                staff.getGender(),
+                                staff.getAccount(),
+                                staff.getPassword(),
+                                staff.getRole(),
+                                staff.getFloor(),
+                                mToken
+                        );
+                        Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(LoginActivity.this, TableManageActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }else{
+                        Toast.makeText(LoginActivity.this, "Vui lòng đăng nhập bằng tài khoản nhân viên", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     Toast.makeText(LoginActivity.this, "Incorrect account or password", Toast.LENGTH_SHORT).show();
                 }

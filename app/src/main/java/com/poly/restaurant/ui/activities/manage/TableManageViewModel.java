@@ -127,7 +127,7 @@ public class TableManageViewModel extends ViewModel {
 
     public void callToGetCashier(){
         ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
-        Observable<Response<List<Staff>>> observable = serviceAPI.getListStaffByRole(3);
+        Observable<Response<List<Staff>>> observable = serviceAPI.getListStaffByRole(2);
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onRetrieveCashier, this::onHandleErrorCashier);
