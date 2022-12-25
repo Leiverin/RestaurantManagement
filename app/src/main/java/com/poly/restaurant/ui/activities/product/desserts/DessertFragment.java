@@ -57,10 +57,11 @@ public class DessertFragment extends BaseFragment {
         adapter = new ProductAdapter(mListDessert, new IOnEventProductListener() {
             @Override
             public void onClickIncrease(@NonNull Product product, @NonNull TextView tvQuantity, int position) {
+                Constants.handleIncrease(tvQuantity, Constants.TYPE_IN_PRODUCT);
                 int quantity = Integer.parseInt(tvQuantity.getText().toString().subSequence(1, tvQuantity.getText().toString().length()).toString());
-                if (quantity < product.getTotal()){
-                    Constants.handleIncrease(tvQuantity, Constants.TYPE_IN_PRODUCT);
+                if (quantity <= product.getTotal()){
                     handleAddProduct(product, quantity);
+                    tvQuantity.setText("x" + quantity);
                     adapter.getMListProduct().get(position).setAmount(quantity);
                 }else{
                     Toast.makeText(requireContext(), "Không được vượt quá sản lượng", Toast.LENGTH_SHORT).show();
