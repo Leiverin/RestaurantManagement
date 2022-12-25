@@ -41,7 +41,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="textCapSentences"
-                            app:queryHint="Search notification ..." />
+                            app:queryHint="Tìm kiếm thông báo ..." />
                     </androidx.cardview.widget.CardView>
 
                     <com.google.android.material.tabs.TabLayout

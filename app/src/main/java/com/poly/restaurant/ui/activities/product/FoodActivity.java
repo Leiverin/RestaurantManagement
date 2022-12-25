@@ -94,7 +94,7 @@ public class FoodActivity extends BaseActivity {
                         visibleBottomSheet();
                     }
                     isShowing = true;
-                    binding.tvTotalDishes.setText("Total: "+products.size()+" dishes");
+                    binding.tvTotalDishes.setText("Tổng: "+products.size()+" món");
                     StringBuilder names = new StringBuilder();
                     for (Product product: products) {
                         names.append(product.getName()).append(", ");
@@ -109,7 +109,6 @@ public class FoodActivity extends BaseActivity {
         isScrollingLiveData.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isScrolling) {
-                Log.d("TAG", "onChanged: "+ isScrolling);
                 if (isScrolling){
                     hideBottomSheet();
                 }else{

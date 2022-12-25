@@ -19,6 +19,7 @@ class ProductAdapter(var mListProduct: List<Product>, private val onEventProduct
         val imgDecrease = binding.imgDecrease
         val tvQuantity = binding.tvQuantity
         val viewProduct = binding.viewProduct
+        val tvDescription = binding.tvDescription
 
         @SuppressLint("SetTextI18n")
         fun bind(product: Product){
@@ -26,6 +27,7 @@ class ProductAdapter(var mListProduct: List<Product>, private val onEventProduct
             Glide.with(imgProduct.context).load(product.urlImage).into(imgProduct)
             tvPrice.text = "${product.price}$"
             tvQuantity.text = "x"+product.amount
+            tvDescription.text = product.description
         }
     }
 

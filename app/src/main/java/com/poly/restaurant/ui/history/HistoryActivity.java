@@ -82,7 +82,7 @@ public class HistoryActivity extends BaseActivity implements CustomSpinner.OnSpi
         adapter = new HistoryAdapter(HistoryActivity.this, list, new OnListener() {
             @Override
             public void onClickBill(Bill bill, CardView cardView) {
-                Constants.dialogShowDetailBill(bill, HistoryActivity.this,cardView);
+                Constants.dialogShowDetailBill(bill, HistoryActivity.this, cardView);
             }
 
             @Override
@@ -130,7 +130,7 @@ public class HistoryActivity extends BaseActivity implements CustomSpinner.OnSpi
                 calendar.set(Calendar.YEAR, year);
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                bindingFilter.timeFirstTv.setText("Date first :" + dayOfMonth + "/" + (month + 1) + "/" + year);
+                bindingFilter.timeFirstTv.setText("Ngày bắt đầu :" + dayOfMonth + "/" + (month + 1) + "/" + year);
                 String firstDate = dayOfMonth + "/" + (month + 1) + "/" + year;
                 SimpleDateFormat dateFormatOfStringInDB = new SimpleDateFormat("dd/MM/yyyy");
                 Date d1 = null;
@@ -151,7 +151,7 @@ public class HistoryActivity extends BaseActivity implements CustomSpinner.OnSpi
                 calendar.set(Calendar.YEAR, year);
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                bindingFilter.timeSecondTv.setText("Date second :" + dayOfMonth + "/" + (month + 1) + "/" + year);
+                bindingFilter.timeSecondTv.setText("Ngày kết thúc :" + dayOfMonth + "/" + (month + 1) + "/" + year);
                 String secondDate = dayOfMonth + "/" + (month + 1) + "/" + year;
                 SimpleDateFormat dateFormatOfStringInDB = new SimpleDateFormat("dd/MM/yyyy");
                 Date d1 = null;
@@ -177,9 +177,9 @@ public class HistoryActivity extends BaseActivity implements CustomSpinner.OnSpi
             viewModel.mListHisLiveData.observe(this, new Observer<List<Bill>>() {
                 @Override
                 public void onChanged(List<Bill> bills) {
-                    if(bills.isEmpty()){
+                    if (bills.isEmpty()) {
                         binding.empty.setVisibility(View.VISIBLE);
-                    }else {
+                    } else {
                         list = bills;
                         adapter.setList(list);
                         binding.empty.setVisibility(View.GONE);
@@ -234,7 +234,7 @@ public class HistoryActivity extends BaseActivity implements CustomSpinner.OnSpi
                 billList.add(bill);
                 binding.empty.setVisibility(View.GONE);
             }
-            if(billList.isEmpty()){
+            if (billList.isEmpty()) {
                 binding.empty.setVisibility(View.VISIBLE);
             }
         }

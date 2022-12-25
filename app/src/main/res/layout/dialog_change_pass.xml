@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:fontFamily="@font/judson_regular"
-            android:text="Change Password"
+            android:text="Đổi mật khẩu"
             android:textColor="@color/white"
             android:textSize="28sp" />
     </LinearLayout>

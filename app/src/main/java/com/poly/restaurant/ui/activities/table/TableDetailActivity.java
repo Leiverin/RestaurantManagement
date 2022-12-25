@@ -51,6 +51,7 @@ public class TableDetailActivity extends BaseActivity {
     private List<Product> mListProduct;
     private List<Staff> mListAdmin;
     private List<Staff> mListChef;
+    private List<Staff> mListCashier;
     private ProductTableAdapter adapter;
     private AppSharePreference sharePreference;
     private Table table;
@@ -71,6 +72,7 @@ public class TableDetailActivity extends BaseActivity {
         setContentView(binding.getRoot());
         mListAdmin = getIntent().getParcelableArrayListExtra(Constants.EXTRA_ADMIN_TO_DETAIL);
         mListChef = getIntent().getParcelableArrayListExtra(Constants.EXTRA_CHEF_TO_DETAIL);
+        mListCashier = getIntent().getParcelableArrayListExtra(Constants.EXTRA_CASHIER_TO_DETAIL);
         Window window = getWindow();
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_color));
         mListProduct = new ArrayList();
@@ -91,18 +93,27 @@ public class TableDetailActivity extends BaseActivity {
 
             @Override
             public void onClickDecrease(@NonNull Product product, @NonNull TextView tvQuantity, int position) {
-                Constants.handleDecrease(tvQuantity, Constants.TYPE_IN_TABLE);
                 int quantity = Integer.parseInt(tvQuantity.getText().toString().trim());
-                handleDecreaseProduct(product, quantity);
-                adapter.getMListProduct().get(position).setAmount(quantity);
+                if (quantity > 0){
+                    quantity--;
+                    Constants.handleDecrease(tvQuantity, Constants.TYPE_IN_TABLE);
+                    handleDecreaseProduct(product, quantity);
+                    tvQuantity.setText(quantity + "");
+                    adapter.getMListProduct().get(position).setAmount(quantity);
+                }
             }
 
             @Override
             public void onClickIncrease(@NonNull Product product, @NonNull TextView tvQuantity, int position) {
-                Constants.handleIncrease(tvQuantity, Constants.TYPE_IN_TABLE);
                 int quantity = Integer.parseInt(tvQuantity.getText().toString().trim());
-                handleAddProduct(product, quantity);
-                adapter.getMListProduct().get(position).setAmount(quantity);
+                if (quantity < product.getTotal()){
+                    quantity++;
+                    handleAddProduct(product, quantity);
+                    tvQuantity.setText(quantity + "");
+                    adapter.getMListProduct().get(position).setAmount(quantity);
+                }else{
+                    Toast.makeText(TableDetailActivity.this, "Không được vượt quá sản lượng", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -151,8 +162,8 @@ public class TableDetailActivity extends BaseActivity {
                     for (Product product : products) {
                         total += Double.parseDouble((product.getPrice() * product.getAmount())+"");
                     }
-                    binding.tvTotalDishes.setText("Total dishes: "+products.size()+" dishes");
-                    binding.tvTotalPrice.setText("Total price: "+total+"$");
+                    binding.tvTotalDishes.setText("Tổng món: "+products.size()+" món");
+                    binding.tvTotalPrice.setText("Tổng giá: "+total+"$");
                     mListProduct = products;
                     adapter.setList(products);
                 }else{
@@ -174,6 +185,30 @@ public class TableDetailActivity extends BaseActivity {
                     String content = "Bill bàn "+bill.getTable().getName()+" đã được tạo. Hành động thôi nào :))";
                     for (Staff s: mListChef){
                         countCreate++;
+                        viewModel.callToPushNotification(
+                                s.getTokenFCM(),
+                                title,
+                                content,
+                                bill.getId(),
+                                Constants.staff.getId()
+                        );
+                        viewModel.createNotification(new Notification(
+                                null, title, content, date, time, Constants.staff, s, bill.getId()
+                        ));
+                    };
+                    for (Staff s: mListAdmin){
+                        viewModel.callToPushNotification(
+                                s.getTokenFCM(),
+                                title,
+                                content,
+                                bill.getId(),
+                                Constants.staff.getId()
+                        );
+                        viewModel.createNotification(new Notification(
+                                null, title, content, date, time, Constants.staff, s, bill.getId()
+                        ));
+                    }
+                    for (Staff s: mListCashier){
                         viewModel.callToPushNotification(
                                 s.getTokenFCM(),
                                 title,
@@ -276,7 +311,9 @@ public class TableDetailActivity extends BaseActivity {
                     for (Product product: bills.get(0).getProducts()){
                         viewModel.insertProduct(new Product(
                                 null,
-                                product.getId(), product.getName(), product.getUrlImage(), product.getPrice(), product.getTotal(), product.getAmount(),
+                                product.getId(), product.getName(), product.getUrlImage(), product.getPrice(),
+                                product.getDescription(),
+                                product.getTotal(), product.getAmount(),
                                 product.getType(),
                                 product.getIdCategory(),
                                 sharePreference.getTableId()
@@ -301,6 +338,7 @@ public class TableDetailActivity extends BaseActivity {
         viewModel.payBillLiveData.observe(this, new Observer<List<Bill>>() {
             @Override
             public void onChanged(List<Bill> bills) {
+                binding.imgDone.setEnabled(true);
                 if (bills != null && bills.size() != 0){
                     Table tableUpdate = new Table(table.getId(), table.getName(), table.getFloor(), table.getCapacity(), 1);
                     viewModel.callToUpdateBill(bills.get(0).getId(), new Bill(bills.get(0).getId(), date, time, total, 0, 2, mListProduct,
@@ -309,6 +347,18 @@ public class TableDetailActivity extends BaseActivity {
                     String title = "Thông báo xác nhận hóa đơn";
                     String content = "Bàn "+ bills.get(0).getTable().getName()+ " đang chờ xác nhận thanh toán";
                     for (Staff s: mListAdmin){
+                        viewModel.callToPushNotification(
+                                s.getTokenFCM(),
+                                title,
+                                content,
+                                bills.get(0).getId(),
+                                Constants.staff.getId()
+                        );
+                        viewModel.createNotification(new Notification(
+                                null, title, content, date, time, Constants.staff, s, bills.get(0).getId()
+                        ));
+                    }
+                    for (Staff s: mListCashier){
                         viewModel.callToPushNotification(
                                 s.getTokenFCM(),
                                 title,
@@ -355,7 +405,7 @@ public class TableDetailActivity extends BaseActivity {
                     @Override
                     public void onClickPositive() {
                         viewModel.callToGetBillExist(sharePreference.getTableId(), Constants.TYPE_PAY_BILL);
-                        binding.btnOrder.setEnabled(false);
+                        binding.imgDone.setEnabled(false);
                     }
                 }).show(getSupportFragmentManager(), new DialogAnnounce().getTag());
             }
@@ -406,7 +456,9 @@ public class TableDetailActivity extends BaseActivity {
             }
             viewModel.updateProduct(new Product(
                     product.getIdProduct(),
-                    product.getId(), product.getName(), product.getUrlImage(), product.getPrice(), product.getTotal(), quantity,
+                    product.getId(), product.getName(), product.getUrlImage(), product.getPrice(),
+                    product.getDescription(),
+                    product.getTotal(), quantity,
                     product.getType(),
                     product.getIdCategory(),
                     sharePreference.getTableId()
@@ -418,7 +470,9 @@ public class TableDetailActivity extends BaseActivity {
         if (viewModel.getProductById(product.getId(), sharePreference.getTableId()) == null){
             viewModel.insertProduct(new Product(
                     null,
-                    product.getId(), product.getName(), product.getUrlImage(), product.getPrice(), product.getTotal(), quantity,
+                    product.getId(), product.getName(), product.getUrlImage(), product.getPrice(),
+                    product.getDescription(),
+                    product.getTotal(), quantity,
                     product.getType(),
                     product.getIdCategory(),
                     sharePreference.getTableId()
@@ -426,7 +480,9 @@ public class TableDetailActivity extends BaseActivity {
         }else{
             viewModel.updateProduct(new Product(
                     product.getIdProduct(),
-                    product.getId(), product.getName(), product.getUrlImage(), product.getPrice(), product.getTotal(), quantity,
+                    product.getId(), product.getName(), product.getUrlImage(), product.getPrice(),
+                    product.getDescription(),
+                    product.getTotal(), quantity,
                     product.getType(),
                     product.getIdCategory(),
                     sharePreference.getTableId()

@@ -19,6 +19,7 @@ public class Product implements Parcelable {
     private String name;
     private String urlImage;
     private double price;
+    private String description;
     private int total;
     private int amount;
     private int type;
@@ -28,12 +29,13 @@ public class Product implements Parcelable {
     public Product() {
     }
 
-    public Product(Long idProduct, String id, String name, String urlImage, double price, int total, int amount, int type, String idCategory, String idTable) {
+    public Product(Long idProduct, String id, String name, String urlImage, double price, String description, int total, int amount, int type, String idCategory, String idTable) {
         this.idProduct = idProduct;
         this.id = id;
         this.name = name;
         this.urlImage = urlImage;
         this.price = price;
+        this.description = description;
         this.total = total;
         this.amount = amount;
         this.type = type;
@@ -51,6 +53,7 @@ public class Product implements Parcelable {
         name = in.readString();
         urlImage = in.readString();
         price = in.readDouble();
+        description = in.readString();
         total = in.readInt();
         amount = in.readInt();
         type = in.readInt();
@@ -70,6 +73,7 @@ public class Product implements Parcelable {
         dest.writeString(name);
         dest.writeString(urlImage);
         dest.writeDouble(price);
+        dest.writeString(description);
         dest.writeInt(total);
         dest.writeInt(amount);
         dest.writeInt(type);
@@ -133,6 +137,14 @@ public class Product implements Parcelable {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public int getTotal() {

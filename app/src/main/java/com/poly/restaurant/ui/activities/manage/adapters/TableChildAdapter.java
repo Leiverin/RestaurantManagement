@@ -35,9 +35,9 @@ public class TableChildAdapter extends RecyclerView.Adapter<TableChildAdapter.Ta
     @Override
     public void onBindViewHolder(@NonNull TableChildViewModel holder, int position) {
         Table table = mListTable.get(position);
-        if(table != null){
+        if (table != null) {
             holder.binding.tvNameTable.setText(table.getName());
-            holder.binding.tvContentTable.setText(table.getCapacity() + " person capacity");
+            holder.binding.tvContentTable.setText("Bàn " + table.getCapacity() + " người");
             holder.binding.viewItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -49,11 +49,12 @@ public class TableChildAdapter extends RecyclerView.Adapter<TableChildAdapter.Ta
 
     @Override
     public int getItemCount() {
-        return mListTable != null ? mListTable.size(): 0;
+        return mListTable != null ? mListTable.size() : 0;
     }
 
-    public class TableChildViewModel extends RecyclerView.ViewHolder{
+    public class TableChildViewModel extends RecyclerView.ViewHolder {
         public ItemTableChildBinding binding;
+
         public TableChildViewModel(ItemTableChildBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
@@ -61,6 +62,6 @@ public class TableChildAdapter extends RecyclerView.Adapter<TableChildAdapter.Ta
     }
 }
 
-interface IOnClickItem{
+interface IOnClickItem {
     void onClickChild(Table table);
 }
