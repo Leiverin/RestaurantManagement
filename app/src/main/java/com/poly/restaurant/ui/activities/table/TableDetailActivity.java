@@ -193,6 +193,18 @@ public class TableDetailActivity extends BaseActivity {
                         viewModel.createNotification(new Notification(
                                 null, title, content, date, time, Constants.staff, s, bill.getId()
                         ));
+                    };
+                    for (Staff s: mListAdmin){
+                        viewModel.callToPushNotification(
+                                s.getTokenFCM(),
+                                title,
+                                content,
+                                bill.getId(),
+                                Constants.staff.getId()
+                        );
+                        viewModel.createNotification(new Notification(
+                                null, title, content, date, time, Constants.staff, s, bill.getId()
+                        ));
                     }
                     Table tableUpdate = new Table(table.getId(), table.getName(), table.getFloor(), table.getCapacity(), 1);
                     viewModel.updateTable(table.getId(), tableUpdate);
