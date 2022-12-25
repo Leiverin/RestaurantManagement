@@ -23,6 +23,7 @@ public class TableManageViewModel extends ViewModel {
     public MutableLiveData<List<Table>> mListEmptyTableLiveData;
     public MutableLiveData<List<Staff>> mListAdminLiveData;
     public MutableLiveData<List<Staff>> mListChefLiveData;
+    public MutableLiveData<List<Staff>> mListCashierLiveData;
 
     public TableManageViewModel() {
         mListTableLiveData = new MutableLiveData<>();
@@ -30,6 +31,7 @@ public class TableManageViewModel extends ViewModel {
         mListEmptyTableLiveData = new MutableLiveData<>();
         mListAdminLiveData = new MutableLiveData<>();
         mListChefLiveData = new MutableLiveData<>();
+        mListCashierLiveData = new MutableLiveData<>();
     }
 
     public void callToGetTable(int floor){
@@ -120,6 +122,26 @@ public class TableManageViewModel extends ViewModel {
     private void onHandleErrorChef(Throwable throwable){
         Log.e("TAG", "handle error admin: " + throwable.getMessage());
         mListChefLiveData.postValue(null);
+    }
+
+
+    public void callToGetCashier(){
+        ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
+        Observable<Response<List<Staff>>> observable = serviceAPI.getListStaffByRole(3);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::onRetrieveCashier, this::onHandleErrorCashier);
+    }
+
+    private void onRetrieveCashier(Response<List<Staff>> staffs){
+        if (staffs.isSuccessful()){
+            mListCashierLiveData.postValue(staffs.body());
+        }
+    }
+
+    private void onHandleErrorCashier(Throwable throwable){
+        Log.e("TAG", "handle error cashier: " + throwable.getMessage());
+        mListCashierLiveData.postValue(null);
     }
 
 

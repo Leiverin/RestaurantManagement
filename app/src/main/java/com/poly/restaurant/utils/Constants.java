@@ -47,6 +47,7 @@ public class Constants {
     public static String EXTRA_TABLE_TO_DETAIL = "extra_table_to_detail";
     public static String EXTRA_ADMIN_TO_DETAIL = "extra_admin_to_detail";
     public static String EXTRA_CHEF_TO_DETAIL = "extra_chef_to_detail";
+    public static String EXTRA_CASHIER_TO_DETAIL = "extra_cashier_to_detail";
 
     public static String TABLE_ID_SELECTED = "TABLE_ID_SELECTED";
     public static String KEY_BEFORE_TABLE_ID = "KEY_BEFORE_TABLE_ID";

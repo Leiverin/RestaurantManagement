@@ -49,6 +49,7 @@ public class TableManageActivity extends BaseActivity {
     private List<TableParent> mListTableMain;
     private List<Staff> mListAdmin;
     private List<Staff> mListChef;
+    private List<Staff> mListCashier;
     private Handler handler = new Handler();
     private Runnable runnable;
 
@@ -70,6 +71,7 @@ public class TableManageActivity extends BaseActivity {
         mListTableMain = new ArrayList<>();
         mListAdmin = new ArrayList<>();
         mListChef = new ArrayList<>();
+        mListCashier = new ArrayList<>();
 
         adapter = new TableManageAdapter(mListTableMain, this, new IOnClickItemParent() {
             @Override
@@ -78,6 +80,7 @@ public class TableManageActivity extends BaseActivity {
                 intent.putExtra(Constants.EXTRA_TABLE_TO_DETAIL, table);
                 intent.putParcelableArrayListExtra(Constants.EXTRA_ADMIN_TO_DETAIL, (ArrayList<? extends Parcelable>) mListAdmin);
                 intent.putParcelableArrayListExtra(Constants.EXTRA_CHEF_TO_DETAIL, (ArrayList<? extends Parcelable>) mListChef);
+                intent.putParcelableArrayListExtra(Constants.EXTRA_CASHIER_TO_DETAIL, (ArrayList<? extends Parcelable>) mListCashier);
                 startActivity(intent);
             }
         });
@@ -117,6 +120,13 @@ public class TableManageActivity extends BaseActivity {
                 binding.prgLoadTable.setVisibility(View.GONE);
                 mListChef = staff;
                 binding.rvTable.setVisibility(View.VISIBLE);
+            }
+        });
+
+        viewModel.mListCashierLiveData.observe(this, new Observer<List<Staff>>() {
+            @Override
+            public void onChanged(List<Staff> staff) {
+                mListCashier = staff;
             }
         });
 
@@ -213,6 +223,7 @@ public class TableManageActivity extends BaseActivity {
         viewModel.callToGetTableLive(Constants.staff.getFloor().getNumberFloor(), Constants.TABLE_LIVE_STATUS);
         viewModel.callToGetAdmin();
         viewModel.callToGetChef();
+        viewModel.callToGetCashier();
         super.onResume();
     }
 

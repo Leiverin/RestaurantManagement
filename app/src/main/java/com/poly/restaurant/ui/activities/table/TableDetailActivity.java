@@ -51,6 +51,7 @@ public class TableDetailActivity extends BaseActivity {
     private List<Product> mListProduct;
     private List<Staff> mListAdmin;
     private List<Staff> mListChef;
+    private List<Staff> mListCashier;
     private ProductTableAdapter adapter;
     private AppSharePreference sharePreference;
     private Table table;
@@ -71,6 +72,7 @@ public class TableDetailActivity extends BaseActivity {
         setContentView(binding.getRoot());
         mListAdmin = getIntent().getParcelableArrayListExtra(Constants.EXTRA_ADMIN_TO_DETAIL);
         mListChef = getIntent().getParcelableArrayListExtra(Constants.EXTRA_CHEF_TO_DETAIL);
+        mListCashier = getIntent().getParcelableArrayListExtra(Constants.EXTRA_CASHIER_TO_DETAIL);
         Window window = getWindow();
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_color));
         mListProduct = new ArrayList();
@@ -195,6 +197,18 @@ public class TableDetailActivity extends BaseActivity {
                         ));
                     };
                     for (Staff s: mListAdmin){
+                        viewModel.callToPushNotification(
+                                s.getTokenFCM(),
+                                title,
+                                content,
+                                bill.getId(),
+                                Constants.staff.getId()
+                        );
+                        viewModel.createNotification(new Notification(
+                                null, title, content, date, time, Constants.staff, s, bill.getId()
+                        ));
+                    }
+                    for (Staff s: mListCashier){
                         viewModel.callToPushNotification(
                                 s.getTokenFCM(),
                                 title,
@@ -333,6 +347,18 @@ public class TableDetailActivity extends BaseActivity {
                     String title = "Thông báo xác nhận hóa đơn";
                     String content = "Bàn "+ bills.get(0).getTable().getName()+ " đang chờ xác nhận thanh toán";
                     for (Staff s: mListAdmin){
+                        viewModel.callToPushNotification(
+                                s.getTokenFCM(),
+                                title,
+                                content,
+                                bills.get(0).getId(),
+                                Constants.staff.getId()
+                        );
+                        viewModel.createNotification(new Notification(
+                                null, title, content, date, time, Constants.staff, s, bills.get(0).getId()
+                        ));
+                    }
+                    for (Staff s: mListCashier){
                         viewModel.callToPushNotification(
                                 s.getTokenFCM(),
                                 title,
