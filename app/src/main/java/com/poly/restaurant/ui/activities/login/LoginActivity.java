@@ -64,7 +64,7 @@ public class LoginActivity extends BaseActivity {
                     String password = binding.edPass.getText().toString().trim();
                     sharePreference.setUsername(username);
                     sharePreference.setPassword(password);
-                    if (staff.getRole() != 0){
+                    if (staff.getRole() == 0){
                         Constants.staff = new Staff(
                                 staff.getId(),
                                 staff.getName(),
