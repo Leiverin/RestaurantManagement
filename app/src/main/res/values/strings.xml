@@ -15,26 +15,26 @@
     <string name="textEmptyTable">Chưa sử dụng : 7</string>
     <string name="textOrderOnTable">Order on table</string>
     <string name="textNameTableItem">Table 1</string>
-    <string name="textAddFood">This table is not have a product</string>
+    <string name="textAddFood">Hiện tại chưa có sản phẩm</string>
     <string name="hintSearchFood">Tìm kiếm món ăn …</string>
 
     <string name="quanityHistory">Số lượng : 1</string>
     <string name="intoMoney">Thành tiền :</string>
     <string name="money">150$</string>
     <string name="time">15:30 P.M 8-9-2022</string>
-    <string name="done">Done</string>
+    <string name="done">Xong</string>
     <string name="thankYou">Cảm ơn quý khách</string>
     <!--    Tab layout-->
-    <string name="appetizer">Appetizer</string>
-    <string name="main">Main dishes</string>
-    <string name="desserts">Desserts</string>
-    <string name="drinks">Drinks</string>
+    <string name="appetizer">Khai vị</string>
+    <string name="main">Chính</string>
+    <string name="desserts">Tráng miệng</string>
+    <string name="drinks">Đồ uống</string>
 
     <string name="floor">Tầng</string>
-    <string name="add">Add</string>
+    <string name="add">Thêm</string>
     <string name="push_product">Thêm món ăn</string>
     <string name="text_alert">Bạn có chắc chắn muốn thanh toán hóa đơn %1s này ?</string>
-    <string name="check_bill">Check bill</string>
+    <string name="check_bill">Kiểm tra bill</string>
     <string name="remember">Lưu thông tin</string>
     <string name="updated">Đã gửi đơn cho nhà bếp !!</string>
     <string name="text_request_pay">Bạn muốn thanh toán hóa đơn này?</string>

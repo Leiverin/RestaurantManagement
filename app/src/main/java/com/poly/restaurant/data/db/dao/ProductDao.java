@@ -29,6 +29,9 @@ public interface ProductDao {
     @Query("UPDATE Product SET amount = :amount WHERE id = :id AND idTable = :idTable")
     void updateAmount(int amount, String id, String idTable);
 
+    @Query("DELETE FROM Product WHERE id = :id AND idTable = :idTable")
+    void deleteProduct(String id, String idTable);
+
     @Query("SELECT id FROM Product WHERE id = :id AND idTable = :idTable")
     String findProductById(String id, String idTable);
 

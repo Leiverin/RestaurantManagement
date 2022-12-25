@@ -3,9 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable
-            name="tableDetailViewModel"
-            type="com.poly.restaurant.ui.activities.table.TableDetailViewModel"/>
+
     </data>
 
     <LinearLayout

@@ -123,7 +123,9 @@ public class VerifyActivity extends BaseActivity {
             }
             mViewModel.updateProduct(new Product(
                     product.getIdProduct(),
-                    product.getId(), product.getName(), product.getUrlImage(), product.getPrice(), product.getTotal(), quantity,
+                    product.getId(), product.getName(), product.getUrlImage(), product.getPrice(),
+                    product.getDescription(),
+                    product.getTotal(), quantity,
                     product.getType(),
                     product.getIdCategory(),
                     sharePreference.getTableId()
@@ -136,7 +138,9 @@ public class VerifyActivity extends BaseActivity {
         if (mViewModel.getProductById(product.getId(), sharePreference.getTableId()) == null){
             mViewModel.insertProduct(new Product(
                     null,
-                    product.getId(), product.getName(), product.getUrlImage(), product.getPrice(), product.getTotal(), quantity,
+                    product.getId(), product.getName(), product.getUrlImage(), product.getPrice(),
+                    product.getDescription(),
+                    product.getTotal(), quantity,
                     product.getType(),
                     product.getIdCategory(),
                     sharePreference.getTableId()
@@ -144,7 +148,9 @@ public class VerifyActivity extends BaseActivity {
         }else{
             mViewModel.updateProduct(new Product(
                     product.getIdProduct(),
-                    product.getId(), product.getName(), product.getUrlImage(), product.getPrice(), product.getTotal(), quantity,
+                    product.getId(), product.getName(), product.getUrlImage(), product.getPrice(),
+                    product.getDescription(),
+                    product.getTotal(), quantity,
                     product.getType(),
                     product.getIdCategory(),
                     sharePreference.getTableId()

@@ -91,18 +91,27 @@ public class TableDetailActivity extends BaseActivity {
 
             @Override
             public void onClickDecrease(@NonNull Product product, @NonNull TextView tvQuantity, int position) {
-                Constants.handleDecrease(tvQuantity, Constants.TYPE_IN_TABLE);
                 int quantity = Integer.parseInt(tvQuantity.getText().toString().trim());
-                handleDecreaseProduct(product, quantity);
-                adapter.getMListProduct().get(position).setAmount(quantity);
+                if (quantity > 0){
+                    quantity--;
+                    Constants.handleDecrease(tvQuantity, Constants.TYPE_IN_TABLE);
+                    handleDecreaseProduct(product, quantity);
+                    tvQuantity.setText(quantity + "");
+                    adapter.getMListProduct().get(position).setAmount(quantity);
+                }
             }
 
             @Override
             public void onClickIncrease(@NonNull Product product, @NonNull TextView tvQuantity, int position) {
-                Constants.handleIncrease(tvQuantity, Constants.TYPE_IN_TABLE);
                 int quantity = Integer.parseInt(tvQuantity.getText().toString().trim());
-                handleAddProduct(product, quantity);
-                adapter.getMListProduct().get(position).setAmount(quantity);
+                if (quantity < product.getTotal()){
+                    quantity++;
+                    handleAddProduct(product, quantity);
+                    tvQuantity.setText(quantity + "");
+                    adapter.getMListProduct().get(position).setAmount(quantity);
+                }else{
+                    Toast.makeText(TableDetailActivity.this, "Không được vượt quá sản lượng", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -276,7 +285,9 @@ public class TableDetailActivity extends BaseActivity {
                     for (Product product: bills.get(0).getProducts()){
                         viewModel.insertProduct(new Product(
                                 null,
-                                product.getId(), product.getName(), product.getUrlImage(), product.getPrice(), product.getTotal(), product.getAmount(),
+                                product.getId(), product.getName(), product.getUrlImage(), product.getPrice(),
+                                product.getDescription(),
+                                product.getTotal(), product.getAmount(),
                                 product.getType(),
                                 product.getIdCategory(),
                                 sharePreference.getTableId()
@@ -301,6 +312,7 @@ public class TableDetailActivity extends BaseActivity {
         viewModel.payBillLiveData.observe(this, new Observer<List<Bill>>() {
             @Override
             public void onChanged(List<Bill> bills) {
+                binding.imgDone.setEnabled(true);
                 if (bills != null && bills.size() != 0){
                     Table tableUpdate = new Table(table.getId(), table.getName(), table.getFloor(), table.getCapacity(), 1);
                     viewModel.callToUpdateBill(bills.get(0).getId(), new Bill(bills.get(0).getId(), date, time, total, 0, 2, mListProduct,
@@ -355,7 +367,7 @@ public class TableDetailActivity extends BaseActivity {
                     @Override
                     public void onClickPositive() {
                         viewModel.callToGetBillExist(sharePreference.getTableId(), Constants.TYPE_PAY_BILL);
-                        binding.btnOrder.setEnabled(false);
+                        binding.imgDone.setEnabled(false);
                     }
                 }).show(getSupportFragmentManager(), new DialogAnnounce().getTag());
             }
@@ -406,7 +418,9 @@ public class TableDetailActivity extends BaseActivity {
             }
             viewModel.updateProduct(new Product(
                     product.getIdProduct(),
-                    product.getId(), product.getName(), product.getUrlImage(), product.getPrice(), product.getTotal(), quantity,
+                    product.getId(), product.getName(), product.getUrlImage(), product.getPrice(),
+                    product.getDescription(),
+                    product.getTotal(), quantity,
                     product.getType(),
                     product.getIdCategory(),
                     sharePreference.getTableId()
@@ -418,7 +432,9 @@ public class TableDetailActivity extends BaseActivity {
         if (viewModel.getProductById(product.getId(), sharePreference.getTableId()) == null){
             viewModel.insertProduct(new Product(
                     null,
-                    product.getId(), product.getName(), product.getUrlImage(), product.getPrice(), product.getTotal(), quantity,
+                    product.getId(), product.getName(), product.getUrlImage(), product.getPrice(),
+                    product.getDescription(),
+                    product.getTotal(), quantity,
                     product.getType(),
                     product.getIdCategory(),
                     sharePreference.getTableId()
@@ -426,7 +442,9 @@ public class TableDetailActivity extends BaseActivity {
         }else{
             viewModel.updateProduct(new Product(
                     product.getIdProduct(),
-                    product.getId(), product.getName(), product.getUrlImage(), product.getPrice(), product.getTotal(), quantity,
+                    product.getId(), product.getName(), product.getUrlImage(), product.getPrice(),
+                    product.getDescription(),
+                    product.getTotal(), quantity,
                     product.getType(),
                     product.getIdCategory(),
                     sharePreference.getTableId()

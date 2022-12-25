@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 import com.poly.restaurant.data.db.dao.ProductDao;
 import com.poly.restaurant.data.models.Product;
 
-@Database(entities = {Product.class}, version = 1, exportSchema = false)
+@Database(entities = {Product.class}, version = 2, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     public static final String DB_NAME = "restaurant.db";
     public static AppDatabase instance;

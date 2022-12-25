@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.poly.restaurant.R;
 import com.poly.restaurant.data.models.Product;
@@ -62,18 +63,25 @@ public class DrinksFragment extends BaseFragment {
         adapter = new ProductAdapter(mListProduct, new IOnEventProductListener() {
             @Override
             public void onClickIncrease(@NonNull Product product, TextView tvQuantity, int position) {
-                Constants.handleIncrease(tvQuantity, Constants.TYPE_IN_PRODUCT);
                 int quantity = Integer.parseInt(tvQuantity.getText().toString().subSequence(1, tvQuantity.getText().toString().length()).toString());
-                handleAddProduct(product, quantity);
-                adapter.getMListProduct().get(position).setAmount(quantity);
+                if (quantity < product.getTotal()){
+                    Constants.handleIncrease(tvQuantity, Constants.TYPE_IN_PRODUCT);
+                    handleAddProduct(product, quantity);
+                    adapter.getMListProduct().get(position).setAmount(quantity);
+                }else{
+                    Toast.makeText(requireContext(), "Không được vượt quá sản lượng", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
             public void onClickDecrease(@NonNull Product product, TextView tvQuantity, int position) {
-                Constants.handleDecrease(tvQuantity, Constants.TYPE_IN_PRODUCT);
                 int quantity = Integer.parseInt(tvQuantity.getText().toString().subSequence(1, tvQuantity.getText().toString().length()).toString());
-                handleDecreaseProduct(product, quantity);
-                adapter.getMListProduct().get(position).setAmount(quantity);
+                if (quantity > 0){
+                    quantity --;
+                    tvQuantity.setText("x"+quantity);
+                    handleDecreaseProduct(product, quantity);
+                    adapter.getMListProduct().get(position).setAmount(quantity);
+                }
             }
 
             @Override
@@ -106,16 +114,23 @@ public class DrinksFragment extends BaseFragment {
         mViewModel.callToGetDrink();
     }
 
+    private boolean isScrolling = true;
     private void eventScrollRecycleView() {
         int height = requireActivity().findViewById(R.id.view_bottom_sheet).getHeight();
         binding.rvDrinks.setPadding(0, 0, 0, height);
         binding.rvDrinks.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                if (newState == 0){
-                    ((FoodActivity) requireActivity()).isScrollingLiveData.postValue(false);
-                }else{
-                    ((FoodActivity) requireActivity()).isScrollingLiveData.postValue(true);
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                if (dy < 0){
+                    if(!isScrolling){
+                        ((FoodActivity) requireActivity()).isScrollingLiveData.postValue(false);
+                        isScrolling = !isScrolling;
+                    }
+                }else if (dy > 0){
+                    if (isScrolling){
+                        ((FoodActivity) requireActivity()).isScrollingLiveData.postValue(true);
+                        isScrolling = !isScrolling;
+                    }
                 }
             }
         });
@@ -124,20 +139,10 @@ public class DrinksFragment extends BaseFragment {
     private void handleDecreaseProduct(Product product, int quantity) {
         if (mViewModel.getProductById(product.getId(), sharePreference.getTableId()) != null){
             if (quantity == 0){
-                mViewModel.deleteProduct(product);
+                mViewModel.deleteProduct(product.getId(), sharePreference.getTableId());
+            }else{
+                mViewModel.updateAmountProduct(quantity, product.getId(), sharePreference.getTableId());
             }
-            mViewModel.updateProduct(new Product(
-                    product.getIdProduct(),
-                    product.getId(),
-                    product.getName(),
-                    product.getUrlImage(),
-                    product.getPrice(),
-                    product.getTotal(),
-                    quantity,
-                    product.getType(),
-                    product.getIdCategory(),
-                    sharePreference.getTableId()
-            ));
         }
     }
 
@@ -149,6 +154,7 @@ public class DrinksFragment extends BaseFragment {
                     product.getName(),
                     product.getUrlImage(),
                     product.getPrice(),
+                    product.getDescription(),
                     product.getTotal(),
                     quantity,
                     product.getType(),
