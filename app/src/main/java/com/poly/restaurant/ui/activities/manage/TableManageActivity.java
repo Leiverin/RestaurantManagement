@@ -194,7 +194,7 @@ public class TableManageActivity extends BaseActivity {
                     return t1.getName().compareTo(t2.getName());
                 }
             });
-            mTableMain.add(new TableParent("Empty table", mListTablesEmpty));
+            mTableMain.add(new TableParent("Bàn còn trống", mListTablesEmpty));
         }
         if (mListTablesLive.size() != 0) {
             mListTablesLive.sort(new Comparator<Table>() {
@@ -203,7 +203,7 @@ public class TableManageActivity extends BaseActivity {
                     return t1.getName().compareTo(t2.getName());
                 }
             });
-            mTableMain.add(new TableParent("Live table", mListTablesLive));
+            mTableMain.add(new TableParent("Bàn đang sử dụng", mListTablesLive));
         }
         return mTableMain;
     }
