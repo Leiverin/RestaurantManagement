@@ -171,7 +171,8 @@ public class AppetizerFragment extends BaseFragment {
                     quantity,
                     product.getType(),
                     product.getIdCategory(),
-                    sharePreference.getTableId()
+                    sharePreference.getTableId(),
+                    0
             ));
         }else{
             mViewModel.updateAmountProduct(quantity, product.getId(), sharePreference.getTableId());

@@ -128,7 +128,8 @@ public class VerifyActivity extends BaseActivity {
                     product.getTotal(), quantity,
                     product.getType(),
                     product.getIdCategory(),
-                    sharePreference.getTableId()
+                    sharePreference.getTableId(),
+                    product.getStatus()
             ));
 
         }
@@ -143,7 +144,8 @@ public class VerifyActivity extends BaseActivity {
                     product.getTotal(), quantity,
                     product.getType(),
                     product.getIdCategory(),
-                    sharePreference.getTableId()
+                    sharePreference.getTableId(),
+                    product.getStatus()
             ));
         }else{
             mViewModel.updateProduct(new Product(
@@ -153,7 +155,8 @@ public class VerifyActivity extends BaseActivity {
                     product.getTotal(), quantity,
                     product.getType(),
                     product.getIdCategory(),
-                    sharePreference.getTableId()
+                    sharePreference.getTableId(),
+                    product.getStatus()
             ));
         }
     }

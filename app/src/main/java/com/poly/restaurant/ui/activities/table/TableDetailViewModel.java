@@ -34,7 +34,6 @@ public class TableDetailViewModel extends BaseViewModel {
     public MutableLiveData<Bill> mBillByIdLiveData;
     public MutableLiveData<List<Bill>> payBillLiveData;
 
-
     public TableDetailViewModel(Context context) {
         super(context);
         mListProductLiveData = new MutableLiveData<>();
@@ -231,5 +230,13 @@ public class TableDetailViewModel extends BaseViewModel {
         Log.d("TAG", "Handle error update table: "+ throwable.getMessage());
     }
 
+    public void updateStatusProductInBill(int status, String id, String idTable){
+        appExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                productDao.updateStatusProductInBill(status, id, idTable);
+            }
+        });
+    }
 
 }

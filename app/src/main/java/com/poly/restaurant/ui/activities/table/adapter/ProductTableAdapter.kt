@@ -2,8 +2,10 @@ package com.poly.restaurant.ui.activities.table.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.poly.restaurant.data.models.Product
@@ -21,12 +23,20 @@ class ProductTableAdapter(var mListProduct: List<Product>, private val onItemPro
         val imbIncrease = binding.imbIncrease
         val imbDelete = binding.imbDelete
         val viewItem = binding.viewItem
+        private val viewCurtain = binding.viewCurtain
 
         fun bind(product: Product){
             Glide.with(imgProduct.context).load(product.urlImage).into(imgProduct)
             tvName.text = product.name
-            tvPrice.text = "${product.price}$"
+            tvPrice.text = "${(product.price * 23000).toInt()} vnđ"
             tvQuantity.text = "${product.amount}"
+            if (product.status == 0){
+                viewCurtain.visibility = View.VISIBLE
+                viewItem.isEnabled = false
+            }else{
+                viewCurtain.visibility = View.GONE
+                viewItem.isEnabled = true
+            }
         }
     }
 

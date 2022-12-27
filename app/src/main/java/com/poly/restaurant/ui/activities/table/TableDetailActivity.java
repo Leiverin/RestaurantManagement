@@ -163,7 +163,7 @@ public class TableDetailActivity extends BaseActivity {
                         total += Double.parseDouble((product.getPrice() * product.getAmount())+"");
                     }
                     binding.tvTotalDishes.setText("Tổng món: "+products.size()+" món");
-                    binding.tvTotalPrice.setText("Tổng giá: "+total+"$");
+                    binding.tvTotalPrice.setText("Tổng giá: "+(int) (total*23000)+"vnđ");
                     mListProduct = products;
                     adapter.setList(products);
                 }else{
@@ -268,7 +268,7 @@ public class TableDetailActivity extends BaseActivity {
                         }
                         binding.tvStatus.setText("Đang giao cho nhà bếp xử lý");
                     }else{
-                        Toast.makeText(TableDetailActivity.this, "No products", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(TableDetailActivity.this, "Chưa có sản phẩm nào", Toast.LENGTH_SHORT).show();
                     }
                 }else{
                     /**
@@ -277,8 +277,7 @@ public class TableDetailActivity extends BaseActivity {
                     Table tableUpdate = new Table(table.getId(), table.getName(), table.getFloor(), table.getCapacity(), 1);
                     viewModel.callToCreateBill(new Bill(null, date, time, total, 0, 0, mListProduct, tableUpdate, null, Constants.staff));
                     binding.btnOrder.setBackgroundResource(R.drawable.bg_btn_order);
-                    binding.imgDone.setVisibility(View.VISIBLE);
-                    binding.btnOrder.setText("Order");
+                    binding.btnOrder.setText("Lên đơn");
                 }
             }
         });
@@ -316,7 +315,8 @@ public class TableDetailActivity extends BaseActivity {
                                 product.getTotal(), product.getAmount(),
                                 product.getType(),
                                 product.getIdCategory(),
-                                sharePreference.getTableId()
+                                sharePreference.getTableId(),
+                                product.getStatus()
                         ));
                     }
                 }
@@ -327,6 +327,7 @@ public class TableDetailActivity extends BaseActivity {
             @Override
             public void onChanged(Bill bill) {
                 if (bill != null){
+                    setStatusProduct(bill);
                     setStatusTable(bill);
                 }
             }
@@ -388,6 +389,14 @@ public class TableDetailActivity extends BaseActivity {
                 }
             }
         });
+    }
+
+    private void setStatusProduct(Bill bill) {
+        mListProduct = bill.getProducts();
+        for (Product product: bill.getProducts()){
+            viewModel.updateStatusProductInBill(product.getStatus(), product.getId(), product.getIdTable());
+        }
+        adapter.setList(mListProduct);
     }
 
     private void initEvent() {
@@ -461,7 +470,8 @@ public class TableDetailActivity extends BaseActivity {
                     product.getTotal(), quantity,
                     product.getType(),
                     product.getIdCategory(),
-                    sharePreference.getTableId()
+                    sharePreference.getTableId(),
+                    product.getStatus()
             ));
         }
     }
@@ -475,7 +485,8 @@ public class TableDetailActivity extends BaseActivity {
                     product.getTotal(), quantity,
                     product.getType(),
                     product.getIdCategory(),
-                    sharePreference.getTableId()
+                    sharePreference.getTableId(),
+                    product.getStatus()
             ));
         }else{
             viewModel.updateProduct(new Product(
@@ -485,7 +496,8 @@ public class TableDetailActivity extends BaseActivity {
                     product.getTotal(), quantity,
                     product.getType(),
                     product.getIdCategory(),
-                    sharePreference.getTableId()
+                    sharePreference.getTableId(),
+                    product.getStatus()
             ));
         }
     }
@@ -522,17 +534,17 @@ public class TableDetailActivity extends BaseActivity {
         if (bill != null){
             if (bill.getStatus() == 0){
                 binding.btnOrder.setBackgroundResource(R.drawable.bg_btn_order_black);
-                binding.btnOrder.setText("Update");
+                binding.btnOrder.setText("Cập nhật");
                 binding.tvStatus.setText("Đang giao cho nhà bếp xử lý");
-                binding.imgDone.setVisibility(View.VISIBLE);
+                binding.imgDone.setVisibility(View.GONE);
             }else if(bill.getStatus() == 1){
                 binding.btnOrder.setBackgroundResource(R.drawable.bg_btn_order_black);
-                binding.btnOrder.setText("Update");
+                binding.btnOrder.setText("Cập nhật");
                 binding.tvStatus.setText("Đồ ăn đã hoàn thành. Bàn đang hoạt động.");
                 binding.imgDone.setVisibility(View.VISIBLE);
             }else if (bill.getStatus() == 2){
                 binding.btnOrder.setBackgroundResource(R.drawable.bg_btn_order_black);
-                binding.btnOrder.setText("Update");
+                binding.btnOrder.setText("Cập nhật");
                 binding.btnOrder.setEnabled(false);
                 binding.tvStatus.setText("Đang chờ tiến hành thanh toán");
                 binding.imgDone.setVisibility(View.VISIBLE);
@@ -543,7 +555,7 @@ public class TableDetailActivity extends BaseActivity {
                 }
                 DialogAnnounce.getInstance("Hóa đơn đã được thanh toán!!").show(getSupportFragmentManager(), new DialogAnnounce().getTag());
                 binding.btnOrder.setBackgroundResource(R.drawable.bg_btn_order);
-                binding.btnOrder.setText("Order");
+                binding.btnOrder.setText("Lên đơn");
                 binding.imgDone.setVisibility(View.GONE);
             }
         }

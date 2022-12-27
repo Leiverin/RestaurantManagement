@@ -1,0 +1,88 @@
+Index: .idea/shelf/Uncommitted_changes_before_Update_at_18_12_2022_12_30_PM_[Changes]/shelved.patch
+===================================================================
+diff --git a/.idea/shelf/Uncommitted_changes_before_Update_at_18_12_2022_12_30_PM_[Changes]/shelved.patch b/.idea/shelf/Uncommitted_changes_before_Update_at_18_12_2022_12_30_PM_[Changes]/shelved.patch
+deleted file mode 100644
+--- a/.idea/shelf/Uncommitted_changes_before_Update_at_18_12_2022_12_30_PM_[Changes]/shelved.patch	(revision c0e8a3fff752e51e234d5fb1c7483de36074689b)
++++ /dev/null	(revision c0e8a3fff752e51e234d5fb1c7483de36074689b)
+@@ -1,69 +0,0 @@
+-Index: app/src/main/java/com/poly/restaurant/ui/activities/manage/TableManageViewModel.java
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+-<+>package com.poly.restaurant.ui.activities.manage;\r\n\r\nimport android.util.Log;\r\n\r\nimport androidx.lifecycle.MutableLiveData;\r\nimport androidx.lifecycle.ViewModel;\r\n\r\nimport com.poly.restaurant.data.models.Table;\r\nimport com.poly.restaurant.data.retrofit.RetroInstance;\r\nimport com.poly.restaurant.data.retrofit.ServiceAPI;\r\n\r\nimport java.util.List;\r\n\r\nimport io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;\r\nimport io.reactivex.rxjava3.core.Observable;\r\nimport io.reactivex.rxjava3.schedulers.Schedulers;\r\n\r\npublic class TableManageViewModel extends ViewModel {\r\n    public MutableLiveData<List<Table>> mListTableLiveData;\r\n    public MutableLiveData<List<Table>> mListLiveTableLiveData;\r\n    public MutableLiveData<List<Table>> mListEmptyTableLiveData;\r\n\r\n    public TableManageViewModel() {\r\n        mListTableLiveData = new MutableLiveData<>();\r\n        mListLiveTableLiveData = new MutableLiveData<>();\r\n        mListEmptyTableLiveData = new MutableLiveData<>();\r\n    }\r\n\r\n    public void callToGetTable(int floor){\r\n        ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);\r\n        Observable<List<Table>> observable = serviceAPI.getTableByFloor(floor);\r\n        observable.subscribeOn(Schedulers.io())\r\n                .observeOn(AndroidSchedulers.mainThread())\r\n                .subscribe(this::onRetrieveTableListSuccess, this::onHandleError);\r\n    }\r\n\r\n    private void onRetrieveTableListSuccess(List<Table> tables){\r\n        mListTableLiveData.postValue(tables);\r\n    }\r\n\r\n    private void onHandleError(Throwable throwable){\r\n        Log.e(\"TAG\", \"handleErrors: \" + throwable.getMessage());\r\n    }\r\n\r\n    public void callToGetTableLive(int floor, int status){\r\n        ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);\r\n        Observable<List<Table>> observable = serviceAPI.getTableByFloorAndStatus(floor, status);\r\n        observable.subscribeOn(Schedulers.io())\r\n                .observeOn(AndroidSchedulers.mainThread())\r\n                .subscribe(this::onRetrieveTableLiveSuccess, this::onHandleErrorTableLive);\r\n    }\r\n\r\n    private void onRetrieveTableLiveSuccess(List<Table> tables){\r\n        mListLiveTableLiveData.postValue(tables);\r\n    }\r\n\r\n    private void onHandleErrorTableLive(Throwable throwable){\r\n        Log.e(\"TAG\", \"handle error live: \" + throwable.getMessage());\r\n        mListLiveTableLiveData.postValue(null);\r\n    }\r\n    public void callToGetTableEmpty(int floor, int status){\r\n        ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);\r\n        Observable<List<Table>> observable = serviceAPI.getTableByFloorAndStatus(floor, status);\r\n        observable.subscribeOn(Schedulers.io())\r\n                .observeOn(AndroidSchedulers.mainThread())\r\n                .subscribe(this::onRetrieveTableEmptySuccess, this::onHandleErrorTableEmpty);\r\n    }\r\n\r\n    private void onRetrieveTableEmptySuccess(List<Table> tables){\r\n        mListEmptyTableLiveData.postValue(tables);\r\n    }\r\n\r\n    private void onHandleErrorTableEmpty(Throwable throwable){\r\n        Log.e(\"TAG\", \"handle error empty: \" + throwable.getMessage());\r\n        mListEmptyTableLiveData.postValue(null);\r\n    }\r\n}\r\n\r\n
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>UTF-8
+-===================================================================
+-diff --git a/app/src/main/java/com/poly/restaurant/ui/activities/manage/TableManageViewModel.java b/app/src/main/java/com/poly/restaurant/ui/activities/manage/TableManageViewModel.java
+---- a/app/src/main/java/com/poly/restaurant/ui/activities/manage/TableManageViewModel.java	(revision 172ba8f60bd9ad365ced347fef5b53961a531648)
+-+++ b/app/src/main/java/com/poly/restaurant/ui/activities/manage/TableManageViewModel.java	(date 1671341391198)
+-@@ -5,6 +5,7 @@
+- import androidx.lifecycle.MutableLiveData;
+- import androidx.lifecycle.ViewModel;
+- 
+-+import com.poly.restaurant.data.models.Staff;
+- import com.poly.restaurant.data.models.Table;
+- import com.poly.restaurant.data.retrofit.RetroInstance;
+- import com.poly.restaurant.data.retrofit.ServiceAPI;
+-@@ -14,6 +15,7 @@
+- import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+- import io.reactivex.rxjava3.core.Observable;
+- import io.reactivex.rxjava3.schedulers.Schedulers;
+-+import retrofit2.Response;
+- 
+- public class TableManageViewModel extends ViewModel {
+-     public MutableLiveData<List<Table>> mListTableLiveData;
+-@@ -74,5 +76,22 @@
+-         Log.e("TAG", "handle error empty: " + throwable.getMessage());
+-         mListEmptyTableLiveData.postValue(null);
+-     }
+-+
+-+//    public void callToGetStaffByRole(int role){
+-+//        ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
+-+//        Observable<Response<List<Staff>>> observable = serviceAPI.getStaffByRole(role);
+-+//        observable.subscribeOn(Schedulers.io())
+-+//                .observeOn(AndroidSchedulers.mainThread())
+-+//                .subscribe(this::onRetrieveTableEmptySuccess, this::onHandleErrorTableEmpty);
+-+//    }
+-+//
+-+//    private void onRetrieveStaff(List<Table> tables){
+-+//        mListEmptyTableLiveData.postValue(tables);
+-+//    }
+-+//
+-+//    private void onHandleStaff(Throwable throwable){
+-+//        Log.e("TAG", "handle error empty: " + throwable.getMessage());
+-+//        mListEmptyTableLiveData.postValue(null);
+-+//    }
+- }
+- 
+-Index: app/src/main/java/com/poly/restaurant/data/retrofit/ServiceAPI.java
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+-<+>package com.poly.restaurant.data.retrofit;\r\n\r\nimport com.poly.restaurant.data.models.Bill;\r\nimport com.poly.restaurant.data.models.BodyDate;\r\nimport com.poly.restaurant.data.models.Notification;\r\nimport com.poly.restaurant.data.models.Product;\r\nimport com.poly.restaurant.data.models.Staff;\r\nimport com.poly.restaurant.data.models.Table;\r\n\r\nimport java.util.List;\r\n\r\nimport io.reactivex.rxjava3.core.Observable;\r\nimport retrofit2.Call;\r\nimport retrofit2.Response;\r\nimport retrofit2.http.Body;\r\nimport retrofit2.http.Field;\r\nimport retrofit2.http.FormUrlEncoded;\r\nimport retrofit2.http.GET;\r\nimport retrofit2.http.POST;\r\nimport retrofit2.http.PUT;\r\nimport retrofit2.http.Path;\r\nimport retrofit2.http.Query;\r\n\r\npublic interface ServiceAPI {\r\n\r\n    // Get table by floor\r\n    @GET(\"table/all/{floor}\")\r\n    Observable<List<Table>> getTableByFloor(\r\n            @Path(\"floor\") int floor\r\n    );\r\n\r\n    // Get table by floor and status\r\n    @GET(\"table\")\r\n    Observable<List<Table>> getTableByFloorAndStatus(\r\n            @Query(\"floor\") int floor,\r\n            @Query(\"status\") int status\r\n    );\r\n\r\n    // Get list product by category\r\n    @GET(\"products/all/{category}\")\r\n    Observable<List<Product>> getProductByCategory(\r\n            @Path(\"category\") int category\r\n    );\r\n\r\n    // Create a bill\r\n    @POST(\"bill/create\")\r\n    Observable<Bill> createBill(\r\n            @Body Bill bill\r\n    );\r\n\r\n    // Get list bill by table\r\n    @GET(\"bill/{idTable}\")\r\n    Observable<Bill> getBillByTable(\r\n            @Path(\"idTable\") String idTable\r\n    );\r\n\r\n    // Get list product in bill\r\n    @GET(\"bill/{idTable}/product\")\r\n    Observable<List<Product>> getListProductInBill(\r\n            @Path(\"idTable\") String idTable\r\n    );\r\n\r\n    // Check bill exist\r\n    @GET(\"bill/{idTable}/check\")\r\n    Observable<List<Bill>> getBillIfExists(\r\n            @Path(\"idTable\") String idTable\r\n    );\r\n\r\n    // Check bill exist\r\n    @PUT(\"bill/update/{id}\")\r\n    Observable<Bill> updateBillById(\r\n            @Path(\"id\") String id,\r\n            @Body Bill bill,\r\n            @Query(\"_method\") String method\r\n    );\r\n\r\n    // login\r\n    @FormUrlEncoded\r\n    @POST(\"staff/login\")\r\n    Observable<Staff> login(\r\n            @Field(\"account\") String account,\r\n            @Field(\"password\") String password,\r\n            @Field(\"tokenFCM\") String tokenFCM\r\n    );\r\n\r\n    // update status in bill\r\n    @PUT(\"bill/update/{id}\")\r\n    Call<List<Bill>> doneBill(\r\n            @Path(\"id\") String id,\r\n            @Query(\"_method\") String method,\r\n            @Body Bill bill\r\n    );\r\n\r\n    // get List Bill in status\r\n    @GET(\"bill/all/{status}\")\r\n    Call<List<Bill>> getTypeBill(@Path(\"status\") int status);\r\n\r\n    // filter history in firstDate and secondDate\r\n    @POST(\"bill/filter/{idTable}\")\r\n    Call<List<Bill>> getBillByDate(\r\n            @Path(\"idTable\") String idTable,\r\n            @Body BodyDate bodyDate\r\n    );\r\n\r\n\r\n    // change Password staff\r\n    @PUT(\"staff/update/{id}\")\r\n    Call<List<Staff>> changePassword(\r\n            @Path(\"id\") String id,\r\n            @Query(\"_method\") String method,\r\n            @Body Staff staff\r\n    );\r\n\r\n    // push notification\r\n    @POST(\"notification/create\")\r\n    Call<Notification> pushNotification(\r\n            @Field(\"title\") String title,\r\n            @Field(\"content\") String content,\r\n            @Field(\"date\") String date,\r\n            @Field(\"time\") String time,\r\n            @Field(\"sender\") Staff staffSender,\r\n            @Field(\"receiver\") Staff staffReceiver\r\n    );\r\n\r\n    // get list notification\r\n    @GET(\"notification/{idStaff}\")\r\n    Call<List<Notification>> getNotification(\r\n            @Path(\"idStaff\") String idStaff\r\n    );\r\n\r\n    // get notification\r\n    @FormUrlEncoded\r\n    @POST(\"bill/notify\")\r\n    Observable<Bill> pushNotificationToStaff(\r\n            @Field(\"tokenFCM\") String token,\r\n            @Field(\"title\") String title,\r\n            @Field(\"content\") String content,\r\n            @Field(\"idBill\") String idBill\r\n    );\r\n\r\n    // update table\r\n    @PUT(\"table/update/{idTable}\")\r\n    Observable<Table> updateTable(\r\n            @Path(\"idTable\") String idTable,\r\n            @Body Table table,\r\n            @Query(\"_method\") String method\r\n    );\r\n\r\n    // update table\r\n    @GET(\"bill\")\r\n    Observable<Response<Bill>> getBillById(\r\n            @Query(\"id\") String id\r\n    );\r\n\r\n}\r\n
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>UTF-8
+-===================================================================
+-diff --git a/app/src/main/java/com/poly/restaurant/data/retrofit/ServiceAPI.java b/app/src/main/java/com/poly/restaurant/data/retrofit/ServiceAPI.java
+---- a/app/src/main/java/com/poly/restaurant/data/retrofit/ServiceAPI.java	(revision 172ba8f60bd9ad365ced347fef5b53961a531648)
+-+++ b/app/src/main/java/com/poly/restaurant/data/retrofit/ServiceAPI.java	(date 1671341396161)
+-@@ -152,4 +152,9 @@
+-             @Query("id") String id
+-     );
+- 
+-+//    @GET("staff")
+-+//    Observable<Response<List<Staff>>> getStaffByRole(
+-+//            @Query("role") int role
+-+//    );
+-+
+- }
+Index: .idea/shelf/Uncommitted_changes_before_Update_at_18_12_2022_12_30_PM__Changes_.xml
+===================================================================
+diff --git a/.idea/shelf/Uncommitted_changes_before_Update_at_18_12_2022_12_30_PM__Changes_.xml b/.idea/shelf/Uncommitted_changes_before_Update_at_18_12_2022_12_30_PM__Changes_.xml
+deleted file mode 100644
+--- a/.idea/shelf/Uncommitted_changes_before_Update_at_18_12_2022_12_30_PM__Changes_.xml	(revision c0e8a3fff752e51e234d5fb1c7483de36074689b)
++++ /dev/null	(revision c0e8a3fff752e51e234d5fb1c7483de36074689b)
+@@ -1,4 +0,0 @@
+-<changelist name="Uncommitted_changes_before_Update_at_18_12_2022_12_30_PM_[Changes]" date="1671341405055" recycled="true" deleted="true">
+-  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_18_12_2022_12_30_PM_[Changes]/shelved.patch" />
+-  <option name="DESCRIPTION" value="Uncommitted changes before Update at 18/12/2022 12:30 PM [Changes]" />
+-</changelist>
+\ No newline at end of file

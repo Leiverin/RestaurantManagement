@@ -55,7 +55,6 @@ public class HistoryActivity extends BaseActivity implements CustomSpinner.OnSpi
     private String firstDateParam, secondDateParam;
     private Table table;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
