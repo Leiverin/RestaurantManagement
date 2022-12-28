@@ -46,6 +46,7 @@ public class TableManageActivity extends BaseActivity {
     private TableManageAdapter adapter;
     private List<Table> mListTablesEmpty;
     private List<Table> mListTablesLive;
+    private List<Table> mListTablesBooked;
     private List<TableParent> mListTableMain;
     private List<Staff> mListAdmin;
     private List<Staff> mListChef;
@@ -68,6 +69,7 @@ public class TableManageActivity extends BaseActivity {
 
         mListTablesEmpty = new ArrayList<>();
         mListTablesLive = new ArrayList<>();
+        mListTablesBooked = new ArrayList<>();
         mListTableMain = new ArrayList<>();
         mListAdmin = new ArrayList<>();
         mListChef = new ArrayList<>();
@@ -107,6 +109,18 @@ public class TableManageActivity extends BaseActivity {
                 if (tables != null) {
                     mListTablesLive = tables;
                     binding.tvNumLiveTable.setText("Đang sử dụng: " + tables.size());
+                    mListTableMain = getListTableMain();
+                    adapter.setList(mListTableMain);
+                }
+            }
+        });
+
+        viewModel.mListBookedTableLiveData.observe(this, new Observer<List<Table>>() {
+            @Override
+            public void onChanged(List<Table> tables) {
+                if (tables != null) {
+                    mListTablesBooked = tables;
+//                    binding.tvNumLiveTable.setText("Bàn đã đặt: " + tables.size());
                     mListTableMain = getListTableMain();
                     adapter.setList(mListTableMain);
                 }
@@ -205,6 +219,15 @@ public class TableManageActivity extends BaseActivity {
             });
             mTableMain.add(new TableParent("Bàn đang sử dụng", mListTablesLive));
         }
+        if (mListTablesBooked.size() != 0) {
+            mListTablesBooked.sort(new Comparator<Table>() {
+                @Override
+                public int compare(Table t1, Table t2) {
+                    return t1.getName().compareTo(t2.getName());
+                }
+            });
+            mTableMain.add(new TableParent("Bàn đã đặt", mListTablesBooked));
+        }
         return mTableMain;
     }
 
@@ -221,6 +244,7 @@ public class TableManageActivity extends BaseActivity {
         );
         viewModel.callToGetTableEmpty(Constants.staff.getFloor().getNumberFloor(), Constants.TABLE_EMPTY_STATUS);
         viewModel.callToGetTableLive(Constants.staff.getFloor().getNumberFloor(), Constants.TABLE_LIVE_STATUS);
+        viewModel.callToGetTableLive(Constants.staff.getFloor().getNumberFloor(), Constants.TABLE_LIVE_BOOKED);
         viewModel.callToGetAdmin();
         viewModel.callToGetChef();
         viewModel.callToGetCashier();

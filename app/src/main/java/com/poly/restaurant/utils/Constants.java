@@ -41,6 +41,7 @@ import retrofit2.Response;
 public class Constants {
     public static final int TABLE_EMPTY_STATUS = 0;
     public static final int TABLE_LIVE_STATUS = 1;
+    public static final int TABLE_LIVE_BOOKED = 2;
     public static final String EXTRA_ID_BILL_TO_TABLE_DETAIL = "EXTRA_ID_BILL_TO_TABLE_DETAIL";
     public static final String EXTRA_ID_STAFF_TO_TABLE_DETAIL = "EXTRA_ID_STAFF_TO_TABLE_DETAIL";
     public static final String STRING_CONTENT_TO_ANNOUNCE = "content_to_announce";

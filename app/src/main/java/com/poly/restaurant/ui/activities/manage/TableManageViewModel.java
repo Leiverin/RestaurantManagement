@@ -21,6 +21,7 @@ public class TableManageViewModel extends ViewModel {
     public MutableLiveData<List<Table>> mListTableLiveData;
     public MutableLiveData<List<Table>> mListLiveTableLiveData;
     public MutableLiveData<List<Table>> mListEmptyTableLiveData;
+    public MutableLiveData<List<Table>> mListBookedTableLiveData;
     public MutableLiveData<List<Staff>> mListAdminLiveData;
     public MutableLiveData<List<Staff>> mListChefLiveData;
     public MutableLiveData<List<Staff>> mListCashierLiveData;
@@ -32,9 +33,10 @@ public class TableManageViewModel extends ViewModel {
         mListAdminLiveData = new MutableLiveData<>();
         mListChefLiveData = new MutableLiveData<>();
         mListCashierLiveData = new MutableLiveData<>();
+        mListBookedTableLiveData = new MutableLiveData<>();
     }
 
-    public void callToGetTable(int floor){
+    public void callToGetTable(int floor) {
         ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
         Observable<List<Table>> observable = serviceAPI.getTableByFloor(floor);
         observable.subscribeOn(Schedulers.io())
@@ -42,15 +44,15 @@ public class TableManageViewModel extends ViewModel {
                 .subscribe(this::onRetrieveTableListSuccess, this::onHandleError);
     }
 
-    private void onRetrieveTableListSuccess(List<Table> tables){
+    private void onRetrieveTableListSuccess(List<Table> tables) {
         mListTableLiveData.postValue(tables);
     }
 
-    private void onHandleError(Throwable throwable){
+    private void onHandleError(Throwable throwable) {
         Log.e("TAG", "handleErrors: " + throwable.getMessage());
     }
 
-    public void callToGetTableLive(int floor, int status){
+    public void callToGetTableLive(int floor, int status) {
         ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
         Observable<List<Table>> observable = serviceAPI.getTableByFloorAndStatus(floor, status);
         observable.subscribeOn(Schedulers.io())
@@ -58,17 +60,17 @@ public class TableManageViewModel extends ViewModel {
                 .subscribe(this::onRetrieveTableLiveSuccess, this::onHandleErrorTableLive);
     }
 
-    private void onRetrieveTableLiveSuccess(List<Table> tables){
+    private void onRetrieveTableLiveSuccess(List<Table> tables) {
         mListLiveTableLiveData.postValue(tables);
     }
 
-    private void onHandleErrorTableLive(Throwable throwable){
+    private void onHandleErrorTableLive(Throwable throwable) {
         Log.e("TAG", "handle error live: " + throwable.getMessage());
         mListLiveTableLiveData.postValue(null);
     }
 
 
-    public void callToGetTableEmpty(int floor, int status){
+    public void callToGetTableEmpty(int floor, int status) {
         ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
         Observable<List<Table>> observable = serviceAPI.getTableByFloorAndStatus(floor, status);
         observable.subscribeOn(Schedulers.io())
@@ -76,16 +78,33 @@ public class TableManageViewModel extends ViewModel {
                 .subscribe(this::onRetrieveTableEmptySuccess, this::onHandleErrorTableEmpty);
     }
 
-    private void onRetrieveTableEmptySuccess(List<Table> tables){
+    private void onRetrieveTableEmptySuccess(List<Table> tables) {
         mListEmptyTableLiveData.postValue(tables);
     }
 
-    private void onHandleErrorTableEmpty(Throwable throwable){
+    private void onHandleErrorTableEmpty(Throwable throwable) {
         Log.e("TAG", "handle error empty: " + throwable.getMessage());
         mListEmptyTableLiveData.postValue(null);
     }
 
-    public void callToGetAdmin(){
+    public void callToGetTableBooked(int floor, int status) {
+        ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
+        Observable<List<Table>> observable = serviceAPI.getTableByFloorAndStatus(floor, status);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::onRetrieveTableBookedSuccess, this::onHandleErrorTableBooked);
+    }
+
+    private void onRetrieveTableBookedSuccess(List<Table> tables) {
+        mListBookedTableLiveData.postValue(tables);
+    }
+
+    private void onHandleErrorTableBooked(Throwable throwable) {
+        Log.e("TAG", "handle error empty: " + throwable.getMessage());
+        mListBookedTableLiveData.postValue(null);
+    }
+
+    public void callToGetAdmin() {
         ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
         Observable<Response<List<Staff>>> observable = serviceAPI.getListStaffByRole(1);
         observable.subscribeOn(Schedulers.io())
@@ -93,19 +112,19 @@ public class TableManageViewModel extends ViewModel {
                 .subscribe(this::onRetrieveAdmin, this::onHandleErrorAdmin);
     }
 
-    private void onRetrieveAdmin(Response<List<Staff>> staffs){
-        if (staffs.isSuccessful()){
+    private void onRetrieveAdmin(Response<List<Staff>> staffs) {
+        if (staffs.isSuccessful()) {
             mListAdminLiveData.postValue(staffs.body());
         }
     }
 
-    private void onHandleErrorAdmin(Throwable throwable){
+    private void onHandleErrorAdmin(Throwable throwable) {
         Log.e("TAG", "handle error admin: " + throwable.getMessage());
         mListAdminLiveData.postValue(null);
     }
 
 
-    public void callToGetChef(){
+    public void callToGetChef() {
         ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
         Observable<Response<List<Staff>>> observable = serviceAPI.getListStaffByRole(3);
         observable.subscribeOn(Schedulers.io())
@@ -113,19 +132,19 @@ public class TableManageViewModel extends ViewModel {
                 .subscribe(this::onRetrieveChef, this::onHandleErrorChef);
     }
 
-    private void onRetrieveChef(Response<List<Staff>> staffs){
-        if (staffs.isSuccessful()){
+    private void onRetrieveChef(Response<List<Staff>> staffs) {
+        if (staffs.isSuccessful()) {
             mListChefLiveData.postValue(staffs.body());
         }
     }
 
-    private void onHandleErrorChef(Throwable throwable){
+    private void onHandleErrorChef(Throwable throwable) {
         Log.e("TAG", "handle error admin: " + throwable.getMessage());
         mListChefLiveData.postValue(null);
     }
 
 
-    public void callToGetCashier(){
+    public void callToGetCashier() {
         ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
         Observable<Response<List<Staff>>> observable = serviceAPI.getListStaffByRole(2);
         observable.subscribeOn(Schedulers.io())
@@ -133,13 +152,13 @@ public class TableManageViewModel extends ViewModel {
                 .subscribe(this::onRetrieveCashier, this::onHandleErrorCashier);
     }
 
-    private void onRetrieveCashier(Response<List<Staff>> staffs){
-        if (staffs.isSuccessful()){
+    private void onRetrieveCashier(Response<List<Staff>> staffs) {
+        if (staffs.isSuccessful()) {
             mListCashierLiveData.postValue(staffs.body());
         }
     }
 
-    private void onHandleErrorCashier(Throwable throwable){
+    private void onHandleErrorCashier(Throwable throwable) {
         Log.e("TAG", "handle error cashier: " + throwable.getMessage());
         mListCashierLiveData.postValue(null);
     }
