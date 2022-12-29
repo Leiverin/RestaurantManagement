@@ -49,7 +49,8 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillHolder> {
                 holder.binding.setStatusTv.setText("Đã thanh toán");
             }
             holder.binding.txtNameTable.setText(bill.getTable().getName());
-            holder.binding.txtMoney.setText(" " + bill.getTotalPrice());
+            int totalPrice= (int) (bill.getTotalPrice() * 23000);
+            holder.binding.txtMoney.setText(totalPrice + " vnđ");
             holder.binding.txtTime.setText(bill.getTime());
             holder.binding.txtDate.setText(bill.getDate() + "");
             holder.binding.viewItem.setOnClickListener(new View.OnClickListener() {

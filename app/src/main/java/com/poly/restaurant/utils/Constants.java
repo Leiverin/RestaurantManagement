@@ -11,7 +11,6 @@ import android.net.Uri;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -139,7 +138,8 @@ public class Constants {
         showDetailBillBinding.txtNameTable.setText(bill.getTable().getName());
         showDetailBillBinding.tvTime.setText(bill.getTime());
         showDetailBillBinding.tvDate.setText(bill.getDate());
-        showDetailBillBinding.tvPrice.setText(bill.getTotalPrice() + "");
+        int totalPrice = (int) (bill.getTotalPrice() * 23000);
+        showDetailBillBinding.tvPrice.setText(totalPrice + " vnđ");
         if (bill.getProducts() != null) {
             showDetailBillBinding.rvProductBillDetail.setVisibility(View.VISIBLE);
             ShowDetailProductBillAdapter adapterShowDetailBill = new ShowDetailProductBillAdapter(context, bill.getProducts());
@@ -205,7 +205,8 @@ public class Constants {
                         showDetailBillBinding.txtNameTable.setText(response.body().get(i).getTable().getName());
                         showDetailBillBinding.tvTime.setText(response.body().get(i).getTime());
                         showDetailBillBinding.tvDate.setText(response.body().get(i).getDate());
-                        showDetailBillBinding.tvPrice.setText(response.body().get(i).getTotalPrice() + "");
+                        int totalPrice = (int) (response.body().get(i).getTotalPrice() * 23000);
+                        showDetailBillBinding.tvPrice.setText(totalPrice + " vnđ");
                         if (response.body().get(i).getProducts() != null) {
                             showDetailBillBinding.rvProductBillDetail.setVisibility(View.VISIBLE);
                             ShowDetailProductBillAdapter adapterShowDetailBill = new ShowDetailProductBillAdapter(context, response.body().get(i).getProducts());
