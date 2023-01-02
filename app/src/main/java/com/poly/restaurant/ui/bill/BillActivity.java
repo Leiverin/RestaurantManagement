@@ -85,35 +85,6 @@ public class BillActivity extends BaseActivity {
         viewModel.getBill(Constants.staff.getId(), Constants.staff.getFloor().getNumberFloor());
     }
 
-
-//    private void showDialogComplete(Bill bill) {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        DialogAlertCompleteBinding dialogAlertCompleteBinding = DialogAlertCompleteBinding.inflate(LayoutInflater.from(this));
-//        builder.setView(dialogAlertCompleteBinding.getRoot());
-//        AlertDialog dialog = builder.create();
-//        Resources res = getResources();
-//        String text = String.format(res.getString(R.string.text_alert), bill.getTable().getName());
-//        dialogAlertCompleteBinding.textAlert.setText(text);
-//        dialogAlertCompleteBinding.btnNo.setOnClickListener(view -> {
-//            dialog.dismiss();
-//        });
-//        dialogAlertCompleteBinding.btnYes.setOnClickListener(view -> {
-//            Constants.setOnStatus(bill);
-//            list.remove(bill);
-//            adapter.setList(list);
-//            adapter.notifyDataSetChanged();
-//            Table table = new Table(bill.getTable().getId(), bill.getTable().getName(), bill.getTable().getFloor(), bill.getTable().getCapacity(), 0);
-//            viewModel.updateTable(table.getId(), table);
-//            dialog.dismiss();
-//        });
-//
-//        dialog.show();
-//        dialog.setCancelable(false);
-//        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
-//        dialog.getWindow().setGravity(Gravity.CENTER);
-//    }
-
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {

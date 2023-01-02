@@ -24,10 +24,10 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/judson_regular"
                 android:padding="18dp"
-                android:text="Table 1"
                 android:textColor="@color/white"
                 android:textSize="20dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="Bàn 1" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -39,9 +39,9 @@
                 android:id="@+id/tvTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
                 android:fontFamily="@font/judson_regular"
                 android:text="15:30"
-                android:layout_marginEnd="10dp"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
 
