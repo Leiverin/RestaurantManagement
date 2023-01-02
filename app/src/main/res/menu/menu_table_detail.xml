@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_add_food"
+        android:title="Thêm món ăn"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_merge"
+        android:title="Gộp bàn"
+        app:showAsAction="never" />
+</menu>

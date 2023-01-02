@@ -14,9 +14,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.AnimationUtils;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +30,8 @@ import com.poly.restaurant.data.models.Staff;
 import com.poly.restaurant.data.models.Table;
 import com.poly.restaurant.databinding.ActivityTableDetailBinding;
 import com.poly.restaurant.preference.AppSharePreference;
+import com.poly.restaurant.ui.activities.account.AccountActivity;
+import com.poly.restaurant.ui.activities.manage.TableManageActivity;
 import com.poly.restaurant.ui.dialog.DialogAnnounce;
 import com.poly.restaurant.ui.activities.product.FoodActivity;
 import com.poly.restaurant.ui.activities.table.adapter.IOnItemProductTableListener;
@@ -35,6 +39,7 @@ import com.poly.restaurant.ui.activities.table.adapter.ProductTableAdapter;
 import com.poly.restaurant.ui.base.BaseActivity;
 import com.poly.restaurant.ui.dialog.DialogRequest;
 import com.poly.restaurant.ui.dialog.interfaces.IOnEventDialogListener;
+import com.poly.restaurant.ui.history.HistoryActivity;
 import com.poly.restaurant.utils.Constants;
 import com.poly.restaurant.utils.helps.ViewModelFactory;
 
@@ -439,12 +444,8 @@ public class TableDetailActivity extends BaseActivity {
                 startActivity(new Intent(TableDetailActivity.this, FoodActivity.class));
             }
         });
-
-        binding.imgAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(TableDetailActivity.this, FoodActivity.class));
-            }
+        binding.imgMenuTableDetail.setOnClickListener(view -> {
+            showPopupMenu();
         });
     }
 
@@ -559,5 +560,21 @@ public class TableDetailActivity extends BaseActivity {
                 binding.imgDone.setVisibility(View.GONE);
             }
         }
+    }
+    private void showPopupMenu() {
+        PopupMenu popupMenu = new PopupMenu(TableDetailActivity.this, binding.imgMenuTableDetail);
+        popupMenu.getMenuInflater().inflate(R.menu.menu_table_detail, popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                if (menuItem.getItemId() == R.id.action_add_food) {
+                    startActivity(new Intent(TableDetailActivity.this, FoodActivity.class));
+                } else if (menuItem.getItemId() == R.id.action_merge) {
+//                    startActivity(new Intent(TableDetailActivity.this, HistoryActivity.class));
+                }
+                return true;
+            }
+        });
+        popupMenu.show();
     }
 }
