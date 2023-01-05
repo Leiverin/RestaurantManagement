@@ -51,8 +51,6 @@ public class TableManageActivity extends BaseActivity {
     private List<Staff> mListAdmin;
     private List<Staff> mListChef;
     private List<Staff> mListCashier;
-    private Handler handler = new Handler();
-    private Runnable runnable;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -232,19 +230,13 @@ public class TableManageActivity extends BaseActivity {
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        handler.removeCallbacks(runnable);
-    }
-
-    @Override
     protected void onResume() {
         LocalBroadcastManager.getInstance(this).registerReceiver((receiver),
                 new IntentFilter(Constants.REQUEST_TO_ACTIVITY)
         );
         viewModel.callToGetTableEmpty(Constants.staff.getFloor().getNumberFloor(), Constants.TABLE_EMPTY_STATUS);
         viewModel.callToGetTableLive(Constants.staff.getFloor().getNumberFloor(), Constants.TABLE_LIVE_STATUS);
-        viewModel.callToGetTableLive(Constants.staff.getFloor().getNumberFloor(), Constants.TABLE_LIVE_BOOKED);
+//        viewModel.callToGetTableLive(Constants.staff.getFloor().getNumberFloor(), Constants.TABLE_LIVE_BOOKED);
         viewModel.callToGetAdmin();
         viewModel.callToGetChef();
         viewModel.callToGetCashier();

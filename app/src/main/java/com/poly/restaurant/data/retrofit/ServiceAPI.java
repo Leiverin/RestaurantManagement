@@ -13,6 +13,7 @@ import io.reactivex.rxjava3.core.Observable;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -189,4 +190,9 @@ public interface ServiceAPI {
 
     @GET("bill/all")
     Call<List<Bill>> getBillNoti();
+
+    @DELETE("bill/delete/{id}?_method=DELETE")
+    Observable<Response<Bill>> deleteBill(
+            @Path("id") String idBill
+    );
 }
