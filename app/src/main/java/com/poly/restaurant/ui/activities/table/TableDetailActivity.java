@@ -32,6 +32,7 @@ import com.poly.restaurant.databinding.ActivityTableDetailBinding;
 import com.poly.restaurant.preference.AppSharePreference;
 import com.poly.restaurant.ui.activities.account.AccountActivity;
 import com.poly.restaurant.ui.activities.manage.TableManageActivity;
+import com.poly.restaurant.ui.activities.merge.MergeTableActivity;
 import com.poly.restaurant.ui.dialog.DialogAnnounce;
 import com.poly.restaurant.ui.activities.product.FoodActivity;
 import com.poly.restaurant.ui.activities.table.adapter.IOnItemProductTableListener;
@@ -568,7 +569,7 @@ public class TableDetailActivity extends BaseActivity {
                 if (menuItem.getItemId() == R.id.action_add_food) {
                     startActivity(new Intent(TableDetailActivity.this, FoodActivity.class));
                 } else if (menuItem.getItemId() == R.id.action_merge) {
-//                    startActivity(new Intent(TableDetailActivity.this, HistoryActivity.class));
+                    startActivity(new Intent(TableDetailActivity.this, MergeTableActivity.class));
                 }
                 return true;
             }

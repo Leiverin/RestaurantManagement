@@ -13,7 +13,7 @@ import com.poly.restaurant.ui.activities.product.desserts.DessertViewModel;
 import com.poly.restaurant.ui.activities.product.drinks.DrinksViewModel;
 import com.poly.restaurant.ui.activities.product.main.MainDishesViewModel;
 import com.poly.restaurant.ui.activities.table.TableDetailViewModel;
-import com.poly.restaurant.ui.activities.verify.VerifyViewModel;
+import com.poly.restaurant.ui.activities.merge.MergeTableViewModel;
 import com.poly.restaurant.ui.bottomsheet.BottomSheetProductViewModel;
 import com.poly.restaurant.ui.notification.receiptnotice.ReceiptNoticeViewModel;
 import com.poly.restaurant.ui.notification.sendnotification.SendNotificationViewModel;
@@ -38,8 +38,8 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             return (T) new AppetizerViewModel(context);
         } else if (modelClass == DessertViewModel.class) {
             return (T) new DessertViewModel(context);
-        } else if (modelClass == VerifyViewModel.class) {
-            return (T) new VerifyViewModel(context);
+        } else if (modelClass == MergeTableViewModel.class) {
+            return (T) new MergeTableViewModel(context);
         } else if (modelClass == MainDishesViewModel.class) {
             return (T) new MainDishesViewModel(context);
         } else if (modelClass == TableDetailViewModel.class) {
