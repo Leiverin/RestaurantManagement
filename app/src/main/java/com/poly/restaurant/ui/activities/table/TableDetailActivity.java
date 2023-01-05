@@ -245,8 +245,7 @@ public class TableDetailActivity extends BaseActivity {
                          * */
                         Table tableUpdate = new Table(table.getId(), table.getName(), table.getFloor(), table.getCapacity(), 1);
                         viewModel.callToUpdateBill(bill.get(0).getId(), new Bill(bill.get(0).getId(), date, time, total, 0, 0, mListProduct,
-                                tableUpdate,
-                                null, Constants.staff), Constants.TYPE_UPDATE);
+                                tableUpdate, null, null, Constants.staff, null), Constants.TYPE_UPDATE);
                         String title = "Thông báo bổ sung món";
                         String content = "Bill bàn "+bill.get(0).getTable().getName()+" vừa bổ sung thêm món";
                         for (Staff s: mListChef){
@@ -275,7 +274,7 @@ public class TableDetailActivity extends BaseActivity {
                     * Create bill
                     * */
                     Table tableUpdate = new Table(table.getId(), table.getName(), table.getFloor(), table.getCapacity(), 1);
-                    viewModel.callToCreateBill(new Bill(null, date, time, total, 0, 0, mListProduct, tableUpdate, null, Constants.staff));
+                    viewModel.callToCreateBill(new Bill(null, date, time, total, 0, 0, mListProduct, tableUpdate, null, null, Constants.staff, null));
                     binding.btnOrder.setBackgroundResource(R.drawable.bg_btn_order);
                     binding.btnOrder.setText("Lên đơn");
                 }
@@ -343,8 +342,7 @@ public class TableDetailActivity extends BaseActivity {
                 if (bills != null && bills.size() != 0){
                     Table tableUpdate = new Table(table.getId(), table.getName(), table.getFloor(), table.getCapacity(), 1);
                     viewModel.callToUpdateBill(bills.get(0).getId(), new Bill(bills.get(0).getId(), date, time, total, 0, 2, mListProduct,
-                            tableUpdate,
-                            null, Constants.staff), Constants.TYPE_PAY);
+                            tableUpdate, null, null, Constants.staff, null), Constants.TYPE_PAY);
                     String title = "Thông báo xác nhận hóa đơn";
                     String content = "Bàn "+ bills.get(0).getTable().getName()+ " đang chờ xác nhận thanh toán";
                     for (Staff s: mListAdmin){
