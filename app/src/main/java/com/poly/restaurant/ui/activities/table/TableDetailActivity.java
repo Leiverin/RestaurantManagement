@@ -195,7 +195,7 @@ public class TableDetailActivity extends BaseActivity {
                         viewModel.createNotification(new Notification(
                                 null, title, content, date, time, Constants.staff, s, bill.getId()
                         ));
-                    };
+                    }
                     for (Staff s: mListAdmin){
                         viewModel.callToPushNotification(
                                 s.getTokenFCM(),
