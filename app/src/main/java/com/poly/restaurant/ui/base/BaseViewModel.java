@@ -7,29 +7,33 @@ import androidx.lifecycle.ViewModel;
 
 import com.poly.restaurant.data.db.AppDatabase;
 import com.poly.restaurant.data.db.dao.ProductDao;
+import com.poly.restaurant.data.db.dao.TableDao;
 import com.poly.restaurant.data.models.Product;
+import com.poly.restaurant.data.models.Table;
 import com.poly.restaurant.utils.helps.AppExecutors;
 
 import java.util.List;
 
 public abstract class BaseViewModel extends ViewModel {
     protected ProductDao productDao;
+    protected TableDao tableDao;
     protected AppExecutors appExecutors;
 
     protected BaseViewModel(Context context) {
         productDao = AppDatabase.getInstance(context).productDao();
+        tableDao = AppDatabase.getInstance(context).tableDao();
         appExecutors = new AppExecutors();
     }
 
-    public List<Product> getListProductByIdTable(String idTable){
+    public List<Product> getListProductByIdTable(String idTable) {
         return productDao.getProductByIdTable(idTable);
     }
 
-    public LiveData<List<Product>> getLocalProductsLiveData(){
+    public LiveData<List<Product>> getLocalProductsLiveData() {
         return productDao.getProducts();
     }
 
-    public void insertProduct(Product product){
+    public void insertProduct(Product product) {
         appExecutors.diskIO().execute(new Runnable() {
             @Override
             public void run() {
@@ -38,7 +42,7 @@ public abstract class BaseViewModel extends ViewModel {
         });
     }
 
-    public void updateProduct(Product product){
+    public void updateProduct(Product product) {
         appExecutors.diskIO().execute(new Runnable() {
             @Override
             public void run() {
@@ -47,7 +51,7 @@ public abstract class BaseViewModel extends ViewModel {
         });
     }
 
-    public void updateAmountProduct(int amount, String id, String idTable){
+    public void updateAmountProduct(int amount, String id, String idTable) {
         appExecutors.diskIO().execute(new Runnable() {
             @Override
             public void run() {
@@ -56,7 +60,7 @@ public abstract class BaseViewModel extends ViewModel {
         });
     }
 
-    public void deleteProduct(Product product){
+    public void deleteProduct(Product product) {
         appExecutors.diskIO().execute(new Runnable() {
             @Override
             public void run() {
@@ -65,7 +69,7 @@ public abstract class BaseViewModel extends ViewModel {
         });
     }
 
-    public void deleteProduct(String id, String idTable){
+    public void deleteProduct(String id, String idTable) {
         appExecutors.diskIO().execute(new Runnable() {
             @Override
             public void run() {
@@ -74,12 +78,39 @@ public abstract class BaseViewModel extends ViewModel {
         });
     }
 
-    public List<Product> getListProduct(){
+    public List<Product> getListProduct() {
         return productDao.getListProducts();
     }
 
-    public String getProductById(String id, String idTable){
+    public String getProductById(String id, String idTable) {
         return productDao.findProductById(id, idTable);
+    }
+    // table
+
+    public void insertTable(Table table) {
+        appExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                tableDao.insertTable(table);
+            }
+        });
+    }
+
+    public void deleteTable(String id) {
+        appExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                tableDao.deleteTable(id);
+            }
+        });
+    }
+    public void updateTable(Table table) {
+        appExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                tableDao.updateTable(table);
+            }
+        });
     }
 
 

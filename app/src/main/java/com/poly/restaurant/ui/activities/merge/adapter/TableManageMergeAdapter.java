@@ -42,8 +42,13 @@ public class TableManageMergeAdapter extends RecyclerView.Adapter<TableManageMer
         TableParent tableParent = mListTable.get(position);
         adapter = new TableChildMergeAdapter(context, tableParent.getTables(), new OnListener() {
             @Override
-            public void onClickChild(Table table) {
-                onListenerMerge.onClick(table);
+            public void onClickAddTable(Table table) {
+                onListenerMerge.onAddTable(table);
+            }
+
+            @Override
+            public void onClickDeleteTable(Table table) {
+               onListenerMerge.onDeleteTable(table);
             }
         });
         holder.binding.rvTable.setAdapter(adapter);

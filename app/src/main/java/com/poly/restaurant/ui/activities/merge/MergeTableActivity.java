@@ -5,18 +5,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.poly.restaurant.R;
 import com.poly.restaurant.data.models.Table;
 import com.poly.restaurant.data.models.TableParent;
 import com.poly.restaurant.databinding.ActivityMergeTableBinding;
-import com.poly.restaurant.ui.activities.manage.adapters.IOnClickItemParent;
-import com.poly.restaurant.ui.activities.manage.adapters.TableManageAdapter;
 import com.poly.restaurant.ui.activities.merge.adapter.OnListenerMerge;
 import com.poly.restaurant.ui.activities.merge.adapter.TableManageMergeAdapter;
 import com.poly.restaurant.ui.base.BaseActivity;
@@ -34,6 +37,7 @@ public class MergeTableActivity extends BaseActivity {
     private List<Table> listEmptyTable;
     private List<TableParent> mListTableMain;
     private TableManageMergeAdapter adapter;
+    private boolean isShowing = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,13 +56,49 @@ public class MergeTableActivity extends BaseActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver((receiver),
                 new IntentFilter(Constants.REQUEST_TO_ACTIVITY)
         );
+        eventScrollRecycleView();
+    }
+
+    private void initActions() {
+        binding.imgMerge.setOnClickListener(view -> {
+
+        });
+    }
+
+    private void eventScrollRecycleView() {
+        binding.rvMerge.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                if (newState == 0) {
+                    visibleBottomSheet();
+                } else {
+                    hideBottomSheet();
+                }
+            }
+        });
+    }
+
+    private void visibleBottomSheet() {
+        binding.viewBottomSheet.setAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_bottom_to_top));
+        binding.viewBottomSheet.setVisibility(View.VISIBLE);
+    }
+
+    private void hideBottomSheet() {
+        binding.viewBottomSheet.setAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_top_to_bottom));
+        binding.viewBottomSheet.setVisibility(View.GONE);
     }
 
     private void initRec() {
         adapter = new TableManageMergeAdapter(mListTableMain, this, new OnListenerMerge() {
             @Override
-            public void onClick(Table table) {
+            public void onAddTable(Table table) {
+                handleAddTable(table);
+            }
 
+            @Override
+            public void onDeleteTable(Table table) {
+                viewModel.deleteTable(table.getId());
+                Log.d("deleteTable", table.getName());
             }
         });
         binding.rvMerge.setAdapter(adapter);
@@ -89,7 +129,38 @@ public class MergeTableActivity extends BaseActivity {
                 }
             }
         });
+        viewModel.getTableLiveData().observe(this, new Observer<List<Table>>() {
+            @Override
+            public void onChanged(List<Table> tables) {
+                if (tables != null && tables.size() != 0) {
+                    if (!isShowing) {
+                        visibleBottomSheet();
+                    }
+                    isShowing = true;
+                    binding.tvTotalTable.setText("Số lượng :" + tables.size() + " bàn");
+                    StringBuilder names = new StringBuilder();
+                    for (Table table : tables) {
+                        names.append(table.getName()).append(", ");
+                    }
+                    binding.tvNameTable.setText(names);
+                } else {
+                    hideBottomSheet();
+                    isShowing = false;
+                }
+                showOrHideView(tables);
+            }
+        });
 
+    }
+
+    private void showOrHideView(List<Table> listTable) {
+        if (listTable == null || listTable.size() == 0) {
+            binding.viewBottomSheet.setVisibility(View.GONE);
+            binding.tvTotalTable.setText("Số lượng :0");
+            binding.tvNameTable.setText("Chọn bàn");
+        } else {
+            binding.viewBottomSheet.setVisibility(View.VISIBLE);
+        }
     }
 
     private List<TableParent> getListTableMain() {
@@ -113,6 +184,16 @@ public class MergeTableActivity extends BaseActivity {
             mTableMain.add(new TableParent("Bàn đang sử dụng", listLiveTable));
         }
         return mTableMain;
+    }
+
+    private void handleAddTable(Table table) {
+        viewModel.insertTable(new Table(null,
+                table.getId(),
+                table.getName(),
+                table.getFloor(),
+                table.getCapacity(),
+                2
+        ));
     }
 
     private final BroadcastReceiver receiver = new BroadcastReceiver() {

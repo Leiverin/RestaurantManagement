@@ -3,9 +3,16 @@ package com.poly.restaurant.data.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.google.gson.annotations.SerializedName;
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+import com.google.gson.annotations.SerializedName;
+@Entity(tableName = "Table")
 public class Table implements Parcelable {
+    @NonNull
+    @PrimaryKey(autoGenerate = true)
+    private Long idTable;
     @SerializedName("_id")
     private String id;
     private String name;
@@ -14,6 +21,15 @@ public class Table implements Parcelable {
     private int status;
 
     public Table() {
+    }
+
+    public Table(@NonNull Long idTable, String id, String name, int floor, String capacity, int status) {
+        this.idTable = idTable;
+        this.id = id;
+        this.name = name;
+        this.floor = floor;
+        this.capacity = capacity;
+        this.status = status;
     }
 
     public Table(String id, String name, int floor, String capacity, int status) {
@@ -43,6 +59,15 @@ public class Table implements Parcelable {
             return new Table[size];
         }
     };
+
+    @NonNull
+    public Long getIdTable() {
+        return idTable;
+    }
+
+    public void setIdTable(@NonNull Long idTable) {
+        this.idTable = idTable;
+    }
 
     public String getId() {
         return id;

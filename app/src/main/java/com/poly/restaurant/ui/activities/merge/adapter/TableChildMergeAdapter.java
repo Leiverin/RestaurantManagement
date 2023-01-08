@@ -2,12 +2,16 @@ package com.poly.restaurant.ui.activities.merge.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.poly.restaurant.data.models.Table;
 import com.poly.restaurant.databinding.ItemTableMergeBinding;
 
@@ -40,9 +44,28 @@ public class TableChildMergeAdapter extends RecyclerView.Adapter<TableChildMerge
             holder.binding.viewItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    onListener.onClickChild(table);
+
                 }
             });
+            holder.binding.clickMerge.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    if (compoundButton.isChecked()) {
+                        holder.binding.viewItem.setCardBackgroundColor(Color.parseColor("#FF7F50"));
+                        holder.binding.tvNameTable.setTextColor(Color.WHITE);
+                        holder.binding.tvCapacityTable.setTextColor(Color.WHITE);
+                        holder.binding.imgTable.setColorFilter(Color.WHITE);
+                        onListener.onClickAddTable(table);
+                    } else {
+                        holder.binding.viewItem.setCardBackgroundColor(Color.WHITE);
+                        holder.binding.tvNameTable.setTextColor(Color.BLACK);
+                        holder.binding.tvCapacityTable.setTextColor(Color.BLACK);
+                        holder.binding.imgTable.setColorFilter(Color.BLACK);
+                        onListener.onClickDeleteTable(table);
+                    }
+                }
+            });
+
         }
     }
 
@@ -62,6 +85,7 @@ public class TableChildMergeAdapter extends RecyclerView.Adapter<TableChildMerge
 }
 
 interface OnListener {
-    void onClickChild(Table table);
+    void onClickAddTable(Table table);
+    void onClickDeleteTable(Table table);
 }
 

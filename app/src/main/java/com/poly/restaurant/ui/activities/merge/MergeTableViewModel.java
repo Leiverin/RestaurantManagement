@@ -1,10 +1,11 @@
 package com.poly.restaurant.ui.activities.merge;
 
 import android.content.Context;
-import android.util.Log;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.poly.restaurant.data.models.Product;
 import com.poly.restaurant.data.models.Table;
 import com.poly.restaurant.data.retrofit.RetroInstance;
 import com.poly.restaurant.data.retrofit.ServiceAPI;
@@ -26,6 +27,10 @@ public class MergeTableViewModel extends BaseViewModel {
         mListEmptyTableLiveData = new MutableLiveData<>();
     }
 
+    public LiveData<List<Table>> getTableLiveData(){
+        return tableDao.getListTable();
+    }
+
     public void callToGetTableLive(int floor, int status) {
         ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
         Observable<List<Table>> observable = serviceAPI.getTableByFloorAndStatus(floor, status);
@@ -39,7 +44,6 @@ public class MergeTableViewModel extends BaseViewModel {
     }
 
     private void onHandleErrorTableLive(Throwable throwable) {
-        Log.e("TAG", "handle error live: " + throwable.getMessage());
         mListLiveTableLiveData.postValue(null);
     }
 
@@ -57,7 +61,6 @@ public class MergeTableViewModel extends BaseViewModel {
     }
 
     private void onHandleErrorTableEmpty(Throwable throwable) {
-        Log.e("TAG", "handle error empty: " + throwable.getMessage());
         mListEmptyTableLiveData.postValue(null);
     }
 }
