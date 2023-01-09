@@ -1,113 +1,49 @@
 package com.poly.restaurant.ui.bill;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-import androidx.cardview.widget.CardView;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.annotation.NonNull;
 
-import com.poly.restaurant.data.models.Bill;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.poly.restaurant.databinding.ActivityBillBinding;
 import com.poly.restaurant.ui.base.BaseActivity;
-import com.poly.restaurant.ui.bill.adapter.BillAdapter;
-import com.poly.restaurant.ui.bill.adapter.OnListener;
-import com.poly.restaurant.utils.Constants;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.poly.restaurant.ui.bill.adapter.PagerBillAdapter;
 
 public class BillActivity extends BaseActivity {
     private ActivityBillBinding binding;
-    private BillAdapter adapter;
-    private List<Bill> list;
-    private BillViewModel viewModel;
+    private PagerBillAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(this).get(BillViewModel.class);
         binding = ActivityBillBinding.inflate(getLayoutInflater());
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(binding.getRoot());
-        binding.prgLoadBill.setVisibility(View.VISIBLE);
-        binding.rvBill.setVisibility(View.GONE);
-        list = new ArrayList<>();
-        initRec();
-        initViewModel();
-        LocalBroadcastManager.getInstance(this).registerReceiver((receiver),
-                new IntentFilter(Constants.REQUEST_TO_ACTIVITY)
-        );
+        tabLayout();
     }
 
-    private void initRec() {
-        adapter = new BillAdapter(this, list, new OnListener() {
+    private void tabLayout() {
+        adapter = new PagerBillAdapter(getSupportFragmentManager(), getLifecycle());
+        binding.pager.setAdapter(adapter);
+        new TabLayoutMediator(binding.tabLayout, binding.pager, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
-            public void onClickBill(Bill bill, CardView cardView) {
-                Constants.dialogShowDetailBill(bill, BillActivity.this,cardView);
-            }
-
-            @Override
-            public void onClickFeedback(Bill bill) {
-
-            }
-        });
-        binding.rvBill.setAdapter(adapter);
-    }
-
-    private void initViewModel() {
-        viewModel.mListBillLiveData.observe(this, new Observer<List<Bill>>() {
-            @Override
-            public void onChanged(List<Bill> bills) {
-                if (bills.isEmpty()) {
-                    binding.empty.setVisibility(View.VISIBLE);
-                    binding.prgLoadBill.setVisibility(View.GONE);
-                } else {
-                    list = bills;
-                    adapter.setList(list);
-                    binding.rvBill.setVisibility(View.VISIBLE);
-                    binding.prgLoadBill.setVisibility(View.GONE);
-                    binding.empty.setVisibility(View.GONE);
+            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+                switch (position) {
+                    case 0:
+                        tab.setText("Hóa đơn");
+                        break;
+                    case 1:
+                        tab.setText("Hóa đơn gộp");
+                        break;
                 }
-
             }
-        });
-        viewModel.getBill(Constants.staff.getId(), Constants.staff.getFloor().getNumberFloor());
+        }).attach();
     }
 
-    private final BroadcastReceiver receiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            try {
-                viewModel.getBill(Constants.staff.getId(), Constants.staff.getFloor().getNumberFloor());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    };
 
-    @Override
-    protected void onStop() {
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
-        super.onStop();
-    }
-
-    @Override
-    protected void onResume() {
-        LocalBroadcastManager.getInstance(this).registerReceiver((receiver),
-                new IntentFilter(Constants.REQUEST_TO_ACTIVITY)
-        );
-        viewModel.getBill(Constants.staff.getId(), Constants.staff.getFloor().getNumberFloor());
-        super.onResume();
-    }
 }

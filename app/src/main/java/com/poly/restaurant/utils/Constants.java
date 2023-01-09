@@ -45,6 +45,7 @@ public class Constants {
     public static final String EXTRA_ID_STAFF_TO_TABLE_DETAIL = "EXTRA_ID_STAFF_TO_TABLE_DETAIL";
     public static final String STRING_CONTENT_TO_ANNOUNCE = "content_to_announce";
     public static String EXTRA_TABLE_TO_DETAIL = "extra_table_to_detail";
+    public static String EXTRA_TABLE_TO_MERGE = "extra_table_to_merge";
     public static String EXTRA_ADMIN_TO_DETAIL = "extra_admin_to_detail";
     public static String EXTRA_CHEF_TO_DETAIL = "extra_chef_to_detail";
     public static String EXTRA_CASHIER_TO_DETAIL = "extra_cashier_to_detail";

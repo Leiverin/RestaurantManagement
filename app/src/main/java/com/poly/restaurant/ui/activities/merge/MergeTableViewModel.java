@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.poly.restaurant.data.models.Bill;
 import com.poly.restaurant.data.models.Product;
 import com.poly.restaurant.data.models.Table;
 import com.poly.restaurant.data.retrofit.RetroInstance;
@@ -20,15 +21,21 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class MergeTableViewModel extends BaseViewModel {
     public MutableLiveData<List<Table>> mListLiveTableLiveData;
     public MutableLiveData<List<Table>> mListEmptyTableLiveData;
+    public MutableLiveData<Bill> wasBillCreated;
 
     public MergeTableViewModel(Context context) {
         super(context);
         mListLiveTableLiveData = new MutableLiveData<>();
         mListEmptyTableLiveData = new MutableLiveData<>();
+        wasBillCreated = new MutableLiveData<>();
     }
 
-    public LiveData<List<Table>> getTableLiveData(){
+    public LiveData<List<Table>> getTableLiveData() {
         return tableDao.getListTable();
+    }
+
+    public LiveData<List<Product>> getListProductByIdTableLive(String idTable){
+        return productDao.getProductByIdTableLiveData(idTable);
     }
 
     public void callToGetTableLive(int floor, int status) {
@@ -62,5 +69,21 @@ public class MergeTableViewModel extends BaseViewModel {
 
     private void onHandleErrorTableEmpty(Throwable throwable) {
         mListEmptyTableLiveData.postValue(null);
+    }
+
+    public void callToCreateBill(Bill bill) {
+        ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
+        Observable<Bill> mListDrinkObservable = serviceAPI.createBill(bill);
+        mListDrinkObservable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::onRetrieveBillSuccess, this::handleErrors);
+    }
+
+    private void onRetrieveBillSuccess(Bill result) {
+        wasBillCreated.postValue(result);
+    }
+
+    private void handleErrors(Throwable throwable) {
+        wasBillCreated.postValue(null);
     }
 }

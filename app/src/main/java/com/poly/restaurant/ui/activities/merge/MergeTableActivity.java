@@ -5,9 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,18 +17,24 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.poly.restaurant.R;
+import com.poly.restaurant.data.models.Bill;
+import com.poly.restaurant.data.models.Product;
 import com.poly.restaurant.data.models.Table;
 import com.poly.restaurant.data.models.TableParent;
 import com.poly.restaurant.databinding.ActivityMergeTableBinding;
+import com.poly.restaurant.preference.AppSharePreference;
 import com.poly.restaurant.ui.activities.merge.adapter.OnListenerMerge;
 import com.poly.restaurant.ui.activities.merge.adapter.TableManageMergeAdapter;
 import com.poly.restaurant.ui.base.BaseActivity;
 import com.poly.restaurant.utils.Constants;
 import com.poly.restaurant.utils.helps.ViewModelFactory;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 public class MergeTableActivity extends BaseActivity {
     private ActivityMergeTableBinding binding;
@@ -36,8 +42,13 @@ public class MergeTableActivity extends BaseActivity {
     private List<Table> listLiveTable;
     private List<Table> listEmptyTable;
     private List<TableParent> mListTableMain;
+    private List<Product> mListProduct;
     private TableManageMergeAdapter adapter;
     private boolean isShowing = false;
+    private final String date = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Calendar.getInstance().getTime());
+    private final String time = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Calendar.getInstance().getTime());
+    private double total = 0;
+    private Table table;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,18 +62,35 @@ public class MergeTableActivity extends BaseActivity {
         listLiveTable = new ArrayList<>();
         listEmptyTable = new ArrayList<>();
         mListTableMain = new ArrayList<>();
+        mListProduct = new ArrayList<Product>();
+        table = getIntent().getParcelableExtra(Constants.EXTRA_TABLE_TO_MERGE);
         initRec();
         initViewModel();
+        initActions();
+        eventScrollRecycleView();
         LocalBroadcastManager.getInstance(this).registerReceiver((receiver),
                 new IntentFilter(Constants.REQUEST_TO_ACTIVITY)
         );
-        eventScrollRecycleView();
     }
 
     private void initActions() {
         binding.imgMerge.setOnClickListener(view -> {
-
+            createBillMerge();
         });
+    }
+
+    private void createBillMerge() {
+        viewModel.wasBillCreated.observe(this, new Observer<Bill>() {
+            @Override
+            public void onChanged(Bill bill) {
+                if (bill != null) {
+                    Toast.makeText(MergeTableActivity.this, "Gộp bàn thành công", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(MergeTableActivity.this, "Xảy ra lỗi", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        viewModel.callToCreateBill(new Bill(null, date, time, total, 0, 4, mListProduct, null, viewModel.getTableLiveData().getValue(), null, Constants.staff, null));
     }
 
     private void eventScrollRecycleView() {
@@ -98,13 +126,31 @@ public class MergeTableActivity extends BaseActivity {
             @Override
             public void onDeleteTable(Table table) {
                 viewModel.deleteTable(table.getId());
-                Log.d("deleteTable", table.getName());
             }
         });
         binding.rvMerge.setAdapter(adapter);
     }
 
     private void initViewModel() {
+        viewModel.getListProductByIdTableLive(table.getId()).observe(this, new Observer<List<Product>>() {
+            @Override
+            public void onChanged(List<Product> products) {
+                if (products != null && products.size() != 0) {
+                    if (!isShowing) {
+                        visibleBottomSheet();
+                        isShowing = true;
+                    }
+                    total = 0;
+                    for (Product product : products) {
+                        total += Double.parseDouble((product.getPrice() * product.getAmount()) + "");
+                    }
+                    mListProduct = products;
+                } else {
+                    isShowing = false;
+                    hideBottomSheet();
+                }
+            }
+        });
         viewModel.mListEmptyTableLiveData.observe(this, new Observer<List<Table>>() {
             @Override
             public void onChanged(List<Table> tables) {
@@ -142,6 +188,7 @@ public class MergeTableActivity extends BaseActivity {
                     for (Table table : tables) {
                         names.append(table.getName()).append(", ");
                     }
+                    tables.add(table);
                     binding.tvNameTable.setText(names);
                 } else {
                     hideBottomSheet();
