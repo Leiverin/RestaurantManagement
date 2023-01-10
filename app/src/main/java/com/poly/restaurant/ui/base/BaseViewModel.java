@@ -104,6 +104,16 @@ public abstract class BaseViewModel extends ViewModel {
             }
         });
     }
+
+    public void deleteTableWhenPaying(Table table) {
+        appExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                tableDao.deleteTableWhenPaying(table);
+            }
+        });
+    }
+
     public void updateTable(Table table) {
         appExecutors.diskIO().execute(new Runnable() {
             @Override

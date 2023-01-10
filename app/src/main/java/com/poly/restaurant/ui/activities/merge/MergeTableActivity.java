@@ -22,7 +22,6 @@ import com.poly.restaurant.data.models.Product;
 import com.poly.restaurant.data.models.Table;
 import com.poly.restaurant.data.models.TableParent;
 import com.poly.restaurant.databinding.ActivityMergeTableBinding;
-import com.poly.restaurant.preference.AppSharePreference;
 import com.poly.restaurant.ui.activities.merge.adapter.OnListenerMerge;
 import com.poly.restaurant.ui.activities.merge.adapter.TableManageMergeAdapter;
 import com.poly.restaurant.ui.base.BaseActivity;
@@ -90,7 +89,6 @@ public class MergeTableActivity extends BaseActivity {
                 }
             }
         });
-        viewModel.callToCreateBill(new Bill(null, date, time, total, 0, 4, mListProduct, null, viewModel.getTableLiveData().getValue(), null, Constants.staff, null));
     }
 
     private void eventScrollRecycleView() {
@@ -189,6 +187,7 @@ public class MergeTableActivity extends BaseActivity {
                         names.append(table.getName()).append(", ");
                     }
                     tables.add(table);
+                    viewModel.callToCreateBill(new Bill(null, date, time, total, 0, 4, mListProduct, null, tables, null, Constants.staff, null));
                     binding.tvNameTable.setText(names);
                 } else {
                     hideBottomSheet();
