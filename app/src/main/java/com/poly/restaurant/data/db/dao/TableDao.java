@@ -17,8 +17,8 @@ public interface TableDao {
     @Query("SELECT * FROM `Table`")
     LiveData<List<Table>> getListTable();
 
-    @Query("SELECT * FROM `Table` WHERE ")
-    LiveData<List<Table>> getListTable();
+//    @Query("SELECT * FROM `Table` WHERE ")
+//    LiveData<List<Table>> getListTable();
 
     @Insert
     void insertTable(Table table);

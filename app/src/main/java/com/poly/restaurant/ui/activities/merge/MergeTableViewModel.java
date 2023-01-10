@@ -1,6 +1,7 @@
 package com.poly.restaurant.ui.activities.merge;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -22,19 +23,21 @@ public class MergeTableViewModel extends BaseViewModel {
     public MutableLiveData<List<Table>> mListLiveTableLiveData;
     public MutableLiveData<List<Table>> mListEmptyTableLiveData;
     public MutableLiveData<Bill> wasBillCreated;
+    public MutableLiveData<List<Bill>> statusBillExistLiveData;
 
     public MergeTableViewModel(Context context) {
         super(context);
         mListLiveTableLiveData = new MutableLiveData<>();
         mListEmptyTableLiveData = new MutableLiveData<>();
         wasBillCreated = new MutableLiveData<>();
+        statusBillExistLiveData = new MutableLiveData<>();
     }
 
     public LiveData<List<Table>> getTableLiveData() {
         return tableDao.getListTable();
     }
 
-    public LiveData<List<Product>> getListProductByIdTableLive(String idTable){
+    public LiveData<List<Product>> getListProductByIdTableLive(String idTable) {
         return productDao.getProductByIdTableLiveData(idTable);
     }
 
@@ -85,5 +88,21 @@ public class MergeTableViewModel extends BaseViewModel {
 
     private void handleErrors(Throwable throwable) {
         wasBillCreated.postValue(null);
+    }
+
+    public void checkBillAlreadyExists(String idTable) {
+        ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
+        Observable<List<Bill>> mListDrinkObservable = serviceAPI.getBillIfExists(idTable);
+        mListDrinkObservable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::onRetrieveBillExist, this::handleErrorsBillExist);
+    }
+
+    private void onRetrieveBillExist(List<Bill> result) {
+        statusBillExistLiveData.postValue(result);
+    }
+
+    private void handleErrorsBillExist(Throwable throwable) {
+        statusBillExistLiveData.postValue(null);
     }
 }

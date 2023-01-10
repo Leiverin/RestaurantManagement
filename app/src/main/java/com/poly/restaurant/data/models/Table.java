@@ -122,4 +122,16 @@ public class Table implements Parcelable {
         parcel.writeString(capacity);
         parcel.writeInt(status);
     }
+
+    @Override
+    public String toString() {
+        return "Table{" +
+                "idTable=" + idTable +
+                ", id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", floor=" + floor +
+                ", capacity='" + capacity + '\'' +
+                ", status=" + status +
+                '}';
+    }
 }

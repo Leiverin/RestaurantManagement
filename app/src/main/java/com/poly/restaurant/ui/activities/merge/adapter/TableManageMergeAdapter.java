@@ -47,9 +47,11 @@ public class TableManageMergeAdapter extends RecyclerView.Adapter<TableManageMer
             }
 
             @Override
-            public void onClickDeleteTable(Table table) {
-               onListenerMerge.onDeleteTable(table);
+            public void onClickDeleteTable(String id) {
+                onListenerMerge.onDeleteTable(id);
             }
+
+
         });
         holder.binding.rvTable.setAdapter(adapter);
         holder.binding.tvTitle.setText(tableParent.getTitle());

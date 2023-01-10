@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -61,7 +60,7 @@ public class TableChildMergeAdapter extends RecyclerView.Adapter<TableChildMerge
                         holder.binding.tvNameTable.setTextColor(Color.BLACK);
                         holder.binding.tvCapacityTable.setTextColor(Color.BLACK);
                         holder.binding.imgTable.setColorFilter(Color.BLACK);
-                        onListener.onClickDeleteTable(table);
+                        onListener.onClickDeleteTable(table.getId());
                     }
                 }
             });
@@ -86,6 +85,7 @@ public class TableChildMergeAdapter extends RecyclerView.Adapter<TableChildMerge
 
 interface OnListener {
     void onClickAddTable(Table table);
-    void onClickDeleteTable(Table table);
+
+    void onClickDeleteTable(String id);
 }
 

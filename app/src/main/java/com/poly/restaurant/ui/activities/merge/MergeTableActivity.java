@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.Toast;
@@ -40,6 +41,7 @@ public class MergeTableActivity extends BaseActivity {
     private MergeTableViewModel viewModel;
     private List<Table> listLiveTable;
     private List<Table> listEmptyTable;
+    private List<Table> tableList;
     private List<TableParent> mListTableMain;
     private List<Product> mListProduct;
     private TableManageMergeAdapter adapter;
@@ -61,7 +63,8 @@ public class MergeTableActivity extends BaseActivity {
         listLiveTable = new ArrayList<>();
         listEmptyTable = new ArrayList<>();
         mListTableMain = new ArrayList<>();
-        mListProduct = new ArrayList<Product>();
+        mListProduct = new ArrayList<>();
+        tableList = new ArrayList<>();
         table = getIntent().getParcelableExtra(Constants.EXTRA_TABLE_TO_MERGE);
         initRec();
         initViewModel();
@@ -75,19 +78,6 @@ public class MergeTableActivity extends BaseActivity {
     private void initActions() {
         binding.imgMerge.setOnClickListener(view -> {
             createBillMerge();
-        });
-    }
-
-    private void createBillMerge() {
-        viewModel.wasBillCreated.observe(this, new Observer<Bill>() {
-            @Override
-            public void onChanged(Bill bill) {
-                if (bill != null) {
-                    Toast.makeText(MergeTableActivity.this, "Gộp bàn thành công", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(MergeTableActivity.this, "Xảy ra lỗi", Toast.LENGTH_SHORT).show();
-                }
-            }
         });
     }
 
@@ -119,17 +109,59 @@ public class MergeTableActivity extends BaseActivity {
             @Override
             public void onAddTable(Table table) {
                 handleAddTable(table);
+                viewModel.checkBillAlreadyExists(table.getId());
             }
 
             @Override
-            public void onDeleteTable(Table table) {
-                viewModel.deleteTable(table.getId());
+            public void onDeleteTable(String id) {
+                viewModel.deleteTable(id);
+                tableList = new ArrayList<>();
+                Log.d("tableList1", tableList.toString());
+
+                if (tableList == null) {
+                    tableList.add(table);
+                }
+                Log.d("tableList2", tableList.toString());
             }
         });
         binding.rvMerge.setAdapter(adapter);
     }
 
     private void initViewModel() {
+        viewModel.getTableLiveData().observe(this, new Observer<List<Table>>() {
+            @Override
+            public void onChanged(List<Table> tables) {
+                if (tables != null && tables.size() != 0) {
+                    if (!isShowing) {
+                        visibleBottomSheet();
+                    }
+                    isShowing = true;
+                    binding.tvTotalTable.setText("Số lượng :" + tables.size() + " bàn");
+                    StringBuilder names = new StringBuilder();
+                    for (Table table : tables) {
+                        names.append(table.getName()).append(", ");
+                    }
+                    tables.add(table);
+                    tableList = tables;
+                    Log.d("tableList", tableList.toString());
+                    binding.tvNameTable.setText(names);
+                } else {
+                    hideBottomSheet();
+                    isShowing = false;
+                }
+                showOrHideView(tables);
+            }
+        });
+        viewModel.statusBillExistLiveData.observe(MergeTableActivity.this, new Observer<List<Bill>>() {
+            @Override
+            public void onChanged(List<Bill> bills) {
+                if (bills != null && bills.size() != 0) {
+                    for (Bill bill : bills) {
+                        mListProduct.addAll(bill.getProducts());
+                    }
+                }
+            }
+        });
         viewModel.getListProductByIdTableLive(table.getId()).observe(this, new Observer<List<Product>>() {
             @Override
             public void onChanged(List<Product> products) {
@@ -171,29 +203,6 @@ public class MergeTableActivity extends BaseActivity {
                     binding.prgLoadBill.setVisibility(View.GONE);
                     adapter.setList(mListTableMain);
                 }
-            }
-        });
-        viewModel.getTableLiveData().observe(this, new Observer<List<Table>>() {
-            @Override
-            public void onChanged(List<Table> tables) {
-                if (tables != null && tables.size() != 0) {
-                    if (!isShowing) {
-                        visibleBottomSheet();
-                    }
-                    isShowing = true;
-                    binding.tvTotalTable.setText("Số lượng :" + tables.size() + " bàn");
-                    StringBuilder names = new StringBuilder();
-                    for (Table table : tables) {
-                        names.append(table.getName()).append(", ");
-                    }
-                    tables.add(table);
-                    viewModel.callToCreateBill(new Bill(null, date, time, total, 0, 4, mListProduct, null, tables, null, Constants.staff, null));
-                    binding.tvNameTable.setText(names);
-                } else {
-                    hideBottomSheet();
-                    isShowing = false;
-                }
-                showOrHideView(tables);
             }
         });
 
@@ -240,6 +249,29 @@ public class MergeTableActivity extends BaseActivity {
                 table.getCapacity(),
                 2
         ));
+    }
+
+    private void createBillMerge() {
+        viewModel.wasBillCreated.observe(this, new Observer<Bill>() {
+            @Override
+            public void onChanged(Bill bill) {
+                if (bill != null) {
+                    if (bill.getTables().size() < 1) {
+                        Toast.makeText(MergeTableActivity.this, "Yêu cầu chọn bàn để gộp", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(MergeTableActivity.this, "Gộp bàn thành công", Toast.LENGTH_SHORT).show();
+                        for (Table table : bill.getTables()) {
+                            viewModel.deleteTable(table.getId());
+                        }
+                    }
+
+                } else {
+                    Toast.makeText(MergeTableActivity.this, "Xảy ra lỗi", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        viewModel.callToCreateBill(new Bill(null, date, time, total, 0, 4, mListProduct, null, tableList, null, Constants.staff, null));
+
     }
 
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
