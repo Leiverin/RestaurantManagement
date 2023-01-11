@@ -23,14 +23,16 @@ public class MergeTableViewModel extends BaseViewModel {
     public MutableLiveData<List<Table>> mListLiveTableLiveData;
     public MutableLiveData<List<Table>> mListEmptyTableLiveData;
     public MutableLiveData<Bill> wasBillCreated;
-    public MutableLiveData<List<Bill>> statusBillExistLiveData;
+    public MutableLiveData<List<Bill>> getProductByIdTable;
+    public MutableLiveData<Boolean> wasUpdatedTable;
 
     public MergeTableViewModel(Context context) {
         super(context);
         mListLiveTableLiveData = new MutableLiveData<>();
         mListEmptyTableLiveData = new MutableLiveData<>();
         wasBillCreated = new MutableLiveData<>();
-        statusBillExistLiveData = new MutableLiveData<>();
+        getProductByIdTable = new MutableLiveData<>();
+        wasUpdatedTable=new MutableLiveData<>();
     }
 
     public LiveData<List<Table>> getTableLiveData() {
@@ -99,10 +101,28 @@ public class MergeTableViewModel extends BaseViewModel {
     }
 
     private void onRetrieveBillExist(List<Bill> result) {
-        statusBillExistLiveData.postValue(result);
+        getProductByIdTable.postValue(result);
     }
 
     private void handleErrorsBillExist(Throwable throwable) {
-        statusBillExistLiveData.postValue(null);
+        getProductByIdTable.postValue(null);
+    }
+
+    public void updateTable(String idTable, Table table){
+        ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
+        Observable<Table> mListDrinkObservable = serviceAPI.updateTable(idTable, table, "PUT");
+        mListDrinkObservable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::onRetrieveTableSuccess, this::handleErrorsGetTable);
+    }
+
+
+    private void onRetrieveTableSuccess(Table result) {
+        wasUpdatedTable.postValue(true);
+    }
+
+    private void handleErrorsGetTable(Throwable throwable) {
+        wasUpdatedTable.postValue(false);
+        Log.d("TAG", "Handle error update table: "+ throwable.getMessage());
     }
 }

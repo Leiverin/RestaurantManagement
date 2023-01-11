@@ -21,7 +21,7 @@ public class TableManageViewModel extends ViewModel {
     public MutableLiveData<List<Table>> mListTableLiveData;
     public MutableLiveData<List<Table>> mListLiveTableLiveData;
     public MutableLiveData<List<Table>> mListEmptyTableLiveData;
-    public MutableLiveData<List<Table>> mListBookedTableLiveData;
+    public MutableLiveData<List<Table>> mListMergeTableLiveData;
     public MutableLiveData<List<Staff>> mListAdminLiveData;
     public MutableLiveData<List<Staff>> mListChefLiveData;
     public MutableLiveData<List<Staff>> mListCashierLiveData;
@@ -33,7 +33,7 @@ public class TableManageViewModel extends ViewModel {
         mListAdminLiveData = new MutableLiveData<>();
         mListChefLiveData = new MutableLiveData<>();
         mListCashierLiveData = new MutableLiveData<>();
-        mListBookedTableLiveData = new MutableLiveData<>();
+        mListMergeTableLiveData = new MutableLiveData<>();
     }
 
     public void callToGetTable(int floor) {
@@ -87,7 +87,7 @@ public class TableManageViewModel extends ViewModel {
         mListEmptyTableLiveData.postValue(null);
     }
 
-    public void callToGetTableBooked(int floor, int status) {
+    public void callToGetTableMerge(int floor, int status) {
         ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
         Observable<List<Table>> observable = serviceAPI.getTableByFloorAndStatus(floor, status);
         observable.subscribeOn(Schedulers.io())
@@ -96,12 +96,12 @@ public class TableManageViewModel extends ViewModel {
     }
 
     private void onRetrieveTableBookedSuccess(List<Table> tables) {
-        mListBookedTableLiveData.postValue(tables);
+        mListMergeTableLiveData.postValue(tables);
     }
 
     private void onHandleErrorTableBooked(Throwable throwable) {
         Log.e("TAG", "handle error empty: " + throwable.getMessage());
-        mListBookedTableLiveData.postValue(null);
+        mListMergeTableLiveData.postValue(null);
     }
 
     public void callToGetAdmin() {

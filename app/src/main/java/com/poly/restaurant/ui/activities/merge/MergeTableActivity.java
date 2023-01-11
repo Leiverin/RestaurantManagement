@@ -23,6 +23,7 @@ import com.poly.restaurant.data.models.Product;
 import com.poly.restaurant.data.models.Table;
 import com.poly.restaurant.data.models.TableParent;
 import com.poly.restaurant.databinding.ActivityMergeTableBinding;
+import com.poly.restaurant.preference.AppSharePreference;
 import com.poly.restaurant.ui.activities.merge.adapter.OnListenerMerge;
 import com.poly.restaurant.ui.activities.merge.adapter.TableManageMergeAdapter;
 import com.poly.restaurant.ui.base.BaseActivity;
@@ -50,6 +51,7 @@ public class MergeTableActivity extends BaseActivity {
     private final String time = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Calendar.getInstance().getTime());
     private double total = 0;
     private Table table;
+    private AppSharePreference sharePreference;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,6 +68,7 @@ public class MergeTableActivity extends BaseActivity {
         mListProduct = new ArrayList<>();
         tableList = new ArrayList<>();
         table = getIntent().getParcelableExtra(Constants.EXTRA_TABLE_TO_MERGE);
+        sharePreference = new AppSharePreference(this);
         initRec();
         initViewModel();
         initActions();
@@ -113,14 +116,8 @@ public class MergeTableActivity extends BaseActivity {
             }
 
             @Override
-            public void onDeleteTable(String id) {
-                viewModel.deleteTable(id);
-                tableList = new ArrayList<>();
-                Log.d("tableList1", tableList.toString());
-
-                if (tableList == null) {
-                    tableList.add(table);
-                }
+            public void onDeleteTable(Table table) {
+                viewModel.deleteTable(table.getId());
                 Log.d("tableList2", tableList.toString());
             }
         });
@@ -143,7 +140,6 @@ public class MergeTableActivity extends BaseActivity {
                     }
                     tables.add(table);
                     tableList = tables;
-                    Log.d("tableList", tableList.toString());
                     binding.tvNameTable.setText(names);
                 } else {
                     hideBottomSheet();
@@ -152,11 +148,23 @@ public class MergeTableActivity extends BaseActivity {
                 showOrHideView(tables);
             }
         });
-        viewModel.statusBillExistLiveData.observe(MergeTableActivity.this, new Observer<List<Bill>>() {
+        viewModel.getProductByIdTable.observe(MergeTableActivity.this, new Observer<List<Bill>>() {
             @Override
             public void onChanged(List<Bill> bills) {
                 if (bills != null && bills.size() != 0) {
                     for (Bill bill : bills) {
+//                        for (Product product : bill.getProducts()) {
+//                            viewModel.updateProduct(new Product(
+//                                    product.getIdProduct(),
+//                                    product.getId(), product.getName(), product.getUrlImage(), product.getPrice(),
+//                                    product.getDescription(),
+//                                    product.getTotal(), product.getAmount(),
+//                                    product.getType(),
+//                                    product.getIdCategory(),
+//                                    table.getId(),
+//                                    product.getStatus()
+//                            ));
+//                        }
                         mListProduct.addAll(bill.getProducts());
                     }
                 }
@@ -211,8 +219,6 @@ public class MergeTableActivity extends BaseActivity {
     private void showOrHideView(List<Table> listTable) {
         if (listTable == null || listTable.size() == 0) {
             binding.viewBottomSheet.setVisibility(View.GONE);
-            binding.tvTotalTable.setText("Số lượng :0");
-            binding.tvNameTable.setText("Chọn bàn");
         } else {
             binding.viewBottomSheet.setVisibility(View.VISIBLE);
         }
@@ -263,6 +269,8 @@ public class MergeTableActivity extends BaseActivity {
                         for (Table table : bill.getTables()) {
                             viewModel.deleteTable(table.getId());
                         }
+                        Table tableUpdate = new Table(table.getId(), table.getName(), table.getFloor(), table.getCapacity(), 2);
+                        viewModel.updateTable(table.getId(), tableUpdate);
                     }
 
                 } else {

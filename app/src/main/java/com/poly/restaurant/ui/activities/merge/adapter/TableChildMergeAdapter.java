@@ -60,7 +60,7 @@ public class TableChildMergeAdapter extends RecyclerView.Adapter<TableChildMerge
                         holder.binding.tvNameTable.setTextColor(Color.BLACK);
                         holder.binding.tvCapacityTable.setTextColor(Color.BLACK);
                         holder.binding.imgTable.setColorFilter(Color.BLACK);
-                        onListener.onClickDeleteTable(table.getId());
+                        onListener.onClickDeleteTable(table);
                     }
                 }
             });
@@ -85,7 +85,6 @@ public class TableChildMergeAdapter extends RecyclerView.Adapter<TableChildMerge
 
 interface OnListener {
     void onClickAddTable(Table table);
-
-    void onClickDeleteTable(String id);
+    void onClickDeleteTable(Table table);
 }
 
