@@ -46,4 +46,8 @@ public interface ProductDao {
 
     @Query("UPDATE Product SET STATUS = :status WHERE id = :id AND idTable = :idTable")
     void updateStatusProductInBill(int status, String id, String idTable);
+
+    @Query("UPDATE Product SET idTable = :idTable WHERE id = :id")
+    void updateProductMerge(String idTable, String id);
+
 }

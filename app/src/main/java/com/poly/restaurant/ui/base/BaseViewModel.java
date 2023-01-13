@@ -123,5 +123,14 @@ public abstract class BaseViewModel extends ViewModel {
         });
     }
 
+    public void updateProductMerge(String idTable,String id){
+        appExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                productDao.updateProductMerge(idTable,id);
+            }
+        });
+    }
+
 
 }

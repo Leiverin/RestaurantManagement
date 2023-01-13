@@ -148,24 +148,16 @@ public class MergeTableActivity extends BaseActivity {
                 showOrHideView(tables);
             }
         });
+        // lấy product từ các bàn đã chọn
         viewModel.getProductByIdTable.observe(MergeTableActivity.this, new Observer<List<Bill>>() {
             @Override
             public void onChanged(List<Bill> bills) {
                 if (bills != null && bills.size() != 0) {
                     for (Bill bill : bills) {
-//                        for (Product product : bill.getProducts()) {
-//                            viewModel.updateProduct(new Product(
-//                                    product.getIdProduct(),
-//                                    product.getId(), product.getName(), product.getUrlImage(), product.getPrice(),
-//                                    product.getDescription(),
-//                                    product.getTotal(), product.getAmount(),
-//                                    product.getType(),
-//                                    product.getIdCategory(),
-//                                    table.getId(),
-//                                    product.getStatus()
-//                            ));
-//                        }
                         mListProduct.addAll(bill.getProducts());
+                        for (Product product : bill.getProducts()) {
+                            viewModel.updateProductMerge(table.getId(), product.getId());
+                        }
                     }
                 }
             }
@@ -268,6 +260,8 @@ public class MergeTableActivity extends BaseActivity {
                         Toast.makeText(MergeTableActivity.this, "Gộp bàn thành công", Toast.LENGTH_SHORT).show();
                         for (Table table : bill.getTables()) {
                             viewModel.deleteTable(table.getId());
+//                            Table tableMerge = new Table(table.getId(), table.getName(), table.getFloor(), table.getCapacity(), 2);
+//                            viewModel.updateTable(table.getId(), tableMerge);
                         }
                         Table tableUpdate = new Table(table.getId(), table.getName(), table.getFloor(), table.getCapacity(), 2);
                         viewModel.updateTable(table.getId(), tableUpdate);
