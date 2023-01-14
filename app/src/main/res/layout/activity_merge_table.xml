@@ -52,7 +52,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_merge"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="500dp"
                 android:layoutAnimation="@anim/layout_animation_slide_from_bottom"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_table_merge" />
@@ -106,7 +106,7 @@
                     style="@style/text_size_18sp_bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="Số lượng :2" />
+                    android:text="Số lượng :0" />
 
                 <TextView
                     android:id="@+id/tv_name_table"
@@ -116,7 +116,7 @@
                     android:layout_marginTop="3dp"
                     android:ellipsize="end"
                     android:lines="1"
-                    tools:text="Bàn 1,Bàn 2 ..." />
+                    android:text="Bàn số mấy" />
             </RelativeLayout>
         </LinearLayout>
     </FrameLayout>

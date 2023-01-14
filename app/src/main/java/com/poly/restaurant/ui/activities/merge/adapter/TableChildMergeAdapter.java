@@ -13,13 +13,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.poly.restaurant.data.models.Table;
 import com.poly.restaurant.databinding.ItemTableMergeBinding;
+import com.poly.restaurant.preference.AppSharePreference;
 
 import java.util.List;
+import java.util.Objects;
 
 public class TableChildMergeAdapter extends RecyclerView.Adapter<TableChildMergeAdapter.TableChildMergeViewModel> {
     private final Context context;
     private final List<Table> mListTable;
     private final OnListener onListener;
+    private AppSharePreference sharePreference;
 
     public TableChildMergeAdapter(Context context, List<Table> mListTable, OnListener onListener) {
         this.context = context;
@@ -37,7 +40,12 @@ public class TableChildMergeAdapter extends RecyclerView.Adapter<TableChildMerge
     @Override
     public void onBindViewHolder(@NonNull TableChildMergeViewModel holder, int position) {
         Table table = mListTable.get(position);
+        sharePreference = new AppSharePreference(context);
         if (table != null) {
+            if (Objects.equals(table.getId(), sharePreference.getTableId())) {
+                holder.itemView.setVisibility(View.GONE);
+                holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
+            }
             holder.binding.tvNameTable.setText(table.getName());
             holder.binding.tvCapacityTable.setText("Bàn " + table.getCapacity() + " người");
             holder.binding.viewItem.setOnClickListener(new View.OnClickListener() {

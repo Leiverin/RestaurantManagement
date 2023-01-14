@@ -118,7 +118,6 @@ public class MergeTableActivity extends BaseActivity {
             @Override
             public void onDeleteTable(Table table) {
                 viewModel.deleteTable(table.getId());
-                Log.d("tableList2", tableList.toString());
             }
         });
         binding.rvMerge.setAdapter(adapter);
