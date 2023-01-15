@@ -1,6 +1,5 @@
 package com.poly.myapplication.ui.login;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -8,7 +7,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 
-import com.poly.myapplication.R;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.poly.restaurant.R;
 
 public class LoginActivity extends AppCompatActivity {
 

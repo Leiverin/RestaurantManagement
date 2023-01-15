@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.poly.myapplication.R;
+import com.poly.restaurant.R;
 
 import java.util.ArrayList;
 import java.util.List;

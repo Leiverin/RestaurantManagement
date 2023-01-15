@@ -1,10 +1,10 @@
 package com.poly.myapplication.ui.food;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 
-import com.poly.myapplication.R;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.poly.restaurant.R;
 
 public class FoodActivity extends AppCompatActivity {
 
