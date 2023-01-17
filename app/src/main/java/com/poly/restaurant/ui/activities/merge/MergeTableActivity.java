@@ -23,7 +23,6 @@ import com.poly.restaurant.data.models.Product;
 import com.poly.restaurant.data.models.Table;
 import com.poly.restaurant.data.models.TableParent;
 import com.poly.restaurant.databinding.ActivityMergeTableBinding;
-import com.poly.restaurant.preference.AppSharePreference;
 import com.poly.restaurant.ui.activities.merge.adapter.OnListenerMerge;
 import com.poly.restaurant.ui.activities.merge.adapter.TableManageMergeAdapter;
 import com.poly.restaurant.ui.base.BaseActivity;
@@ -51,7 +50,6 @@ public class MergeTableActivity extends BaseActivity {
     private final String time = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Calendar.getInstance().getTime());
     private double total = 0;
     private Table table;
-    private AppSharePreference sharePreference;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,7 +66,6 @@ public class MergeTableActivity extends BaseActivity {
         mListProduct = new ArrayList<>();
         tableList = new ArrayList<>();
         table = getIntent().getParcelableExtra(Constants.EXTRA_TABLE_TO_MERGE);
-        sharePreference = new AppSharePreference(this);
         initRec();
         initViewModel();
         initActions();
@@ -144,7 +141,7 @@ public class MergeTableActivity extends BaseActivity {
                     hideBottomSheet();
                     isShowing = false;
                 }
-                showOrHideView(tables);
+                showOrHideView(tableList);
             }
         });
         // lấy product từ các bàn đã chọn
