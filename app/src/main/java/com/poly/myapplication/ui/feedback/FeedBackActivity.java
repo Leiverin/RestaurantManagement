@@ -112,41 +112,6 @@ public class FeedBackActivity extends BaseActivity {
                     }
                     if (!checkCreateFeedback) {
                         initViewModel();
-                    } else {
-                        if (i != -1) {
-                            binding.notFeedback.setVisibility(View.GONE);
-                            binding.haveFeedback.setVisibility(View.VISIBLE);
-                            if (feedbacks.get(i).getStatus() == 0) {
-                                binding.star1.setColorFilter(ContextCompat.getColor(FeedBackActivity.this, R.color.color_star), PorterDuff.Mode.MULTIPLY);
-                            } else if (feedbacks.get(i).getStatus() == 1) {
-                                binding.star1.setColorFilter(ContextCompat.getColor(FeedBackActivity.this, R.color.color_star), PorterDuff.Mode.MULTIPLY);
-                                binding.star2.setColorFilter(ContextCompat.getColor(FeedBackActivity.this, R.color.color_star), PorterDuff.Mode.MULTIPLY);
-                            } else if (feedbacks.get(i).getStatus() == 2) {
-                                binding.star1.setColorFilter(ContextCompat.getColor(FeedBackActivity.this, R.color.color_star), PorterDuff.Mode.MULTIPLY);
-                                binding.star2.setColorFilter(ContextCompat.getColor(FeedBackActivity.this, R.color.color_star), PorterDuff.Mode.MULTIPLY);
-                                binding.star3.setColorFilter(ContextCompat.getColor(FeedBackActivity.this, R.color.color_star), PorterDuff.Mode.MULTIPLY);
-                            } else if (feedbacks.get(i).getStatus() == 3) {
-                                binding.star1.setColorFilter(ContextCompat.getColor(FeedBackActivity.this, R.color.color_star), PorterDuff.Mode.MULTIPLY);
-                                binding.star2.setColorFilter(ContextCompat.getColor(FeedBackActivity.this, R.color.color_star), PorterDuff.Mode.MULTIPLY);
-                                binding.star3.setColorFilter(ContextCompat.getColor(FeedBackActivity.this, R.color.color_star), PorterDuff.Mode.MULTIPLY);
-                                binding.star4.setColorFilter(ContextCompat.getColor(FeedBackActivity.this, R.color.color_star), PorterDuff.Mode.MULTIPLY);
-                            } else if (feedbacks.get(i).getStatus() == 4) {
-                                binding.star1.setColorFilter(ContextCompat.getColor(FeedBackActivity.this, R.color.color_star), PorterDuff.Mode.MULTIPLY);
-                                binding.star2.setColorFilter(ContextCompat.getColor(FeedBackActivity.this, R.color.color_star), PorterDuff.Mode.MULTIPLY);
-                                binding.star3.setColorFilter(ContextCompat.getColor(FeedBackActivity.this, R.color.color_star), PorterDuff.Mode.MULTIPLY);
-                                binding.star4.setColorFilter(ContextCompat.getColor(FeedBackActivity.this, R.color.color_star), PorterDuff.Mode.MULTIPLY);
-                                binding.star5.setColorFilter(ContextCompat.getColor(FeedBackActivity.this, R.color.color_star), PorterDuff.Mode.MULTIPLY);
-                            }
-                            if (feedbacks.get(i).getTitle() == 0) {
-                                binding.titleFeedback1.setBackgroundResource(R.drawable.bg_select_title_feedback);
-                            } else if (feedbacks.get(i).getTitle() == 1) {
-                                binding.titleFeedback2.setBackgroundResource(R.drawable.bg_select_title_feedback);
-                            } else if (feedbacks.get(i).getTitle() == 2) {
-                                binding.titleFeedback3.setBackgroundResource(R.drawable.bg_select_title_feedback);
-                            }
-                            binding.contentFeedback.setText(feedbacks.get(i).getContent());
-                        }
-
                     }
                 }
 
