@@ -56,7 +56,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_merge"
                 android:layout_width="match_parent"
-                android:layout_height="570dp"
+                android:layout_height="550dp"
                 android:layoutAnimation="@anim/layout_animation_slide_from_bottom"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_table_merge" />

@@ -19,6 +19,7 @@ public class Table implements Parcelable {
     private int floor;
     private String capacity;
     private int status;
+    private String tableParent;
 
     public Table() {
     }
@@ -32,12 +33,39 @@ public class Table implements Parcelable {
         this.status = status;
     }
 
+    public Table(@NonNull Long idTable, String id, String name, int floor, String capacity, int status, String tableParent) {
+        this.idTable = idTable;
+        this.id = id;
+        this.name = name;
+        this.floor = floor;
+        this.capacity = capacity;
+        this.status = status;
+        this.tableParent = tableParent;
+    }
+
+    public String getTableParent() {
+        return tableParent;
+    }
+
+    public void setTableParent(String tableParent) {
+        this.tableParent = tableParent;
+    }
+
     public Table(String id, String name, int floor, String capacity, int status) {
         this.id = id;
         this.name = name;
         this.floor = floor;
         this.capacity = capacity;
         this.status = status;
+    }
+
+    public Table(String id, String name, int floor, String capacity, int status,String tableParent) {
+        this.id = id;
+        this.name = name;
+        this.floor = floor;
+        this.capacity = capacity;
+        this.status = status;
+        this.tableParent=tableParent;
     }
 
     protected Table(Parcel in) {

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.Toast;
@@ -35,6 +34,7 @@ import java.util.Calendar;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class MergeTableActivity extends BaseActivity {
     private ActivityMergeTableBinding binding;
@@ -49,7 +49,7 @@ public class MergeTableActivity extends BaseActivity {
     private final String date = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Calendar.getInstance().getTime());
     private final String time = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Calendar.getInstance().getTime());
     private double total = 0;
-    private Table table;
+    private Table tableIntent;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,7 +65,7 @@ public class MergeTableActivity extends BaseActivity {
         mListTableMain = new ArrayList<>();
         mListProduct = new ArrayList<>();
         tableList = new ArrayList<>();
-        table = getIntent().getParcelableExtra(Constants.EXTRA_TABLE_TO_MERGE);
+        tableIntent = getIntent().getParcelableExtra(Constants.EXTRA_TABLE_TO_MERGE);
         initRec();
         initViewModel();
         initActions();
@@ -129,18 +129,19 @@ public class MergeTableActivity extends BaseActivity {
                         visibleBottomSheet();
                     }
                     isShowing = true;
-                    binding.tvTotalTable.setText("Số lượng :" + tables.size() + " bàn");
                     StringBuilder names = new StringBuilder();
                     for (Table table : tables) {
                         names.append(table.getName()).append(", ");
                     }
-                    tables.add(table);
+                    tables.add(tableIntent);
                     tableList = tables;
                     binding.tvNameTable.setText(names);
                 } else {
+                    binding.tvNameTable.setText("Bàn ...");
                     hideBottomSheet();
                     isShowing = false;
                 }
+                binding.tvTotalTable.setText("Số lượng :" + tables.size() + " bàn");
                 showOrHideView(tableList);
             }
         });
@@ -152,13 +153,13 @@ public class MergeTableActivity extends BaseActivity {
                     for (Bill bill : bills) {
                         mListProduct.addAll(bill.getProducts());
                         for (Product product : bill.getProducts()) {
-                            viewModel.updateProductMerge(table.getId(), product.getId());
+                            viewModel.updateProductMerge(tableIntent.getId(), product.getId());
                         }
                     }
                 }
             }
         });
-        viewModel.getListProductByIdTableLive(table.getId()).observe(this, new Observer<List<Product>>() {
+        viewModel.getListProductByIdTableLive(tableIntent.getId()).observe(this, new Observer<List<Product>>() {
             @Override
             public void onChanged(List<Product> products) {
                 if (products != null && products.size() != 0) {
@@ -241,7 +242,8 @@ public class MergeTableActivity extends BaseActivity {
                 table.getName(),
                 table.getFloor(),
                 table.getCapacity(),
-                2
+                2,
+                tableIntent.getName()
         ));
     }
 
@@ -256,11 +258,15 @@ public class MergeTableActivity extends BaseActivity {
                         Toast.makeText(MergeTableActivity.this, "Gộp bàn thành công", Toast.LENGTH_SHORT).show();
                         for (Table table : bill.getTables()) {
                             viewModel.deleteTable(table.getId());
-//                            Table tableMerge = new Table(table.getId(), table.getName(), table.getFloor(), table.getCapacity(), 2);
-//                            viewModel.updateTable(table.getId(), tableMerge);
+                            if (!Objects.equals(table.getId(), tableIntent.getId())) {
+                                Table tableMerge = new Table(table.getId(), table.getName(), table.getFloor(), table.getCapacity(), 2, tableIntent.getName());
+                                viewModel.updateTable(table.getId(), tableMerge);
+                            } else {
+                                Table tableUpdate = new Table(tableIntent.getId(), tableIntent.getName(), tableIntent.getFloor(), tableIntent.getCapacity(), 2);
+                                viewModel.updateTable(tableIntent.getId(), tableUpdate);
+                            }
                         }
-                        Table tableUpdate = new Table(table.getId(), table.getName(), table.getFloor(), table.getCapacity(), 2);
-                        viewModel.updateTable(table.getId(), tableUpdate);
+                        finish();
                     }
 
                 } else {
