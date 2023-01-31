@@ -25,6 +25,7 @@ public class MergeTableViewModel extends BaseViewModel {
     public MutableLiveData<Bill> wasBillCreated;
     public MutableLiveData<List<Bill>> getProductByIdTable;
     public MutableLiveData<Boolean> wasUpdatedTable;
+    public MutableLiveData<Boolean> wasUpdated;
 
     public MergeTableViewModel(Context context) {
         super(context);
@@ -123,6 +124,24 @@ public class MergeTableViewModel extends BaseViewModel {
 
     private void handleErrorsGetTable(Throwable throwable) {
         wasUpdatedTable.postValue(false);
-        Log.d("TAG", "Handle error update table: "+ throwable.getMessage());
+    }
+
+    public void callToUpdateBill(String id, Bill bill, int type){
+        ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
+        Observable<Bill> mListDrinkObservable = serviceAPI.updateBillById(id, bill, "PUT");
+        mListDrinkObservable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        result -> onRetrieveUpdateBillSuccess(result, type),
+                        err -> handleErrorsUpdateBill(err, type)
+                );
+    }
+
+    private void onRetrieveUpdateBillSuccess(Bill result, int type) {
+        wasUpdated.postValue(true);
+    }
+
+    private void handleErrorsUpdateBill(Throwable throwable, int type) {
+        wasUpdated.postValue(false);
     }
 }

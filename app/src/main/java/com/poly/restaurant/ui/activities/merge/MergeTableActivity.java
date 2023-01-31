@@ -145,20 +145,6 @@ public class MergeTableActivity extends BaseActivity {
                 showOrHideView(tableList);
             }
         });
-        // lấy product từ các bàn đã chọn
-        viewModel.getProductByIdTable.observe(MergeTableActivity.this, new Observer<List<Bill>>() {
-            @Override
-            public void onChanged(List<Bill> bills) {
-                if (bills != null && bills.size() != 0) {
-                    for (Bill bill : bills) {
-                        mListProduct.addAll(bill.getProducts());
-                        for (Product product : bill.getProducts()) {
-                            viewModel.updateProductMerge(tableIntent.getId(), product.getId());
-                        }
-                    }
-                }
-            }
-        });
         viewModel.getListProductByIdTableLive(tableIntent.getId()).observe(this, new Observer<List<Product>>() {
             @Override
             public void onChanged(List<Product> products) {
@@ -175,6 +161,20 @@ public class MergeTableActivity extends BaseActivity {
                 } else {
                     isShowing = false;
                     hideBottomSheet();
+                }
+            }
+        });
+        // lấy product từ các bàn đã chọn
+        viewModel.getProductByIdTable.observe(MergeTableActivity.this, new Observer<List<Bill>>() {
+            @Override
+            public void onChanged(List<Bill> bills) {
+                if (bills != null && bills.size() != 0) {
+                    for (Bill bill : bills) {
+                        mListProduct.addAll(bill.getProducts());
+                        for (Product product : bill.getProducts()) {
+                            viewModel.updateProductMerge(tableIntent.getId(), product.getId());
+                        }
+                    }
                 }
             }
         });
@@ -275,6 +275,22 @@ public class MergeTableActivity extends BaseActivity {
             }
         });
         viewModel.callToCreateBill(new Bill(null, date, time, total, 0, 4, mListProduct, null, tableList, null, Constants.staff, null));
+//        viewModel.getProductByIdTable.observe(MergeTableActivity.this, new Observer<List<Bill>>() {
+//            @Override
+//            public void onChanged(List<Bill> bills) {
+//                if (bills != null && bills.size() != 0) {
+//                    // update bill
+//                    for (Bill bill : bills) {
+//                        Bill billUpdate = new Bill(bill.getId(), date, time, total, 0, 4, mListProduct, null, tableList, null, Constants.staff, null);
+//                        viewModel.callToUpdateBill(bill.getId(),billUpdate , Constants.TYPE_UPDATE);
+//                    }
+//                } else {
+//                    // create bill
+//
+//                }viewModel.callToCreateBill(new Bill(null, date, time, total, 0, 4, mListProduct, null, tableList, null, Constants.staff, null));
+//            }
+//        });
+//        viewModel.checkBillAlreadyExists(tableIntent.getId());
 
     }
 
