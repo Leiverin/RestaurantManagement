@@ -7,11 +7,15 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.poly.restaurant.R;
 
+
 public class LoginActivity extends AppCompatActivity {
+    private AppSharePreference sharePreference;
+
 
     EditText userName;
     EditText passWord;
@@ -21,6 +25,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         userName = findViewById(R.id.ed_username);
         passWord = findViewById(R.id.ed_pass);
+        sharePreference = new AppSharePreference(this);
         passWord.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -44,5 +49,14 @@ public class LoginActivity extends AppCompatActivity {
                 return false;
             }
         });
+        if (sharePreference.getRemember()) {
+            binding.edUsername.setText(sharePreference.getUsername());
+            binding.edPass.setText(sharePreference.getPassword());
+            binding.cbxRemember.setChecked(true);
+        } else {
+            binding.edUsername.setText("");
+            binding.edPass.setText("");
+            binding.cbxRemember.setChecked(false);
+        }
     }
 }
