@@ -1,13 +1,11 @@
-package com.poly.restaurant.ui.bill.billmerge;
-
-import android.content.Context;
+package com.poly.restaurant.ui.bill;
 
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.poly.restaurant.data.models.Bill;
 import com.poly.restaurant.data.retrofit.RetroInstance;
 import com.poly.restaurant.data.retrofit.ServiceAPI;
-import com.poly.restaurant.ui.base.BaseViewModel;
 
 import java.util.List;
 
@@ -15,11 +13,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BillMergeViewModel extends BaseViewModel {
+public class BillViewModel extends ViewModel {
     public MutableLiveData<List<Bill>> mListBillLiveData;
 
-    public BillMergeViewModel(Context context) {
-        super(context);
+    public BillViewModel() {
         mListBillLiveData = new MutableLiveData<>();
     }
 

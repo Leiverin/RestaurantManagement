@@ -14,8 +14,6 @@ import com.poly.restaurant.ui.activities.product.desserts.DessertViewModel;
 import com.poly.restaurant.ui.activities.product.drinks.DrinksViewModel;
 import com.poly.restaurant.ui.activities.product.main.MainDishesViewModel;
 import com.poly.restaurant.ui.activities.table.TableDetailViewModel;
-import com.poly.restaurant.ui.bill.bill.BillViewModel;
-import com.poly.restaurant.ui.bill.billmerge.BillMergeViewModel;
 import com.poly.restaurant.ui.bottomsheet.BottomSheetProductViewModel;
 import com.poly.restaurant.ui.notification.receiptnotice.ReceiptNoticeViewModel;
 import com.poly.restaurant.ui.notification.sendnotification.SendNotificationViewModel;
@@ -52,10 +50,6 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             return (T) new ReceiptNoticeViewModel(context);
         } else if (modelClass == SendNotificationViewModel.class) {
             return (T) new SendNotificationViewModel(context);
-        } else if (modelClass == BillViewModel.class) {
-            return (T) new BillViewModel(context);
-        } else if (modelClass == BillMergeViewModel.class) {
-            return (T) new BillMergeViewModel(context);
         } else {
             return ViewModelProvider.Factory.super.create(modelClass);
         }

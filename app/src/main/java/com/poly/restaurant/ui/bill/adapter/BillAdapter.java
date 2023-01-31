@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.poly.restaurant.data.models.Bill;
+import com.poly.restaurant.data.models.Table;
 import com.poly.restaurant.databinding.ItemBillBinding;
 
 import java.util.List;
