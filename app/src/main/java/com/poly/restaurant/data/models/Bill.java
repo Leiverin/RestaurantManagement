@@ -186,4 +186,19 @@ public class Bill implements Parcelable {
         parcel.writeParcelable(staff, i);
         parcel.writeTypedList(staffs);
     }
+
+    @Override
+    public String toString() {
+        return "Bill{" +
+                "id='" + id + '\'' +
+                ", date='" + date + '\'' +
+                ", time='" + time + '\'' +
+                ", totalPrice=" + totalPrice +
+                ", checkoutType=" + checkoutType +
+                ", status=" + status +
+                ", table=" + table +
+                ", idCustomer='" + idCustomer + '\'' +
+                ", staff=" + staff +
+                '}';
+    }
 }

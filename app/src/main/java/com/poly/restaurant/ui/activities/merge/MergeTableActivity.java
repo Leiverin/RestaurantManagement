@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.Toast;
@@ -275,40 +276,35 @@ public class MergeTableActivity extends BaseActivity {
                 }
             }
         });
-//        viewModel.callToCreateBill(new Bill(null, date, time, total, 0, 4, mListProduct, tableIntent, tableList, null, Constants.staff, null));
-        /**
-         * Was updated bill successfully
-         * */
-        viewModel.wasUpdated.observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean wasUpdated) {
-                if (wasUpdated) {
-                    Toast.makeText(MergeTableActivity.this, "Updated", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(MergeTableActivity.this, "Failed to update", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-//        viewModel.getProductByIdTable.observe(MergeTableActivity.this, new Observer<List<Bill>>() {
+        viewModel.callToCreateBill(new Bill(null, date, time, total, 0, 4, mListProduct, tableIntent, tableList, null, Constants.staff, null));
+//        viewModel.wasDeleted.observe(this, new Observer<Boolean>() {
+//            @Override
+//            public void onChanged(Boolean aBoolean) {
+//                if (aBoolean) {
+//                    Toast.makeText(MergeTableActivity.this, "Updated", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    Toast.makeText(MergeTableActivity.this, "Failed to update", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
+//        viewModel.getBillByIdTable.observe(MergeTableActivity.this, new Observer<List<Bill>>() {
 //            @Override
 //            public void onChanged(List<Bill> bills) {
 //                if (bills != null && bills.size() != 0) {
 //                    for (Bill bill : bills) {
-//                        if (Objects.equals(bill.getTable().getId(), tableIntent.getId())) {
-//                            // update bill
-//                            Bill billUpdate = new Bill(bill.getId(), date, time, total, 0, 4, mListProduct, tableIntent, tableList, null, Constants.staff, null);
-//                            viewModel.callToUpdateBill(bill.getId(), billUpdate, Constants.TYPE_UPDATE);
-//                        } else {
-//                            // create bill
-//                            viewModel.callToCreateBill(new Bill(null, date, time, total, 0, 4, mListProduct, tableIntent, tableList, null, Constants.staff, null));
-//                        }
+//                        // update bill
+//                        Log.d("checkBillByIdTable", bill.toString());
+////                        Bill billUpdate = new Bill(bill.getId(), date, time, total, 0, 4, mListProduct, tableIntent, tableList, null, Constants.staff, null);
+//                        viewModel.deleteBill(bill.getId());
+//
 //                    }
+//                } else {
+//                    // create bill
+////                    viewModel.callToCreateBill(new Bill(null, date, time, total, 0, 4, mListProduct, tableIntent, tableList, null, Constants.staff, null));
 //                }
 //            }
 //        });
-//        viewModel.checkBillAlreadyExists(tableIntent.getId());
-
-
+//        viewModel.checkBillByIdTable(tableIntent.getId());
     }
 
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
