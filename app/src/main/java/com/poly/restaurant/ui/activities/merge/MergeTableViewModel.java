@@ -19,6 +19,8 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MergeTableViewModel extends BaseViewModel {
     public MutableLiveData<List<Table>> mListLiveTableLiveData;
@@ -27,6 +29,7 @@ public class MergeTableViewModel extends BaseViewModel {
     public MutableLiveData<List<Bill>> getProductByIdTable;
     public MutableLiveData<Boolean> wasUpdatedTable;
     public MutableLiveData<Boolean> wasUpdated;
+    public MutableLiveData<List<Bill>> mBillLiveData;
 
     public MergeTableViewModel(Context context) {
         super(context);
@@ -35,6 +38,7 @@ public class MergeTableViewModel extends BaseViewModel {
         wasBillCreated = new MutableLiveData<>();
         getProductByIdTable = new MutableLiveData<>();
         wasUpdatedTable=new MutableLiveData<>();
+        mBillLiveData=new MutableLiveData<>();
     }
 
     public LiveData<List<Table>> getTableLiveData() {
@@ -144,5 +148,21 @@ public class MergeTableViewModel extends BaseViewModel {
 
     private void handleErrorsUpdateBill(Throwable throwable, int type) {
         wasUpdated.postValue(false);
+    }
+
+    public void getBill(String idStaff, int numberFloor) {
+        ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
+        Call<List<Bill>> call = serviceAPI.getBill(idStaff, numberFloor);
+        call.enqueue(new Callback<List<Bill>>() {
+            @Override
+            public void onResponse(Call<List<Bill>> call, Response<List<Bill>> response) {
+                mBillLiveData.postValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<Bill>> call, Throwable t) {
+                mBillLiveData.postValue(null);
+            }
+        });
     }
 }

@@ -43,7 +43,7 @@ public class TableChildAdapter extends RecyclerView.Adapter<TableChildAdapter.Ta
                 holder.binding.tvTableMerge.setText("");
             } else {
                 holder.binding.viewItem.setEnabled(false);
-                holder.binding.tvTableMerge.setText("( " +table.getTableParent() +" )");
+                holder.binding.tvTableMerge.setText("(" +table.getTableParent() +")");
             }
             holder.binding.tvNameTable.setText(table.getName());
             holder.binding.tvContentTable.setText("Bàn " + table.getCapacity() + " người");

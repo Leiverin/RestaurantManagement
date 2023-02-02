@@ -24,6 +24,7 @@ import com.poly.restaurant.data.models.TableParent;
 import com.poly.restaurant.databinding.ActivityMergeTableBinding;
 import com.poly.restaurant.ui.activities.merge.adapter.OnListenerMerge;
 import com.poly.restaurant.ui.activities.merge.adapter.TableManageMergeAdapter;
+import com.poly.restaurant.ui.activities.table.TableDetailActivity;
 import com.poly.restaurant.ui.base.BaseActivity;
 import com.poly.restaurant.utils.Constants;
 import com.poly.restaurant.utils.helps.ViewModelFactory;
@@ -274,23 +275,39 @@ public class MergeTableActivity extends BaseActivity {
                 }
             }
         });
-//        viewModel.callToCreateBill(new Bill(null, date, time, total, 0, 4, mListProduct, null, tableList, null, Constants.staff, null));
-        viewModel.getProductByIdTable.observe(MergeTableActivity.this, new Observer<List<Bill>>() {
+//        viewModel.callToCreateBill(new Bill(null, date, time, total, 0, 4, mListProduct, tableIntent, tableList, null, Constants.staff, null));
+        /**
+         * Was updated bill successfully
+         * */
+        viewModel.wasUpdated.observe(this, new Observer<Boolean>() {
             @Override
-            public void onChanged(List<Bill> bills) {
-                if (bills != null || bills.size() != 0) {
-                    // update bill
-                    for (Bill bill : bills) {
-                        Bill billUpdate = new Bill(bill.getId(), date, time, total, 0, 4, mListProduct, null, tableList, null, Constants.staff, null);
-                        viewModel.callToUpdateBill(bill.getId(),billUpdate , Constants.TYPE_UPDATE);
-                    }
+            public void onChanged(Boolean wasUpdated) {
+                if (wasUpdated) {
+                    Toast.makeText(MergeTableActivity.this, "Updated", Toast.LENGTH_SHORT).show();
                 } else {
-                    // create bill
-                    viewModel.callToCreateBill(new Bill(null, date, time, total, 0, 4, mListProduct, null, tableList, null, Constants.staff, null));
+                    Toast.makeText(MergeTableActivity.this, "Failed to update", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-        viewModel.checkBillAlreadyExists(tableIntent.getId());
+//        viewModel.getProductByIdTable.observe(MergeTableActivity.this, new Observer<List<Bill>>() {
+//            @Override
+//            public void onChanged(List<Bill> bills) {
+//                if (bills != null && bills.size() != 0) {
+//                    for (Bill bill : bills) {
+//                        if (Objects.equals(bill.getTable().getId(), tableIntent.getId())) {
+//                            // update bill
+//                            Bill billUpdate = new Bill(bill.getId(), date, time, total, 0, 4, mListProduct, tableIntent, tableList, null, Constants.staff, null);
+//                            viewModel.callToUpdateBill(bill.getId(), billUpdate, Constants.TYPE_UPDATE);
+//                        } else {
+//                            // create bill
+//                            viewModel.callToCreateBill(new Bill(null, date, time, total, 0, 4, mListProduct, tableIntent, tableList, null, Constants.staff, null));
+//                        }
+//                    }
+//                }
+//            }
+//        });
+//        viewModel.checkBillAlreadyExists(tableIntent.getId());
+
 
     }
 
