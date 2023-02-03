@@ -48,6 +48,8 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillHolder> {
                 holder.binding.setStatusTv.setText("Đang chờ thanh toán");
             } else if (bill.getStatus() == 3) {
                 holder.binding.setStatusTv.setText("Đã thanh toán");
+            }else if(bill.getStatus()==4){
+                holder.binding.txtNameTable.setText(bill.getTable().getName()+" (Gộp)");
             }
             holder.binding.txtNameTable.setText(bill.getTable().getName());
             int totalPrice= (int) (bill.getTotalPrice() * 23000);
