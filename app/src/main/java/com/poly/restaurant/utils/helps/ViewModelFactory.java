@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.poly.restaurant.ui.activities.login.LoginViewModel;
+import com.poly.restaurant.ui.activities.manage.TableManageViewModel;
 import com.poly.restaurant.ui.activities.merge.MergeTableViewModel;
 import com.poly.restaurant.ui.activities.product.FoodViewModel;
 import com.poly.restaurant.ui.activities.product.appetizer.AppetizerViewModel;
@@ -50,6 +51,8 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             return (T) new ReceiptNoticeViewModel(context);
         } else if (modelClass == SendNotificationViewModel.class) {
             return (T) new SendNotificationViewModel(context);
+        }  else if (modelClass == TableManageViewModel.class) {
+            return (T) new TableManageViewModel(context);
         } else {
             return ViewModelProvider.Factory.super.create(modelClass);
         }

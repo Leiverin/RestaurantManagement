@@ -34,6 +34,7 @@ import com.poly.restaurant.ui.bill.BillActivity;
 import com.poly.restaurant.ui.history.HistoryActivity;
 import com.poly.restaurant.ui.notification.NotificationActivity;
 import com.poly.restaurant.utils.Constants;
+import com.poly.restaurant.utils.helps.ViewModelFactory;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -55,7 +56,8 @@ public class TableManageActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(this).get(TableManageViewModel.class);
+        ViewModelFactory factory = new ViewModelFactory(this);
+        viewModel = new ViewModelProvider(this, factory).get(TableManageViewModel.class);
         binding = ActivityTableManageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         Window window = getWindow();
@@ -256,5 +258,11 @@ public class TableManageActivity extends BaseActivity {
             }
         });
         popupMenu.show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        viewModel.deleteAllProduct();
     }
 }
