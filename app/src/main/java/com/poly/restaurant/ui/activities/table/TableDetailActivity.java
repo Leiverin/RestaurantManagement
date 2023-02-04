@@ -6,6 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -22,6 +25,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
 import com.poly.restaurant.R;
 import com.poly.restaurant.data.models.Bill;
 import com.poly.restaurant.data.models.Notification;
@@ -52,6 +56,7 @@ public class TableDetailActivity extends BaseActivity {
     private ActivityTableDetailBinding binding;
     private TableDetailViewModel viewModel;
     private List<Product> mListProduct;
+    private List<Product> mListOldProduct;
     private List<Staff> mListAdmin;
     private List<Staff> mListChef;
     private List<Staff> mListCashier;
@@ -73,12 +78,15 @@ public class TableDetailActivity extends BaseActivity {
         viewModel = new ViewModelProvider(this, factory).get(TableDetailViewModel.class);
         binding = ActivityTableDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        binding.prgLoadDetail.setVisibility(View.VISIBLE);
+        binding.viewNoneItem.setVisibility(View.GONE);
         mListAdmin = getIntent().getParcelableArrayListExtra(Constants.EXTRA_ADMIN_TO_DETAIL);
         mListChef = getIntent().getParcelableArrayListExtra(Constants.EXTRA_CHEF_TO_DETAIL);
         mListCashier = getIntent().getParcelableArrayListExtra(Constants.EXTRA_CASHIER_TO_DETAIL);
         Window window = getWindow();
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_color));
         mListProduct = new ArrayList();
+        mListOldProduct = new ArrayList<>();
         sharePreference = new AppSharePreference(this);
         table = getIntent().getParcelableExtra(Constants.EXTRA_TABLE_TO_DETAIL);
         sharePreference.setTableId(table.getId());
@@ -132,9 +140,9 @@ public class TableDetailActivity extends BaseActivity {
         initEventViewModel();
 
         viewModel.checkBillAlreadyExists(table.getId());
+        viewModel.callToGetBillExist(sharePreference.getTableId(), Constants.TYPE_NON_CLICK);
 
         if (!sharePreference.getTableId().equals(sharePreference.getBeforeTableId()) && viewModel.getListProductByIdTable(table.getId()).size() == 0) {
-            viewModel.callToGetBillExist(sharePreference.getTableId(), Constants.TYPE_NON_CLICK);
             sharePreference.setBeforeTableId(table.getId());
         }
 
@@ -149,6 +157,9 @@ public class TableDetailActivity extends BaseActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver((receiver),
                 new IntentFilter(Constants.REQUEST_TO_ACTIVITY)
         );
+        if (viewModel.getListProductByIdTable(sharePreference.getTableId()).size() != 0){
+            binding.viewNoneItem.setVisibility(View.GONE);
+        }
         super.onResume();
     }
 
@@ -173,7 +184,6 @@ public class TableDetailActivity extends BaseActivity {
                     isShowing = false;
                     hideBottomSheet();
                 }
-                showOrHideView(products);
             }
         });
 
@@ -306,6 +316,7 @@ public class TableDetailActivity extends BaseActivity {
         viewModel.mBilExist.observe(this, new Observer<List<Bill>>() {
             @Override
             public void onChanged(List<Bill> bills) {
+                binding.prgLoadDetail.setVisibility(View.GONE);
                 if ((bills != null ? bills.size() : 0) != 0) {
                     binding.imgDone.setVisibility(View.VISIBLE);
                     setStatusTable(bills.get(0));
@@ -321,6 +332,14 @@ public class TableDetailActivity extends BaseActivity {
                                 product.getStatus()
                         ));
                     }
+                    new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mListOldProduct = viewModel.getListProductByIdTable(sharePreference.getTableId());
+                        }
+                    }, 200);
+                }else{
+                    binding.viewNoneItem.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -575,5 +594,23 @@ public class TableDetailActivity extends BaseActivity {
             }
         });
         popupMenu.show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        viewModel.deleteAllProduct();
+        super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Log.d("TAGGG", "onBackPressed 1: "+ new Gson().toJson(mListProduct));
+        Log.d("TAGGG", "onBackPressed 2: "+ new Gson().toJson(mListOldProduct));
+        Log.d("TAGGG", "onBackPressed: "+ mListProduct.containsAll(mListOldProduct));
+//        if (mListOldProduct.equals(mListProduct)){
+        super.onBackPressed();
+//        }else{
+//            Log.d("TAG", "onBackPressed: ");
+//        }
     }
 }

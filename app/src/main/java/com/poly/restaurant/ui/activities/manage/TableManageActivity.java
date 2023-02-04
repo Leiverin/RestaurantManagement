@@ -176,6 +176,7 @@ public class TableManageActivity extends BaseActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver((receiver),
                 new IntentFilter(Constants.REQUEST_TO_ACTIVITY)
         );
+        viewModel.deleteAllProduct();
     }
 
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -260,9 +261,4 @@ public class TableManageActivity extends BaseActivity {
         popupMenu.show();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        viewModel.deleteAllProduct();
-    }
 }
