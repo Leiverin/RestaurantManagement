@@ -68,6 +68,7 @@ public class TableDetailActivity extends BaseActivity {
     private double total = 0;
     private int count = 0;
     private int countCreate = 0;
+    private Bill mBill;
     private final String date = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Calendar.getInstance().getTime());
     private final String time = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Calendar.getInstance().getTime());
 
@@ -140,7 +141,6 @@ public class TableDetailActivity extends BaseActivity {
         initEventViewModel();
 
         viewModel.checkBillAlreadyExists(table.getId());
-        viewModel.callToGetBillExist(sharePreference.getTableId(), Constants.TYPE_NON_CLICK);
 
         if (!sharePreference.getTableId().equals(sharePreference.getBeforeTableId()) && viewModel.getListProductByIdTable(table.getId()).size() == 0) {
             sharePreference.setBeforeTableId(table.getId());
@@ -154,6 +154,7 @@ public class TableDetailActivity extends BaseActivity {
 
     @Override
     protected void onResume() {
+        viewModel.callToGetBillExist(sharePreference.getTableId(), Constants.TYPE_NON_CLICK);
         LocalBroadcastManager.getInstance(this).registerReceiver((receiver),
                 new IntentFilter(Constants.REQUEST_TO_ACTIVITY)
         );
@@ -339,7 +340,11 @@ public class TableDetailActivity extends BaseActivity {
                         }
                     }, 200);
                 }else{
-                    binding.viewNoneItem.setVisibility(View.VISIBLE);
+                    if (viewModel.getListProductByIdTable(sharePreference.getTableId()).isEmpty()){
+                        binding.viewNoneItem.setVisibility(View.VISIBLE);
+                    }else{
+                        binding.viewNoneItem.setVisibility(View.GONE);
+                    }
                 }
             }
         });
@@ -348,6 +353,7 @@ public class TableDetailActivity extends BaseActivity {
             @Override
             public void onChanged(Bill bill) {
                 if (bill != null) {
+                    mBill = bill;
                     setStatusProduct(bill);
                     setStatusTable(bill);
                 }
@@ -588,6 +594,7 @@ public class TableDetailActivity extends BaseActivity {
                 } else if (menuItem.getItemId() == R.id.action_merge) {
                     Intent intent = new Intent(TableDetailActivity.this, MergeTableActivity.class);
                     intent.putExtra(Constants.EXTRA_TABLE_TO_MERGE, table);
+                    intent.putExtra(Constants.EXTRA_BILL_TO_MERGE, mBill);
                     startActivity(intent);
                 }
                 return true;

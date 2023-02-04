@@ -49,6 +49,7 @@ public class MergeTableActivity extends BaseActivity {
     private final String time = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Calendar.getInstance().getTime());
     private double total = 0;
     private Table tableIntent;
+    private Bill mBill;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,6 +66,7 @@ public class MergeTableActivity extends BaseActivity {
         mListProduct = new ArrayList<>();
         tableList = new ArrayList<>();
         tableIntent = getIntent().getParcelableExtra(Constants.EXTRA_TABLE_TO_MERGE);
+        mBill = getIntent().getParcelableExtra(Constants.EXTRA_BILL_TO_MERGE);
         initRec();
         initViewModel();
         initActions();
@@ -159,6 +161,7 @@ public class MergeTableActivity extends BaseActivity {
                 }
             }
         });
+
         viewModel.getListProductByIdTableLive(tableIntent.getId()).observe(this, new Observer<List<Product>>() {
             @Override
             public void onChanged(List<Product> products) {
@@ -202,6 +205,7 @@ public class MergeTableActivity extends BaseActivity {
                 }
             }
         });
+
         viewModel.getBillByIdTable.observe(MergeTableActivity.this, new Observer<List<Bill>>() {
             @Override
             public void onChanged(List<Bill> bills) {
@@ -222,6 +226,13 @@ public class MergeTableActivity extends BaseActivity {
                     viewModel.callToCreateBill(new Bill(null, date, time, total, 0, 4, mListProduct, tableIntent, tableList, null, Constants.staff, null));
                 }
                 finish();
+            }
+        });
+
+        viewModel.wasBillCreated.observe(this, new Observer<Bill>() {
+            @Override
+            public void onChanged(Bill bill) {
+                viewModel.deleteBill(mBill.getId());
             }
         });
 
