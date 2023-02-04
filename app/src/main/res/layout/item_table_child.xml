@@ -33,12 +33,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <!--            <item name="android:layout_width">match_parent</item>-->
-            <!--            <item name="android:layout_height">wrap_content</item>-->
-            <!--            <item name="android:textSize">18sp</item>-->
-            <!--            <item name="android:textStyle">bold</item>-->
-            <!--            <item name="android:fontFamily">@font/judson_bold</item>-->
-            <!--            <item name="android:textColor">@color/black</item>-->
             <TextView
                 android:id="@+id/tv_name_table"
                 android:layout_width="wrap_content"
@@ -49,11 +43,12 @@
                 android:textSize="18sp" />
 
             <TextView
+                android:layout_marginStart="5dp"
                 android:id="@+id/tv_table_merge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/judson_bold"
-                android:text="( Bàn gộp )"
+                android:text="(Bàn gộp)"
                 android:textColor="@color/color_price"
                 android:textSize="18sp" />
         </LinearLayout>

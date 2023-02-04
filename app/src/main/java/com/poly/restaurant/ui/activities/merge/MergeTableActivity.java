@@ -7,7 +7,6 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AnimationUtils;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -77,7 +76,8 @@ public class MergeTableActivity extends BaseActivity {
 
     private void initActions() {
         binding.imgMerge.setOnClickListener(view -> {
-            createBillMerge();
+            viewModel.checkBillByIdTable(tableIntent.getId());
+//            createBillMerge();
         });
     }
 
@@ -202,6 +202,28 @@ public class MergeTableActivity extends BaseActivity {
                 }
             }
         });
+        viewModel.getBillByIdTable.observe(MergeTableActivity.this, new Observer<List<Bill>>() {
+            @Override
+            public void onChanged(List<Bill> bills) {
+                for (Table table : tableList) {
+                    viewModel.deleteTable(table.getId());
+                    if (!Objects.equals(table.getId(), tableIntent.getId())) {
+                        Table tableMerge = new Table(table.getId(), table.getName(), Constants.staff.getFloor().getNumberFloor(), table.getCapacity(), 2, tableIntent.getName());
+                        viewModel.updateTable(table.getId(), tableMerge);
+                    } else {
+                        Table tableUpdate = new Table(tableIntent.getId(), tableIntent.getName(), Constants.staff.getFloor().getNumberFloor(), tableIntent.getCapacity(), tableIntent.getStatus());
+                        viewModel.updateTable(tableIntent.getId(), tableUpdate);
+                    }
+                }
+                if (bills != null && bills.size() == 0) {
+                    Bill billUpdate = new Bill(bills.get(0).getId(), date, time, total, 0, 4, mListProduct, tableIntent, tableList, null, Constants.staff, null);
+                    viewModel.callToUpdateBill(bills.get(0).getId(), billUpdate, Constants.TYPE_UPDATE);
+                } else {
+                    viewModel.callToCreateBill(new Bill(null, date, time, total, 0, 4, mListProduct, tableIntent, tableList, null, Constants.staff, null));
+                }
+                finish();
+            }
+        });
 
     }
 
@@ -245,37 +267,6 @@ public class MergeTableActivity extends BaseActivity {
                 2,
                 tableIntent.getName()
         ));
-    }
-
-    private void createBillMerge() {
-        viewModel.wasBillCreated.observe(this, new Observer<Bill>() {
-            @Override
-            public void onChanged(Bill bill) {
-                if (bill != null) {
-                    if (bill.getTables().size() < 1) {
-                        Toast.makeText(MergeTableActivity.this, "Yêu cầu chọn bàn để gộp", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(MergeTableActivity.this, "Gộp bàn thành công", Toast.LENGTH_SHORT).show();
-                        for (Table table : bill.getTables()) {
-                            viewModel.deleteTable(table.getId());
-                            if (!Objects.equals(table.getId(), tableIntent.getId())) {
-                                Table tableMerge = new Table(table.getId(), table.getName(), table.getFloor(), table.getCapacity(), 2, tableIntent.getName());
-                                viewModel.updateTable(table.getId(), tableMerge);
-                            } else {
-                                Table tableUpdate = new Table(tableIntent.getId(), tableIntent.getName(), tableIntent.getFloor(), tableIntent.getCapacity(), 2);
-                                viewModel.updateTable(tableIntent.getId(), tableUpdate);
-                            }
-                        }
-                        finish();
-                    }
-
-                } else {
-                    Toast.makeText(MergeTableActivity.this, "Xảy ra lỗi", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-        viewModel.callToCreateBill(new Bill(null, date, time, total, 0, 4, mListProduct, null, tableList, null, Constants.staff, null));
-
     }
 
     private final BroadcastReceiver receiver = new BroadcastReceiver() {

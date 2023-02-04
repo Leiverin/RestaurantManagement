@@ -18,13 +18,20 @@ import java.util.List;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MergeTableViewModel extends BaseViewModel {
     public MutableLiveData<List<Table>> mListLiveTableLiveData;
     public MutableLiveData<List<Table>> mListEmptyTableLiveData;
     public MutableLiveData<Bill> wasBillCreated;
     public MutableLiveData<List<Bill>> getProductByIdTable;
+    public MutableLiveData<List<Bill>> getBillByIdTable;
     public MutableLiveData<Boolean> wasUpdatedTable;
+    public MutableLiveData<Bill> wasUpdated;
+    public MutableLiveData<Boolean> wasDeleted;
+    public MutableLiveData<List<Bill>> mBillLiveData;
 
     public MergeTableViewModel(Context context) {
         super(context);
@@ -33,6 +40,8 @@ public class MergeTableViewModel extends BaseViewModel {
         wasBillCreated = new MutableLiveData<>();
         getProductByIdTable = new MutableLiveData<>();
         wasUpdatedTable=new MutableLiveData<>();
+        mBillLiveData=new MutableLiveData<>();
+        getBillByIdTable=new MutableLiveData<>();
     }
 
     public LiveData<List<Table>> getTableLiveData() {
@@ -123,6 +132,58 @@ public class MergeTableViewModel extends BaseViewModel {
 
     private void handleErrorsGetTable(Throwable throwable) {
         wasUpdatedTable.postValue(false);
-        Log.d("TAG", "Handle error update table: "+ throwable.getMessage());
+    }
+
+    public void callToUpdateBill(String id, Bill bill, int type){
+        ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
+        Observable<Bill> mListDrinkObservable = serviceAPI.updateBillById(id, bill, "PUT");
+        mListDrinkObservable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        result -> onRetrieveUpdateBillSuccess(result, type),
+                        err -> handleErrorsUpdateBill(err, type)
+                );
+    }
+
+    private void onRetrieveUpdateBillSuccess(Bill result, int type) {
+        wasUpdated.postValue(result);
+    }
+
+    private void handleErrorsUpdateBill(Throwable throwable, int type) {
+        wasUpdated.postValue(null);
+    }
+
+    public void checkBillByIdTable(String idTable) {
+        ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
+        Observable<List<Bill>> mListDrinkObservable = serviceAPI.getBillIfExists(idTable);
+        mListDrinkObservable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::onRetrieveBill, this::handleErrorsBill);
+    }
+
+    private void onRetrieveBill(List<Bill> result) {
+        getBillByIdTable.postValue(result);
+    }
+
+    private void handleErrorsBill(Throwable throwable) {
+        getBillByIdTable.postValue(null);
+    }
+    public void deleteBill(String id){
+        ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
+        Observable<Response<Bill>> mBill = serviceAPI.deleteBill(id);
+        mBill.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::onRetrieveDeleteBillSuccessfully, this::handleErrorsDeleteBill);
+    }
+
+    private void onRetrieveDeleteBillSuccessfully(Response<Bill> result) {
+        if (result.isSuccessful()){
+            wasDeleted.postValue(true);
+        }
+    }
+
+    private void handleErrorsDeleteBill(Throwable throwable) {
+        Log.d("TAG", "Handle error delete bill: "+ throwable.getMessage());
+        wasDeleted.postValue(false);
     }
 }
