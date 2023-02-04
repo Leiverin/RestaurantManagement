@@ -11,7 +11,7 @@ import com.poly.restaurant.data.db.dao.TableDao;
 import com.poly.restaurant.data.models.Product;
 import com.poly.restaurant.data.models.Table;
 
-@Database(entities = {Product.class, Table.class}, version = 1, exportSchema = false)
+@Database(entities = {Product.class, Table.class}, version = 2, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     public static final String DB_NAME = "restaurant.db";
     public static AppDatabase instance;
