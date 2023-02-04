@@ -29,7 +29,7 @@ public class MergeTableViewModel extends BaseViewModel {
     public MutableLiveData<List<Bill>> getProductByIdTable;
     public MutableLiveData<List<Bill>> getBillByIdTable;
     public MutableLiveData<Boolean> wasUpdatedTable;
-    public MutableLiveData<Bill> wasUpdated;
+    public MutableLiveData<Boolean> wasUpdated;
     public MutableLiveData<Boolean> wasDeleted;
     public MutableLiveData<List<Bill>> mBillLiveData;
 
@@ -146,11 +146,12 @@ public class MergeTableViewModel extends BaseViewModel {
     }
 
     private void onRetrieveUpdateBillSuccess(Bill result, int type) {
-        wasUpdated.postValue(result);
+        wasUpdated.postValue(true);
     }
 
     private void handleErrorsUpdateBill(Throwable throwable, int type) {
-        wasUpdated.postValue(null);
+        wasUpdated.postValue(false);
+        Log.d("TAG", "handleErrorsUpdateBill: "+ throwable.getMessage());
     }
 
     public void checkBillByIdTable(String idTable) {

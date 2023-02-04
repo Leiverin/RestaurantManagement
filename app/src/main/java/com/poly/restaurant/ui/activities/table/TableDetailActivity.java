@@ -60,6 +60,7 @@ public class TableDetailActivity extends BaseActivity {
     private List<Staff> mListAdmin;
     private List<Staff> mListChef;
     private List<Staff> mListCashier;
+    private List<Bill> billIntent;
     private ProductTableAdapter adapter;
     private AppSharePreference sharePreference;
     private Table table;
@@ -251,6 +252,7 @@ public class TableDetailActivity extends BaseActivity {
         viewModel.mBillLiveData.observe(this, new Observer<List<Bill>>() {
             @Override
             public void onChanged(List<Bill> bill) {
+                billIntent=bill;
                 if (bill != null && bill.size() != 0) {
                     if (mListProduct.size() != 0) {
                         /**
@@ -591,6 +593,7 @@ public class TableDetailActivity extends BaseActivity {
                 } else if (menuItem.getItemId() == R.id.action_merge) {
                     Intent intent = new Intent(TableDetailActivity.this, MergeTableActivity.class);
                     intent.putExtra(Constants.EXTRA_TABLE_TO_MERGE, table);
+//                    intent.putExtra("abc",billIntent);
                     startActivity(intent);
                 }
                 return true;

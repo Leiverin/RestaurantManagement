@@ -21,6 +21,7 @@ import com.poly.restaurant.data.models.Product;
 import com.poly.restaurant.data.models.Table;
 import com.poly.restaurant.data.models.TableParent;
 import com.poly.restaurant.databinding.ActivityMergeTableBinding;
+import com.poly.restaurant.ui.activities.manage.TableManageActivity;
 import com.poly.restaurant.ui.activities.merge.adapter.OnListenerMerge;
 import com.poly.restaurant.ui.activities.merge.adapter.TableManageMergeAdapter;
 import com.poly.restaurant.ui.base.BaseActivity;
@@ -208,23 +209,33 @@ public class MergeTableActivity extends BaseActivity {
                 for (Table table : tableList) {
                     viewModel.deleteTable(table.getId());
                     if (!Objects.equals(table.getId(), tableIntent.getId())) {
-                        Table tableMerge = new Table(table.getId(), table.getName(), Constants.staff.getFloor().getNumberFloor(), table.getCapacity(), 2, tableIntent.getName());
+                        Table tableMerge = new Table(table.getId(), table.getName(), tableIntent.getFloor(), table.getCapacity(), 2, tableIntent.getName());
                         viewModel.updateTable(table.getId(), tableMerge);
                     } else {
-                        Table tableUpdate = new Table(tableIntent.getId(), tableIntent.getName(), Constants.staff.getFloor().getNumberFloor(), tableIntent.getCapacity(), tableIntent.getStatus());
+                        Table tableUpdate = new Table(tableIntent.getId(), tableIntent.getName(), tableIntent.getFloor(), tableIntent.getCapacity(), tableIntent.getStatus());
                         viewModel.updateTable(tableIntent.getId(), tableUpdate);
                     }
                 }
-                if (bills != null && bills.size() == 0) {
-                    Bill billUpdate = new Bill(bills.get(0).getId(), date, time, total, 0, 4, mListProduct, tableIntent, tableList, null, Constants.staff, null);
-                    viewModel.callToUpdateBill(bills.get(0).getId(), billUpdate, Constants.TYPE_UPDATE);
-                } else {
-                    viewModel.callToCreateBill(new Bill(null, date, time, total, 0, 4, mListProduct, tableIntent, tableList, null, Constants.staff, null));
+                for (Bill bill : bills) {
+                    if (bill != null) {
+                        Bill billUpdate = new Bill(bill.getId(), date, time, total, 0, 4, mListProduct, tableIntent, tableList, null, Constants.staff, null);
+                        viewModel.callToUpdateBill(bill.getId(), billUpdate, Constants.TYPE_UPDATE);
+                    } else {
+                        viewModel.callToCreateBill(new Bill(null, date, time, total, 0, 4, mListProduct, tableIntent, tableList, null, Constants.staff, null));
+                    }
                 }
                 finish();
+//                finishMerge();
             }
         });
 
+    }
+
+    private void finishMerge() {
+        Intent i = new Intent(this, TableManageActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(i);
+        finish();
     }
 
     private void showOrHideView(List<Table> listTable) {
