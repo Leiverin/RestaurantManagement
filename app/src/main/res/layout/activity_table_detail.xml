@@ -176,6 +176,16 @@
                         android:textColor="@color/white" />
                 </RelativeLayout>
             </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/prg_load_detail"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:indeterminateOnly="true"
+                android:indeterminateDrawable="@drawable/progress_custom_circle"
+                android:layout_gravity="center"
+                android:indeterminateDuration="600"
+                />
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
     </LinearLayout>
 </layout>

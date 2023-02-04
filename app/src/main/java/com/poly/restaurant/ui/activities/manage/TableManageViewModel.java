@@ -1,5 +1,6 @@
 package com.poly.restaurant.ui.activities.manage;
 
+import android.content.Context;
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
@@ -9,6 +10,7 @@ import com.poly.restaurant.data.models.Staff;
 import com.poly.restaurant.data.models.Table;
 import com.poly.restaurant.data.retrofit.RetroInstance;
 import com.poly.restaurant.data.retrofit.ServiceAPI;
+import com.poly.restaurant.ui.base.BaseViewModel;
 
 import java.util.List;
 
@@ -17,7 +19,7 @@ import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import retrofit2.Response;
 
-public class TableManageViewModel extends ViewModel {
+public class TableManageViewModel extends BaseViewModel {
     public MutableLiveData<List<Table>> mListTableLiveData;
     public MutableLiveData<List<Table>> mListLiveTableLiveData;
     public MutableLiveData<List<Table>> mListEmptyTableLiveData;
@@ -26,7 +28,8 @@ public class TableManageViewModel extends ViewModel {
     public MutableLiveData<List<Staff>> mListChefLiveData;
     public MutableLiveData<List<Staff>> mListCashierLiveData;
 
-    public TableManageViewModel() {
+    public TableManageViewModel(Context context) {
+        super(context);
         mListTableLiveData = new MutableLiveData<>();
         mListLiveTableLiveData = new MutableLiveData<>();
         mListEmptyTableLiveData = new MutableLiveData<>();

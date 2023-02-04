@@ -69,6 +69,15 @@ public abstract class BaseViewModel extends ViewModel {
         });
     }
 
+    public void deleteAllProduct() {
+        appExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                productDao.deleteAllProduct();
+            }
+        });
+    }
+
     public void deleteProduct(String id, String idTable) {
         appExecutors.diskIO().execute(new Runnable() {
             @Override
