@@ -561,6 +561,9 @@ public class TableDetailActivity extends BaseActivity {
     private void showPopupMenu() {
         PopupMenu popupMenu = new PopupMenu(TableDetailActivity.this, binding.imgMenuTableDetail);
         popupMenu.getMenuInflater().inflate(R.menu.menu_table_detail, popupMenu.getMenu());
+        if (table.getStatus() == 0) {
+            popupMenu.getMenu().findItem(R.id.action_merge).setVisible(false);
+        }
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {

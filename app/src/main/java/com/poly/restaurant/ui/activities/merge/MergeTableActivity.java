@@ -264,7 +264,7 @@ public class MergeTableActivity extends BaseActivity {
                 table.getName(),
                 table.getFloor(),
                 table.getCapacity(),
-                2,
+                table.getStatus(),
                 tableIntent.getName()
         ));
     }
