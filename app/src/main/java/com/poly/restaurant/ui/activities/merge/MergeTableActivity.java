@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AnimationUtils;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -78,7 +79,7 @@ public class MergeTableActivity extends BaseActivity {
     private void initActions() {
         binding.imgMerge.setOnClickListener(view -> {
             viewModel.checkBillByIdTable(tableIntent.getId());
-//            createBillMerge();
+            createBillMerge();
         });
     }
 
@@ -206,29 +207,53 @@ public class MergeTableActivity extends BaseActivity {
         viewModel.getBillByIdTable.observe(MergeTableActivity.this, new Observer<List<Bill>>() {
             @Override
             public void onChanged(List<Bill> bills) {
-                for (Table table : tableList) {
-                    viewModel.deleteTable(table.getId());
-                    if (!Objects.equals(table.getId(), tableIntent.getId())) {
-                        Table tableMerge = new Table(table.getId(), table.getName(), tableIntent.getFloor(), table.getCapacity(), 2, tableIntent.getName());
-                        viewModel.updateTable(table.getId(), tableMerge);
-                    } else {
-                        Table tableUpdate = new Table(tableIntent.getId(), tableIntent.getName(), tableIntent.getFloor(), tableIntent.getCapacity(), tableIntent.getStatus());
-                        viewModel.updateTable(tableIntent.getId(), tableUpdate);
-                    }
-                }
-                for (Bill bill : bills) {
-                    if (bill != null) {
-                        Bill billUpdate = new Bill(bill.getId(), date, time, total, 0, 4, mListProduct, tableIntent, tableList, null, Constants.staff, null);
-                        viewModel.callToUpdateBill(bill.getId(), billUpdate, Constants.TYPE_UPDATE);
-                    } else {
-                        viewModel.callToCreateBill(new Bill(null, date, time, total, 0, 4, mListProduct, tableIntent, tableList, null, Constants.staff, null));
-                    }
-                }
+//                for (Table table : tableList) {
+//                    viewModel.deleteTable(table.getId());
+//                    if (!Objects.equals(table.getId(), tableIntent.getId())) {
+//                        Table tableMerge = new Table(table.getId(), table.getName(), tableIntent.getFloor(), table.getCapacity(), 2, tableIntent.getName());
+//                        viewModel.updateTable(table.getId(), tableMerge);
+//                    } else {
+//                        Table tableUpdate = new Table(tableIntent.getId(), tableIntent.getName(), tableIntent.getFloor(), tableIntent.getCapacity(), tableIntent.getStatus());
+//                        viewModel.updateTable(tableIntent.getId(), tableUpdate);
+//                    }
+//                }
+                viewModel.deleteBill(bills.get(0).getId());
+
                 finish();
 //                finishMerge();
             }
         });
 
+    }
+
+    private void createBillMerge() {
+        viewModel.wasBillCreated.observe(this, new Observer<Bill>() {
+            @Override
+            public void onChanged(Bill bill) {
+                if (bill != null) {
+                    if (bill.getTables().size() < 1) {
+                        Toast.makeText(MergeTableActivity.this, "Yêu cầu chọn bàn để gộp", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(MergeTableActivity.this, "Gộp bàn thành công", Toast.LENGTH_SHORT).show();
+                        for (Table table : bill.getTables()) {
+                            viewModel.deleteTable(table.getId());
+                            if (!Objects.equals(table.getId(), tableIntent.getId())) {
+                                Table tableMerge = new Table(table.getId(), table.getName(), table.getFloor(), table.getCapacity(), 2, tableIntent.getName());
+                                viewModel.updateTable(table.getId(), tableMerge);
+                            } else {
+                                Table tableUpdate = new Table(tableIntent.getId(), tableIntent.getName(), tableIntent.getFloor(), tableIntent.getCapacity(), tableIntent.getStatus());
+                                viewModel.updateTable(tableIntent.getId(), tableUpdate);
+                            }
+                        }
+                        finish();
+                    }
+
+                } else {
+                    Toast.makeText(MergeTableActivity.this, "Xảy ra lỗi", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        viewModel.callToCreateBill(new Bill(null, date, time, total, 0, 4, mListProduct, tableIntent, tableList, null, Constants.staff, null));
     }
 
     private void finishMerge() {
