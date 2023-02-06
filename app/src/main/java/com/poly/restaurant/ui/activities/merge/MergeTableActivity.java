@@ -207,20 +207,12 @@ public class MergeTableActivity extends BaseActivity {
         viewModel.getBillByIdTable.observe(MergeTableActivity.this, new Observer<List<Bill>>() {
             @Override
             public void onChanged(List<Bill> bills) {
-//                for (Table table : tableList) {
-//                    viewModel.deleteTable(table.getId());
-//                    if (!Objects.equals(table.getId(), tableIntent.getId())) {
-//                        Table tableMerge = new Table(table.getId(), table.getName(), tableIntent.getFloor(), table.getCapacity(), 2, tableIntent.getName());
-//                        viewModel.updateTable(table.getId(), tableMerge);
-//                    } else {
-//                        Table tableUpdate = new Table(tableIntent.getId(), tableIntent.getName(), tableIntent.getFloor(), tableIntent.getCapacity(), tableIntent.getStatus());
-//                        viewModel.updateTable(tableIntent.getId(), tableUpdate);
-//                    }
-//                }
-                viewModel.deleteBill(bills.get(0).getId());
-
-                finish();
-//                finishMerge();
+                for (Bill bill : bills) {
+                    if (bill != null || bills.size() == 0) {
+                        assert bill != null;
+                        viewModel.deleteBill(bill.getId());
+                    }
+                }
             }
         });
 
@@ -247,7 +239,6 @@ public class MergeTableActivity extends BaseActivity {
                         }
                         finish();
                     }
-
                 } else {
                     Toast.makeText(MergeTableActivity.this, "Xảy ra lỗi", Toast.LENGTH_SHORT).show();
                 }

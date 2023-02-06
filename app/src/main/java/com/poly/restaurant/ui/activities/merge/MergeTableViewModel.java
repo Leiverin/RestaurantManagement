@@ -29,7 +29,6 @@ public class MergeTableViewModel extends BaseViewModel {
     public MutableLiveData<List<Bill>> getProductByIdTable;
     public MutableLiveData<List<Bill>> getBillByIdTable;
     public MutableLiveData<Boolean> wasUpdatedTable;
-    public MutableLiveData<Boolean> wasUpdated;
     public MutableLiveData<Boolean> wasDeleted;
     public MutableLiveData<List<Bill>> mBillLiveData;
 
@@ -134,25 +133,6 @@ public class MergeTableViewModel extends BaseViewModel {
         wasUpdatedTable.postValue(false);
     }
 
-    public void callToUpdateBill(String id, Bill bill, int type){
-        ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
-        Observable<Bill> mListDrinkObservable = serviceAPI.updateBillById(id, bill, "PUT");
-        mListDrinkObservable.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        result -> onRetrieveUpdateBillSuccess(result, type),
-                        err -> handleErrorsUpdateBill(err, type)
-                );
-    }
-
-    private void onRetrieveUpdateBillSuccess(Bill result, int type) {
-        wasUpdated.postValue(true);
-    }
-
-    private void handleErrorsUpdateBill(Throwable throwable, int type) {
-        wasUpdated.postValue(false);
-        Log.d("TAG", "handleErrorsUpdateBill: "+ throwable.getMessage());
-    }
 
     public void checkBillByIdTable(String idTable) {
         ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
@@ -169,6 +149,7 @@ public class MergeTableViewModel extends BaseViewModel {
     private void handleErrorsBill(Throwable throwable) {
         getBillByIdTable.postValue(null);
     }
+
     public void deleteBill(String id){
         ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
         Observable<Response<Bill>> mBill = serviceAPI.deleteBill(id);
@@ -184,7 +165,7 @@ public class MergeTableViewModel extends BaseViewModel {
     }
 
     private void handleErrorsDeleteBill(Throwable throwable) {
-        Log.d("TAG", "Handle error delete bill: "+ throwable.getMessage());
-        wasDeleted.postValue(false);
+        Log.d("handleErrorsDeleteBill", "Handle error delete bill: "+ throwable.getMessage());
+//        wasDeleted.postValue(false);
     }
 }

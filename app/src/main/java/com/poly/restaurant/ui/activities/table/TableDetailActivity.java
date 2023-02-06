@@ -141,7 +141,7 @@ public class TableDetailActivity extends BaseActivity {
         initEventViewModel();
 
         viewModel.checkBillAlreadyExists(table.getId());
-        viewModel.callToGetBillExist(sharePreference.getTableId(), Constants.TYPE_NON_CLICK);
+//        viewModel.callToGetBillExist(sharePreference.getTableId(), Constants.TYPE_NON_CLICK);
 
         if (!sharePreference.getTableId().equals(sharePreference.getBeforeTableId()) && viewModel.getListProductByIdTable(table.getId()).size() == 0) {
             sharePreference.setBeforeTableId(table.getId());
@@ -158,6 +158,8 @@ public class TableDetailActivity extends BaseActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver((receiver),
                 new IntentFilter(Constants.REQUEST_TO_ACTIVITY)
         );
+        viewModel.callToGetBillExist(sharePreference.getTableId(), Constants.TYPE_NON_CLICK);
+        viewModel.deleteAllProduct();
         if (viewModel.getListProductByIdTable(sharePreference.getTableId()).size() != 0){
             binding.viewNoneItem.setVisibility(View.GONE);
         }
@@ -582,9 +584,9 @@ public class TableDetailActivity extends BaseActivity {
     private void showPopupMenu() {
         PopupMenu popupMenu = new PopupMenu(TableDetailActivity.this, binding.imgMenuTableDetail);
         popupMenu.getMenuInflater().inflate(R.menu.menu_table_detail, popupMenu.getMenu());
-        if (table.getStatus() == 0) {
-            popupMenu.getMenu().findItem(R.id.action_merge).setVisible(false);
-        }
+//        if (table.getStatus() == 0) {
+//            popupMenu.getMenu().findItem(R.id.action_merge).setVisible(false);
+//        }
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
@@ -593,7 +595,6 @@ public class TableDetailActivity extends BaseActivity {
                 } else if (menuItem.getItemId() == R.id.action_merge) {
                     Intent intent = new Intent(TableDetailActivity.this, MergeTableActivity.class);
                     intent.putExtra(Constants.EXTRA_TABLE_TO_MERGE, table);
-//                    intent.putExtra("abc",billIntent);
                     startActivity(intent);
                 }
                 return true;

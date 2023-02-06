@@ -32,6 +32,7 @@ import com.poly.restaurant.ui.feedback.FeedBackActivity;
 import com.poly.restaurant.ui.history.adapter.HistoryAdapter;
 import com.poly.restaurant.ui.history.adapter.SpinnerTableAdapter;
 import com.poly.restaurant.utils.Constants;
+import com.poly.restaurant.utils.helps.ViewModelFactory;
 import com.poly.restaurant.utils.view.CustomSpinner;
 
 import java.text.ParseException;
@@ -59,7 +60,8 @@ public class HistoryActivity extends BaseActivity implements CustomSpinner.OnSpi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = new ViewModelProvider(this).get(HistoryViewModel.class);
-        tableManageViewModel = new ViewModelProvider(this).get(TableManageViewModel.class);
+        ViewModelFactory factory = new ViewModelFactory(this);
+        tableManageViewModel = new ViewModelProvider(this, factory).get(TableManageViewModel.class);
         binding = ActivityHistoryBinding.inflate(getLayoutInflater());
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
