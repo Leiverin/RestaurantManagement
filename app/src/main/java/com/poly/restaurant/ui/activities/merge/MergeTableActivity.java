@@ -233,8 +233,13 @@ public class MergeTableActivity extends BaseActivity {
                                 Table tableMerge = new Table(table.getId(), table.getName(), table.getFloor(), table.getCapacity(), 2, tableIntent.getName());
                                 viewModel.updateTable(table.getId(), tableMerge);
                             } else {
-                                Table tableUpdate = new Table(tableIntent.getId(), tableIntent.getName(), tableIntent.getFloor(), tableIntent.getCapacity(), tableIntent.getStatus());
-                                viewModel.updateTable(tableIntent.getId(), tableUpdate);
+                                if (tableIntent.getStatus() == 0) {
+                                    Table tableUpdate = new Table(tableIntent.getId(), tableIntent.getName(), tableIntent.getFloor(), tableIntent.getCapacity(), 1);
+                                    viewModel.updateTable(tableIntent.getId(), tableUpdate);
+                                } else {
+                                    Table tableUpdate = new Table(tableIntent.getId(), tableIntent.getName(), tableIntent.getFloor(), tableIntent.getCapacity(), tableIntent.getStatus());
+                                    viewModel.updateTable(tableIntent.getId(), tableUpdate);
+                                }
                             }
                         }
                         finish();
