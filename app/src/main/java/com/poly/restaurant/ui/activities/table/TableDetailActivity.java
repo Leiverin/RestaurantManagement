@@ -70,6 +70,7 @@ public class TableDetailActivity extends BaseActivity {
     private int count = 0;
     private int countCreate = 0;
     private int mCount = 0;
+    private int checkToCall = 0;
     private Bill mBill;
     private final String date = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Calendar.getInstance().getTime());
     private final String time = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Calendar.getInstance().getTime());
@@ -167,8 +168,10 @@ public class TableDetailActivity extends BaseActivity {
         }else{
 //            binding.viewNoneItem.setVisibility(View.VISIBLE);
         }
-
-        viewModel.callToGetBillExist(sharePreference.getTableId(), Constants.TYPE_NON_CLICK);
+        if (checkToCall == 0){
+            viewModel.callToGetBillExist(sharePreference.getTableId(), Constants.TYPE_NON_CLICK);
+            checkToCall++;
+        }
         super.onResume();
     }
 
@@ -622,5 +625,10 @@ public class TableDetailActivity extends BaseActivity {
 //        }else{
 //            Log.d("TAG", "onBackPressed: ");
 //        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
     }
 }
