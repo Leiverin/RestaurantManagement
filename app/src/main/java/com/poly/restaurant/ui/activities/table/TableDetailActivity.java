@@ -69,6 +69,7 @@ public class TableDetailActivity extends BaseActivity {
     private double total = 0;
     private int count = 0;
     private int countCreate = 0;
+    private int mCount = 0;
     private Bill mBill;
     private final String date = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Calendar.getInstance().getTime());
     private final String time = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Calendar.getInstance().getTime());
@@ -87,8 +88,9 @@ public class TableDetailActivity extends BaseActivity {
         mListCashier = getIntent().getParcelableArrayListExtra(Constants.EXTRA_CASHIER_TO_DETAIL);
         Window window = getWindow();
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_color));
-        mListProduct = new ArrayList();
+        mListProduct = new ArrayList<>();
         mListOldProduct = new ArrayList<>();
+        billIntent = new ArrayList<>();
         sharePreference = new AppSharePreference(this);
         table = getIntent().getParcelableExtra(Constants.EXTRA_TABLE_TO_DETAIL);
         sharePreference.setTableId(table.getId());
@@ -159,11 +161,15 @@ public class TableDetailActivity extends BaseActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver((receiver),
                 new IntentFilter(Constants.REQUEST_TO_ACTIVITY)
         );
-        viewModel.callToGetBillExist(sharePreference.getTableId(), Constants.TYPE_NON_CLICK);
-        viewModel.deleteAllProduct();
         if (viewModel.getListProductByIdTable(sharePreference.getTableId()).size() != 0){
             binding.viewNoneItem.setVisibility(View.GONE);
+            mCount++;
+        }else{
+//            binding.viewNoneItem.setVisibility(View.VISIBLE);
         }
+        viewModel.deleteAllProduct();
+
+        viewModel.callToGetBillExist(sharePreference.getTableId(), Constants.TYPE_NON_CLICK);
         super.onResume();
     }
 
@@ -255,8 +261,9 @@ public class TableDetailActivity extends BaseActivity {
         viewModel.mBillLiveData.observe(this, new Observer<List<Bill>>() {
             @Override
             public void onChanged(List<Bill> bill) {
-                billIntent=bill;
                 if (bill != null && bill.size() != 0) {
+                    billIntent = bill;
+                    mBill = bill.get(0);
                     if (mListProduct.size() != 0) {
                         /**
                          * Update bill
@@ -322,7 +329,9 @@ public class TableDetailActivity extends BaseActivity {
             @Override
             public void onChanged(List<Bill> bills) {
                 binding.prgLoadDetail.setVisibility(View.GONE);
-                if ((bills != null ? bills.size() : 0) != 0) {
+                if (bills.size() != 0) {
+                    binding.viewNoneItem.setVisibility(View.GONE);
+                    mBill = bills.get(0);
                     binding.imgDone.setVisibility(View.VISIBLE);
                     setStatusTable(bills.get(0));
                     for (Product product : bills.get(0).getProducts()) {
@@ -344,11 +353,10 @@ public class TableDetailActivity extends BaseActivity {
                         }
                     }, 200);
                 }else{
-                    if (viewModel.getListProductByIdTable(sharePreference.getTableId()).isEmpty()){
+                    if (mCount == 0){
                         binding.viewNoneItem.setVisibility(View.VISIBLE);
-                    }else{
-                        binding.viewNoneItem.setVisibility(View.GONE);
                     }
+                    mCount = 0;
                 }
             }
         });
@@ -471,16 +479,6 @@ public class TableDetailActivity extends BaseActivity {
         binding.imgMenuTableDetail.setOnClickListener(view -> {
             showPopupMenu();
         });
-    }
-
-    private void showOrHideView(List<Product> products) {
-        if (products == null || products.size() == 0) {
-            binding.rvFood.setVisibility(View.GONE);
-            binding.viewNoneItem.setVisibility(View.VISIBLE);
-        } else {
-            binding.viewNoneItem.setVisibility(View.GONE);
-            binding.rvFood.setVisibility(View.VISIBLE);
-        }
     }
 
     private void handleDecreaseProduct(Product product, int quantity) {

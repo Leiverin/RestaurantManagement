@@ -223,7 +223,9 @@ public class MergeTableActivity extends BaseActivity {
         viewModel.wasBillCreated.observe(this, new Observer<Bill>() {
             @Override
             public void onChanged(Bill bill) {
-                viewModel.deleteBill(mBill.getId());
+                if (mBill != null){
+                    viewModel.deleteBill(mBill.getId());
+                }
             }
         });
 
