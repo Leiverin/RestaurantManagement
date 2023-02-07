@@ -151,7 +151,8 @@ public class DessertFragment extends BaseFragment {
                     product.getId(), product.getName(), product.getUrlImage(), product.getPrice(), product.getDescription(), product.getTotal(), quantity,
                     product.getType(),
                     product.getIdCategory(),
-                    sharePreference.getTableId()
+                    sharePreference.getTableId(),
+                    0
             ));
         }else{
             mViewModel.updateAmountProduct(quantity, product.getId(), sharePreference.getTableId());

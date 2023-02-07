@@ -45,16 +45,13 @@
             android:name="com.poly.restaurant.ui.activities.table.TableDetailActivity"
             android:exported="false" />
         <activity
-            android:name="com.poly.restaurant.ui.activities.MainActivity"
-            android:exported="true" />
-        <activity
             android:name="com.poly.restaurant.ui.history.HistoryActivity"
             android:exported="true" />
         <activity
             android:name="com.poly.restaurant.ui.feedback.FeedBackActivity"
             android:exported="true" />
         <activity
-            android:name="com.poly.restaurant.ui.activities.verify.VerifyActivity"
+            android:name="com.poly.restaurant.ui.activities.merge.MergeTableActivity"
             android:exported="false" />
         <activity
             android:name="com.poly.restaurant.ui.bill.BillActivity"

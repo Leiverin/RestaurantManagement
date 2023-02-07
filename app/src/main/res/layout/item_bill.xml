@@ -80,7 +80,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="end"
-                    android:text="8-9-2022" />
+                    android:text="08/09/2022" />
             </LinearLayout>
         </LinearLayout>
 

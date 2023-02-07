@@ -61,13 +61,21 @@
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_pay_bill" />
 
+<!--                    <ImageView-->
+<!--                        android:id="@+id/imgAdd"-->
+<!--                        style="@style/imgIcon"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:src="@drawable/ic_icon_add" />-->
                     <ImageView
-                        android:id="@+id/imgAdd"
+                        android:id="@+id/imgMenuTableDetail"
                         style="@style/imgIcon"
-                        android:layout_gravity="center"
+                        android:paddingTop="15dp"
+                        android:paddingEnd="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_icon_add" />
+                        android:src="@drawable/ic_menu" />
                 </LinearLayout>
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.AppBarLayout>
@@ -168,6 +176,16 @@
                         android:textColor="@color/white" />
                 </RelativeLayout>
             </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/prg_load_detail"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:indeterminateOnly="true"
+                android:indeterminateDrawable="@drawable/progress_custom_circle"
+                android:layout_gravity="center"
+                android:indeterminateDuration="600"
+                />
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
     </LinearLayout>
 </layout>

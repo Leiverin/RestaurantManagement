@@ -25,14 +25,14 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No Internet Connection"
+        android:text="Không có kết nối Internet"
         android:textColor="#5C3F13"
         android:textSize="20dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Please check your connection"
+        android:text="Vui lòng kiểm tra kết nối của bạn"
         android:textColor="#5C3F13"
         android:textSize="14dp" />
 
@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:padding="10dp"
-            android:text="RETRY"
+            android:text="THỬ LẠI"
             android:textColor="@color/white"
             android:textSize="16dp" />
     </androidx.cardview.widget.CardView>

@@ -100,5 +100,13 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true" />
         </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/view_curtain"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#61D8D8D8"
+            android:orientation="vertical"
+            />
     </androidx.cardview.widget.CardView>
 </layout>

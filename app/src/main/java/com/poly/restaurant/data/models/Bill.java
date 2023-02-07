@@ -2,9 +2,7 @@ package com.poly.restaurant.data.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 public class Bill implements Parcelable {
@@ -17,8 +15,10 @@ public class Bill implements Parcelable {
     private int status;
     private List<Product> foods;
     private Table table;
+    private List<Table> tables;
     private String idCustomer;
     private Staff staff;
+    private List<Staff> staffs;
 
     public Bill() {
     }
@@ -28,7 +28,7 @@ public class Bill implements Parcelable {
         this.id = id;
     }
 
-    public Bill(String id, String date, String time, double totalPrice, int checkoutType, int status, List<Product> foods, Table table, String idCustomer, Staff staff) {
+    public Bill(String id, String date, String time, double totalPrice, int checkoutType, int status, List<Product> foods, Table table, List<Table> tables, String idCustomer, Staff staff, List<Staff> staffs) {
         this.id = id;
         this.date = date;
         this.time = time;
@@ -37,10 +37,11 @@ public class Bill implements Parcelable {
         this.status = status;
         this.foods = foods;
         this.table = table;
+        this.tables = tables;
         this.idCustomer = idCustomer;
         this.staff = staff;
+        this.staffs = staffs;
     }
-
 
     protected Bill(Parcel in) {
         id = in.readString();
@@ -51,8 +52,10 @@ public class Bill implements Parcelable {
         status = in.readInt();
         foods = in.createTypedArrayList(Product.CREATOR);
         table = in.readParcelable(Table.class.getClassLoader());
+        tables = in.createTypedArrayList(Table.CREATOR);
         idCustomer = in.readString();
         staff = in.readParcelable(Staff.class.getClassLoader());
+        staffs = in.createTypedArrayList(Staff.CREATOR);
     }
 
     public static final Creator<Bill> CREATOR = new Creator<Bill>() {
@@ -147,6 +150,22 @@ public class Bill implements Parcelable {
         this.staff = staff;
     }
 
+    public List<Table> getTables() {
+        return tables;
+    }
+
+    public void setTables(List<Table> tables) {
+        this.tables = tables;
+    }
+
+    public List<Staff> getStaffs() {
+        return staffs;
+    }
+
+    public void setStaffs(List<Staff> staffs) {
+        this.staffs = staffs;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -162,7 +181,24 @@ public class Bill implements Parcelable {
         parcel.writeInt(status);
         parcel.writeTypedList(foods);
         parcel.writeParcelable(table, i);
+        parcel.writeTypedList(tables);
         parcel.writeString(idCustomer);
         parcel.writeParcelable(staff, i);
+        parcel.writeTypedList(staffs);
+    }
+
+    @Override
+    public String toString() {
+        return "Bill{" +
+                "id='" + id + '\'' +
+                ", date='" + date + '\'' +
+                ", time='" + time + '\'' +
+                ", totalPrice=" + totalPrice +
+                ", checkoutType=" + checkoutType +
+                ", status=" + status +
+                ", table=" + table +
+                ", idCustomer='" + idCustomer + '\'' +
+                ", staff=" + staff +
+                '}';
     }
 }

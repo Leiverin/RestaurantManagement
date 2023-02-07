@@ -39,6 +39,11 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillHolder> {
     public void onBindViewHolder(@NonNull BillHolder holder, int position) {
         Bill bill = mListBill.get(position);
         if (bill != null) {
+            holder.binding.txtNameTable.setText(bill.getTable().getName());
+            int totalPrice = (int) (bill.getTotalPrice() * 23000);
+            holder.binding.txtMoney.setText(totalPrice + " vnđ");
+            holder.binding.txtTime.setText(bill.getTime());
+            holder.binding.txtDate.setText(bill.getDate() + "");
             if (bill.getStatus() == 0) {
                 holder.binding.setStatusTv.setText("Đang chờ bếp xử lý");
             } else if (bill.getStatus() == 1) {
@@ -47,11 +52,9 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillHolder> {
                 holder.binding.setStatusTv.setText("Đang chờ thanh toán");
             } else if (bill.getStatus() == 3) {
                 holder.binding.setStatusTv.setText("Đã thanh toán");
+            } else if (bill.getStatus() == 4) {
+                holder.binding.txtNameTable.setText(bill.getTable().getName()+" (Gộp) ");
             }
-            holder.binding.txtNameTable.setText(bill.getTable().getName());
-            holder.binding.txtMoney.setText(" " + bill.getTotalPrice());
-            holder.binding.txtTime.setText(bill.getTime());
-            holder.binding.txtDate.setText(bill.getDate() + "");
             holder.binding.viewItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

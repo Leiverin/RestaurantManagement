@@ -11,7 +11,6 @@ import android.net.Uri;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +21,7 @@ import com.poly.restaurant.data.models.Bill;
 import com.poly.restaurant.data.models.Notification;
 import com.poly.restaurant.data.models.Product;
 import com.poly.restaurant.data.models.Staff;
+import com.poly.restaurant.data.models.Table;
 import com.poly.restaurant.data.retrofit.RetroInstance;
 import com.poly.restaurant.data.retrofit.ServiceAPI;
 import com.poly.restaurant.databinding.DialogShowDetailBillBinding;
@@ -41,10 +41,13 @@ import retrofit2.Response;
 public class Constants {
     public static final int TABLE_EMPTY_STATUS = 0;
     public static final int TABLE_LIVE_STATUS = 1;
+    public static final int TABLE_LIVE_MERGE = 2;
     public static final String EXTRA_ID_BILL_TO_TABLE_DETAIL = "EXTRA_ID_BILL_TO_TABLE_DETAIL";
     public static final String EXTRA_ID_STAFF_TO_TABLE_DETAIL = "EXTRA_ID_STAFF_TO_TABLE_DETAIL";
     public static final String STRING_CONTENT_TO_ANNOUNCE = "content_to_announce";
     public static String EXTRA_TABLE_TO_DETAIL = "extra_table_to_detail";
+    public static String EXTRA_TABLE_TO_MERGE = "extra_table_to_merge";
+    public static String EXTRA_BILL_TO_MERGE = "extra_bill_to_merge";
     public static String EXTRA_ADMIN_TO_DETAIL = "extra_admin_to_detail";
     public static String EXTRA_CHEF_TO_DETAIL = "extra_chef_to_detail";
     public static String EXTRA_CASHIER_TO_DETAIL = "extra_cashier_to_detail";
@@ -135,10 +138,16 @@ public class Constants {
         dialog.setCancelable(false);
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         dialog.getWindow().setGravity(Gravity.CENTER);
-        showDetailBillBinding.txtNameTable.setText(bill.getTable().getName());
+        StringBuilder names = new StringBuilder();
+        for (Table table : bill.getTables()) {
+            names.append(table.getName()).append(", ");
+        }
+        showDetailBillBinding.txtNameTable.setText(names);
+//        showDetailBillBinding.txtNameTable.setText(bill.getTable().getName());
         showDetailBillBinding.tvTime.setText(bill.getTime());
         showDetailBillBinding.tvDate.setText(bill.getDate());
-        showDetailBillBinding.tvPrice.setText(bill.getTotalPrice() + "");
+        int totalPrice = (int) (bill.getTotalPrice() * 23000);
+        showDetailBillBinding.tvPrice.setText(totalPrice + " vnđ");
         if (bill.getProducts() != null) {
             showDetailBillBinding.rvProductBillDetail.setVisibility(View.VISIBLE);
             ShowDetailProductBillAdapter adapterShowDetailBill = new ShowDetailProductBillAdapter(context, bill.getProducts());
@@ -204,7 +213,8 @@ public class Constants {
                         showDetailBillBinding.txtNameTable.setText(response.body().get(i).getTable().getName());
                         showDetailBillBinding.tvTime.setText(response.body().get(i).getTime());
                         showDetailBillBinding.tvDate.setText(response.body().get(i).getDate());
-                        showDetailBillBinding.tvPrice.setText(response.body().get(i).getTotalPrice() + "");
+                        int totalPrice = (int) (response.body().get(i).getTotalPrice() * 23000);
+                        showDetailBillBinding.tvPrice.setText(totalPrice + " vnđ");
                         if (response.body().get(i).getProducts() != null) {
                             showDetailBillBinding.rvProductBillDetail.setVisibility(View.VISIBLE);
                             ShowDetailProductBillAdapter adapterShowDetailBill = new ShowDetailProductBillAdapter(context, response.body().get(i).getProducts());

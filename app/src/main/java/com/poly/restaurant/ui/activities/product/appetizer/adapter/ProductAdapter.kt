@@ -25,7 +25,7 @@ class ProductAdapter(var mListProduct: List<Product>, private val onEventProduct
         fun bind(product: Product){
             tvName.text = product.name
             Glide.with(imgProduct.context).load(product.urlImage).into(imgProduct)
-            tvPrice.text = "${product.price}$"
+            tvPrice.text = "${(product.price * 23000).toInt()} vnđ"
             tvQuantity.text = "x"+product.amount
             tvDescription.text = product.description
         }

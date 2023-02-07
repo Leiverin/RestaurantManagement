@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -27,9 +26,9 @@ import java.util.List;
 
 public class BillActivity extends BaseActivity {
     private ActivityBillBinding binding;
-    private BillAdapter adapter;
-    private List<Bill> list;
     private BillViewModel viewModel;
+    private List<Bill> list;
+    private BillAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +53,7 @@ public class BillActivity extends BaseActivity {
         adapter = new BillAdapter(this, list, new OnListener() {
             @Override
             public void onClickBill(Bill bill, CardView cardView) {
-                Constants.dialogShowDetailBill(bill, BillActivity.this,cardView);
+                Constants.dialogShowDetailBill(bill, BillActivity.this, cardView);
             }
 
             @Override
@@ -63,6 +62,7 @@ public class BillActivity extends BaseActivity {
             }
         });
         binding.rvBill.setAdapter(adapter);
+
     }
 
     private void initViewModel() {
@@ -82,37 +82,7 @@ public class BillActivity extends BaseActivity {
 
             }
         });
-        viewModel.getBill(Constants.staff.getId(), Constants.staff.getFloor().getNumberFloor());
     }
-
-
-//    private void showDialogComplete(Bill bill) {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        DialogAlertCompleteBinding dialogAlertCompleteBinding = DialogAlertCompleteBinding.inflate(LayoutInflater.from(this));
-//        builder.setView(dialogAlertCompleteBinding.getRoot());
-//        AlertDialog dialog = builder.create();
-//        Resources res = getResources();
-//        String text = String.format(res.getString(R.string.text_alert), bill.getTable().getName());
-//        dialogAlertCompleteBinding.textAlert.setText(text);
-//        dialogAlertCompleteBinding.btnNo.setOnClickListener(view -> {
-//            dialog.dismiss();
-//        });
-//        dialogAlertCompleteBinding.btnYes.setOnClickListener(view -> {
-//            Constants.setOnStatus(bill);
-//            list.remove(bill);
-//            adapter.setList(list);
-//            adapter.notifyDataSetChanged();
-//            Table table = new Table(bill.getTable().getId(), bill.getTable().getName(), bill.getTable().getFloor(), bill.getTable().getCapacity(), 0);
-//            viewModel.updateTable(table.getId(), table);
-//            dialog.dismiss();
-//        });
-//
-//        dialog.show();
-//        dialog.setCancelable(false);
-//        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
-//        dialog.getWindow().setGravity(Gravity.CENTER);
-//    }
 
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -126,17 +96,18 @@ public class BillActivity extends BaseActivity {
     };
 
     @Override
-    protected void onStop() {
+    public void onStop() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
         super.onStop();
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         LocalBroadcastManager.getInstance(this).registerReceiver((receiver),
                 new IntentFilter(Constants.REQUEST_TO_ACTIVITY)
         );
         viewModel.getBill(Constants.staff.getId(), Constants.staff.getFloor().getNumberFloor());
         super.onResume();
     }
+
 }

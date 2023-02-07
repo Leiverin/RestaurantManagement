@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="table"
             type="com.poly.restaurant.data.models.Table" />
@@ -11,31 +12,51 @@
     <LinearLayout
         android:id="@+id/view_item"
         android:layout_width="match_parent"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
         android:layout_margin="7dp"
-        android:layout_height="wrap_content">
+        android:orientation="vertical">
 
         <androidx.cardview.widget.CardView
-            app:cardCornerRadius="15dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="15dp">
 
             <ImageView
-                android:src="@drawable/ic_icon_table"
-                android:adjustViewBounds="true"
-                android:layout_margin="30dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_margin="30dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_icon_table" />
         </androidx.cardview.widget.CardView>
 
-        <TextView
-            android:id="@+id/tv_name_table"
-            style="@style/text_size_18sp_bold"
-            android:text="@string/textNameTableItem" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tv_name_table"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/judson_bold"
+                android:text="@string/textNameTableItem"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_marginStart="5dp"
+                android:id="@+id/tv_table_merge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/judson_bold"
+                android:text="(Bàn gộp)"
+                android:textColor="@color/color_price"
+                android:textSize="18sp" />
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/tv_content_table"
-            android:text="@string/textOrderOnTable"
-            style="@style/text_size_16sp_regular" />
+            style="@style/text_size_16sp_regular"
+            android:text="@string/textOrderOnTable" />
     </LinearLayout>
 </layout>

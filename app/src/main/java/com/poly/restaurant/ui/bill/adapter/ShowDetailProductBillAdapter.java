@@ -38,7 +38,7 @@ public class ShowDetailProductBillAdapter extends RecyclerView.Adapter<ShowDetai
         Product product = list.get(position);
         if (product != null) {
             holder.binding.tvName.setText(product.getName());
-            holder.binding.tvPrice.setText(product.getPrice() + "$");
+            holder.binding.tvPrice.setText(product.getPrice() + "vnđ");
             holder.binding.tvQuantity.setText("Số lượng : " + product.getAmount());
             Glide.with(context).load(product.getUrlImage()).into(holder.binding.imgProduct);
             holder.binding.cardView.setOnClickListener(view -> {

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="tableParent"
+            type="com.poly.restaurant.data.models.TableParent" />
+    </data>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="4dp">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:textColor="#FF7F50"
+            style="@style/text_size_22sp_bold"
+            tools:text="Live table" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_table"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/item_table_merge"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+    </LinearLayout>
+</layout>

@@ -13,6 +13,7 @@ import com.poly.restaurant.data.models.Table;
 import com.poly.restaurant.databinding.ItemTableChildBinding;
 
 import java.util.List;
+import java.util.Objects;
 
 public class TableChildAdapter extends RecyclerView.Adapter<TableChildAdapter.TableChildViewModel> {
     private Context context;
@@ -36,6 +37,14 @@ public class TableChildAdapter extends RecyclerView.Adapter<TableChildAdapter.Ta
     public void onBindViewHolder(@NonNull TableChildViewModel holder, int position) {
         Table table = mListTable.get(position);
         if (table != null) {
+            if (table.getTableParent()==null) {
+                holder.binding.viewItem.setEnabled(true);
+                holder.binding.tvTableMerge.setVisibility(View.GONE);
+                holder.binding.tvTableMerge.setText("");
+            } else {
+                holder.binding.viewItem.setEnabled(false);
+                holder.binding.tvTableMerge.setText("(" +table.getTableParent() +")");
+            }
             holder.binding.tvNameTable.setText(table.getName());
             holder.binding.tvContentTable.setText("Bàn " + table.getCapacity() + " người");
             holder.binding.viewItem.setOnClickListener(new View.OnClickListener() {

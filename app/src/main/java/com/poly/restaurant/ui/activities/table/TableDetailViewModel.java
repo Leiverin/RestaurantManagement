@@ -33,7 +33,7 @@ public class TableDetailViewModel extends BaseViewModel {
     public MutableLiveData<List<Bill>> statusBillExistLiveData;
     public MutableLiveData<Bill> mBillByIdLiveData;
     public MutableLiveData<List<Bill>> payBillLiveData;
-
+    public MutableLiveData<Boolean> wasDeleted;
 
     public TableDetailViewModel(Context context) {
         super(context);
@@ -47,6 +47,7 @@ public class TableDetailViewModel extends BaseViewModel {
         mBillByIdLiveData = new MutableLiveData<>();
         payBillLiveData = new MutableLiveData<>();
         statusBillExistLiveData = new MutableLiveData<>();
+        wasDeleted = new MutableLiveData<>();
     }
 
     public LiveData<List<Product>> getListProductByIdTableLive(String idTable){
@@ -231,5 +232,32 @@ public class TableDetailViewModel extends BaseViewModel {
         Log.d("TAG", "Handle error update table: "+ throwable.getMessage());
     }
 
+    public void updateStatusProductInBill(int status, String id, String idTable){
+        appExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                productDao.updateStatusProductInBill(status, id, idTable);
+            }
+        });
+    }
+
+    public void deleteBill(String id){
+        ServiceAPI serviceAPI = RetroInstance.getRetrofitInstance().create(ServiceAPI.class);
+        Observable<Response<Bill>> mBill = serviceAPI.deleteBill(id);
+        mBill.subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(this::onRetrieveDeleteBillSuccessfully, this::handleErrorsDeleteBill);
+    }
+
+    private void onRetrieveDeleteBillSuccessfully(Response<Bill> result) {
+        if (result.isSuccessful()){
+            wasDeleted.postValue(true);
+        }
+    }
+
+    private void handleErrorsDeleteBill(Throwable throwable) {
+        Log.d("TAG", "Handle error delete bill: "+ throwable.getMessage());
+        wasDeleted.postValue(false);
+    }
 
 }

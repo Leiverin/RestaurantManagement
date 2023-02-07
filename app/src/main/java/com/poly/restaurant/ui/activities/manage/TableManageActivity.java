@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.MenuItem;
@@ -35,6 +34,7 @@ import com.poly.restaurant.ui.bill.BillActivity;
 import com.poly.restaurant.ui.history.HistoryActivity;
 import com.poly.restaurant.ui.notification.NotificationActivity;
 import com.poly.restaurant.utils.Constants;
+import com.poly.restaurant.utils.helps.ViewModelFactory;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -46,18 +46,18 @@ public class TableManageActivity extends BaseActivity {
     private TableManageAdapter adapter;
     private List<Table> mListTablesEmpty;
     private List<Table> mListTablesLive;
+    private List<Table> mListTablesMerge;
     private List<TableParent> mListTableMain;
     private List<Staff> mListAdmin;
     private List<Staff> mListChef;
     private List<Staff> mListCashier;
-    private Handler handler = new Handler();
-    private Runnable runnable;
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(this).get(TableManageViewModel.class);
+        ViewModelFactory factory = new ViewModelFactory(this);
+        viewModel = new ViewModelProvider(this, factory).get(TableManageViewModel.class);
         binding = ActivityTableManageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         Window window = getWindow();
@@ -68,6 +68,7 @@ public class TableManageActivity extends BaseActivity {
 
         mListTablesEmpty = new ArrayList<>();
         mListTablesLive = new ArrayList<>();
+        mListTablesMerge = new ArrayList<>();
         mListTableMain = new ArrayList<>();
         mListAdmin = new ArrayList<>();
         mListChef = new ArrayList<>();
@@ -107,6 +108,17 @@ public class TableManageActivity extends BaseActivity {
                 if (tables != null) {
                     mListTablesLive = tables;
                     binding.tvNumLiveTable.setText("Đang sử dụng: " + tables.size());
+                    mListTableMain = getListTableMain();
+                    adapter.setList(mListTableMain);
+                }
+            }
+        });
+
+        viewModel.mListMergeTableLiveData.observe(this, new Observer<List<Table>>() {
+            @Override
+            public void onChanged(List<Table> tables) {
+                if (tables != null) {
+                    mListTablesMerge = tables;
                     mListTableMain = getListTableMain();
                     adapter.setList(mListTableMain);
                 }
@@ -164,6 +176,7 @@ public class TableManageActivity extends BaseActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver((receiver),
                 new IntentFilter(Constants.REQUEST_TO_ACTIVITY)
         );
+        viewModel.deleteAllProduct();
     }
 
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -194,7 +207,7 @@ public class TableManageActivity extends BaseActivity {
                     return t1.getName().compareTo(t2.getName());
                 }
             });
-            mTableMain.add(new TableParent("Empty table", mListTablesEmpty));
+            mTableMain.add(new TableParent("Bàn còn trống", mListTablesEmpty));
         }
         if (mListTablesLive.size() != 0) {
             mListTablesLive.sort(new Comparator<Table>() {
@@ -203,15 +216,18 @@ public class TableManageActivity extends BaseActivity {
                     return t1.getName().compareTo(t2.getName());
                 }
             });
-            mTableMain.add(new TableParent("Live table", mListTablesLive));
+            mTableMain.add(new TableParent("Bàn đang sử dụng", mListTablesLive));
+        }
+        if (mListTablesMerge.size() != 0) {
+            mListTablesMerge.sort(new Comparator<Table>() {
+                @Override
+                public int compare(Table t1, Table t2) {
+                    return t1.getName().compareTo(t2.getName());
+                }
+            });
+            mTableMain.add(new TableParent("Bàn đã gộp", mListTablesMerge));
         }
         return mTableMain;
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        handler.removeCallbacks(runnable);
     }
 
     @Override
@@ -221,6 +237,7 @@ public class TableManageActivity extends BaseActivity {
         );
         viewModel.callToGetTableEmpty(Constants.staff.getFloor().getNumberFloor(), Constants.TABLE_EMPTY_STATUS);
         viewModel.callToGetTableLive(Constants.staff.getFloor().getNumberFloor(), Constants.TABLE_LIVE_STATUS);
+        viewModel.callToGetTableMerge(Constants.staff.getFloor().getNumberFloor(), Constants.TABLE_LIVE_MERGE);
         viewModel.callToGetAdmin();
         viewModel.callToGetChef();
         viewModel.callToGetCashier();
@@ -243,4 +260,5 @@ public class TableManageActivity extends BaseActivity {
         });
         popupMenu.show();
     }
+
 }

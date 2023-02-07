@@ -25,11 +25,12 @@ public class Product implements Parcelable {
     private int type;
     private String idCategory;
     private String idTable;
+    private int status;
 
     public Product() {
     }
 
-    public Product(Long idProduct, String id, String name, String urlImage, double price, String description, int total, int amount, int type, String idCategory, String idTable) {
+    public Product(Long idProduct, String id, String name, String urlImage, double price, String description, int total, int amount, int type, String idCategory, String idTable, int status) {
         this.idProduct = idProduct;
         this.id = id;
         this.name = name;
@@ -41,6 +42,7 @@ public class Product implements Parcelable {
         this.type = type;
         this.idCategory = idCategory;
         this.idTable = idTable;
+        this.status = status;
     }
 
     protected Product(Parcel in) {
@@ -59,6 +61,7 @@ public class Product implements Parcelable {
         type = in.readInt();
         idCategory = in.readString();
         idTable = in.readString();
+        status = in.readInt();
     }
 
     @Override
@@ -79,6 +82,7 @@ public class Product implements Parcelable {
         dest.writeInt(type);
         dest.writeString(idCategory);
         dest.writeString(idTable);
+        dest.writeInt(status);
     }
 
     @Override
@@ -185,5 +189,13 @@ public class Product implements Parcelable {
 
     public void setIdTable(String idTable) {
         this.idTable = idTable;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

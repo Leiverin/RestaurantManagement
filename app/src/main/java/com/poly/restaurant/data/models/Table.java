@@ -3,17 +3,52 @@ package com.poly.restaurant.data.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.google.gson.annotations.SerializedName;
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+import com.google.gson.annotations.SerializedName;
+@Entity(tableName = "Table")
 public class Table implements Parcelable {
+    @NonNull
+    @PrimaryKey(autoGenerate = true)
+    private Long idTable;
     @SerializedName("_id")
     private String id;
     private String name;
     private int floor;
     private String capacity;
     private int status;
+    private String tableParent;
 
     public Table() {
+    }
+
+    public Table(@NonNull Long idTable, String id, String name, int floor, String capacity, int status) {
+        this.idTable = idTable;
+        this.id = id;
+        this.name = name;
+        this.floor = floor;
+        this.capacity = capacity;
+        this.status = status;
+    }
+
+    public Table(@NonNull Long idTable, String id, String name, int floor, String capacity, int status, String tableParent) {
+        this.idTable = idTable;
+        this.id = id;
+        this.name = name;
+        this.floor = floor;
+        this.capacity = capacity;
+        this.status = status;
+        this.tableParent = tableParent;
+    }
+
+    public String getTableParent() {
+        return tableParent;
+    }
+
+    public void setTableParent(String tableParent) {
+        this.tableParent = tableParent;
     }
 
     public Table(String id, String name, int floor, String capacity, int status) {
@@ -22,6 +57,15 @@ public class Table implements Parcelable {
         this.floor = floor;
         this.capacity = capacity;
         this.status = status;
+    }
+
+    public Table(String id, String name, int floor, String capacity, int status,String tableParent) {
+        this.id = id;
+        this.name = name;
+        this.floor = floor;
+        this.capacity = capacity;
+        this.status = status;
+        this.tableParent=tableParent;
     }
 
     protected Table(Parcel in) {
@@ -43,6 +87,15 @@ public class Table implements Parcelable {
             return new Table[size];
         }
     };
+
+    @NonNull
+    public Long getIdTable() {
+        return idTable;
+    }
+
+    public void setIdTable(@NonNull Long idTable) {
+        this.idTable = idTable;
+    }
 
     public String getId() {
         return id;
@@ -96,5 +149,17 @@ public class Table implements Parcelable {
         parcel.writeInt(floor);
         parcel.writeString(capacity);
         parcel.writeInt(status);
+    }
+
+    @Override
+    public String toString() {
+        return "Table{" +
+                "idTable=" + idTable +
+                ", id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", floor=" + floor +
+                ", capacity='" + capacity + '\'' +
+                ", status=" + status +
+                '}';
     }
 }
