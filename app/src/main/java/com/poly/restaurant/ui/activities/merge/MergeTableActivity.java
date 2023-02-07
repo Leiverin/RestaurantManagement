@@ -68,7 +68,7 @@ public class MergeTableActivity extends BaseActivity {
         tableIntent = getIntent().getParcelableExtra(Constants.EXTRA_TABLE_TO_MERGE);
         mBill = getIntent().getParcelableExtra(Constants.EXTRA_BILL_TO_MERGE);
         initRec();
-        initViewModel();
+        initViewModel(); 
         initActions();
         eventScrollRecycleView();
         LocalBroadcastManager.getInstance(this).registerReceiver((receiver),
