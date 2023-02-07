@@ -21,6 +21,7 @@ import com.poly.restaurant.data.models.Bill;
 import com.poly.restaurant.data.models.Notification;
 import com.poly.restaurant.data.models.Product;
 import com.poly.restaurant.data.models.Staff;
+import com.poly.restaurant.data.models.Table;
 import com.poly.restaurant.data.retrofit.RetroInstance;
 import com.poly.restaurant.data.retrofit.ServiceAPI;
 import com.poly.restaurant.databinding.DialogShowDetailBillBinding;
@@ -137,7 +138,12 @@ public class Constants {
         dialog.setCancelable(false);
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         dialog.getWindow().setGravity(Gravity.CENTER);
-        showDetailBillBinding.txtNameTable.setText(bill.getTable().getName());
+        StringBuilder names = new StringBuilder();
+        for (Table table : bill.getTables()) {
+            names.append(table.getName()).append(", ");
+        }
+        showDetailBillBinding.txtNameTable.setText(names);
+//        showDetailBillBinding.txtNameTable.setText(bill.getTable().getName());
         showDetailBillBinding.tvTime.setText(bill.getTime());
         showDetailBillBinding.tvDate.setText(bill.getDate());
         int totalPrice = (int) (bill.getTotalPrice() * 23000);

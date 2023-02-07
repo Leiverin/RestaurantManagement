@@ -60,6 +60,7 @@ public class TableDetailActivity extends BaseActivity {
     private List<Staff> mListAdmin;
     private List<Staff> mListChef;
     private List<Staff> mListCashier;
+    private List<Bill> billIntent;
     private ProductTableAdapter adapter;
     private AppSharePreference sharePreference;
     private Table table;
@@ -141,6 +142,7 @@ public class TableDetailActivity extends BaseActivity {
         initEventViewModel();
 
         viewModel.checkBillAlreadyExists(table.getId());
+//        viewModel.callToGetBillExist(sharePreference.getTableId(), Constants.TYPE_NON_CLICK);
 
         if (!sharePreference.getTableId().equals(sharePreference.getBeforeTableId()) && viewModel.getListProductByIdTable(table.getId()).size() == 0) {
             sharePreference.setBeforeTableId(table.getId());
@@ -154,10 +156,11 @@ public class TableDetailActivity extends BaseActivity {
 
     @Override
     protected void onResume() {
-        viewModel.callToGetBillExist(sharePreference.getTableId(), Constants.TYPE_NON_CLICK);
         LocalBroadcastManager.getInstance(this).registerReceiver((receiver),
                 new IntentFilter(Constants.REQUEST_TO_ACTIVITY)
         );
+        viewModel.callToGetBillExist(sharePreference.getTableId(), Constants.TYPE_NON_CLICK);
+        viewModel.deleteAllProduct();
         if (viewModel.getListProductByIdTable(sharePreference.getTableId()).size() != 0){
             binding.viewNoneItem.setVisibility(View.GONE);
         }
@@ -252,6 +255,7 @@ public class TableDetailActivity extends BaseActivity {
         viewModel.mBillLiveData.observe(this, new Observer<List<Bill>>() {
             @Override
             public void onChanged(List<Bill> bill) {
+                billIntent=bill;
                 if (bill != null && bill.size() != 0) {
                     if (mListProduct.size() != 0) {
                         /**
@@ -353,7 +357,6 @@ public class TableDetailActivity extends BaseActivity {
             @Override
             public void onChanged(Bill bill) {
                 if (bill != null) {
-                    mBill = bill;
                     setStatusProduct(bill);
                     setStatusTable(bill);
                 }
@@ -586,6 +589,9 @@ public class TableDetailActivity extends BaseActivity {
     private void showPopupMenu() {
         PopupMenu popupMenu = new PopupMenu(TableDetailActivity.this, binding.imgMenuTableDetail);
         popupMenu.getMenuInflater().inflate(R.menu.menu_table_detail, popupMenu.getMenu());
+//        if (table.getStatus() == 0) {
+//            popupMenu.getMenu().findItem(R.id.action_merge).setVisible(false);
+//        }
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {

@@ -42,8 +42,10 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
         if (bill != null) {
             holder.binding.txtNameTable.setText(bill.getTable().getName());
             holder.binding.txtTime.setText(bill.getTime() + " " + bill.getDate());
-            holder.binding.txtMount.setText("Số lượng :" + bill.getCheckoutType());
-            holder.binding.txtMoney.setText(bill.getTotalPrice() + "");
+            holder.binding.txtMount.setText("Số lượng :" + bill.getProducts().size());
+            holder.binding.txtNameTable.setText(bill.getTable().getName());
+            int totalPrice = (int) (bill.getTotalPrice() * 23000);
+            holder.binding.txtMoney.setText(totalPrice + " vnđ");
             holder.binding.imgFeedback.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
