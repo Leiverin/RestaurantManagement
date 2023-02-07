@@ -167,7 +167,6 @@ public class TableDetailActivity extends BaseActivity {
         }else{
 //            binding.viewNoneItem.setVisibility(View.VISIBLE);
         }
-        viewModel.deleteAllProduct();
 
         viewModel.callToGetBillExist(sharePreference.getTableId(), Constants.TYPE_NON_CLICK);
         super.onResume();

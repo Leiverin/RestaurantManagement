@@ -255,7 +255,7 @@ public class MergeTableActivity extends BaseActivity {
                                 }
                             }
                         }
-                        finish();
+                        finishMerge();
                     }
                 } else {
                     Toast.makeText(MergeTableActivity.this, "Xảy ra lỗi", Toast.LENGTH_SHORT).show();
