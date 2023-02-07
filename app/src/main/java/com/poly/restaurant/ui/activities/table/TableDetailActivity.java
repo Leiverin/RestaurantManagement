@@ -207,7 +207,7 @@ public class TableDetailActivity extends BaseActivity {
             public void onChanged(Bill bill) {
                 if (bill != null) {
                     String title = "Thông báo";
-                    String content = "Bill bàn " + bill.getTable().getName() + " đã được tạo. Hành động thôi nào :))";
+                    String content = "Bill bàn " + bill.getTable().getName() + " tầng "+ bill.getTable().getFloor() +" đã được tạo. Hành động thôi nào :))";
                     for (Staff s : mListChef) {
                         countCreate++;
                         viewModel.callToPushNotification(
@@ -274,7 +274,7 @@ public class TableDetailActivity extends BaseActivity {
                         viewModel.callToUpdateBill(bill.get(0).getId(), new Bill(bill.get(0).getId(), date, time, total, 0, 0, mListProduct,
                                 tableUpdate, null, null, Constants.staff, null), Constants.TYPE_UPDATE);
                         String title = "Thông báo bổ sung món";
-                        String content = "Bill bàn " + bill.get(0).getTable().getName() + " vừa bổ sung thêm món";
+                        String content = "Bill bàn " + bill.get(0).getTable().getName() + " tầng "+ bill.get(0).getTable().getFloor() +" vừa bổ sung thêm món";
                         for (Staff s : mListChef) {
                             count++;
                             viewModel.callToPushNotification(
@@ -385,7 +385,7 @@ public class TableDetailActivity extends BaseActivity {
                     viewModel.callToUpdateBill(bills.get(0).getId(), new Bill(bills.get(0).getId(), date, time, total, 0, 2, mListProduct,
                             tableUpdate, null, null, Constants.staff, null), Constants.TYPE_PAY);
                     String title = "Thông báo xác nhận hóa đơn";
-                    String content = "Bàn " + bills.get(0).getTable().getName() + " đang chờ xác nhận thanh toán";
+                    String content = "Bàn " + bills.get(0).getTable().getName() + " tầng "+ bills.get(0).getTable().getFloor() +" đang chờ xác nhận thanh toán";
                     for (Staff s : mListAdmin) {
                         viewModel.callToPushNotification(
                                 s.getTokenFCM(),
@@ -617,9 +617,6 @@ public class TableDetailActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        Log.d("TAGGG", "onBackPressed 1: "+ new Gson().toJson(mListProduct));
-        Log.d("TAGGG", "onBackPressed 2: "+ new Gson().toJson(mListOldProduct));
-        Log.d("TAGGG", "onBackPressed: "+ mListProduct.containsAll(mListOldProduct));
 //        if (mListOldProduct.equals(mListProduct)){
         super.onBackPressed();
 //        }else{
